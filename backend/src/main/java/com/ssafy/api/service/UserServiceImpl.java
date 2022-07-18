@@ -1,6 +1,7 @@
 package com.ssafy.api.service;
 
 import com.ssafy.db.entity.UserType;
+import org.hibernate.exception.DataException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -33,6 +34,7 @@ public class UserServiceImpl implements UserService {
 		user.setUserName(userRegisterInfo.getUserName());
 		user.setUserEmail(userRegisterInfo.getUserEmail());
 		user.setUserType(UserType.USER);
+
 		return userRepository.save(user);
 	}
 
