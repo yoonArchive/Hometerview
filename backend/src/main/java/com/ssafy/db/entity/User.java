@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 유저 모델 정의.
@@ -39,8 +41,17 @@ public class User {
     @Column(name = "user_img")
     private String userImg;
 
-    @Column(name = "user_type")
     @Enumerated(EnumType.STRING)
+    @Column(name = "user_type")
     private UserType userType;
+
+    @OneToMany(mappedBy = "user")
+    private List<Resume> resumes = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<Apply> applies = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<StudyJoin> studyJoins = new ArrayList<>();
 
 }
