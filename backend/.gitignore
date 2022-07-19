@@ -36,7 +36,7 @@ out/
 /nbdist/
 /.nb-gradle/
 
-!**/src/main/resources/dist/
+dist/
 
 ### VS Code ###
 .vscode/
