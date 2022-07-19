@@ -6,6 +6,7 @@ build/
 !**/src/test/**/build/
 
 ssafy-web.log
+.gz
 
 ### STS ###
 .apt_generated
@@ -34,6 +35,8 @@ out/
 /dist/
 /nbdist/
 /.nb-gradle/
+
+dist/
 
 ### VS Code ###
 .vscode/
