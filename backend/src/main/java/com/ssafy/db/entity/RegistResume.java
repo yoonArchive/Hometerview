@@ -26,7 +26,4 @@ public class RegistResume {
     @JoinColumn(name = "resume_no")
     private Resume resume;
 
-    @OneToMany(mappedBy = "registResume")
-    private List<PersonalQuestion> personalQuestions = new ArrayList<>();
-
 }

@@ -17,11 +17,8 @@ public class PersonalQuestion {
     private Long questionNo;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "regist_no")
-    private RegistResume registResume;
-
-    @Column(name = "item_no")
-    private Long itemNo;
+    @JoinColumn(name="detail_no")
+    private ResumeDetail resumeDetail;
 
     @Column(name = "std_no")
     private Long stdNo;

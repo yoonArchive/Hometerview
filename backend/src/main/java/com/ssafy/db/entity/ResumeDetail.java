@@ -3,6 +3,8 @@ package com.ssafy.db.entity;
 import lombok.Getter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -26,5 +28,8 @@ public class ResumeDetail {
 
     @Column(name = "answer")
     private String answer;
+
+    @OneToMany(mappedBy = "resumeDetail")
+    private List<PersonalQuestion> personalQuestions = new ArrayList<>();
 
 }
