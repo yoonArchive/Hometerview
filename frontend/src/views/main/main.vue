@@ -1,19 +1,18 @@
 <template>
-  <el-container class="main-wrapper">
-    <main-header
-      :height="`70px`"
-      @openLoginDialog="onOpenLoginDialog"/>
-    <el-container class="main-container">
-      <el-aside class="hide-on-small" width="240px">
-        <main-sidebar
-          :width="`240px`"/>
-      </el-aside>
-      <el-main>
-        <router-view></router-view>
-      </el-main>
-    </el-container>
-    <main-footer :height="`110px`"/>
-  </el-container>
+  <div id="mainBackground">
+    <div id="mainDivLogo">
+      <img :src="logo" id="mainImageLogo"/>
+    </div>
+
+    <img :src="images[0]" alt="" class="main-image" />
+      <router-link to="/home">
+        <button id="mainBtn">홈페이지 바로가기
+
+        </button>
+      </router-link>
+    <img :src="images[1]" alt="" class="main-image" />
+    <img :src="images[2]" alt="" class="main-image" />
+  </div>
   <login-dialog
     :open="loginDialogOpen"
     @closeLoginDialog="onCloseLoginDialog"/>
@@ -41,7 +40,9 @@ export default {
   },
   data () {
     return {
-      loginDialogOpen: false
+      loginDialogOpen: false,
+      images:[ require('../../assets/images/sample-image.png'), require('../../assets/images/ssafy-logo.png'),require('../../assets/images/sample-image.png')],
+      logo: require('../../assets/images/ssafy-logo.png'),
     }
   },
   methods: {
