@@ -96,4 +96,12 @@ public class UserController {
         else return ResponseEntity.status(200).body(UserFindIdGetRes.of(200, "아이디 찾기 성공", user.getUserId()));
     }
 
+    @GetMapping("/pw")
+    @ApiOperation(value = "비밀번호 인증", notes = "비밀번호 인증을 위해 로그인한 회원의 비밀번호와 일치하는 비밀번호를 입력한다.")
+    public ResponseEntity<?> certifyPw(@RequestParam Long userNo, @RequestParam String userPw) {
+        if (userService.validateUser(userNo, userPw))
+            return ResponseEntity.status(401).body(BaseResponseBody.of(401, "비밀번호를 다시 확인해주세요."));
+        else return ResponseEntity.status(200).body(BaseResponseBody.of(200, "비밀번호 인증 성공"));
+    }
+
 }

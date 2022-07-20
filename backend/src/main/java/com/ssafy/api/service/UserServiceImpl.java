@@ -52,4 +52,12 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByUserNameAndUserEmail(userName, userEmail).orElse(null);
     }
 
+    @Override
+    public Boolean validateUser(Long userNo, String userPw) {
+        User user = userRepository.findByUserNo(userNo).get();
+        if (passwordEncoder.matches(user.getUserPw(), userPw))
+            return true;
+        return false;
+    }
+
 }
