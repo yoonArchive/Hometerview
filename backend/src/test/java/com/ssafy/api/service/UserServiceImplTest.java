@@ -44,8 +44,8 @@ public class UserServiceImplTest {
         user.setUserEmail("giyoon@naver.com");
         user.setUserName("박기윤");
         userService.createUser(user);
-        String userId = userService.getByUserNameAndUserEmail("박기윤", "giyoon@naver.com");
-        assertEquals(userId, "giyoon");
+        User findUser = userService.getByUserNameAndUserEmail("박기윤", "giyoon@naver.com");
+        assertEquals(findUser, user);
     }
-    
+
 }
