@@ -47,7 +47,7 @@
 #mainBtn {
   position: absolute;
   left: 60%;
-  top: 60%;
+  top: 100%;
 }
 
 #mainBackground {
@@ -57,7 +57,7 @@
   text-align: center;
 }
 #mainImageLogo {
-  margin-top: 10%;
+  margin-top: 5%;
 }
 #mainFirstImage {
   position: relative;
