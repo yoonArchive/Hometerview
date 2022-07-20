@@ -1,9 +1,6 @@
 package com.ssafy.api.controller;
 
-import com.ssafy.api.request.UserFindIdGetReq;
 import com.ssafy.api.response.UserFindIdGetRes;
-import com.ssafy.api.response.UserLoginPostRes;
-import com.ssafy.common.util.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -92,12 +89,11 @@ public class UserController {
     @GetMapping("/findid")
     @ApiOperation(value = "아이디 찾기", notes = "회원의 이름과 이메일에 해당하는 회원 아이디를 찾는다.")
     @ApiResponses({@ApiResponse(code = 200, message = "아이디 찾기 성공"), @ApiResponse(code = 401, message = "아이디 찾기 실패"), @ApiResponse(code = 500, message = "서버 오류")})
-    public ResponseEntity<?> findId(@RequestBody @ApiParam(value = "아이디 찾기 정보", required = true) UserFindIdGetReq userFindIdGetReq) {
-        String userId = userService.getByUserNameAndUserEmail(userFindIdGetReq.getUserName(), userFindIdGetReq.getUserEmail());
-        System.out.println(userId);
-        if (userId == null)
+    public ResponseEntity<?> findId(@RequestParam @ApiParam(value = "회원 이름", required = true) String userName, @RequestParam @ApiParam(value = "회원 이메일", required = true) String userEmail) {
+        User user = userService.getByUserNameAndUserEmail(userName, userEmail);
+        if (user == null)
             return ResponseEntity.status(401).body(UserFindIdGetRes.of(401, "고객님의 정보와 일치하는 아이디가 없습니다.", null));
-        else return ResponseEntity.status(200).body(UserFindIdGetRes.of(200, "아이디 찾기 성공", userId));
+        else return ResponseEntity.status(200).body(UserFindIdGetRes.of(200, "아이디 찾기 성공", user.getUserId()));
     }
 
 }

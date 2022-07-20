@@ -13,6 +13,6 @@ public interface UserService {
 
     User getByUserEmail(String userEmail);
 
-    String getByUserNameAndUserEmail(String userName, String userEmail);
+    User getByUserNameAndUserEmail(String userName, String userEmail);
 
 }
