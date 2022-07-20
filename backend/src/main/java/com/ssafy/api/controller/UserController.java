@@ -41,7 +41,6 @@ public class UserController {
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 401, message = "인증 실패"),
-            @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<? extends BaseResponseBody> register(
@@ -50,9 +49,9 @@ public class UserController {
 		@ApiParam : Api에서 사용할 파라미터를 표시
 		 */
         //임의로 리턴된 User 인스턴스. 현재 코드는 회원 가입 성공 여부만 판단하기 때문에 굳이 Insert 된 유저 정보를 응답하지 않음.
-        User user = userService.createUser(registerInfo);
 
-        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success")); // 응답 코드와 함께 응답 메시지 return
+        userService.createUser(registerInfo);
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "회원가입에 성공하셨습니다.")); // 응답 코드와 함께 응답 메시지 return
     }
 
     @GetMapping("/me")
