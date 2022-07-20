@@ -1,16 +1,22 @@
 {
-  "home" : {
-    "name" : "홈",       
+  "mystudy" : {
+    "name" : "마이스터디",
     "hidden" : false,
     "path" : "/",
     "icon" : "el-icon-s-home",
     "children" : []
   },
-  "history" : {
-    "name" : "지난 회의 이력",
+  "findstudy" : {
+    "name" : "스터디 찾기",
     "hidden" : false,
-    "path" : "/history",
+    "path" : "/",
     "icon" : "el-icon-s-order",
+    "children" : []
+  },
+  "myinterview":{
+    "name":"나의 면접",
+    "hidden" :false,
+    "path" : "/",
     "children" : []
   }
 }
