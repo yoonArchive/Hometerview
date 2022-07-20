@@ -5,7 +5,8 @@
   }
 }
 
-#app, .main-wrapper {
+#app,
+.main-wrapper {
   height: 100%;
   display: block !important;
 }
@@ -34,51 +35,58 @@
   margin-right: 0 !important;
   border-top: 1px solid #dcdfe6;
 }
-.main-image{
+
+/* main page */
+.main-image {
   padding-left: 15%;
   padding-top: 5%;
   width: 70%;
   height: 70%;
 }
 
-#mainBtn{
+#mainBtn {
   position: absolute;
   left: 60%;
-  top: 120%;
+  top: 60%;
 }
 
-#mainBackground{
-  background-color: #653FD3;
-
+#mainBackground {
+  background-color: #653fd3;
 }
-#mainDivLogo{
+#mainDivLogo {
   text-align: center;
 }
-#mainImageLogo{
+#mainImageLogo {
   margin-top: 10%;
+}
+#mainFirstImage {
+  position: relative;
 }
 
 /* header */
-#headerFrame{
+#headerFrame {
+  background-color: white;
+  width: 100%;
   height: 10%;
   border-radius: 24px;
+  /* border-radius: 0px 0px 24px 24px; */
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 16px 32px;
+  padding: 0;
   gap: 3%;
-
-  position: relative;
+  z-index: 100;
+  position: fixed;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.08), 0px 4px 24px rgba(0, 0, 0, 0.08);
 }
-#headerLogo{
+#headerLogo {
   flex: none;
   order: 0;
   flex-grow: 0;
 }
 
-#headerMenu{
+#headerMenu {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -88,7 +96,7 @@
   order: 1;
   flex-grow: 1;
 }
-#headerBtnGroup{
+#headerBtnGroup {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -97,8 +105,9 @@
   flex: none;
   order: 2;
   flex-grow: 0;
+  padding-right: 2%;
 }
-.header-btn{
+.header-btn {
   box-sizing: border-box;
 
   /* Auto layout */
@@ -108,15 +117,15 @@
   align-items: center;
   padding: 8px;
   gap: 8px;
-  border: 1px solid #E8E8EA;
+  border: 1px solid #e8e8ea;
   border-radius: 16px;
 }
-.header-btn-text{
+.header-btn-text {
   display: flex;
   flex-direction: row;
   align-items: center;
   padding: 8px;
-  font-family: 'Libre Franklin';
+  font-family: "Libre Franklin";
   font-style: normal;
   font-weight: 700;
   font-size: 14px;
@@ -125,14 +134,14 @@
   align-items: center;
   text-align: center;
   letter-spacing: 0.02em;
-  font-feature-settings: 'salt' on, 'liga' off;
+  font-feature-settings: "salt" on, "liga" off;
 
-  color: #653FD3;
+  color: #653fd3;
 }
-.header-menu-item{
-  text-decoration:none;
+.header-menu-item {
+  text-decoration: none;
   width: auto;
-  font-family: 'Libre Franklin';
+  font-family: "Libre Franklin";
   font-style: normal;
   font-weight: 700;
   font-size: 14px;
@@ -140,11 +149,10 @@
   display: flex;
   align-items: center;
   letter-spacing: 0.02em;
-  font-feature-settings: 'salt' on, 'liga' off;
-  color: #1D1929;
-
+  font-feature-settings: "salt" on, "liga" off;
+  color: #1d1929;
 }
 
-.header-routerlink-decoration{
+.header-routerlink-decoration {
   text-decoration: none;
 }
