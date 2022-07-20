@@ -2,10 +2,10 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '@/views/home/home'
 import ConferencesDetail from '@/views/conferences/conference-detail'
 import History from '@/views/history/history'
-
+import Main from '@/views/main/main'
 const fullMenu = require('@/views/main/menu.json')
 function makeRoutesFromMenu () {
-  let routes = Object.keys(fullMenu).map((key) => { 
+  let routes = Object.keys(fullMenu).map((key) => {
     if (key === 'home') {
       return { path: fullMenu[key].path, name: key, component: Home  }
     } else if (key === 'history') {
@@ -21,6 +21,14 @@ function makeRoutesFromMenu () {
     path: '/conferences/:conferenceId',
     name: 'conference-detail',
     component: ConferencesDetail
+  },{
+    path: '/home',
+    name: 'home',
+    component: Home
+  },{
+    path: '/',
+    name: 'main',
+    component:Main
   })
   return routes
 }
