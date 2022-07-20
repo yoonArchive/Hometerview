@@ -9,6 +9,8 @@
   padding-left: 0;
   max-height: calc(100% - 35px);
 }
+
+/* 컨테이너 */
 .main-container {
   margin-right: 15%;
   margin-left: 15%;
