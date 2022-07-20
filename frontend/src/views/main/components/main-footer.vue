@@ -81,7 +81,7 @@
 @media (min-width: 701px) {
   .main-footer {
     height: 110px;
-    width: 100%;
+    /* width: 102%; */
     background-color: #653FD3;
     color: white;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.08), 0px 4px 24px rgba(0, 0, 0, 0.08);
