@@ -1,7 +1,6 @@
 package com.ssafy.api.service;
 
 import com.ssafy.db.entity.UserType;
-import org.hibernate.exception.DataException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -46,6 +45,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getByUserEmail(String userEmail) {
         return userRepository.findByUserEmail(userEmail).orElse(null);
+    }
+
+    @Override
+    public User getByUserNameAndUserEmail(String userName, String userEmail) {
+        return userRepository.findByUserNameAndUserEmail(userName, userEmail).orElse(null);
     }
 
 }

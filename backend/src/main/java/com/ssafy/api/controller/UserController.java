@@ -1,5 +1,6 @@
 package com.ssafy.api.controller;
 
+import com.ssafy.api.response.UserFindIdGetRes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -38,13 +39,8 @@ public class UserController {
     - value: API에 대한 요약을 작성한다.
     - notes : API에 대한 자세한 설명을 작성한다.
      */
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "성공"),
-            @ApiResponse(code = 401, message = "인증 실패"),
-            @ApiResponse(code = 500, message = "서버 오류")
-    })
-    public ResponseEntity<? extends BaseResponseBody> register(
-            @RequestBody @ApiParam(value = "회원가입 정보", required = true) UserRegisterPostReq registerInfo) {
+    @ApiResponses({@ApiResponse(code = 200, message = "성공"), @ApiResponse(code = 401, message = "인증 실패"), @ApiResponse(code = 500, message = "서버 오류")})
+    public ResponseEntity<? extends BaseResponseBody> register(@RequestBody @ApiParam(value = "회원가입 정보", required = true) UserRegisterPostReq registerInfo) {
 		/*
 		@ApiParam : Api에서 사용할 파라미터를 표시
 		 */
@@ -59,12 +55,7 @@ public class UserController {
 
     @GetMapping("/me")
     @ApiOperation(value = "회원 본인 정보 조회", notes = "로그인한 회원 본인의 정보를 응답한다.")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "성공"),
-            @ApiResponse(code = 401, message = "인증 실패"),
-            @ApiResponse(code = 404, message = "사용자 없음"),
-            @ApiResponse(code = 500, message = "서버 오류")
-    })
+    @ApiResponses({@ApiResponse(code = 200, message = "성공"), @ApiResponse(code = 401, message = "인증 실패"), @ApiResponse(code = 404, message = "사용자 없음"), @ApiResponse(code = 500, message = "서버 오류")})
     public ResponseEntity<UserRes> getUserInfo(@ApiIgnore Authentication authentication) {
         /**
          * 요청 헤더 액세스 토큰이 포함된 경우에만 실행되는 인증 처리이후, 리턴되는 인증 정보 객체(authentication) 통해서 요청한 유저 식별.
@@ -79,11 +70,7 @@ public class UserController {
 
     @GetMapping("/checkid")
     @ApiOperation(value = "아이디 중복 검사", notes = "회원가입 시 아이디 중복을 체크한다.")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "사용 가능"),
-            @ApiResponse(code = 401, message = "아이디 중복"),
-            @ApiResponse(code = 500, message = "서버 오류")
-    })
+    @ApiResponses({@ApiResponse(code = 200, message = "사용 가능"), @ApiResponse(code = 401, message = "아이디 중복"), @ApiResponse(code = 500, message = "서버 오류")})
     public ResponseEntity<?> checkId(@RequestParam @ApiParam(value = "회원 아이디", required = true) String id) {
         User user = userService.getByUserId(id);
         if (user == null) return ResponseEntity.status(200).body(BaseResponseBody.of(200, "사용 가능한 아이디입니다."));
@@ -92,15 +79,21 @@ public class UserController {
 
     @GetMapping("/checkemail")
     @ApiOperation(value = "이메일 중복 검사", notes = "회원가입 시 이메일 중복을 체크한다.")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "사용 가능"),
-            @ApiResponse(code = 401, message = "이메일 중복"),
-            @ApiResponse(code = 500, message = "서버 오류")
-    })
+    @ApiResponses({@ApiResponse(code = 200, message = "사용 가능"), @ApiResponse(code = 401, message = "이메일 중복"), @ApiResponse(code = 500, message = "서버 오류")})
     public ResponseEntity<?> checkEmail(@RequestParam @ApiParam(value = "회원 이메일", required = true) String email) {
         User user = userService.getByUserEmail(email);
         if (user == null) return ResponseEntity.status(200).body(BaseResponseBody.of(200, "사용 가능한 이메일입니다."));
         else return ResponseEntity.status(401).body(BaseResponseBody.of(401, "사용 중인 이메일입니다."));
+    }
+
+    @GetMapping("/findid")
+    @ApiOperation(value = "아이디 찾기", notes = "회원의 이름과 이메일에 해당하는 회원 아이디를 찾는다.")
+    @ApiResponses({@ApiResponse(code = 200, message = "아이디 찾기 성공"), @ApiResponse(code = 401, message = "아이디 찾기 실패"), @ApiResponse(code = 500, message = "서버 오류")})
+    public ResponseEntity<?> findId(@RequestParam @ApiParam(value = "회원 이름", required = true) String userName, @RequestParam @ApiParam(value = "회원 이메일", required = true) String userEmail) {
+        User user = userService.getByUserNameAndUserEmail(userName, userEmail);
+        if (user == null)
+            return ResponseEntity.status(401).body(UserFindIdGetRes.of(401, "고객님의 정보와 일치하는 아이디가 없습니다.", null));
+        else return ResponseEntity.status(200).body(UserFindIdGetRes.of(200, "아이디 찾기 성공", user.getUserId()));
     }
 
 }
