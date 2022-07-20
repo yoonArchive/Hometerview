@@ -1,8 +1,14 @@
 <template>
   <div id="headerFrame">
-    <img id="headerLogo" :src="imagesrc" alt=""/>
+    <img id="headerLogo" :src="imagesrc" alt="" style="padding-left:2%;" />
     <div id="headerMenu">
-      <router-link :to="item.path" v-for="(item,index) in state.headeritems" :key="index" :index="index.toString()" class="header-routerlink-decoration">
+      <router-link
+        :to="item.path"
+        v-for="(item, index) in state.headeritems"
+        :key="index"
+        :index="index.toString()"
+        class="header-routerlink-decoration"
+      >
         <div class="header-menu-item">{{ item.title }}</div>
       </router-link>
     </div>
@@ -22,39 +28,36 @@
 </template>
 
 <script>
-import { computed, reactive } from '@vue/runtime-core'
-import { useStore } from 'vuex'
+import { computed, reactive } from "@vue/runtime-core";
+import { useStore } from "vuex";
 export default {
-  name:'header',
-  data(){
-    return{
-      imagesrc:require('../../assets/images/ssafy-logo.png'),
-    }
+  name: "header",
+  data() {
+    return {
+      imagesrc: require("../../assets/images/ssafy-logo.png")
+    };
   },
-  setup(){
+  setup() {
     const store = useStore();
     const state = reactive({
-      headeritems: computed(()=>{
-        const headeritems = store.getters['root/getMenus'];
-        console.log(headeritems + '?');
+      headeritems: computed(() => {
+        const headeritems = store.getters["root/getMenus"];
+        console.log(headeritems + "?");
         let keys = Object.keys(headeritems);
-        console.log(keys + "!")
+        console.log(keys + "!");
         let headmenu = [];
-        for(var i =0;i<keys.length;i++){
+        for (var i = 0; i < keys.length; i++) {
           let menuobject = {};
-          menuobject.path = headeritems[keys[i]].path
-          menuobject.title = headeritems[keys[i]].name
+          menuobject.path = headeritems[keys[i]].path;
+          menuobject.title = headeritems[keys[i]].name;
           headmenu.push(menuobject);
         }
         return headmenu;
       })
     });
-    return { state }
+    return { state };
   }
-
-}
+};
 </script>
 
-<style>
-
-</style>
+<style></style>
