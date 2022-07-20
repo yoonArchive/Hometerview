@@ -49,9 +49,9 @@ public class UserController {
 		@ApiParam : Api에서 사용할 파라미터를 표시
 		 */
         //임의로 리턴된 User 인스턴스. 현재 코드는 회원 가입 성공 여부만 판단하기 때문에 굳이 Insert 된 유저 정보를 응답하지 않음.
-        try{
+        try {
             userService.createUser(registerInfo);
-        } catch(Exception e) {
+        } catch (Exception e) {
             return ResponseEntity.status(401).body(BaseResponseBody.of(401, "회원가입에 실패하셨습니다."));
         }
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "회원가입에 성공하셨습니다.")); // 응답 코드와 함께 응답 메시지 return
@@ -72,7 +72,7 @@ public class UserController {
          */
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         String userId = userDetails.getUsername();
-        User user = userService.getUserByUserId(userId);
+        User user = userService.getByUserId(userId);
 
         return ResponseEntity.status(200).body(UserRes.of(user));
     }
@@ -85,9 +85,22 @@ public class UserController {
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<?> checkId(@RequestParam @ApiParam(value = "회원 아이디", required = true) String id) {
-        User user = userService.getUserByUserId(id);
+        User user = userService.getByUserId(id);
         if (user == null) return ResponseEntity.status(200).body(BaseResponseBody.of(200, "사용 가능한 아이디입니다."));
         else return ResponseEntity.status(401).body(BaseResponseBody.of(401, "사용 중인 아이디입니다."));
+    }
+
+    @GetMapping("/checkemail")
+    @ApiOperation(value = "이메일 중복 검사", notes = "회원가입 시 이메일 중복을 체크한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "사용 가능"),
+            @ApiResponse(code = 401, message = "이메일 중복"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<?> checkEmail(@RequestParam @ApiParam(value = "회원 이메일", required = true) String email) {
+        User user = userService.getByUserEmail(email);
+        if (user == null) return ResponseEntity.status(200).body(BaseResponseBody.of(200, "사용 가능한 이메일입니다."));
+        else return ResponseEntity.status(401).body(BaseResponseBody.of(401, "사용 중인 이메일입니다."));
     }
 
 }

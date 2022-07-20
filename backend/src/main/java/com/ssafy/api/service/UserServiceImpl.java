@@ -38,9 +38,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserByUserId(String userId) {
+    public User getByUserId(String userId) {
         // 디비에 유저 정보 조회 (userId를 통한 조회).
-        return userRepositorySupport.findUserByUserId(userId).orElse(null);
+        return userRepository.findByUserId(userId).orElse(null);
+    }
+
+    @Override
+    public User getByUserEmail(String userEmail) {
+        return userRepository.findByUserEmail(userEmail).orElse(null);
     }
 
 }

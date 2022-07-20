@@ -7,6 +7,7 @@ import com.ssafy.db.entity.User;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -18,10 +19,12 @@ public class UserRepositorySupport {
     private JPAQueryFactory jpaQueryFactory;
     QUser qUser = QUser.user;
 
+    // 참고용 나중에 지우자
     public Optional<User> findUserByUserId(String userId) {
         User user = jpaQueryFactory.select(qUser).from(qUser)
                 .where(qUser.userId.eq(userId)).fetchOne();
         if (user == null) return Optional.empty();
         return Optional.ofNullable(user);
     }
+
 }
