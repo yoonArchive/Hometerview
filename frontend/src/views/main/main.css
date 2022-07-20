@@ -34,3 +34,26 @@
   margin-right: 0 !important;
   border-top: 1px solid #dcdfe6;
 }
+.main-image{
+  padding-left: 15%;
+  padding-top: 5%;
+  width: 70%;
+  height: 70%;
+}
+
+#mainBtn{
+  position: absolute;
+  left: 60%;
+  top: 120%;
+}
+
+#mainBackground{
+  background-color: #653FD3;
+
+}
+#mainDivLogo{
+  text-align: center;
+}
+#mainImageLogo{
+  margin-top: 10%;
+}
