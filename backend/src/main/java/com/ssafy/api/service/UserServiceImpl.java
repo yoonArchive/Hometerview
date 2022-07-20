@@ -11,6 +11,8 @@ import com.ssafy.db.entity.User;
 import com.ssafy.db.repository.UserRepository;
 import com.ssafy.db.repository.UserRepositorySupport;
 
+import java.util.Optional;
+
 /**
  * 유저 관련 비즈니스 로직 처리를 위한 서비스 구현 정의.
  */
@@ -46,6 +48,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getByUserEmail(String userEmail) {
         return userRepository.findByUserEmail(userEmail).orElse(null);
+    }
+
+    @Override
+    public String getByUserNameAndUserEmail(String userName, String userEmail) {
+        return userRepository.findByUserNameAndUserEmail(userName, userEmail).get().getUserId();
     }
 
 }
