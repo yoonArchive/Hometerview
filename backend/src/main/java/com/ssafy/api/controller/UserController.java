@@ -49,8 +49,11 @@ public class UserController {
 		@ApiParam : Api에서 사용할 파라미터를 표시
 		 */
         //임의로 리턴된 User 인스턴스. 현재 코드는 회원 가입 성공 여부만 판단하기 때문에 굳이 Insert 된 유저 정보를 응답하지 않음.
-
-        userService.createUser(registerInfo);
+        try{
+            userService.createUser(registerInfo);
+        } catch(Exception e) {
+            return ResponseEntity.status(401).body(BaseResponseBody.of(401, "회원가입에 실패하셨습니다."));
+        }
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "회원가입에 성공하셨습니다.")); // 응답 코드와 함께 응답 메시지 return
     }
 
