@@ -25,8 +25,8 @@ export default {
   },
   actions:{
     saveToken({ commit }, token) {
-      /* 
-      state.token 추가 
+      /*
+      state.token 추가
       localStorage에 token 추가
       */
       commit('SET_TOKEN', token)
@@ -34,7 +34,7 @@ export default {
     },
 
     removeToken({ commit }) {
-      /* 
+      /*
       state.token 삭제
       localStorage에 token 추가
       */
@@ -43,7 +43,7 @@ export default {
     },
 
     login({ commit, dispatch }, credentials) {
-      /* 
+      /*
       POST: 사용자 입력정보를 login URL로 보내기
         성공하면
           응답 토큰 저장
@@ -71,7 +71,7 @@ export default {
     },
 
     logout({ getters, dispatch }) {
-      /* 
+      /*
       POST: token을 logout URL로 보내기
         성공하면
           토큰 삭제
@@ -97,7 +97,7 @@ export default {
 
 
     signup({ commit, dispatch }, credentials) {
-      /* 
+      /*
       POST: 사용자 입력정보를 signup URL로 보내기
         성공하면
           응답 토큰 저장
