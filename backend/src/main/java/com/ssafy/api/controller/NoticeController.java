@@ -1,6 +1,7 @@
 package com.ssafy.api.controller;
 
 import com.ssafy.api.request.NoticeWritePostReq;
+import com.ssafy.api.request.UpdateNoticePutReq;
 import com.ssafy.api.response.NoticeListRes;
 import com.ssafy.api.response.NoticeRes;
 import com.ssafy.api.service.NoticeService;
@@ -39,9 +40,7 @@ public class NoticeController {
     @ApiOperation(value = "공지사항 목록 조회", notes = "공지사항 목록을 조회한다.")
     @ApiResponses({@ApiResponse(code = 200, message = "성공"), @ApiResponse(code = 401, message = "실패"), @ApiResponse(code = 500, message = "서버 오류")})
     public ResponseEntity<NoticeListRes> liseNotice() throws Exception {
-
         List<Notice> notices = noticeService.listNotice();
-
         if (notices == null) {
             return ResponseEntity.status(401).body(NoticeListRes.of(null, 401, "조회된 공지사항이 없습니다."));
         }
@@ -52,10 +51,8 @@ public class NoticeController {
     @GetMapping("{noticeno}")
     @ApiOperation(value = "공지사항 상세조회", notes = "공지사항 상세정보을 조회한다.")
     @ApiResponses({@ApiResponse(code = 200, message = "성공"), @ApiResponse(code = 401, message = "실패"), @ApiResponse(code = 500, message = "서버 오류")})
-    public ResponseEntity<NoticeRes> writeNotice(@PathVariable @ApiParam(value = "공지사항 번호", required = true) long noticeno) {
-
+    public ResponseEntity<NoticeRes> detailNotice(@PathVariable @ApiParam(value = "공지사항 번호", required = true) long noticeno) {
         Notice notice = noticeService.detailNotice(noticeno);
-
         if (notice == null) {
             return ResponseEntity.status(401).body(NoticeRes.of(null, 401, "공지사항 조회에 실패하였습니다."));
         }
@@ -63,7 +60,19 @@ public class NoticeController {
     }
 
     // 수정
+    @PutMapping("{noticeno}")
+    @ApiOperation(value = "공지사항 수정", notes = "공지사항을 수정한다.")
+    @ApiResponses({@ApiResponse(code = 200, message = "성공"), @ApiResponse(code = 401, message = "실패"), @ApiResponse(code = 500, message = "서버 오류")})
+    public ResponseEntity<NoticeRes> updateNotice(@PathVariable @ApiParam(value = "공지사항 번호", required = true) long noticeno, @RequestBody @ApiParam(value = "공지사항 내용", required = true) UpdateNoticePutReq updateNoticePutReq) {
 
+        Notice notice = noticeService.getByNoticeNo(noticeno);
+        try {
+            noticeService.updateNotice(notice, updateNoticePutReq);
+            return ResponseEntity.status(200).body(NoticeRes.of(notice, 200, "공지사항 수정을 성공하였습니다."));
+        } catch (Exception e){
+            return ResponseEntity.status(401).body(NoticeRes.of(notice, 401, "공지사항 수정을 실패하였습니다."));
+        }
+    }
 
     // 삭제
 
