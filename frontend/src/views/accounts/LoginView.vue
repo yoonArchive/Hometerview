@@ -6,12 +6,12 @@
   <form @submit.prevent="login(credentials)">
     <div>
       <label for="id">ID: </label>
-      <input v-model="credentials.id" type="text" id="id" required />
+      <input v-model="credentials.userId" type="text" id="id" required />
     </div>
 
     <div>
       <label for="password">password: </label>
-      <input v-model="credentials.password" type="password" id="password" required />
+      <input v-model="credentials.userPw" type="password" id="password" required />
     </div>
 
     <button>Login</button>
@@ -36,8 +36,8 @@
     data() {
       return {
         credentials: {
-          id: '',
-          password: '',
+          userId: '',
+          userPw: '',
         }
       }
     },
