@@ -10,7 +10,7 @@ import java.util.List;
 public interface NoticeService {
 
     Notice writeNotice(NoticeWritePostReq noticeWritePostReq);
-//    List<Notice> NoticeList();
+    List<Notice> listNotice();
 //    Notice detailNotice(long noticeNo);
 //    Notice updateNotice(Notice notice);
 //    void deleteNotice(long noticeNo);

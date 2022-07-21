@@ -31,10 +31,10 @@ public class NoticeServiceImpl implements NoticeService{
         return notice;
     }
 
-//    @Override
-//    public List<Notice> NoticeList(){
-//        return noticeRepository.findAll();
-//    }
+    @Override
+    public List<Notice> listNotice(){
+        return noticeRepository.findAll();
+    }
 //
 //    @Override
 //    public Notice detailNotice(long noticeNo){
