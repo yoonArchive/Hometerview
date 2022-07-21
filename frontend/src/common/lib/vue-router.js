@@ -1,9 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '@/views/home/home'
 import ConferencesDetail from '@/views/conferences/conference-detail'
+
 import History from '@/views/history/history'
 import Main from '@/views/main/main'
 
+import LoginView from '@/views/accounts/LoginView'
+import SignupView from '@/views/accounts/SignupView'
+import LogoutView from '@/views/accounts/LogoutView'
 
 
 const fullMenu = require('@/views/main/menu.json')
@@ -35,8 +39,19 @@ function makeRoutesFromMenu () {
   },{
     path: '/login',
     name: 'login',
-    component: () => import("@/views/account/login.vue")
-  })
+    component: LoginView
+    // component: () => import("@/views/account/login.vue")
+  },{
+    path: '/signup',
+    name: 'signup',
+    component: SignupView
+  },{
+    path: '/logout',
+    name: 'logout',
+    component: LogoutView
+  }
+  
+  )
   return routes
 }
 
