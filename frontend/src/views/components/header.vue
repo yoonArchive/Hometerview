@@ -1,6 +1,8 @@
 <template>
   <div id="headerFrame">
-    <img id="headerLogo" :src="imagesrc" alt="" style="padding-left:2%;" />
+    <router-link to="/home" class="header-routerlink-decoration">
+      <img id="headerLogo" :src="imagesrc" alt="" style="padding-left:2%;" />
+    </router-link>
     <div id="headerMenu">
       <router-link
         :to="item.path"
@@ -12,17 +14,22 @@
         <div class="header-menu-item">{{ item.title }}</div>
       </router-link>
     </div>
+
     <div id="headerBtnGroup">
-      <div class="header-btn">
-        <div class="header-btn-text">
-          login
+      <router-link to="/home/login" class="header-routerlink-decoration">
+        <div class="header-btn">
+          <div class="header-btn-text">
+            login
+          </div>
         </div>
-      </div>
-      <div class="header-btn" style="background-color:#653FD3;">
-        <div class="header-btn-text" style="color:white">
-          sign up
+      </router-link>
+      <router-link to="/home/signup" class="header-routerlink-decoration">
+        <div class="header-btn" style="background-color:#653FD3;">
+          <div class="header-btn-text" style="color:white">
+            sign up
+          </div>
         </div>
-      </div>
+      </router-link>
     </div>
   </div>
 </template>

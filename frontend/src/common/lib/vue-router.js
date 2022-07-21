@@ -9,6 +9,7 @@ import LoginView from '@/views/accounts/LoginView'
 import SignupView from '@/views/accounts/SignupView'
 import LogoutView from '@/views/accounts/LogoutView'
 
+import StudyRecruitment from '@/views/home/components/study-recruitment'
 
 const fullMenu = require('@/views/main/menu.json')
 function makeRoutesFromMenu () {
@@ -31,26 +32,32 @@ function makeRoutesFromMenu () {
   },{
     path: '/home',
     name: 'home',
-    component: Home
+    component: Home,
+    redirect:'/home/studyrecruitment',
+    children : [{
+      path:'studyrecruitment',
+      name:'studyrecruitment',
+      component : StudyRecruitment,
+    },{
+      path: 'login',
+      name: 'login',
+      component: LoginView
+      // component: () => import("@/views/account/login.vue")
+    },{
+      path: 'signup',
+      name: 'signup',
+      component: SignupView
+    },{
+      path: 'logout',
+      name: 'logout',
+      component: LogoutView
+    }]
   },{
     path: '/',
     name: 'main',
     component:Main
-  },{
-    path: '/login',
-    name: 'login',
-    component: LoginView
-    // component: () => import("@/views/account/login.vue")
-  },{
-    path: '/signup',
-    name: 'signup',
-    component: SignupView
-  },{
-    path: '/logout',
-    name: 'logout',
-    component: LogoutView
   }
-  
+
   )
   return routes
 }
