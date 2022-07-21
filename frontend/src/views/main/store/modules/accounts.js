@@ -66,6 +66,7 @@ export default {
         .catch(err => {
           console.error(err.response.data)
           commit('SET_AUTH_ERROR', err.response.data)
+          alert('로그인 실패')
         })
     },
 
@@ -119,6 +120,7 @@ export default {
         .catch(err => {
           console.error(err.response.data)
           commit('SET_AUTH_ERROR', err.response.data)
+          alert('회원가입 실패')
         })
     },
 
@@ -158,7 +160,7 @@ export default {
         .then(res=>{
           // 어떤 형태로 오는지 확인 후 작성
           const userId = res.data
-        
+          console.log(userId)
 
         })
         .catch(err=>{
@@ -170,28 +172,3 @@ export default {
   }
 
 }
-
-// export default {
-//   state: ()=>({
-//     profile: "",
-//     loginUser: null,
-//     isLogin: false,
-//     isLoginError: false,
-//     pwallowedchar: ["!", "@", "#", "$", "%", "^", "&", "*"],
-//   }),
-//   mutations:{
-//     LOGIN_USER(state,user){
-//       state.loginUser = user;
-//     }
-//   },
-//   getters:{
-//     getloginuser(state){
-//       return state.loginuser;
-//     }
-//   },
-//   actions:{
-//     loginUser({commit},user){
-//       console.log("로그인 옴?");
-//     }
-//   }
-// }

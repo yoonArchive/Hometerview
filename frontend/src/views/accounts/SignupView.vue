@@ -5,6 +5,15 @@
     <!-- <account-error-list v-if="authError"></account-error-list> -->
 
     <form @submit.prevent="signup(credentials)">
+
+      <div>
+        <label for="email">e-mail: </label>
+        <input  v-model="credentials.email" type="text" id="email" required/>
+      </div>
+      <div>
+        <label for="userName">User Name: </label>
+        <input  v-model="credentials.userName" type="text" id="userName" required/>
+      </div>
       <div>
         <label for="id">ID: </label>
         <input  v-model="credentials.id" type="text" id="id" required/>
@@ -38,6 +47,8 @@
     data() {
       return {
         credentials: {
+          userEmail:'',
+          userName:'',
           id: '',
           password1: '',
           password2: '',
@@ -45,7 +56,8 @@
       }
     },
     computed: {
-      ...mapGetters(['authError'])
+      ...mapGetters(['authError']),
+
     },
     methods: {
       ...mapActions(['signup'])
