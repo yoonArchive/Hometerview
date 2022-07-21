@@ -67,9 +67,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User getByUserNameAndUserEmailAndUserId(String userName, String userEmail, String userId) {
+        return userRepository.findByUserNameAndUserEmailAndUserId(userName, userEmail, userId).orElse(null);
+    }
+
+    @Override
     public void deleteUser(String userId) {
         userRepository.deleteByUserId(userId);
     }
-
 
 }

@@ -1,6 +1,7 @@
 package com.ssafy.api.controller;
 
 import com.ssafy.api.response.UserFindIdGetRes;
+import com.ssafy.api.response.UserFindPwGetRes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -113,9 +114,28 @@ public class UserController {
     @DeleteMapping()
     @ApiOperation(value = "회원 탈퇴", notes = "회원 탈퇴")
     @ApiResponses({@ApiResponse(code = 200, message = "회원 탈퇴 성공"), @ApiResponse(code = 401, message = "회원 탈퇴 실패"), @ApiResponse(code = 500, message = "서버 오류")})
-    public ResponseEntity<?> deleteUser(@ApiIgnore Authentication authentication) throws Exception{
+    public ResponseEntity<?> deleteUser(@ApiIgnore Authentication authentication) throws Exception {
         userService.deleteUser(((UserDetails) authentication.getDetails()).getUsername());
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "회원탈퇴가 완료되었습니다."));
+    }
+
+    @GetMapping("/findpw")
+    @ApiOperation(value = "비밀번호 찾기", notes = "회원의 이름과 이메일 그리고 아이디에 해당하는 회원 비밀번호를 찾는다.")
+    @ApiResponses({@ApiResponse(code = 200, message = "비밀번호 찾기 성공"), @ApiResponse(code = 401, message = "비밀번호 찾기 실패"), @ApiResponse(code = 500, message = "서버 오류")})
+    public ResponseEntity<?> findPw(@RequestParam @ApiParam(value = "회원 이름", required = true) String userName,
+                                    @RequestParam @ApiParam(value = "회원 이메일", required = true) String userEmail,
+                                    @RequestParam @ApiParam(value = "회원 아이디", required = true) String userId) throws Exception {
+        User user = userService.getByUserNameAndUserEmailAndUserId(userName, userEmail, userId);
+
+        if (user == null)
+            return ResponseEntity.status(401).body(UserFindPwGetRes.of(401, "입력한 정보를 다시 확인해주세요.", null));
+        else {
+            // 랜덤 임시 비밀번호 생성
+
+            // 비밀번호 값 변경
+
+            return ResponseEntity.status(200).body(UserFindPwGetRes.of(200, "비밀번호 찾기 성공", passwordEncoder.encode(user.getUserPw())));
+        }
     }
 
 }
