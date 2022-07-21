@@ -3,6 +3,9 @@ import Home from '@/views/home/home'
 import ConferencesDetail from '@/views/conferences/conference-detail'
 import History from '@/views/history/history'
 import Main from '@/views/main/main'
+
+
+
 const fullMenu = require('@/views/main/menu.json')
 function makeRoutesFromMenu () {
   let routes = Object.keys(fullMenu).map((key) => {
@@ -29,6 +32,10 @@ function makeRoutesFromMenu () {
     path: '/',
     name: 'main',
     component:Main
+  },{
+    path: '/login',
+    name: 'login',
+    component: () => import("@/views/account/login.vue")
   })
   return routes
 }
