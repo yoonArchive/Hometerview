@@ -15,6 +15,6 @@ public interface UserService {
 
     User getByUserNameAndUserEmail(String userName, String userEmail);
 
-    Boolean validateUser(Long userNo, String userPw);
+    User getByUserNo(Long userNo);
 
 }
