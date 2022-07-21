@@ -2,6 +2,7 @@ package com.ssafy.api.controller;
 
 import com.ssafy.api.dto.Mail;
 import com.ssafy.api.request.UpdatePwPutReq;
+import com.ssafy.api.request.UpdateUserPutReq;
 import com.ssafy.api.response.UserFindIdGetRes;
 import com.ssafy.api.response.UserFindPwGetRes;
 import com.ssafy.api.service.MailService;
@@ -136,13 +137,10 @@ public class UserController {
     @PostMapping("/findpw")
     @ApiOperation(value = "임시 비밀번호 전송", notes = "회원 정보를 입력하고 일치하면 임시 비밀번호를 메일로 전송한다.")
     @ApiResponses({@ApiResponse(code = 200, message = "임시 비밀번호 발급 성공"), @ApiResponse(code = 401, message = "임시 비밀번호 발급 실패"), @ApiResponse(code = 500, message = "서버 오류")})
-    public ResponseEntity<?> findPw(@RequestParam @ApiParam(value = "회원 이름", required = true) String userName,
-                                    @RequestParam @ApiParam(value = "회원 이메일", required = true) String userEmail,
-                                    @RequestParam @ApiParam(value = "회원 아이디", required = true) String userId) throws Exception {
+    public ResponseEntity<?> findPw(@RequestParam @ApiParam(value = "회원 이름", required = true) String userName, @RequestParam @ApiParam(value = "회원 이메일", required = true) String userEmail, @RequestParam @ApiParam(value = "회원 아이디", required = true) String userId) throws Exception {
         User user = userService.getByUserNameAndUserEmailAndUserId(userName, userEmail, userId);
 
-        if (user == null)
-            return ResponseEntity.status(401).body(UserFindPwGetRes.of(401, "입력한 정보를 다시 확인해주세요.", null));
+        if (user == null) return ResponseEntity.status(401).body(UserFindPwGetRes.of(401, "입력한 정보를 다시 확인해주세요.", null));
         else {
 
             // 랜덤 임시 비밀번호 생성
@@ -154,6 +152,17 @@ public class UserController {
             mailService.sendMail(mail);
             return ResponseEntity.status(200).body(UserFindPwGetRes.of(200, "이메일 발송 성공", passwordEncoder.encode(user.getUserPw())));
         }
+    }
+
+    @PutMapping()
+    @ApiOperation(value = "회원 정보 수정", notes = "회원의 프로필 이미지, 이름 혹은 이메일을 수정한다.")
+    @ApiResponses({@ApiResponse(code = 200, message = "회원 정보 수정 성공"), @ApiResponse(code = 401, message = "회원 정보 수정 실패"), @ApiResponse(code = 500, message = "서버 오류")})
+    public ResponseEntity<?> updateUser(@ApiIgnore Authentication authentication, @RequestBody @ApiParam(value = "변경된 회원 정보", required = true) UpdateUserPutReq updateUserPutReq) throws Exception {
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        String userId = userDetails.getUsername();
+        User user = userService.getByUserId(userId);
+        userService.updateUser(user, updateUserPutReq);
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "회원정보가 수정되었습니다."));
     }
 
     @DeleteMapping()
