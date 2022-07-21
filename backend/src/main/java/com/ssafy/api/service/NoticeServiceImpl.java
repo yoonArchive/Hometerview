@@ -58,9 +58,9 @@ public class NoticeServiceImpl implements NoticeService{
         noticeRepository.save(notice);
     }
 
-//    @Override
-//    public void deleteNotice(long noticeNo){
-//
-//    }
+    @Override
+    public void deleteNotice(long noticeNo){
+        noticeRepository.deleteByNoticeNo(noticeNo);
+    }
 
 }

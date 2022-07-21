@@ -25,7 +25,7 @@ public class NoticeController {
     // 작성
     @PostMapping()
     @ApiOperation(value = "공지사항 작성", notes = "공지사항 제목과 내용을 작성한다.")
-    @ApiResponses({@ApiResponse(code = 200, message = "성공"), @ApiResponse(code = 401, message = "실패"), @ApiResponse(code = 500, message = "서버 오류")})
+    @ApiResponses({@ApiResponse(code = 200, message = "공지사항 작성 성공"), @ApiResponse(code = 401, message = "공지사항 작성 실패"), @ApiResponse(code = 500, message = "서버 오류")})
     public ResponseEntity<NoticeRes> writeNotice(@RequestBody @ApiParam(value = "공지사항 내용", required = true) NoticeWritePostReq noticeWritePostReq) throws Exception {
         try {
             Notice notice = noticeService.writeNotice(noticeWritePostReq);
@@ -38,7 +38,7 @@ public class NoticeController {
     // 목록조회
     @GetMapping()
     @ApiOperation(value = "공지사항 목록 조회", notes = "공지사항 목록을 조회한다.")
-    @ApiResponses({@ApiResponse(code = 200, message = "성공"), @ApiResponse(code = 401, message = "실패"), @ApiResponse(code = 500, message = "서버 오류")})
+    @ApiResponses({@ApiResponse(code = 200, message = "공지사항 목록을 조회 성공"), @ApiResponse(code = 401, message = "공지사항 목록을 조회 실패"), @ApiResponse(code = 500, message = "서버 오류")})
     public ResponseEntity<NoticeListRes> liseNotice() throws Exception {
         List<Notice> notices = noticeService.listNotice();
         if (notices == null) {
@@ -50,7 +50,7 @@ public class NoticeController {
     // 상세조회
     @GetMapping("{noticeno}")
     @ApiOperation(value = "공지사항 상세조회", notes = "공지사항 상세정보을 조회한다.")
-    @ApiResponses({@ApiResponse(code = 200, message = "성공"), @ApiResponse(code = 401, message = "실패"), @ApiResponse(code = 500, message = "서버 오류")})
+    @ApiResponses({@ApiResponse(code = 200, message = "공지사항 상세정보을 조회 성공"), @ApiResponse(code = 401, message = "공지사항 상세정보을 조회 실패"), @ApiResponse(code = 500, message = "서버 오류")})
     public ResponseEntity<NoticeRes> detailNotice(@PathVariable @ApiParam(value = "공지사항 번호", required = true) long noticeno) {
         Notice notice = noticeService.detailNotice(noticeno);
         if (notice == null) {
@@ -62,7 +62,7 @@ public class NoticeController {
     // 수정
     @PutMapping("{noticeno}")
     @ApiOperation(value = "공지사항 수정", notes = "공지사항을 수정한다.")
-    @ApiResponses({@ApiResponse(code = 200, message = "성공"), @ApiResponse(code = 401, message = "실패"), @ApiResponse(code = 500, message = "서버 오류")})
+    @ApiResponses({@ApiResponse(code = 200, message = "공지사항 수정 성공"), @ApiResponse(code = 401, message = "공지사항 수정 실패"), @ApiResponse(code = 500, message = "서버 오류")})
     public ResponseEntity<NoticeRes> updateNotice(@PathVariable @ApiParam(value = "공지사항 번호", required = true) long noticeno, @RequestBody @ApiParam(value = "공지사항 내용", required = true) UpdateNoticePutReq updateNoticePutReq) {
 
         Notice notice = noticeService.getByNoticeNo(noticeno);
@@ -75,5 +75,12 @@ public class NoticeController {
     }
 
     // 삭제
+    @DeleteMapping("{noticeno}")
+    @ApiOperation(value = "공지사항 삭제", notes = "공지사항 삭제")
+    @ApiResponses({@ApiResponse(code = 200, message = "공지사항 삭제 성공"), @ApiResponse(code = 401, message = "공지사항 삭제 실패"), @ApiResponse(code = 500, message = "서버 오류")})
+    public ResponseEntity<?> deleteNotice(@PathVariable @ApiParam(value = "공지사항 번호", required = true) long noticeno) throws Exception {
+        noticeService.deleteNotice(noticeno);
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "공지사항 삭제가 완료되었습니다."));
+    }
 
 }
