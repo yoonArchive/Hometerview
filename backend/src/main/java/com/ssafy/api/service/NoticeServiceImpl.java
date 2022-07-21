@@ -35,11 +35,11 @@ public class NoticeServiceImpl implements NoticeService{
     public List<Notice> listNotice(){
         return noticeRepository.findAll();
     }
-//
-//    @Override
-//    public Notice detailNotice(long noticeNo){
-//
-//    }
+
+    @Override
+    public Notice detailNotice(long noticeNo){
+        return noticeRepository.getOne(noticeNo);
+    }
 //
 //    @Override
 //    public Notice updateNotice(Notice notice){

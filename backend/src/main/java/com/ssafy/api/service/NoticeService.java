@@ -11,7 +11,7 @@ public interface NoticeService {
 
     Notice writeNotice(NoticeWritePostReq noticeWritePostReq);
     List<Notice> listNotice();
-//    Notice detailNotice(long noticeNo);
+    Notice detailNotice(long noticeNo);
 //    Notice updateNotice(Notice notice);
 //    void deleteNotice(long noticeNo);
 }
