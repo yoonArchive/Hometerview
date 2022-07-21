@@ -103,9 +103,9 @@ public class UserController {
     @GetMapping("/pw")
     @ApiOperation(value = "비밀번호 인증", notes = "비밀번호 인증을 위해 로그인한 회원의 비밀번호와 일치하는 비밀번호를 입력한다.")
     @ApiResponses({@ApiResponse(code = 200, message = "비밀번호 인증 성공"), @ApiResponse(code = 401, message = "비밀번호 인증 실패"), @ApiResponse(code = 500, message = "서버 오류")})
-    public ResponseEntity<?> certifyPw(@RequestParam Long userNo, @RequestParam String userPw) throws Exception {
-        User user = userService.getByUserNo(userNo);
-        if (passwordEncoder.matches(userPw, user.getUserPw()))
+    public ResponseEntity<?> certifyPw(@ApiIgnore Authentication authentication, @RequestParam String userPw) throws Exception {
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        if (passwordEncoder.matches(userPw, userDetails.getPassword()))
             return ResponseEntity.status(200).body(BaseResponseBody.of(200, "비밀번호 인증 성공"));
         else return ResponseEntity.status(401).body(BaseResponseBody.of(401, "비밀번호를 다시 확인해주세요."));
     }
