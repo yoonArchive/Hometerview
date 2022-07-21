@@ -1,7 +1,6 @@
 import axios from 'axios'
 import api_url from '@/api/api_url'
 
-
 export default {
 
   state: () => ({
