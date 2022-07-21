@@ -21,4 +21,7 @@ public interface UserService {
 
     User getByUserNameAndUserEmailAndUserId(String userName, String userEmail, String userId);
 
+    String getTmpPassword();
+
+    void updatePassword(User user, String tmpPw);
 }

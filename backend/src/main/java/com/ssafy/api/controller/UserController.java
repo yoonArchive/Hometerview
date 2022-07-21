@@ -1,7 +1,9 @@
 package com.ssafy.api.controller;
 
+import com.ssafy.api.dto.Mail;
 import com.ssafy.api.response.UserFindIdGetRes;
 import com.ssafy.api.response.UserFindPwGetRes;
+import com.ssafy.api.service.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -32,6 +34,9 @@ public class UserController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    MailService mailService;
 
     @Autowired
     PasswordEncoder passwordEncoder;
@@ -90,16 +95,6 @@ public class UserController {
         else return ResponseEntity.status(401).body(BaseResponseBody.of(401, "사용 중인 이메일입니다."));
     }
 
-    @GetMapping("/findid")
-    @ApiOperation(value = "아이디 찾기", notes = "회원의 이름과 이메일에 해당하는 회원 아이디를 찾는다.")
-    @ApiResponses({@ApiResponse(code = 200, message = "아이디 찾기 성공"), @ApiResponse(code = 401, message = "아이디 찾기 실패"), @ApiResponse(code = 500, message = "서버 오류")})
-    public ResponseEntity<?> findId(@RequestParam @ApiParam(value = "회원 이름", required = true) String userName, @RequestParam @ApiParam(value = "회원 이메일", required = true) String userEmail) throws Exception {
-        User user = userService.getByUserNameAndUserEmail(userName, userEmail);
-        if (user == null)
-            return ResponseEntity.status(401).body(UserFindIdGetRes.of(401, "고객님의 정보와 일치하는 아이디가 없습니다.", null));
-        else return ResponseEntity.status(200).body(UserFindIdGetRes.of(200, "아이디 찾기 성공", user.getUserId()));
-    }
-
     @GetMapping("/pw")
     @ApiOperation(value = "비밀번호 인증", notes = "비밀번호 인증을 위해 로그인한 회원의 비밀번호와 일치하는 비밀번호를 입력한다.")
     @ApiResponses({@ApiResponse(code = 200, message = "비밀번호 인증 성공"), @ApiResponse(code = 401, message = "비밀번호 인증 실패"), @ApiResponse(code = 500, message = "서버 오류")})
@@ -110,17 +105,19 @@ public class UserController {
         else return ResponseEntity.status(401).body(BaseResponseBody.of(401, "비밀번호를 다시 확인해주세요."));
     }
 
-    @DeleteMapping()
-    @ApiOperation(value = "회원 탈퇴", notes = "회원 탈퇴")
-    @ApiResponses({@ApiResponse(code = 200, message = "회원 탈퇴 성공"), @ApiResponse(code = 401, message = "회원 탈퇴 실패"), @ApiResponse(code = 500, message = "서버 오류")})
-    public ResponseEntity<?> deleteUser(@ApiIgnore Authentication authentication) throws Exception {
-        userService.deleteUser(((UserDetails) authentication.getDetails()).getUsername());
-        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "회원탈퇴가 완료되었습니다."));
+    @GetMapping("/findid")
+    @ApiOperation(value = "아이디 찾기", notes = "회원의 이름과 이메일에 해당하는 회원 아이디를 찾는다.")
+    @ApiResponses({@ApiResponse(code = 200, message = "아이디 찾기 성공"), @ApiResponse(code = 401, message = "아이디 찾기 실패"), @ApiResponse(code = 500, message = "서버 오류")})
+    public ResponseEntity<?> findId(@RequestParam @ApiParam(value = "회원 이름", required = true) String userName, @RequestParam @ApiParam(value = "회원 이메일", required = true) String userEmail) throws Exception {
+        User user = userService.getByUserNameAndUserEmail(userName, userEmail);
+        if (user == null)
+            return ResponseEntity.status(401).body(UserFindIdGetRes.of(401, "고객님의 정보와 일치하는 아이디가 없습니다.", null));
+        else return ResponseEntity.status(200).body(UserFindIdGetRes.of(200, "아이디 찾기 성공", user.getUserId()));
     }
 
-    @GetMapping("/findpw")
-    @ApiOperation(value = "비밀번호 찾기", notes = "회원의 이름과 이메일 그리고 아이디에 해당하는 회원 비밀번호를 찾는다.")
-    @ApiResponses({@ApiResponse(code = 200, message = "비밀번호 찾기 성공"), @ApiResponse(code = 401, message = "비밀번호 찾기 실패"), @ApiResponse(code = 500, message = "서버 오류")})
+    @PostMapping("/findpw")
+    @ApiOperation(value = "임시 비밀번호 전송", notes = "회원 정보를 입력하고 일치하면 임시 비밀번호를 메일로 전송한다.")
+    @ApiResponses({@ApiResponse(code = 200, message = "임시 비밀번호 발급 성공"), @ApiResponse(code = 401, message = "임시 비밀번호 발급 실패"), @ApiResponse(code = 500, message = "서버 오류")})
     public ResponseEntity<?> findPw(@RequestParam @ApiParam(value = "회원 이름", required = true) String userName,
                                     @RequestParam @ApiParam(value = "회원 이메일", required = true) String userEmail,
                                     @RequestParam @ApiParam(value = "회원 아이디", required = true) String userId) throws Exception {
@@ -129,12 +126,24 @@ public class UserController {
         if (user == null)
             return ResponseEntity.status(401).body(UserFindPwGetRes.of(401, "입력한 정보를 다시 확인해주세요.", null));
         else {
+
             // 랜덤 임시 비밀번호 생성
-
+            String tmpPw = userService.getTmpPassword();
             // 비밀번호 값 변경
-
-            return ResponseEntity.status(200).body(UserFindPwGetRes.of(200, "비밀번호 찾기 성공", passwordEncoder.encode(user.getUserPw())));
+            userService.updatePassword(user, tmpPw);
+            // 메일 생성 & 전송
+            Mail mail = mailService.createMail(tmpPw, user.getUserEmail());
+            mailService.sendMail(mail);
+            return ResponseEntity.status(200).body(UserFindPwGetRes.of(200, "이메일 발송 성공", passwordEncoder.encode(user.getUserPw())));
         }
+    }
+
+    @DeleteMapping()
+    @ApiOperation(value = "회원 탈퇴", notes = "회원 탈퇴")
+    @ApiResponses({@ApiResponse(code = 200, message = "회원 탈퇴 성공"), @ApiResponse(code = 401, message = "회원 탈퇴 실패"), @ApiResponse(code = 500, message = "서버 오류")})
+    public ResponseEntity<?> deleteUser(@ApiIgnore Authentication authentication) throws Exception {
+        userService.deleteUser(((UserDetails) authentication.getDetails()).getUsername());
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "회원탈퇴가 완료되었습니다."));
     }
 
 }
