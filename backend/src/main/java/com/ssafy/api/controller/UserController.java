@@ -1,6 +1,7 @@
 package com.ssafy.api.controller;
 
 import com.ssafy.api.dto.Mail;
+import com.ssafy.api.request.UpdatePwPutReq;
 import com.ssafy.api.response.UserFindIdGetRes;
 import com.ssafy.api.response.UserFindPwGetRes;
 import com.ssafy.api.service.MailService;
@@ -103,6 +104,23 @@ public class UserController {
         if (passwordEncoder.matches(userPw, userDetails.getPassword()))
             return ResponseEntity.status(200).body(BaseResponseBody.of(200, "비밀번호 인증 성공"));
         else return ResponseEntity.status(401).body(BaseResponseBody.of(401, "비밀번호를 다시 확인해주세요."));
+    }
+
+    @PutMapping("/pw")
+    @ApiOperation(value = "비밀번호 변경", notes = "회원의 비밀번호를 변경한다.")
+    @ApiResponses({@ApiResponse(code = 200, message = "비밀번호 변경 성공"), @ApiResponse(code = 401, message = "비밀번호 변경 실패"), @ApiResponse(code = 500, message = "서버 오류")})
+    public ResponseEntity<?> updatePw(Authentication authentication, @RequestBody @ApiParam(value = "비밀번호 변경 정보", required = true) UpdatePwPutReq updatePwPutReq) {
+        String userPw = updatePwPutReq.getUserPw();
+        String newPw = updatePwPutReq.getNewPw();
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        String userId = userDetails.getUsername();
+        User user = userService.getByUserId(userId);
+        if (!passwordEncoder.matches(userPw, user.getUserPw()))
+            return ResponseEntity.status(401).body(BaseResponseBody.of(401, "비밀번호를 다시 확인해주세요."));
+        else {
+            userService.updatePassword(user, newPw);
+            return ResponseEntity.status(200).body(BaseResponseBody.of(200, "비밀번호가 변경되었습니다."));
+        }
     }
 
     @GetMapping("/findid")
