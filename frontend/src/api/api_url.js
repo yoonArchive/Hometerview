@@ -1,7 +1,4 @@
 const HOST = '/api/v1/'
-
-
-
 const USERS = 'users/'
 const AUTH = 'auth/'
 

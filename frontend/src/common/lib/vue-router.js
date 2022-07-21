@@ -45,12 +45,10 @@ function makeRoutesFromMenu () {
     path: '/signup',
     name: 'signup',
     component: SignupView
-    // component: () => import("@/views/account/login.vue")
   },{
     path: '/logout',
     name: 'logout',
     component: LogoutView
-    // component: () => import("@/views/account/login.vue")
   }
   
   )

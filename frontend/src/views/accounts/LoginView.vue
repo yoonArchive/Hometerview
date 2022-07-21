@@ -5,8 +5,8 @@
 
   <form @submit.prevent="login(credentials)">
     <div>
-      <label for="username">username: </label>
-      <input v-model="credentials.username" type="text" id="username" required />
+      <label for="id">ID: </label>
+      <input v-model="credentials.id" type="text" id="id" required />
     </div>
 
     <div>
@@ -30,12 +30,13 @@
   export default {
     name: 'LoginView',
     components: {
+      // AccountErrorList
     },
 
     data() {
       return {
         credentials: {
-          username: '',
+          id: '',
           password: '',
         }
       }
@@ -44,6 +45,7 @@
       ...mapGetters(['authError'])
       },
     methods: {
+
       ...mapActions(['login'])
     },
   }

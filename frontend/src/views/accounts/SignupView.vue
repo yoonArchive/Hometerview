@@ -6,8 +6,8 @@
 
     <form @submit.prevent="signup(credentials)">
       <div>
-        <label for="username">Username: </label>
-        <input  v-model="credentials.username" type="text" id="username" required/>
+        <label for="id">ID: </label>
+        <input  v-model="credentials.id" type="text" id="id" required/>
       </div>
       <div>
         <label for="password1">Password: </label>
@@ -38,7 +38,7 @@
     data() {
       return {
         credentials: {
-          username: '',
+          id: '',
           password1: '',
           password2: '',
         }

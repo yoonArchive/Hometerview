@@ -1,8 +1,9 @@
 <template>
   <div class="account-error-list">
-    <p v-for="(errors, field) in authError" :key="field">
-      {{ errors }}
-    </p>
+    <p>{{ authError }}</p>
+    <!-- <p v-for="(errors, field) in authError" :key="field">
+      {{ errors }} -->
+    <!-- </p> -->
 
   </div>
 </template>

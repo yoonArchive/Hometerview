@@ -1,6 +1,7 @@
 import axios from 'axios'
 import api_url from '@/api/api_url'
 
+
 export default {
 
   state: () => ({
@@ -147,6 +148,25 @@ export default {
           })
       }
     },
+
+    findUserid({},credentials){
+      axios({
+        url:api_url.accounts.findUserid(),
+        method: 'get',
+        data: credentials
+      })
+        .then(res=>{
+          // 어떤 형태로 오는지 확인 후 작성
+          const userId = res.data
+        
+
+        })
+        .catch(err=>{
+          console.error(err.response.data)
+          commit('SET_AUTH_ERROR',err.response.data)
+        })
+
+    }
   }
 
 }
