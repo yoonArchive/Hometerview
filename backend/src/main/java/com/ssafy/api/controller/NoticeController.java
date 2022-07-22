@@ -41,48 +41,42 @@ public class NoticeController {
     @ApiResponses({@ApiResponse(code = 200, message = "공지사항 목록을 조회 성공"), @ApiResponse(code = 401, message = "공지사항 목록을 조회 실패"), @ApiResponse(code = 500, message = "서버 오류")})
     public ResponseEntity<NoticeListRes> liseNotice() throws Exception {
         List<Notice> notices = noticeService.listNotice();
-        if (notices == null) {
-            return ResponseEntity.status(401).body(NoticeListRes.of(null, 401, "조회된 공지사항이 없습니다."));
-        }
         return ResponseEntity.status(200).body(NoticeListRes.of(notices, 200, "공지사항 목록 조회를 성공하였습니다."));
     }
 
     // 상세조회
-    @GetMapping("{noticeno}")
+    @GetMapping("{noticeNo}")
     @ApiOperation(value = "공지사항 상세조회", notes = "공지사항 상세정보을 조회한다.")
     @ApiResponses({@ApiResponse(code = 200, message = "공지사항 상세정보을 조회 성공"), @ApiResponse(code = 401, message = "공지사항 상세정보을 조회 실패"), @ApiResponse(code = 500, message = "서버 오류")})
-    public ResponseEntity<NoticeRes> detailNotice(@PathVariable @ApiParam(value = "공지사항 번호", required = true) long noticeno) {
-        Notice notice = noticeService.detailNotice(noticeno);
-        if (notice == null) {
-            return ResponseEntity.status(401).body(NoticeRes.of(null, 401, "공지사항 조회에 실패하였습니다."));
-        }
+    public ResponseEntity<?> detailNotice(@PathVariable @ApiParam(value = "공지사항 번호", required = true) long noticeNo) {
+        Notice notice = noticeService.getByNoticeNo(noticeNo);
+        if (notice == null) return ResponseEntity.status(401).body(BaseResponseBody.of(402, "해당하는 공지사항이 없습니다."));
         return ResponseEntity.status(200).body(NoticeRes.of(notice, 200, "공지사항 상세조회를 성공하였습니다."));
     }
 
     // 수정
-    @PutMapping("{noticeno}")
+    @PutMapping("{noticeNo}")
     @ApiOperation(value = "공지사항 수정", notes = "공지사항을 수정한다.")
-    @ApiResponses({@ApiResponse(code = 200, message = "공지사항 수정 성공"), @ApiResponse(code = 401, message = "공지사항 수정 실패"), @ApiResponse(code = 500, message = "서버 오류")})
-    public ResponseEntity<NoticeRes> updateNotice(@PathVariable @ApiParam(value = "공지사항 번호", required = true) long noticeno, @RequestBody @ApiParam(value = "공지사항 내용", required = true) UpdateNoticePutReq updateNoticePutReq) {
-
-        Notice notice = noticeService.getByNoticeNo(noticeno);
+    @ApiResponses({@ApiResponse(code = 200, message = "공지사항 수정 성공"), @ApiResponse(code = 401, message = "공지사항 수정 실패"), @ApiResponse(code = 402, message = "해당 공지 없음"), @ApiResponse(code = 500, message = "서버 오류")})
+    public ResponseEntity<?> updateNotice(@PathVariable @ApiParam(value = "공지사항 번호", required = true) long noticeNo, @RequestBody @ApiParam(value = "공지사항 내용", required = true) UpdateNoticePutReq updateNoticePutReq) {
+        Notice notice = noticeService.getByNoticeNo(noticeNo);
+        if (notice == null) return ResponseEntity.status(401).body(BaseResponseBody.of(402, "해당하는 공지사항이 없습니다."));
         try {
             noticeService.updateNotice(notice, updateNoticePutReq);
-            return ResponseEntity.status(200).body(NoticeRes.of(notice, 200, "공지사항 수정을 성공하였습니다."));
+            return ResponseEntity.status(200).body(NoticeRes.of(notice, 200, "공지사항이 수정되었습니다."));
         } catch (Exception e) {
-            return ResponseEntity.status(401).body(NoticeRes.of(notice, 401, "공지사항 수정을 실패하였습니다."));
+            return ResponseEntity.status(401).body(NoticeRes.of(notice, 401, "공지사항 수정에 실패하였습니다."));
         }
     }
 
     // 삭제
-    @DeleteMapping("{noticeno}")
+    @DeleteMapping("{noticeNo}")
     @ApiOperation(value = "공지사항 삭제", notes = "공지사항 삭제")
     @ApiResponses({@ApiResponse(code = 200, message = "공지사항 삭제 성공"), @ApiResponse(code = 401, message = "공지사항 삭제 실패"), @ApiResponse(code = 500, message = "서버 오류")})
-    public ResponseEntity<?> deleteNotice(@PathVariable @ApiParam(value = "공지사항 번호", required = true) long noticeno) throws Exception {
-        int result = noticeService.deleteNotice(noticeno);
-        System.out.println(result);
-        if (result == 0) return ResponseEntity.status(200).body(BaseResponseBody.of(401, "공지사항 삭제에 실패하였습니다."));
-        else return ResponseEntity.status(200).body(BaseResponseBody.of(200, "공지사항 삭제가 완료되었습니다."));
+    public ResponseEntity<?> deleteNotice(@PathVariable @ApiParam(value = "공지사항 번호", required = true) long noticeNo) throws Exception {
+        int result = noticeService.deleteNotice(noticeNo);
+        if (result == 1) return ResponseEntity.status(200).body(BaseResponseBody.of(200, "공지사항 삭제가 완료되었습니다."));
+        else return ResponseEntity.status(200).body(BaseResponseBody.of(401, "공지사항 삭제에 실패하였습니다."));
     }
 
 }

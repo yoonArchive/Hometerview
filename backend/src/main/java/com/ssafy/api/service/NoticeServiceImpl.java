@@ -42,16 +42,15 @@ public class NoticeServiceImpl implements NoticeService {
         return noticeRepository.findAll();
     }
 
-    @Override
-    public Notice detailNotice(long noticeNo) {
-        return noticeRepository.getOne(noticeNo);
-    }
+//    @Override
+//    public Notice detailNotice(long noticeNo) {
+//        return noticeRepository.getOne(noticeNo);
+//    }
 
     @Override
     public void updateNotice(Notice notice, UpdateNoticePutReq updateNoticePutReq) {
         notice.setNoticeTitle(updateNoticePutReq.getNoticeTitle());
         notice.setNoticeContents(updateNoticePutReq.getNoticeContents());
-
         SimpleDateFormat dataFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date now = new Date();
         notice.setWriteDate(dataFormat.format(now));
