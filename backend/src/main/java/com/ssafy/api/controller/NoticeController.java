@@ -69,7 +69,7 @@ public class NoticeController {
         try {
             noticeService.updateNotice(notice, updateNoticePutReq);
             return ResponseEntity.status(200).body(NoticeRes.of(notice, 200, "공지사항 수정을 성공하였습니다."));
-        } catch (Exception e){
+        } catch (Exception e) {
             return ResponseEntity.status(401).body(NoticeRes.of(notice, 401, "공지사항 수정을 실패하였습니다."));
         }
     }
@@ -79,8 +79,10 @@ public class NoticeController {
     @ApiOperation(value = "공지사항 삭제", notes = "공지사항 삭제")
     @ApiResponses({@ApiResponse(code = 200, message = "공지사항 삭제 성공"), @ApiResponse(code = 401, message = "공지사항 삭제 실패"), @ApiResponse(code = 500, message = "서버 오류")})
     public ResponseEntity<?> deleteNotice(@PathVariable @ApiParam(value = "공지사항 번호", required = true) long noticeno) throws Exception {
-        noticeService.deleteNotice(noticeno);
-        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "공지사항 삭제가 완료되었습니다."));
+        int result = noticeService.deleteNotice(noticeno);
+        System.out.println(result);
+        if (result == 0) return ResponseEntity.status(200).body(BaseResponseBody.of(401, "공지사항 삭제에 실패하였습니다."));
+        else return ResponseEntity.status(200).body(BaseResponseBody.of(200, "공지사항 삭제가 완료되었습니다."));
     }
 
 }

@@ -12,13 +12,13 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class NoticeServiceImpl implements NoticeService{
+public class NoticeServiceImpl implements NoticeService {
 
     @Autowired
     NoticeRepository noticeRepository;
 
     @Override
-    public Notice getByNoticeNo(long noticeNo){
+    public Notice getByNoticeNo(long noticeNo) {
         return noticeRepository.findByNoticeNo(noticeNo).orElse(null);
     }
 
@@ -38,17 +38,17 @@ public class NoticeServiceImpl implements NoticeService{
     }
 
     @Override
-    public List<Notice> listNotice(){
+    public List<Notice> listNotice() {
         return noticeRepository.findAll();
     }
 
     @Override
-    public Notice detailNotice(long noticeNo){
+    public Notice detailNotice(long noticeNo) {
         return noticeRepository.getOne(noticeNo);
     }
 
     @Override
-    public void updateNotice(Notice notice, UpdateNoticePutReq updateNoticePutReq){
+    public void updateNotice(Notice notice, UpdateNoticePutReq updateNoticePutReq) {
         notice.setNoticeTitle(updateNoticePutReq.getNoticeTitle());
         notice.setNoticeContents(updateNoticePutReq.getNoticeContents());
 
@@ -59,8 +59,14 @@ public class NoticeServiceImpl implements NoticeService{
     }
 
     @Override
-    public void deleteNotice(long noticeNo){
+    public int deleteNotice(long noticeNo) {
+        try {
+            noticeRepository.findByNoticeNo(noticeNo).get();
+        } catch (Exception e) {
+            return 0;
+        }
         noticeRepository.deleteByNoticeNo(noticeNo);
+        return 1;
     }
 
 }

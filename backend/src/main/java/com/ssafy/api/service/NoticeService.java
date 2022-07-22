@@ -15,5 +15,5 @@ public interface NoticeService {
     List<Notice> listNotice();
     Notice detailNotice(long noticeNo);
     void updateNotice(Notice notice, UpdateNoticePutReq updateNoticePutReq);
-    void deleteNotice(long noticeNo);
+    int deleteNotice(long noticeNo);
 }
