@@ -1,7 +1,14 @@
 package com.ssafy.api.controller;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
+import com.ssafy.api.dto.Mail;
+import com.ssafy.api.request.UpdatePwPutReq;
+import com.ssafy.api.request.UpdateUserPutReq;
 import com.ssafy.api.response.UserFindIdGetRes;
 import com.ssafy.api.response.UserFindPwGetRes;
+import com.ssafy.api.service.MailService;
+import com.ssafy.api.service.RedisUtil;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -27,14 +34,14 @@ import springfox.documentation.annotations.ApiIgnore;
  */
 @Api(value = "유저 API", tags = {"User"})
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/v1/users")
 public class UserController {
 
-    @Autowired
-    UserService userService;
 
-    @Autowired
-    PasswordEncoder passwordEncoder;
+    private final UserService userService;
+    private final MailService mailService;
+    private final PasswordEncoder passwordEncoder;
 
     @PostMapping()
     @ApiOperation(value = "회원 가입", notes = "<strong>아이디와 패스워드</strong>를 통해 회원가입 한다.")
@@ -90,16 +97,6 @@ public class UserController {
         else return ResponseEntity.status(401).body(BaseResponseBody.of(401, "사용 중인 이메일입니다."));
     }
 
-    @GetMapping("/findid")
-    @ApiOperation(value = "아이디 찾기", notes = "회원의 이름과 이메일에 해당하는 회원 아이디를 찾는다.")
-    @ApiResponses({@ApiResponse(code = 200, message = "아이디 찾기 성공"), @ApiResponse(code = 401, message = "아이디 찾기 실패"), @ApiResponse(code = 500, message = "서버 오류")})
-    public ResponseEntity<?> findId(@RequestParam @ApiParam(value = "회원 이름", required = true) String userName, @RequestParam @ApiParam(value = "회원 이메일", required = true) String userEmail) throws Exception {
-        User user = userService.getByUserNameAndUserEmail(userName, userEmail);
-        if (user == null)
-            return ResponseEntity.status(401).body(UserFindIdGetRes.of(401, "고객님의 정보와 일치하는 아이디가 없습니다.", null));
-        else return ResponseEntity.status(200).body(UserFindIdGetRes.of(200, "아이디 찾기 성공", user.getUserId()));
-    }
-
     @GetMapping("/pw")
     @ApiOperation(value = "비밀번호 인증", notes = "비밀번호 인증을 위해 로그인한 회원의 비밀번호와 일치하는 비밀번호를 입력한다.")
     @ApiResponses({@ApiResponse(code = 200, message = "비밀번호 인증 성공"), @ApiResponse(code = 401, message = "비밀번호 인증 실패"), @ApiResponse(code = 500, message = "서버 오류")})
@@ -110,31 +107,92 @@ public class UserController {
         else return ResponseEntity.status(401).body(BaseResponseBody.of(401, "비밀번호를 다시 확인해주세요."));
     }
 
+    @PutMapping("/pw")
+    @ApiOperation(value = "비밀번호 변경", notes = "회원의 비밀번호를 변경한다.")
+    @ApiResponses({@ApiResponse(code = 200, message = "비밀번호 변경 성공"), @ApiResponse(code = 401, message = "비밀번호 변경 실패"), @ApiResponse(code = 500, message = "서버 오류")})
+    public ResponseEntity<?> updatePw(Authentication authentication, @RequestBody @ApiParam(value = "비밀번호 변경 정보", required = true) UpdatePwPutReq updatePwPutReq) {
+        String userPw = updatePwPutReq.getUserPw();
+        String newPw = updatePwPutReq.getNewPw();
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        String userId = userDetails.getUsername();
+        User user = userService.getByUserId(userId);
+        if (!passwordEncoder.matches(userPw, user.getUserPw()))
+            return ResponseEntity.status(401).body(BaseResponseBody.of(401, "비밀번호를 다시 확인해주세요."));
+        else {
+            userService.updatePassword(user, newPw);
+            return ResponseEntity.status(200).body(BaseResponseBody.of(200, "비밀번호가 변경되었습니다."));
+        }
+    }
+
+    @GetMapping("/findid")
+    @ApiOperation(value = "아이디 찾기", notes = "회원의 이름과 이메일에 해당하는 회원 아이디를 찾는다.")
+    @ApiResponses({@ApiResponse(code = 200, message = "아이디 찾기 성공"), @ApiResponse(code = 401, message = "아이디 찾기 실패"), @ApiResponse(code = 500, message = "서버 오류")})
+    public ResponseEntity<?> findId(@RequestParam @ApiParam(value = "회원 이름", required = true) String userName, @RequestParam @ApiParam(value = "회원 이메일", required = true) String userEmail) throws Exception {
+        User user = userService.getByUserNameAndUserEmail(userName, userEmail);
+        if (user == null)
+            return ResponseEntity.status(401).body(UserFindIdGetRes.of(401, "고객님의 정보와 일치하는 아이디가 없습니다.", null));
+        else return ResponseEntity.status(200).body(UserFindIdGetRes.of(200, "아이디 찾기 성공", user.getUserId()));
+    }
+
+    @PostMapping("/findpw")
+    @ApiOperation(value = "임시 비밀번호 전송", notes = "회원 정보를 입력하고 일치하면 임시 비밀번호를 메일로 전송한다.")
+    @ApiResponses({@ApiResponse(code = 200, message = "임시 비밀번호 발급 성공"), @ApiResponse(code = 401, message = "임시 비밀번호 발급 실패"), @ApiResponse(code = 500, message = "서버 오류")})
+    public ResponseEntity<?> findPw(@RequestParam @ApiParam(value = "회원 이름", required = true) String userName, @RequestParam @ApiParam(value = "회원 이메일", required = true) String userEmail, @RequestParam @ApiParam(value = "회원 아이디", required = true) String userId) throws Exception {
+        User user = userService.getByUserNameAndUserEmailAndUserId(userName, userEmail, userId);
+
+        if (user == null) return ResponseEntity.status(401).body(UserFindPwGetRes.of(401, "입력한 정보를 다시 확인해주세요.", null));
+        else {
+
+            // 랜덤 임시 비밀번호 생성
+            String tmpPw = mailService.getTmpPassword();
+            // 비밀번호 값 변경
+            userService.updatePassword(user, tmpPw);
+            // 메일 생성 & 전송
+            Mail mail = mailService.createTempPwMail(tmpPw, user.getUserEmail());
+            mailService.sendMail(mail);
+            return ResponseEntity.status(200).body(UserFindPwGetRes.of(200, "이메일 발송 성공", passwordEncoder.encode(user.getUserPw())));
+        }
+    }
+
+    @PostMapping("/authEmail")
+    @ApiOperation(value = "이메일 인증번호 전송", notes = "이메일 인증번호를 전송한다.")
+    @ApiResponses({@ApiResponse(code = 200, message = "임시 비밀번호 발급 성공"), @ApiResponse(code = 401, message = "임시 비밀번호 발급 실패"), @ApiResponse(code = 500, message = "서버 오류")})
+    public ResponseEntity<?> authEmail(@RequestParam @ApiParam(value = "회원 이메일", required = true) String userEmail) throws Exception {
+        Mail mail = mailService.createAuthMail(userEmail);
+        mailService.sendMail(mail);
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "인증번호 발송 성공"));
+    }
+
+    @GetMapping("/checkAuthKey")
+    @ApiOperation(value = "인증번호 확인", notes = "인증번호를 확인한다.")
+    @ApiResponses({@ApiResponse(code = 200, message = "인증 성공"), @ApiResponse(code = 401, message = "인증 실패"), @ApiResponse(code = 500, message = "서버 오류")})
+    public ResponseEntity<?> checkAuthKey(@RequestParam @ApiParam(value = "회원 이메일", required = true) String userEmail, @RequestParam @ApiParam(value = "인증번호", required = true) String authKey) throws Exception {
+        String email = mailService.checkAuthKey(authKey);
+        if (!email.equals(userEmail))
+            return ResponseEntity.status(401).body(BaseResponseBody.of(401, "인증번호가 옳바르지 않습니다."));
+        else {
+            mailService.deleteAuthKey(authKey);
+            return ResponseEntity.status(200).body(BaseResponseBody.of(200, "인증 성공"));
+        }
+    }
+
+    @PutMapping()
+    @ApiOperation(value = "회원 정보 수정", notes = "회원의 프로필 이미지, 이름 혹은 이메일을 수정한다.")
+    @ApiResponses({@ApiResponse(code = 200, message = "회원 정보 수정 성공"), @ApiResponse(code = 401, message = "회원 정보 수정 실패"), @ApiResponse(code = 500, message = "서버 오류")})
+    public ResponseEntity<?> updateUser(@ApiIgnore Authentication authentication, @RequestBody @ApiParam(value = "변경된 회원 정보", required = true) UpdateUserPutReq updateUserPutReq) throws Exception {
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        String userId = userDetails.getUsername();
+        User user = userService.getByUserId(userId);
+        userService.updateUser(user, updateUserPutReq);
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "회원정보가 수정되었습니다."));
+    }
+
     @DeleteMapping()
     @ApiOperation(value = "회원 탈퇴", notes = "회원 탈퇴")
     @ApiResponses({@ApiResponse(code = 200, message = "회원 탈퇴 성공"), @ApiResponse(code = 401, message = "회원 탈퇴 실패"), @ApiResponse(code = 500, message = "서버 오류")})
     public ResponseEntity<?> deleteUser(@ApiIgnore Authentication authentication) throws Exception {
         userService.deleteUser(((UserDetails) authentication.getDetails()).getUsername());
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "회원탈퇴가 완료되었습니다."));
-    }
-
-    @GetMapping("/findpw")
-    @ApiOperation(value = "비밀번호 찾기", notes = "회원의 이름과 이메일 그리고 아이디에 해당하는 회원 비밀번호를 찾는다.")
-    @ApiResponses({@ApiResponse(code = 200, message = "비밀번호 찾기 성공"), @ApiResponse(code = 401, message = "비밀번호 찾기 실패"), @ApiResponse(code = 500, message = "서버 오류")})
-    public ResponseEntity<?> findPw(@RequestParam @ApiParam(value = "회원 이름", required = true) String userName,
-                                    @RequestParam @ApiParam(value = "회원 이메일", required = true) String userEmail,
-                                    @RequestParam @ApiParam(value = "회원 아이디", required = true) String userId) throws Exception {
-        User user = userService.getByUserNameAndUserEmailAndUserId(userName, userEmail, userId);
-
-        if (user == null)
-            return ResponseEntity.status(401).body(UserFindPwGetRes.of(401, "입력한 정보를 다시 확인해주세요.", null));
-        else {
-            // 랜덤 임시 비밀번호 생성
-
-            // 비밀번호 값 변경
-
-            return ResponseEntity.status(200).body(UserFindPwGetRes.of(200, "비밀번호 찾기 성공", passwordEncoder.encode(user.getUserPw())));
-        }
     }
 
 }

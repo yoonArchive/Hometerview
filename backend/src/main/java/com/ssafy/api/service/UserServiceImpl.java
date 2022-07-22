@@ -1,8 +1,10 @@
 package com.ssafy.api.service;
 
+import com.ssafy.api.request.UpdateUserPutReq;
 import com.ssafy.db.entity.UserType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.api.request.UserRegisterPostReq;
@@ -52,15 +54,6 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByUserNameAndUserEmail(userName, userEmail).orElse(null);
     }
 
-  /*  @Override
-    public Boolean validateUser(Long userNo, String userPw) {
-        User user = userRepository.findByUserNo(userNo).get();
-        if (passwordEncoder.matches(user.getUserPw(), userPw))
-            return true;
-        return false;
-    }
-   */
-
     @Override
     public User getByUserNo(Long userNo) {
         return userRepository.findByUserNo(userNo).get();
@@ -74,6 +67,20 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(String userId) {
         userRepository.deleteByUserId(userId);
+    }
+
+    @Override
+    public void updatePassword(User user, String temPw) {
+        user.setUserPw(passwordEncoder.encode(temPw));
+        userRepository.save(user);
+    }
+
+    @Override
+    public void updateUser(User user, UpdateUserPutReq updateUserPutReq) {
+        user.setUserName(updateUserPutReq.getUserName());
+        user.setUserEmail(updateUserPutReq.getUserEmail());
+        user.setUserImg(updateUserPutReq.getUserImg());
+        userRepository.save(user);
     }
 
 }

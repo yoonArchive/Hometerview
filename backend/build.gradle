@@ -160,6 +160,10 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok:1.18.20")
     testCompile('org.springframework.boot:spring-boot-starter-test')
 
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
+
 }
 
 tasks.named('test') {

@@ -1,5 +1,6 @@
 package com.ssafy.api.service;
 
+import com.ssafy.api.request.UpdateUserPutReq;
 import com.ssafy.api.request.UserRegisterPostReq;
 import com.ssafy.db.entity.User;
 
@@ -21,4 +22,7 @@ public interface UserService {
 
     User getByUserNameAndUserEmailAndUserId(String userName, String userEmail, String userId);
 
+    void updatePassword(User user, String tmpPw);
+
+    void updateUser(User user, UpdateUserPutReq updateUserPutReq);
 }
