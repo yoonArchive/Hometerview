@@ -1,6 +1,6 @@
 import axios from 'axios'
 import api_url from '@/api/api_url'
-
+import router from '@/common/lib/vue-router'
 
 export default {
 
@@ -53,7 +53,7 @@ export default {
           에러 메시지 표시
       */
       axios({
-        url: api_url.accounts.login(),  // 수정 필요할지 확인
+        url: api_url.accounts.login(),
         method: 'post',
         data: credentials
       })
@@ -62,7 +62,7 @@ export default {
           console.log('로그인성공')
           dispatch('saveToken', token)
           dispatch('fetchCurrentUser')
-          // router.push({ name: 'articles' })
+          router.push({ name: 'home' })
         })
         .catch(err => {
           console.error(err.response.data)
@@ -106,22 +106,23 @@ export default {
           에러 메시지 표시
       */
     delete credentials.userPw2
-    const credentialsForLogin = {
-      userId : credentials.userId,
-      userPw : credentials.userPw
-    }
+    // const credentialsForLogin = {
+    //   userId : credentials.userId,
+    //   userPw : credentials.userPw
+    // }
       axios({
         url: api_url.accounts.signup(),
         method: 'post',
         data: credentials,
-        // hearders: getters.authHeader,
       })
         .then(res => {
-          // console.log(res.data)
+          console.log(res.data)
           // const token = res.data.key
           // dispatch('saveToken', token)
-          dispatch('fetchCurrentUser')
-          // router.push({ name: 'login' })
+          // dispatch('fetchCurrentUser')
+          alert('회원가입 성공')
+          router.push({ name: 'login' })
+
         })
         .catch(err => {
           console.error(err.response.data)
@@ -158,7 +159,7 @@ export default {
       }
     },
 
-    findUserid({},credentials){
+    findUserid({ commit,dispatch },credentials){
       axios({
         url:api_url.accounts.findUserid(),
         method: 'get',
@@ -166,7 +167,7 @@ export default {
       })
         .then(res=>{
           // 어떤 형태로 오는지 확인 후 작성
-          const userId = res.data
+          const userId = res
           console.log(userId)
 
         })

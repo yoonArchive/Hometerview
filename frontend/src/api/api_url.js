@@ -1,4 +1,4 @@
-const HOST = 'http://localhost:8081/api/v1/'
+const HOST = 'http://localhost:8080/api/v1/'
 const USERS = 'users/'
 const AUTH = 'auth/'
 const NOTICE = 'notice'
@@ -9,7 +9,7 @@ export default {
     login: () => HOST + AUTH + 'login/',
     logout: () => HOST + USERS + 'logout/',
     signup: () => HOST + USERS,
-    findMyAccount: () => HOST + USERS + 'findid/',
+    findUserid: () => HOST + USERS + 'findid/',
 
 
     // Token 으로 현재 user 판단

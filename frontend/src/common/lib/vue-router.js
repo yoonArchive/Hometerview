@@ -8,6 +8,7 @@ import Main from '@/views/main/main'
 import LoginView from '@/views/accounts/LoginView'
 import SignupView from '@/views/accounts/SignupView'
 import LogoutView from '@/views/accounts/LogoutView'
+import FindUseridView from '@/views/accounts/FindUseridView'
 
 import StudyRecruitment from '@/views/home/components/study-recruitment'
 
@@ -54,6 +55,10 @@ function makeRoutesFromMenu () {
       path: 'logout',
       name: 'logout',
       component: LogoutView
+    },{
+      path: 'findid',
+      name: 'findid',
+      component:FindUseridView
     }]
   },{
     path: '/',

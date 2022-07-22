@@ -5,13 +5,13 @@
 
   <form @submit.prevent="findUserid(credentials)">
     <div>
-      <label for="username">username: </label>
-      <input v-model="credentials.username" type="text" id="username" required />
+      <label for="userName">username: </label>
+      <input v-model="credentials.userName" type="text" id="userName"/>
     </div>
 
     <div>
-      <label for="email">e-mail: </label>
-      <input v-model="credentials.password" type="text" id="email" required />
+      <label for="userEmail">e-mail: </label>
+      <input v-model="credentials.userEmail" type="text" id="userEmail"/>
     </div>
 
     <button>submit</button>
@@ -34,8 +34,8 @@
     data() {
       return {
         credentials: {
-          username: '',
-          email: '',
+          userName : '',
+          userEmail : ''
         }
       }
     },

@@ -59,7 +59,6 @@
     },
     computed: {
       ...mapGetters(['authError']),
-      // 함수 == userPw != userPw >> false
 
     },
     methods: {
