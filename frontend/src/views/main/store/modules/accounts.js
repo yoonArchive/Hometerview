@@ -94,8 +94,6 @@ export default {
           console.error(err.response)
         })
     },
-
-
     signup({ commit, dispatch }, credentials) {
       /*
       POST: 사용자 입력정보를 signup URL로 보내기
@@ -106,22 +104,30 @@ export default {
         실패하면
           에러 메시지 표시
       */
+    delete credentials.userPw2
+    const credentialsForLogin = {
+      userId : credentials.userId,
+      userPw : credentials.userPw
+    }
       axios({
         url: api_url.accounts.signup(),
         method: 'post',
-        data: credentials
+        data: credentials,
+        // hearders: getters.authHeader,
       })
         .then(res => {
-          const token = res.data.key
-          dispatch('saveToken', token)
+          // console.log(res.data)
+          // const token = res.data.key
+          // dispatch('saveToken', token)
           dispatch('fetchCurrentUser')
-          router.push({ name: 'articles' })
+          // router.push({ name: 'login' })
         })
         .catch(err => {
           console.error(err.response.data)
           commit('SET_AUTH_ERROR', err.response.data)
           alert('회원가입 실패')
         })
+        // dispatch('login', credentialsForLogin)
     },
 
 

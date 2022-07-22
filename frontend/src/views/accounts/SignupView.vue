@@ -29,7 +29,7 @@
         <input v-model="credentials.userPw2" type="password" id="userPw2" required />
       </div>
       <div>
-        <button>Signup</button>
+        <button @click="signupComfirmation">Signup</button>
       </div>
     </form>
     
@@ -53,21 +53,36 @@
           userName:'',
           userId: '',
           userPw: '',
-          userPw2: '',
-        }
+          userPw2: ''
+        },
       }
     },
     computed: {
       ...mapGetters(['authError']),
       // 함수 == userPw != userPw >> false
-      isMatchedPassword(){
-
-      }
-
 
     },
     methods: {
-      ...mapActions(['signup'])
+      ...mapActions(['signup']),
+      signupComfirmation(){
+        if(
+          this.credentials.userEmail===''||
+          this.credentials.userName===''||
+          this.credentials.userId=== ''||
+          this.credentials.userPw=== ''||
+          this.credentials.userPw2=== ''
+        ){
+          alert("모든 내용을 입력해주세요")
+          return
+        }else if (this.credentials.userPw !== this.credentials.userPw2){
+          alert('비밀번호가 일치하지 않습니다.')
+          return
+        }
+        // 아이디 중복검사 구현
+
+
+
+      }
     },
   }
 </script>
