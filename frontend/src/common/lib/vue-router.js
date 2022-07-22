@@ -11,6 +11,9 @@ import LogoutView from '@/views/accounts/LogoutView'
 
 import StudyRecruitment from '@/views/home/components/study-recruitment'
 
+import noticeList from '@/views/notice/noticeListView'
+import noticeNewView from '@/views/notice/noticeNewView'
+
 const fullMenu = require('@/views/main/menu.json')
 function makeRoutesFromMenu () {
   let routes = Object.keys(fullMenu).map((key) => {
@@ -56,7 +59,16 @@ function makeRoutesFromMenu () {
     path: '/',
     name: 'main',
     component:Main
-  }
+  },{
+    path: '/notice',
+    name: 'notice',
+    component: noticeList,
+    children : [{
+      path: 'new',
+      name: 'noticeNew',
+      component: noticeNewView
+    }]
+  },
 
   )
   return routes
