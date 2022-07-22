@@ -4,6 +4,8 @@
 
     <!-- <account-error-list v-if="authError"></account-error-list> -->
 
+    <!-- <div v-if="sdf"></div> -->
+
     <form @submit.prevent="signup(credentials)">
 
       <div>
@@ -58,7 +60,11 @@
     computed: {
       ...mapGetters(['authError']),
       // 함수 == userPw != userPw >> false
-    
+      isMatchedPassword(){
+
+      }
+
+
     },
     methods: {
       ...mapActions(['signup'])
