@@ -37,7 +37,7 @@
       return {
         credentials: {
           userId: '',
-          userPw: '',
+          userPw: ''
         }
       }
     },

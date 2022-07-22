@@ -3,6 +3,7 @@
   <div class="main-container">
     <router-view></router-view>
   </div>
+  <footer-vue></footer-vue>
 </template>
 <style>
 .infinite-list {
@@ -42,12 +43,14 @@ import Conference from "./components/conference";
 import { reactive } from "vue";
 import { useRouter } from "vue-router";
 import headerVue from "../components/header.vue";
+import footerVue from "../components/footer.vue"
 export default {
   name: "Home",
 
   components: {
     headerVue,
-    Conference
+    Conference,
+    footerVue
   },
 
   setup() {
