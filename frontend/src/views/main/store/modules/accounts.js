@@ -59,6 +59,7 @@ export default {
       })
         .then(res => {
           const token = res.data.key
+          console.log('로그인성공')
           dispatch('saveToken', token)
           dispatch('fetchCurrentUser')
           // router.push({ name: 'articles' })
