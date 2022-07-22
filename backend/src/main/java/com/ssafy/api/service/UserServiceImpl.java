@@ -69,21 +69,6 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteByUserId(userId);
     }
 
-    public String getTmpPassword() {
-        char[] charSet = new char[]{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-                'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N',
-                'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
-
-        String pwd = "";
-        /* 문자 배열 길이의 값을 랜덤으로 10개를 뽑아 조합 */
-        int idx = 0;
-        for (int i = 0; i < 10; i++) {
-            idx = (int) (charSet.length * Math.random());
-            pwd += charSet[idx];
-        }
-        return pwd;
-    }
-
     @Override
     public void updatePassword(User user, String temPw) {
         user.setUserPw(passwordEncoder.encode(temPw));
