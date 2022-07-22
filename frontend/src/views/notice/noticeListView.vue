@@ -9,18 +9,21 @@
             </tr>
           </thead>
           <tbody>
+
             <tr v-for="notice in notices" :key="notice.no" >
               <!-- <th scope="row" >
                 <td>{{ notice.user.username }}</td></th> -->
+              <!-- {{ notice[noticeTitle] }} -->
               <th scope="row">
                 <td>
                   <router-link style="text-decoration:none"
                     :to="{ name: 'notice', params: {noticeno: notice.no} }">
-                    {{ notice.noticeTitle }}
+                    {{ notice }}
                     </router-link>
                 </td></th>
               <th scope="row">
-                <td>{{ timeForToday(notice.writeDate) }}</td></th>
+                <td>{{ timeForToday(notice.writeDate) }}</td>
+              </th>
             </tr>
           </tbody>
         </table>
@@ -76,6 +79,7 @@
     },
     created() {
       this.fetchNotices()
+      console.log('김')
     },
   }
 </script>

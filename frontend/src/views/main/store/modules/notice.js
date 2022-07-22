@@ -1,6 +1,6 @@
 import axios from 'axios'
 import api_url from '@/api/api_url'
-import router from '@/router'
+import router from '../../../../common/lib/vue-router'
 
 import _ from 'lodash'
 // import accounts from './accounts'
