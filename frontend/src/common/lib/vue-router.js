@@ -5,15 +5,24 @@ import ConferencesDetail from '@/views/conferences/conference-detail'
 import History from '@/views/history/history'
 import Main from '@/views/main/main'
 
+/* 로그인 회원가입 등 계정 관련 페이지 */
 import LoginView from '@/views/accounts/LoginView'
 import SignupView from '@/views/accounts/SignupView'
 import LogoutView from '@/views/accounts/LogoutView'
 import FindUserPassword from '@/views/accounts/FindUserPassword'
 
+/* 스터디 모집 페이지 */
 import StudyRecruitment from '@/views/home/components/study-recruitment'
 
+/* 공지사항 */
 import noticeList from '@/views/notice/noticeListView'
 import noticeNewView from '@/views/notice/noticeNewView'
+
+/* 마이 페이지 */
+import MyPage from '@/views/mypage/MyPage'
+import ChangePassword from '@/views/mypage/changepassword/ChangePassword'
+import MyAccount from '@/views/mypage/myaccount/MyAccount'
+import Withdrawal from '@/views/mypage/withdrawal/Withdrawal'
 
 const fullMenu = require('@/views/main/menu.json')
 function makeRoutesFromMenu () {
@@ -59,6 +68,26 @@ function makeRoutesFromMenu () {
       path:'finduserpassword',
       name: 'finduserpassword',
       component :FindUserPassword
+    },{
+      path:'mypage',
+      name: 'mypage',
+      component :MyPage,
+      redirect: '/home/mypage/myaccount',
+      children : [
+        {
+          path: 'myaccount',
+          name: 'myaccount',
+          component :MyAccount,
+        },{
+          path: 'changepassword',
+          name: 'changepassword',
+          component :ChangePassword,
+        },{
+          path: 'withdrawal',
+          name: 'withdrawal',
+          component :Withdrawal,
+        }
+      ]
     }]
   },{
     path: '/',
