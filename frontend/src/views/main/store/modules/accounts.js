@@ -21,7 +21,7 @@ export default {
     isLoggedIn: state => !!state.token,
     currentUser: state => state.currentUser,
     authError: state => state.authError,
-    authHeader: state => ({ Authorization: `Token ${state.token}`})
+    authHeader: state => ({ Authorization: `Bearer ${state.token}`})
   },
   actions:{
     saveToken({ commit }, token) {
@@ -170,6 +170,23 @@ export default {
           commit('SET_AUTH_ERROR',err.response.data)
         })
 
+    },
+
+    changePassword({getters}, credentials){
+      axios({
+        url:api_url.accounts.changepassword(),
+        method:'put',
+        data: {
+          userPw:credentials.userPw,
+          newPw : credentials.newPw,
+        },
+        headers : getters.authHeader
+      }).then(data =>{
+        console.log(data);
+      }).catch(err=>{
+        console.log(credentials);
+        console.log(err);
+      })
     }
   }
 

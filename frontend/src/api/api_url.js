@@ -11,7 +11,7 @@ export default {
     signup: () => HOST + USERS,
     findMyAccount: () => HOST + USERS + 'findid/',
     findUserPassword: () => HOST + USERS + 'findpw/',
-
+    changepassword: () => HOST + USERS + 'pw/',
     // Token 으로 현재 user 판단
     currentUserInfo: () => HOST + USERS + 'me/', // 맞는지 확인
 
