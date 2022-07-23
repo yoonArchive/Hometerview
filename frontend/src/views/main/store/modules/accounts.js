@@ -1,6 +1,6 @@
 import axios from 'axios'
 import api_url from '@/api/api_url'
-
+import http from '@/api/api_url'
 
 export default {
 
@@ -41,6 +41,24 @@ export default {
       commit('SET_TOKEN', '')
       localStorage.setItem('token', '')
     },
+    updateUser({dispatch, getters}, credentials){
+      axios({
+        url: api_url.accounts.updateUser,
+        method:'put',
+        data:{
+          userEmail:credentials.userEmail,
+          userImg:credentials.userImg,
+          userName:credentials.userName,
+        },
+        headers:getters.authHeader
+      }).then(data=>{
+        console.log(data);
+        dispatch('fetchCurrentUser')
+      }).catch(err=>{
+        console.log(err)
+      })
+    },
+
 
     login({ commit, dispatch }, credentials) {
       /*
@@ -142,8 +160,18 @@ export default {
           url: api_url.accounts.currentUserInfo(),
           method: 'get',
           headers: getters.authHeader,
+        }).then(res =>{
+          console.log(res);
+          const tempuser = {
+            userEmail : res.data.userEmail,
+            userImg : res.data.userImg,
+            userId : res.data.userId,
+            userName : res.data.userName,
+          }
+          console.log(tempuser);
+          commit('SET_CURRENT_USER', tempuser);
+
         })
-          .then(res => commit('SET_CURRENT_USER', res.data))
           .catch(err => {
             if (err.response.status === 401) {
               dispatch('removeToken')

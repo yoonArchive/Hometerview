@@ -15,7 +15,7 @@
       </router-link>
     </div>
 
-    <div id="headerBtnGroup">
+    <div id="headerBtnGroup" v-if="!isLoggedIn">
       <router-link to="/home/login" class="header-routerlink-decoration">
         <div class="header-btn">
           <div class="header-btn-text">
@@ -31,14 +31,25 @@
         </div>
       </router-link>
     </div>
+    <div class="header-btngroup" v-else>
+      <div>
+        <router-link to="/home/mypage">
+          <img :src="imagesrc" alt="" >
+        </router-link>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import { computed, reactive } from "@vue/runtime-core";
 import { useStore } from "vuex";
+import { mapGetters } from "vuex";
 export default {
   name: "header",
+  computed:{
+    ...mapGetters(['isLoggedIn'])
+  },
   data() {
     return {
       imagesrc: require("../../assets/images/ssafy-logo.png")
@@ -67,4 +78,14 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.header-btngroup{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px;
+  gap: 16px;
+  order: 2;
+}
+</style>
