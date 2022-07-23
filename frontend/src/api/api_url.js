@@ -10,6 +10,8 @@ export default {
     logout: () => HOST + USERS + 'logout/',
     signup: () => HOST + USERS,
     findUserid: () => HOST + USERS + 'findid/',
+    emailDuplicateCheck:() => HOST + USERS + 'checkemail/',
+    idDuplicateCheck:() => HOST + USERS + 'checkid/',
 
 
     // Token 으로 현재 user 판단

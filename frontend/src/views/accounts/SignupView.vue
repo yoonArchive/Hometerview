@@ -1,5 +1,5 @@
 <template>
-  <div>
+
     <h1>Signup</h1>
 
     <!-- <account-error-list v-if="authError"></account-error-list> -->
@@ -10,7 +10,10 @@
 
       <div>
         <label for="userEmail">e-mail: </label>
-        <input  v-model="credentials.userEmail" type="text" id="userEmail" required/>
+        <input v-model="credentials.userEmail" type="text" id="userEmail" required/>
+        <form @submit.prevent="emailDuplicateCheck(credentials.userEmail)">
+          <button>check</button>
+        </form>
       </div>
       <div>
         <label for="userName">User Name: </label>
@@ -19,6 +22,10 @@
       <div>
         <label for="userId">ID: </label>
         <input  v-model="credentials.userId" type="text" id="id" required/>
+        <form @submit.prevent="idDuplicateCheck(credentials.userId)">
+          <button>check</button>
+        </form>
+
       </div>
       <div>
         <label for="userPw">Password: </label>
@@ -33,7 +40,6 @@
       </div>
     </form>
     
-  </div>
   
 </template>
 
@@ -58,11 +64,12 @@
       }
     },
     computed: {
-      ...mapGetters(['authError']),
+      ...mapGetters(['authError','isDuplicatedEmail','isDuplicatedId']),
 
     },
     methods: {
-      ...mapActions(['signup']),
+      ...mapActions(['signup','emailDuplicateCheck', 'idDuplicateCheck']),
+
       signupComfirmation(){
         if(
           this.credentials.userEmail===''||
@@ -77,7 +84,7 @@
           alert('비밀번호가 일치하지 않습니다.')
           return
         }
-        // 아이디 중복검사 구현
+        // 아이디 중복검사 구현 => isDuplicatedEmail가 false이면 alert
 
 
 

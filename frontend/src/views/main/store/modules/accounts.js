@@ -9,19 +9,27 @@ export default {
     currentUser: {},
     profile: {},
     authError: null,
+    isDuplicatedEmail: true,
+    isDuplicatedId: true,
+
   }),
 
   mutations:{
     SET_TOKEN: (state, token) => state.token = token,
     SET_CURRENT_USER: (state, user) => state.currentUser = user,
-    SET_AUTH_ERROR: (state, error) => state.authError = error
+    SET_AUTH_ERROR: (state, error) => state.authError = error,
+    SET_CHECK_EMAIL: (state, isDuplicatedEmail) => state.isDuplicatedEmail = isDuplicatedEmail,
+    SET_CHECK_ID: (state, isDuplicatedId) => state.isDuplicatedId = isDuplicatedId,
 
   },
   getters:{
+    isDuplicatedEmail : state => state.isDuplicatedEmail,
+    isDuplicatedId : state => state.isDuplicatedId,
     isLoggedIn: state => !!state.token,
     currentUser: state => state.currentUser,
     authError: state => state.authError,
-    authHeader: state => ({ Authorization: `Token ${state.token}`})
+    authHeader: state => ({ Authorization: `Token ${state.token}`}),
+
   },
   actions:{
     saveToken({ commit }, token) {
@@ -41,7 +49,6 @@ export default {
       commit('SET_TOKEN', '')
       localStorage.setItem('token', '')
     },
-
     login({ commit, dispatch }, credentials) {
       /*
       POST: 사용자 입력정보를 login URL로 보내기
@@ -131,8 +138,6 @@ export default {
         })
         // dispatch('login', credentialsForLogin)
     },
-
-
     fetchCurrentUser({ commit, getters, dispatch }) {
       /*
       GET: 사용자가 로그인 했다면(토큰이 있다면)
@@ -158,26 +163,70 @@ export default {
           })
       }
     },
-
-    findUserid({ commit,dispatch },credentials){
+    findUserid({ commit },credentials){
+      
+      const splitedEmail = credentials.userEmail.split('@')
+      const emailId = splitedEmail[0]
+      const emailaddress = splitedEmail[1]
+      const emailAndUserNameForSubmit = `?userEmail=${emailId}%40${emailaddress}&userName=${credentials.userName}`
       axios({
-        url:api_url.accounts.findUserid(),
+        url:api_url.accounts.findUserid() + emailAndUserNameForSubmit,
         method: 'get',
-        data: credentials
       })
         .then(res=>{
-          // 어떤 형태로 오는지 확인 후 작성
-          const userId = res
-          console.log(userId)
 
+          const userId = res.data.userId
+          console.log(userId)
+          alert(`당신의 ID는 ${userId} 입니다`)
         })
         .catch(err=>{
           console.error(err.response.data)
+          alert(err.response.data.message)
           commit('SET_AUTH_ERROR',err.response.data)
         })
-
     },
+    emailDuplicateCheck({commit}, email){
+      // 요청 => 성공 => true를 보냄
+      // 요청 => 실패 => defalt false값이 될 것임
+      const splitedEmail = email.split('@')
+      const emailId = splitedEmail[0]
+      const emailaddress = splitedEmail[1]
+      const emailForSubmit = `?email=${emailId}%40${emailaddress}`
+      
+      axios({
+        url: api_url.accounts.emailDuplicateCheck() + emailForSubmit,
+        method : 'get',
+      })
+        .then(res => {
+          // 응답에 성공을 하면
+          console.log(res.data)
+          commit('SET_CHECK_EMAIL', false)
+          alert('사용가능한 이메일 입니다')
+        })
+        .catch(err => {
+          console.log(err.response)
+          // console.log(err.request)
+          alert('사용중인 이메일 입니다')
+        })
+    },
+    idDuplicateCheck({commit}, id){
 
+      // console.log(getters.isDuplicatedId)
+      const idForSubmit = `?id=${id}`
+      axios({
+        url: api_url.accounts.idDuplicateCheck() + idForSubmit,
+        method : 'get',
+      })
+        .then(res => {
+          // 응답에 성공을 하면
+          console.log(res.data)
+          commit('SET_CHECK_ID', false)
+          alert('사용가능한 아이디입니다')
+        })
+        .catch(err => {
+          console.log(err.response)
+          alert('사용중인 아이디 입니다')
+        })
+    },
   }
-
 }
