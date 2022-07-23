@@ -58,7 +58,8 @@ export default {
         data: credentials
       })
         .then(res => {
-          const token = res.data.key
+          console.log(res);
+          const token = res.data.accessToken;
           console.log('로그인성공')
           dispatch('saveToken', token)
           dispatch('fetchCurrentUser')
