@@ -40,7 +40,6 @@ import javax.validation.Valid;
 @RequestMapping("/api/v1/users")
 public class UserController {
 
-
     private final UserService userService;
     private final MailService mailService;
     private final PasswordEncoder passwordEncoder;
