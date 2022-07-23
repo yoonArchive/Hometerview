@@ -6,6 +6,7 @@ import com.ssafy.db.entity.Notice;
 import com.ssafy.db.repository.NoticeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -46,13 +47,14 @@ public class NoticeServiceImpl implements NoticeService {
 //    }
 
     @Override
+    @Transactional
     public void updateNotice(Notice notice, UpdateNoticePutReq updateNoticePutReq) {
         notice.setNoticeTitle(updateNoticePutReq.getNoticeTitle());
         notice.setNoticeContents(updateNoticePutReq.getNoticeContents());
         SimpleDateFormat dataFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date now = new Date();
         notice.setWriteDate(dataFormat.format(now));
-        noticeRepository.save(notice);
+        // noticeRepository.save(notice);
     }
 
     @Override
