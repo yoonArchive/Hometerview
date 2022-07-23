@@ -58,6 +58,7 @@ public class NoticeServiceImpl implements NoticeService {
     }
 
     @Override
+    @Transactional
     public int deleteNotice(long noticeNo) {
         try {
             noticeRepository.findByNoticeNo(noticeNo).get();
