@@ -66,7 +66,6 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void updatePassword(User user, String temPw) {
         user.setUserPw(passwordEncoder.encode(temPw));
-        // userRepository.save(user);
     }
 
     @Override
