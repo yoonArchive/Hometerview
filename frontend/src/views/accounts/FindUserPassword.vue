@@ -22,25 +22,25 @@ export default {
     }
     function findPassword(){
       console.log(this.userData);
-      http.post('/users/findpw/',null,{
-        params:this.userData
-      }).then(data=>{
-        console.log(data);
-      }).catch(error =>{
-        console.log("또야?" + error);
-      })
-
-      // axios({
-      //   url:api_url.accounts.findUserPassword(),
-      //   method:'post',
-      //   data: JSON.stringify(userData)
-      // })
-      // .then((data)=>{
+      // http.post('/users/findpw/',null,{
+      //   params:this.userData
+      // }).then(data=>{
       //   console.log(data);
+      // }).catch(error =>{
+      //   console.log("또야?" + error);
       // })
-      // .catch((error)=>{
-      //   alert('잘못된 정보를 입력하셨습니다.' + error);
-      // })
+
+      axios({
+        url:api_url.accounts.findUserPassword(),
+        method:'post',
+        params: this.userData
+      })
+      .then((data)=>{
+        console.log(data);
+      })
+      .catch((error)=>{
+        alert('잘못된 정보를 입력하셨습니다.' + error);
+      })
       // axios({
       //   url: api_url.accounts.findPassWord(),
       //   method:'POST',
