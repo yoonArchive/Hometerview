@@ -31,7 +31,9 @@ public class ApplyServiceImpl implements ApplyService {
     public void applyRecruit(Long userNo, Long recruitNo) {
         User user = userRepository.findByUserNo(userNo).get();
         Recruit recruit = recruitRepository.findByRecruitNo(recruitNo).get();
-        Apply apply = Apply.createApply(user, recruit);
+        Apply apply = new Apply();
+        apply.setUser(user);
+        apply.setRecruit(recruit);
         applyRepository.save(apply);
     }
 
