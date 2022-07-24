@@ -49,7 +49,7 @@ public class Recruit {
     @Column(name = "std_limit")
     private int stdLimit;
 
-    @OneToMany(mappedBy = "posts")
+    @OneToMany(mappedBy = "recruit")
     private List<Apply> applies = new ArrayList<>();
 
 }
