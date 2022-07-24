@@ -66,7 +66,6 @@ public class RecruitController {
         } catch (Exception e) {
             return ResponseEntity.status(401).body(BaseResponseBody.of(401, "스터디 모집글 수정에 실패하였습니다."));
         }
-
     }
 
     @DeleteMapping("/{recruitNo}")
