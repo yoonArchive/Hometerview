@@ -12,8 +12,8 @@ import java.util.Optional;
 public interface NoticeRepository extends JpaRepository<Notice, Long> {
 
     @Transactional
-    Optional<Notice> deleteByNoticeNo(long noticeNo);
+    Optional<Notice> deleteByNoticeNo(Long noticeNo);
 
-    Optional<Notice> findByNoticeNo(long noticeNo);
+    Optional<Notice> findByNoticeNo(Long noticeNo);
     
 }

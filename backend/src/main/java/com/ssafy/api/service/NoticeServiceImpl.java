@@ -19,7 +19,7 @@ public class NoticeServiceImpl implements NoticeService {
     NoticeRepository noticeRepository;
 
     @Override
-    public Notice getByNoticeNo(long noticeNo) {
+    public Notice getByNoticeNo(Long noticeNo) {
         return noticeRepository.findByNoticeNo(noticeNo).orElse(null);
     }
 
@@ -53,7 +53,7 @@ public class NoticeServiceImpl implements NoticeService {
 
     @Override
     @Transactional
-    public int deleteNotice(long noticeNo) {
+    public int deleteNotice(Long noticeNo) {
         try {
             noticeRepository.findByNoticeNo(noticeNo).get();
         } catch (Exception e) {
