@@ -39,8 +39,8 @@ public class RecruitController {
     @ApiOperation(value = "스터디 모집글 목록 조회", notes = "스터디 모집글 목록을 조회한다.")
     @ApiResponses({@ApiResponse(code = 200, message = "스터디 모집글 목록 조회 성공"), @ApiResponse(code = 401, message = "스터디 모집글 목록 조회 실패"), @ApiResponse(code = 500, message = "서버 오류")})
     public ResponseEntity<RecruitListRes> getRecruitList() throws Exception {
-        List<Recruit> posts = recruitService.getList();
-        return ResponseEntity.status(200).body(RecruitListRes.of(posts, 200, "공지사항 목록 조회를 성공하였습니다."));
+        List<Recruit> recruits = recruitService.getList();
+        return ResponseEntity.status(200).body(RecruitListRes.of(recruits, 200, "공지사항 목록 조회를 성공하였습니다."));
     }
 
 
