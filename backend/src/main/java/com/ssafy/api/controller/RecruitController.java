@@ -54,7 +54,7 @@ public class RecruitController {
     }
 
     @PutMapping("/{recruitNo}")
-    @ApiOperation(value = "공지사항 수정", notes = "모집글 내용을 수정한다.")
+    @ApiOperation(value = "모집글 수정", notes = "모집글 내용을 수정한다.")
     @ApiResponses({@ApiResponse(code = 200, message = "모집글 수정 성공"), @ApiResponse(code = 401, message = "모집글 수정 실패"), @ApiResponse(code = 402, message = "해당 모집글 없음"), @ApiResponse(code = 500, message = "서버 오류")})
     public ResponseEntity<?> updateRecruit(@PathVariable @ApiParam(value = "모집글 번호", required = true) Long recruitNo, @RequestBody @ApiParam(value = "모집글 변경 내용", required = true) RecruitReq recruitReq) {
         Recruit recruit = recruitService.getByRecruitNo(recruitNo);
