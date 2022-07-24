@@ -51,6 +51,11 @@ public class RecruitController {
         return ResponseEntity.status(200).body(RecruitRes.of(recruit, 200, "모집글 상세조회를 성공하였습니다."));
     }
 
+    @PutMapping("/{recruitNo}")
+    public ResponseEntity<?> updateRecruit(@PathVariable Long recruitNo){
+
+    }
+
     @DeleteMapping("/{recruitNo}")
     @ApiOperation(value = "모집글 삭제", notes = "스터디 모집글을 삭제한다.")
     public ResponseEntity<?> deleteRecruit(@PathVariable Long recruitNo) {
