@@ -1,6 +1,5 @@
 package com.ssafy.api.controller;
 
-
 import com.ssafy.api.service.ApplyService;
 import com.ssafy.common.auth.UserDetails;
 import com.ssafy.common.model.response.BaseResponseBody;
