@@ -45,20 +45,21 @@ public class RecruitController {
     @GetMapping("/{recruitNo}")
     @ApiOperation(value = "모집글 상세조회", notes = "스터디 모집글 상세정보를 조회한다.")
     @ApiResponses({@ApiResponse(code = 200, message = "스터디 모집글 상세정보 조회 성공"), @ApiResponse(code = 401, message = "스터디 모집글 상세정보 조회 실패"), @ApiResponse(code = 500, message = "서버 오류")})
-    public ResponseEntity<?> getRecruitDetail(@PathVariable @ApiParam(value = "모집글 번호", required = true) Long recruitNo) {
+    public ResponseEntity<?> getRecruitDetail(@PathVariable @ApiParam(value = "모집글 번호", required = true) Long recruitNo) throws Exception {
         Recruit recruit = recruitService.getByRecruitNo(recruitNo);
         if (recruit == null) return ResponseEntity.status(401).body(BaseResponseBody.of(401, "해당하는 모집글이 없습니다."));
         return ResponseEntity.status(200).body(RecruitRes.of(recruit, 200, "모집글 상세조회를 성공하였습니다."));
     }
 
     @PutMapping("/{recruitNo}")
-    public ResponseEntity<?> updateRecruit(@PathVariable Long recruitNo){
+    public ResponseEntity<?> updateRecruit(@PathVariable Long recruitNo) {
 
     }
 
     @DeleteMapping("/{recruitNo}")
     @ApiOperation(value = "모집글 삭제", notes = "스터디 모집글을 삭제한다.")
-    public ResponseEntity<?> deleteRecruit(@PathVariable Long recruitNo) {
+    @ApiResponses({@ApiResponse(code = 200, message = "모집글 삭제 성공"), @ApiResponse(code = 401, message = "모집글 삭제 실패"), @ApiResponse(code = 500, message = "서버 오류")})
+    public ResponseEntity<?> deleteRecruit(@PathVariable @ApiParam(value = "모집글 번호", required = true) Long recruitNo) throws Exception {
         int result = recruitService.deleteRecruit(recruitNo);
         if (result == 1) return ResponseEntity.status(200).body(BaseResponseBody.of(200, "스터디 모집글 삭제가 완료되었습니다."));
         else return ResponseEntity.status(200).body(BaseResponseBody.of(401, "스터디 모집글 삭제에 실패하였습니다."));
