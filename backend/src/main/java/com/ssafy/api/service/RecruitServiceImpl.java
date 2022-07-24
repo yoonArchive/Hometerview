@@ -5,6 +5,7 @@ import com.ssafy.db.entity.Recruit;
 import com.ssafy.db.repository.RecruitRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -38,6 +39,18 @@ public class RecruitServiceImpl implements RecruitService {
     @Override
     public Recruit getByRecruitNo(Long recruitNo) {
         return recruitRepository.findByRecruitNo(recruitNo).orElse(null);
+    }
+
+    @Override
+    @Transactional
+    public int deleteRecruit(Long recruitNo) {
+        try {
+            recruitRepository.findByRecruitNo(recruitNo).get();
+        } catch (Exception e) {
+            return 0;
+        }
+        recruitRepository.deleteByRecruitNo(recruitNo);
+        return 1;
     }
 
 }

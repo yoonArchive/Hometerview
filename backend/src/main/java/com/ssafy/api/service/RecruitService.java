@@ -13,4 +13,6 @@ public interface RecruitService {
 
     Recruit getByRecruitNo(Long recruitNo);
 
+    int deleteRecruit(Long recruitNo);
+
 }
