@@ -11,6 +11,7 @@ import com.ssafy.api.request.UserRegisterPostReq;
 import com.ssafy.db.entity.User;
 import com.ssafy.db.repository.UserRepository;
 import com.ssafy.db.repository.UserRepositorySupport;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 유저 관련 비즈니스 로직 처리를 위한 서비스 구현 정의.
@@ -19,9 +20,6 @@ import com.ssafy.db.repository.UserRepositorySupport;
 public class UserServiceImpl implements UserService {
     @Autowired
     UserRepository userRepository;
-
-    @Autowired
-    UserRepositorySupport userRepositorySupport;
 
     @Autowired
     PasswordEncoder passwordEncoder;
@@ -55,11 +53,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getByUserNo(Long userNo) {
-        return userRepository.findByUserNo(userNo).get();
-    }
-
-    @Override
     public User getByUserNameAndUserEmailAndUserId(String userName, String userEmail, String userId) {
         return userRepository.findByUserNameAndUserEmailAndUserId(userName, userEmail, userId).orElse(null);
     }
@@ -70,17 +63,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void updatePassword(User user, String temPw) {
         user.setUserPw(passwordEncoder.encode(temPw));
-        userRepository.save(user);
     }
 
     @Override
+    @Transactional
     public void updateUser(User user, UpdateUserPutReq updateUserPutReq) {
         user.setUserName(updateUserPutReq.getUserName());
         user.setUserEmail(updateUserPutReq.getUserEmail());
         user.setUserImg(updateUserPutReq.getUserImg());
-        userRepository.save(user);
     }
 
 }
