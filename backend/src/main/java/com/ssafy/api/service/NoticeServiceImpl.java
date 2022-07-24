@@ -54,7 +54,6 @@ public class NoticeServiceImpl implements NoticeService {
         SimpleDateFormat dataFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date now = new Date();
         notice.setWriteDate(dataFormat.format(now));
-        // noticeRepository.save(notice);
     }
 
     @Override
