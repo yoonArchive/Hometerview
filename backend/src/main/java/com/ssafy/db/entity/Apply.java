@@ -24,4 +24,11 @@ public class Apply {
     @JoinColumn(name = "user_no")
     private User user;
 
+    public static Apply createApply(User user, Recruit recruit) {
+        Apply apply = new Apply();
+        apply.setUser(user);
+        apply.setRecruit(recruit);
+        return apply;
+    }
+
 }
