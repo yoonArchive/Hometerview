@@ -13,6 +13,8 @@ import StudyRecruitment from '@/views/home/components/study-recruitment'
 
 import noticeList from '@/views/notice/noticeListView'
 import noticeNewView from '@/views/notice/noticeNewView'
+import noticeDetailView from '@/views/notice/noticeDetailView'
+import noticeEditView from '@/views/notice/noticeEditView'
 
 const fullMenu = require('@/views/main/menu.json')
 function makeRoutesFromMenu () {
@@ -61,13 +63,21 @@ function makeRoutesFromMenu () {
     component:Main
   },{
     path: '/notice',
+    name: 'notices',
+    component: noticeList
+  },{
+    path: '/notice/new',
+    name: 'noticeNew',
+    component: noticeNewView
+  },{
+    path: '/notice/:noticeNo',
     name: 'notice',
-    component: noticeList,
-    children : [{
-      path: 'new',
-      name: 'noticeNew',
-      component: noticeNewView
-    }]
+    component: noticeDetailView
+  },
+  {
+    path: '/notice/:noticeNo/edit',
+    name: 'noticeEdit',
+    component: noticeEditView
   },
 
   )

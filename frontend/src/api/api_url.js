@@ -1,7 +1,7 @@
 const HOST = 'http://localhost:8081/api/v1/'
 const USERS = 'users/'
 const AUTH = 'auth/'
-const NOTICE = 'notice'
+const NOTICE = 'notice/'
 
 
 export default {
@@ -18,6 +18,7 @@ export default {
   },
   notice: {
     notices: () => HOST + NOTICE,
-    notice: () => HOST + NOTICE+ `${{noticeno}}`,
+    notice: (noticeNo) => HOST + NOTICE + `${noticeNo}`,
+
   }
 }

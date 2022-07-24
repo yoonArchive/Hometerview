@@ -5,7 +5,7 @@
     <div class="contents">
       <div class="box">
         <div class="word">
-          <router-link class="routerlink" :to="{ name: 'notice' }" id="a">
+          <router-link class="routerlink" :to="{ name: 'notices' }" id="a">
             공지사항
           </router-link>
           <a href="" id="b">이용약관</a>
