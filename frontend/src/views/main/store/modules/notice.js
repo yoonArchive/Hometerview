@@ -33,68 +33,70 @@ export default {
       axios({
         url: api_url.notice.notices(),
         method: 'get',
-        headers: getters.authHeader,
+        // headers: getters.authHeader,
       })
-        .then(res => commit('SET_NOTICES', res.data))
+        .then(res => commit('SET_NOTICES', res.data),
+        )
         .catch(err => console.error(err.response))
     },
     //공지사항 상세 가져오기
-    fetchNotice({ commit, getters }, noticeno) {
+    fetchNotice({ commit, getters }, noticeNo) {
       axios({
-        url: api_url.notices.notice(noticeno),
+        url: api_url.notice.notice(noticeNo),
         method: 'get',
-        headers: getters.authHeader,
+        // headers: getters.authHeader,
       })
         .then(res => commit('SET_NOTICE', res.data))
         .catch(err => {
-          console.error(err.response)
+          console.error('에러'+err.response)
           if (err.response.status === 404) {
             router.push({ name: 'NotFound404' })
           }
         })
     },
     //공지사항 작성하기
-    createnotice({ commit, getters }, notice) {
+    createNotice({ commit, getters }, notice) {
       axios({
-        url: api_url.notices.notices(),
+        url: api_url.notice.notices(),
         method: 'post',
         data: notice,
-        headers: getters.authHeader,
+        // headers: getters.authHeader,
       })
         .then(res => {
           commit('SET_NOTICE', res.data)
+          console.log('공지사항 작성 성공' + res)
           router.push({
             name: 'notice',
-            params: { noticeno: getters.notice.pk }
+            params: { noticeNo: getters.notice.noticeNo }
           })
         })
     },
     //공지사항 수정하기
-    updatenotice({ commit, getters }, { pk, title, content}) {
-      console.log(title)
-      console.log(content)
+    updateNotice({ commit, getters }, { noticeNo, noticeTitle, noticeContents}) {
+      console.log(noticeTitle)
+      console.log(noticeContents)
       axios({
-        url: api_url.notices.notice(pk),
+        url: api_url.notice.notice(noticeNo),
         method: 'put',
-        data: { title, content },
-        headers: getters.authHeader,
+        data: { noticeTitle, noticeContents },
+        // headers: getters.authHeader,
       })
         .then(res => {
 
           commit('SET_NOTICE', res.data)
           router.push({
             name: 'notice',
-            params: { noticeno: getters.notice.pk }
+            params: { noticeno: getters.notice.noticeNo }
           })
         })
     },
     //공지사항 삭제하기
-    deletenotice({ commit, getters }, noticeno) {
+    deleteNotice({ commit, getters }, noticeNo) {
       if (confirm('정말 삭제하시겠습니까?')) {
         axios({
-          url: api_url.notices.notice(noticeno),
+          url: api_url.notice.notice(noticeNo),
           method: 'delete',
-          headers: getters.authHeader,
+          // headers: getters.authHeader,
         })
           .then(() => {
             commit('SET_NOTICE', {})
