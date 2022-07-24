@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class PostServiceImpl implements PostService {
@@ -29,5 +30,15 @@ public class PostServiceImpl implements PostService {
         posts.setStdDay(postWritePostReq.getStdDay());
         posts.setStdLimit(postWritePostReq.getStdLimit());
         postRepository.save(posts);
+    }
+
+    @Override
+    public List<Posts> getList() {
+        return null;
+    }
+
+    @Override
+    public Posts getByPostNo(long postNo) {
+        return null;
     }
 }
