@@ -11,8 +11,8 @@ import javax.validation.constraints.NotEmpty;
 
 @Getter
 @Setter
-@ApiModel("RecruitWritePostRequest")
-public class RecruitWritePostReq {
+@ApiModel("RecruitRequest")
+public class RecruitReq {
 
     @NotEmpty
     @ApiModelProperty(name = "모집글 제목", example = "모집글 제목입니다.")

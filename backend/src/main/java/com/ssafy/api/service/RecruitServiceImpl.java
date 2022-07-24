@@ -1,6 +1,6 @@
 package com.ssafy.api.service;
 
-import com.ssafy.api.request.RecruitWritePostReq;
+import com.ssafy.api.request.RecruitReq;
 import com.ssafy.db.entity.Recruit;
 import com.ssafy.db.repository.RecruitRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,18 +16,9 @@ public class RecruitServiceImpl implements RecruitService {
     RecruitRepository recruitRepository;
 
     @Override
-    public void writeRecruit(RecruitWritePostReq recruitWritePostReq) {
+    public void writeRecruit(RecruitReq recruitReq) {
         Recruit recruit = new Recruit();
-        recruit.setRecruitTitle(recruitWritePostReq.getRecruitTitle());
-        recruit.setStdName(recruitWritePostReq.getStdName());
-        recruit.setStdDetail(recruitWritePostReq.getStdDetail());
-        recruit.setStdImg(recruitWritePostReq.getStdImg());
-        recruit.setStdType(recruitWritePostReq.getStdType());
-        recruit.setComName(recruitWritePostReq.getComName());
-        recruit.setStartDate(recruitWritePostReq.getStartDate());
-        recruit.setEndDate(recruitWritePostReq.getEndDate());
-        recruit.setStdDay(recruitWritePostReq.getStdDay());
-        recruit.setStdLimit(recruitWritePostReq.getStdLimit());
+        initRecruit(recruitReq, recruit);
         recruitRepository.save(recruit);
     }
 
@@ -43,6 +34,12 @@ public class RecruitServiceImpl implements RecruitService {
 
     @Override
     @Transactional
+    public void updateRecruit(Recruit recruit, RecruitReq recruitReq) {
+        initRecruit(recruitReq, recruit);
+    }
+
+    @Override
+    @Transactional
     public int deleteRecruit(Long recruitNo) {
         try {
             recruitRepository.findByRecruitNo(recruitNo).get();
@@ -51,6 +48,19 @@ public class RecruitServiceImpl implements RecruitService {
         }
         recruitRepository.deleteByRecruitNo(recruitNo);
         return 1;
+    }
+
+    private void initRecruit(RecruitReq recruitReq, Recruit recruit) {
+        recruit.setRecruitTitle(recruitReq.getRecruitTitle());
+        recruit.setStdName(recruitReq.getStdName());
+        recruit.setStdDetail(recruitReq.getStdDetail());
+        recruit.setStdImg(recruitReq.getStdImg());
+        recruit.setStdType(recruitReq.getStdType());
+        recruit.setComName(recruitReq.getComName());
+        recruit.setStartDate(recruitReq.getStartDate());
+        recruit.setEndDate(recruitReq.getEndDate());
+        recruit.setStdDay(recruitReq.getStdDay());
+        recruit.setStdLimit(recruitReq.getStdLimit());
     }
 
 }

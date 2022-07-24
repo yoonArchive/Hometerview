@@ -1,6 +1,7 @@
 package com.ssafy.api.controller;
 
-import com.ssafy.api.request.RecruitWritePostReq;
+import com.ssafy.api.request.RecruitReq;
+import com.ssafy.api.response.RecruitListRes;
 import com.ssafy.api.response.RecruitRes;
 import com.ssafy.api.service.RecruitService;
 import com.ssafy.common.model.response.BaseResponseBody;
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Api(value = "모집글 API", tags = {"Recruits"})
 @RestController
@@ -23,36 +25,47 @@ public class RecruitController {
     @PostMapping()
     @ApiOperation(value = "모집글 작성", notes = "스터디 모집글을 작성한다.")
     @ApiResponses({@ApiResponse(code = 200, message = "모집글 작성 성공"), @ApiResponse(code = 401, message = "모집글 작성 실패"), @ApiResponse(code = 500, message = "서버 오류")})
-    public ResponseEntity<? extends BaseResponseBody> register(@RequestBody @ApiParam(value = "모집글 정보", required = true) @Valid RecruitWritePostReq recruitWritePostReq) throws Exception {
+    public ResponseEntity<? extends BaseResponseBody> register(@RequestBody @ApiParam(value = "모집글 정보", required = true) @Valid RecruitReq recruitReq) throws Exception {
         try {
-            recruitService.writeRecruit(recruitWritePostReq);
+            recruitService.writeRecruit(recruitReq);
         } catch (Exception e) {
             return ResponseEntity.status(401).body(BaseResponseBody.of(401, "스터디 모집글 작성에 실패하였습니다."));
         }
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "스터디 모집글 작성에 성공하였습니다."));
     }
 
-    /*
+
     @GetMapping()
     @ApiOperation(value = "스터디 모집글 목록 조회", notes = "스터디 모집글 목록을 조회한다.")
     @ApiResponses({@ApiResponse(code = 200, message = "스터디 모집글 목록 조회 성공"), @ApiResponse(code = 401, message = "스터디 모집글 목록 조회 실패"), @ApiResponse(code = 500, message = "서버 오류")})
-    public ResponseEntity<Posts> getPostsList() throws Exception {
-        List<Posts> posts = postService.getList();
-        return ResponseEntity.status(200).body(PostsListRes.of(posts, 200, "공지사항 목록 조회를 성공하였습니다."));
+    public ResponseEntity<RecruitListRes> getRecruitList() throws Exception {
+        List<Recruit> posts = recruitService.getList();
+        return ResponseEntity.status(200).body(RecruitListRes.of(posts, 200, "공지사항 목록 조회를 성공하였습니다."));
     }
-     */
+
 
     @GetMapping("/{recruitNo}")
     @ApiOperation(value = "모집글 상세조회", notes = "스터디 모집글 상세정보를 조회한다.")
     @ApiResponses({@ApiResponse(code = 200, message = "스터디 모집글 상세정보 조회 성공"), @ApiResponse(code = 401, message = "스터디 모집글 상세정보 조회 실패"), @ApiResponse(code = 500, message = "서버 오류")})
     public ResponseEntity<?> getRecruitDetail(@PathVariable @ApiParam(value = "모집글 번호", required = true) Long recruitNo) throws Exception {
         Recruit recruit = recruitService.getByRecruitNo(recruitNo);
-        if (recruit == null) return ResponseEntity.status(401).body(BaseResponseBody.of(401, "해당하는 모집글이 없습니다."));
-        return ResponseEntity.status(200).body(RecruitRes.of(recruit, 200, "모집글 상세조회를 성공하였습니다."));
+        if (recruit == null) return ResponseEntity.status(401).body(BaseResponseBody.of(401, "해당하는 스터디 모집글이 없습니다."));
+        return ResponseEntity.status(200).body(RecruitRes.of(recruit, 200, "스터디 모집글 상세조회를 성공하였습니다."));
     }
 
     @PutMapping("/{recruitNo}")
-    public ResponseEntity<?> updateRecruit(@PathVariable Long recruitNo) {
+    @ApiOperation(value = "공지사항 수정", notes = "모집글 내용을 수정한다.")
+    @ApiResponses({@ApiResponse(code = 200, message = "모집글 수정 성공"), @ApiResponse(code = 401, message = "모집글 수정 실패"), @ApiResponse(code = 402, message = "해당 모집글 없음"), @ApiResponse(code = 500, message = "서버 오류")})
+    public ResponseEntity<?> updateRecruit(@PathVariable @ApiParam(value = "모집글 번호", required = true) Long recruitNo, @RequestBody @ApiParam(value = "모집글 변경 내용", required = true) RecruitReq recruitReq) {
+        Recruit recruit = recruitService.getByRecruitNo(recruitNo);
+        if (recruit == null) return ResponseEntity.status(401).body(BaseResponseBody.of(402, "해당하는 스터디 모집글이 없습니다."));
+        try {
+            recruitService.updateRecruit(recruit, recruitReq);
+            Recruit updatedRecruit = recruitService.getByRecruitNo(recruitNo);
+            return ResponseEntity.status(200).body(RecruitRes.of(updatedRecruit, 200, "스터디 모집글이 수정되었습니다."));
+        } catch (Exception e) {
+            return ResponseEntity.status(401).body(BaseResponseBody.of(401, "스터디 모집글 수정에 실패하였습니다."));
+        }
 
     }
 
