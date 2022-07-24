@@ -1,6 +1,7 @@
 package com.ssafy.api.controller;
 
 import com.ssafy.api.request.RecruitWritePostReq;
+import com.ssafy.api.response.RecruitRes;
 import com.ssafy.api.service.RecruitService;
 import com.ssafy.common.model.response.BaseResponseBody;
 import com.ssafy.db.entity.Recruit;
@@ -46,7 +47,7 @@ public class RecruitController {
     @ApiResponses({@ApiResponse(code = 200, message = "스터디 모집글 상세정보 조회 성공"), @ApiResponse(code = 401, message = "스터디 모집글 상세정보 조회 실패"), @ApiResponse(code = 500, message = "서버 오류")})
     public ResponseEntity<?> getRecruitDetail(@PathVariable @ApiParam(value = "모집글 번호", required = true) Long recruitNo) {
         Recruit recruit = recruitService.getByRecruitNo(recruitNo);
-        if (recruit == null) return ResponseEntity.status(401).body(BaseResponseBody.of(402, "해당하는 모집글이 없습니다."));
+        if (recruit == null) return ResponseEntity.status(401).body(BaseResponseBody.of(401, "해당하는 모집글이 없습니다."));
         return ResponseEntity.status(200).body(RecruitRes.of(recruit, 200, "모집글 상세조회를 성공하였습니다."));
     }
 

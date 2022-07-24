@@ -6,9 +6,11 @@ import com.ssafy.db.entity.Recruit;
 import java.util.List;
 
 public interface RecruitService {
+
     void writeRecruit(RecruitWritePostReq recruitWritePostReq);
 
     List<Recruit> getList();
 
-    Recruit getByRecruitNo(Long postNo);
+    Recruit getByRecruitNo(Long recruitNo);
+
 }

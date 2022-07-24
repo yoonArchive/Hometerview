@@ -32,12 +32,12 @@ public class RecruitServiceImpl implements RecruitService {
 
     @Override
     public List<Recruit> getList() {
-        return null;
+        return recruitRepository.findAll();
     }
 
     @Override
-    public Recruit getByRecruitNo(Long postNo) {
-        return null;
+    public Recruit getByRecruitNo(Long recruitNo) {
+        return recruitRepository.findByRecruitNo(recruitNo).orElse(null);
     }
 
 }
