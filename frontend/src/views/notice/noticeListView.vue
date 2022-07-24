@@ -9,20 +9,25 @@
             </tr>
           </thead>
           <tbody>
-
-            <tr v-for="notice in notices" :key="notice.no" >
-              <!-- <th scope="row" >
-                <td>{{ notice.user.username }}</td></th> -->
+              <!-- {{notices}} -->
+            <tr v-for="notice in notices.notices" :key="notice.noticeNo" >
+              <th scope="row" >
+                <td>{{ notice.noticeNo }}</td></th>
               <!-- {{ notice[noticeTitle] }} -->
-              <th scope="row">
+              <th >
                 <td>
+
                   <router-link style="text-decoration:none"
-                    :to="{ name: 'notice', params: {noticeno: notice.no} }">
-                    {{ notice }}
+                    :to="{ name: 'notice', params: {noticeNo: notice.noticeNo} }">
+                    {{ notice.noticeTitle }}
+
                     </router-link>
                 </td></th>
-              <th scope="row">
+              <th>
                 <td>{{ timeForToday(notice.writeDate) }}</td>
+              </th>
+              <th>
+                <td>관리자</td>
               </th>
             </tr>
           </tbody>
@@ -45,7 +50,7 @@
     name: 'NoticeList',
     data(){
       return {
-        headers: ['작성자', '제목', '작성시간']
+        headers: ['번호','제목', '작성시간', '작성자']
       }
     },
     computed: {

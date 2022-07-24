@@ -29,6 +29,8 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import springfox.documentation.annotations.ApiIgnore;
 
+import javax.validation.Valid;
+
 /**
  * 유저 관련 API 요청 처리를 위한 컨트롤러 정의.
  */
@@ -37,7 +39,6 @@ import springfox.documentation.annotations.ApiIgnore;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/users")
 public class UserController {
-
 
     private final UserService userService;
     private final MailService mailService;
@@ -52,17 +53,17 @@ public class UserController {
     - notes : API에 대한 자세한 설명을 작성한다.
      */
     @ApiResponses({@ApiResponse(code = 200, message = "성공"), @ApiResponse(code = 401, message = "인증 실패"), @ApiResponse(code = 500, message = "서버 오류")})
-    public ResponseEntity<? extends BaseResponseBody> register(@RequestBody @ApiParam(value = "회원가입 정보", required = true) UserRegisterPostReq registerInfo) throws Exception {
+    public ResponseEntity<? extends BaseResponseBody> register(@RequestBody @ApiParam(value = "회원가입 정보", required = true) @Valid UserRegisterPostReq userRegisterPostReq) throws Exception {
 		/*
 		@ApiParam : Api에서 사용할 파라미터를 표시
 		 */
         //임의로 리턴된 User 인스턴스. 현재 코드는 회원 가입 성공 여부만 판단하기 때문에 굳이 Insert 된 유저 정보를 응답하지 않음.
         try {
-            userService.createUser(registerInfo);
+            userService.createUser(userRegisterPostReq);
         } catch (Exception e) {
-            return ResponseEntity.status(401).body(BaseResponseBody.of(401, "회원가입에 실패하셨습니다."));
+            return ResponseEntity.status(401).body(BaseResponseBody.of(401, "회원가입에 실패하였습니다."));
         }
-        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "회원가입에 성공하셨습니다.")); // 응답 코드와 함께 응답 메시지 return
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "회원가입에 성공하였습니다.")); // 응답 코드와 함께 응답 메시지 return
     }
 
     @GetMapping("/me")
@@ -179,12 +180,13 @@ public class UserController {
     @PutMapping()
     @ApiOperation(value = "회원 정보 수정", notes = "회원의 프로필 이미지, 이름 혹은 이메일을 수정한다.")
     @ApiResponses({@ApiResponse(code = 200, message = "회원 정보 수정 성공"), @ApiResponse(code = 401, message = "회원 정보 수정 실패"), @ApiResponse(code = 500, message = "서버 오류")})
-    public ResponseEntity<?> updateUser(@ApiIgnore Authentication authentication, @RequestBody @ApiParam(value = "변경된 회원 정보", required = true) UpdateUserPutReq updateUserPutReq) throws Exception {
+    public ResponseEntity<?> updateUser(@ApiIgnore Authentication authentication, @RequestBody @ApiParam(value = "변경된 회원 정보", required = true) @Valid UpdateUserPutReq updateUserPutReq) throws Exception {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         String userId = userDetails.getUsername();
         User user = userService.getByUserId(userId);
         userService.updateUser(user, updateUserPutReq);
-        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "회원정보가 수정되었습니다."));
+        User updatedUser = userService.getByUserId(userId);
+        return ResponseEntity.status(200).body(UserRes.of(updatedUser, 200, "회원정보가 수정되었습니다."));
     }
 
     @DeleteMapping()
