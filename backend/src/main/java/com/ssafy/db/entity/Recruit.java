@@ -10,16 +10,16 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@Table(name = "posts")
-public class Posts {
+@Table(name = "recruit")
+public class Recruit {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "post_no")
-    private Long postNo;
+    @Column(name = "recruit_no")
+    private Long recruitNo;
 
-    @Column(name = "post_title")
-    private String postTitle;
+    @Column(name = "recruit_title")
+    private String recruitTitle;
 
     @Column(name = "std_name")
     private String stdName;

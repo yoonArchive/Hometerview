@@ -1,9 +1,9 @@
 package com.ssafy.api.controller;
 
-import com.ssafy.api.request.PostWritePostReq;
-import com.ssafy.api.service.PostService;
+import com.ssafy.api.request.RecruitWritePostReq;
+import com.ssafy.api.service.RecruitService;
 import com.ssafy.common.model.response.BaseResponseBody;
-import com.ssafy.db.entity.Posts;
+import com.ssafy.db.entity.Recruit;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -11,20 +11,20 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-@Api(value = "모집글 API", tags = {"Posts"})
+@Api(value = "모집글 API", tags = {"Recruits"})
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/posts")
-public class PostController {
+@RequestMapping("/api/v1/recruits")
+public class RecruitController {
 
-    private final PostService postService;
+    private final RecruitService recruitService;
 
     @PostMapping()
     @ApiOperation(value = "모집글 작성", notes = "스터디 모집글을 작성한다.")
     @ApiResponses({@ApiResponse(code = 200, message = "모집글 작성 성공"), @ApiResponse(code = 401, message = "모집글 작성 실패"), @ApiResponse(code = 500, message = "서버 오류")})
-    public ResponseEntity<? extends BaseResponseBody> register(@RequestBody @ApiParam(value = "모집글 정보", required = true) @Valid PostWritePostReq postWritePostReq) throws Exception {
+    public ResponseEntity<? extends BaseResponseBody> register(@RequestBody @ApiParam(value = "모집글 정보", required = true) @Valid RecruitWritePostReq recruitWritePostReq) throws Exception {
         try {
-            postService.writePost(postWritePostReq);
+            recruitService.writeRecruit(recruitWritePostReq);
         } catch (Exception e) {
             return ResponseEntity.status(401).body(BaseResponseBody.of(401, "스터디 모집글 작성에 실패하였습니다."));
         }
@@ -41,13 +41,13 @@ public class PostController {
     }
      */
 
-    @GetMapping("/{postNo}")
+    @GetMapping("/{recruitNo}")
     @ApiOperation(value = "모집글 상세조회", notes = "스터디 모집글 상세정보를 조회한다.")
     @ApiResponses({@ApiResponse(code = 200, message = "스터디 모집글 상세정보 조회 성공"), @ApiResponse(code = 401, message = "스터디 모집글 상세정보 조회 실패"), @ApiResponse(code = 500, message = "서버 오류")})
-    public ResponseEntity<?> getPostDetail(@PathVariable @ApiParam(value = "모집글 번호", required = true) long postNo) {
-        Posts posts = postService.getByPostNo(postNo);
-        if (posts == null) return ResponseEntity.status(401).body(BaseResponseBody.of(402, "해당하는 모집글이 없습니다."));
-        return ResponseEntity.status(200).body(PostRes.of(posts, 200, "모집글 상세조회를 성공하였습니다."));
+    public ResponseEntity<?> getRecruitDetail(@PathVariable @ApiParam(value = "모집글 번호", required = true) Long recruitNo) {
+        Recruit recruit = recruitService.getByRecruitNo(recruitNo);
+        if (recruit == null) return ResponseEntity.status(401).body(BaseResponseBody.of(402, "해당하는 모집글이 없습니다."));
+        return ResponseEntity.status(200).body(RecruitRes.of(recruit, 200, "모집글 상세조회를 성공하였습니다."));
     }
 
 }

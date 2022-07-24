@@ -11,12 +11,12 @@ import javax.validation.constraints.NotEmpty;
 
 @Getter
 @Setter
-@ApiModel("PostWritePostRequest")
-public class PostWritePostReq {
+@ApiModel("RecruitWritePostRequest")
+public class RecruitWritePostReq {
 
     @NotEmpty
     @ApiModelProperty(name = "모집글 제목", example = "모집글 제목입니다.")
-    String postTitle;
+    String recruitTitle;
 
     @NotEmpty
     @ApiModelProperty(name = "스터디 이름", example = "스터디 이름입니다.")
