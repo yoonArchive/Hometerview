@@ -41,11 +41,6 @@ public class NoticeServiceImpl implements NoticeService {
         return noticeRepository.findAll();
     }
 
-//    @Override
-//    public Notice detailNotice(long noticeNo) {
-//        return noticeRepository.getOne(noticeNo);
-//    }
-
     @Override
     @Transactional
     public void updateNotice(Notice notice, UpdateNoticePutReq updateNoticePutReq) {
@@ -54,7 +49,6 @@ public class NoticeServiceImpl implements NoticeService {
         SimpleDateFormat dataFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date now = new Date();
         notice.setWriteDate(dataFormat.format(now));
-        // noticeRepository.save(notice);
     }
 
     @Override
