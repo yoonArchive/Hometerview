@@ -41,11 +41,6 @@ public class NoticeServiceImpl implements NoticeService {
         return noticeRepository.findAll();
     }
 
-//    @Override
-//    public Notice detailNotice(long noticeNo) {
-//        return noticeRepository.getOne(noticeNo);
-//    }
-
     @Override
     @Transactional
     public void updateNotice(Notice notice, UpdateNoticePutReq updateNoticePutReq) {
