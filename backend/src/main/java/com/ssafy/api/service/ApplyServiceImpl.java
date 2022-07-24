@@ -48,4 +48,5 @@ public class ApplyServiceImpl implements ApplyService {
         applyRepository.deleteByApplyNo(applyNo);
         return 1;
     }
+
 }
