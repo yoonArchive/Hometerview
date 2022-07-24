@@ -28,7 +28,6 @@ public class NoticeServiceImpl implements NoticeService {
         Notice notice = new Notice();
         notice.setNoticeTitle(noticeWritePostReq.getNoticeTitle());
         notice.setNoticeContents(noticeWritePostReq.getNoticeContents());
-        // 작성일자
         SimpleDateFormat dataFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date now = new Date();
         notice.setWriteDate(dataFormat.format(now));

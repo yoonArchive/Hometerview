@@ -22,7 +22,6 @@ public class NoticeController {
     @Autowired
     NoticeService noticeService;
 
-    // 작성
     @PostMapping()
     @ApiOperation(value = "공지사항 작성", notes = "공지사항 제목과 내용을 작성한다.")
     @ApiResponses({@ApiResponse(code = 200, message = "공지사항 작성 성공"), @ApiResponse(code = 401, message = "공지사항 작성 실패"), @ApiResponse(code = 500, message = "서버 오류")})
@@ -35,7 +34,6 @@ public class NoticeController {
         }
     }
 
-    // 목록조회
     @GetMapping()
     @ApiOperation(value = "공지사항 목록 조회", notes = "공지사항 목록을 조회한다.")
     @ApiResponses({@ApiResponse(code = 200, message = "공지사항 목록 조회 성공"), @ApiResponse(code = 401, message = "공지사항 목록 조회 실패"), @ApiResponse(code = 500, message = "서버 오류")})
@@ -44,7 +42,6 @@ public class NoticeController {
         return ResponseEntity.status(200).body(NoticeListRes.of(notices, 200, "공지사항 목록 조회를 성공하였습니다."));
     }
 
-    // 상세조회
     @GetMapping("/{noticeNo}")
     @ApiOperation(value = "공지사항 상세조회", notes = "공지사항 상세정보을 조회한다.")
     @ApiResponses({@ApiResponse(code = 200, message = "공지사항 상세정보을 조회 성공"), @ApiResponse(code = 401, message = "공지사항 상세정보을 조회 실패"), @ApiResponse(code = 500, message = "서버 오류")})
@@ -54,7 +51,6 @@ public class NoticeController {
         return ResponseEntity.status(200).body(NoticeRes.of(notice, 200, "공지사항 상세조회를 성공하였습니다."));
     }
 
-    // 수정
     @PutMapping("/{noticeNo}")
     @ApiOperation(value = "공지사항 수정", notes = "공지사항의 제목 또는 내용을 수정한다.")
     @ApiResponses({@ApiResponse(code = 200, message = "공지사항 수정 성공"), @ApiResponse(code = 401, message = "공지사항 수정 실패"), @ApiResponse(code = 402, message = "해당 공지 없음"), @ApiResponse(code = 500, message = "서버 오류")})
@@ -70,7 +66,6 @@ public class NoticeController {
         }
     }
 
-    // 삭제
     @DeleteMapping("/{noticeNo}")
     @ApiOperation(value = "공지사항 삭제", notes = "공지사항 삭제")
     @ApiResponses({@ApiResponse(code = 200, message = "공지사항 삭제 성공"), @ApiResponse(code = 401, message = "공지사항 삭제 실패"), @ApiResponse(code = 500, message = "서버 오류")})
