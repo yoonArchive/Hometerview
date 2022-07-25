@@ -18,13 +18,15 @@ import java.util.List;
 public class ResumeServiceImpl implements ResumeService {
 
     private final ResumeRepository resumeRepository;
+
     private final ResumeDetailRepository resumeDetailRepository;
+
     private final UserRepository userRepository;
+
     private final ResumeDetailRepositorySupport resumeDetailRepositorySupport;
 
     private final ResumeRepositorySupport resumeRepositorySupport;
 
-    // 자기소개서
     @Override
     public void createResume(Long userNo, String resumeTitle) {
         Resume resume = new Resume();
@@ -38,6 +40,7 @@ public class ResumeServiceImpl implements ResumeService {
     public List<Resume> listResume(Long userNo) {
         return resumeRepositorySupport.findAllResumeByUserNo(userNo);
     }
+
     @Override
     public Resume getByResumeNo(Long resumeNo){
         return resumeRepository.findByResumeNo(resumeNo).orElse(null);
@@ -65,8 +68,6 @@ public class ResumeServiceImpl implements ResumeService {
         return 1;
     }
 
-
-    // 자기소개서 상세
     @Override
     public ResumeDetail writeResumeDetail(ResumeWritePostReq resumeWritePostReq) {
         ResumeDetail resumeDetail = new ResumeDetail();

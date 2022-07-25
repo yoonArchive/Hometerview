@@ -31,11 +31,6 @@ public class ResumeController {
 
     private final ResumeService resumeService;
 
-    /**
-     * 자기소개서
-     */
-
-    //생성
     @PostMapping()
     @ApiOperation(value = "자기소개서 생성", notes = "자기소개서를 생성한다.")
     @ApiResponses({@ApiResponse(code = 200, message = "자기소개서 생성 성공"), @ApiResponse(code = 401, message = "자기소개서 생성 실패"), @ApiResponse(code = 500, message = "서버 오류")})
@@ -51,7 +46,6 @@ public class ResumeController {
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "자기소개서 생성에 성공하였습니다."));
     }
 
-    // 조회
     @GetMapping()
     @ApiResponses({@ApiResponse(code = 200, message = "자기소개서 목록 조회 성공"), @ApiResponse(code = 401, message = "자기소개서 목록 조회 실패"), @ApiResponse(code = 500, message = "서버 오류")})
     @ApiOperation(value = "자기소개서 목록 조회", notes = "자기소개서를 목록을 조회한다.")
@@ -62,7 +56,6 @@ public class ResumeController {
         return ResponseEntity.status(200).body(ResumeListRes.of(resumes,200, "자기소개서 생성에 성공하였습니다."));
     }
 
-    // 수정
     @PutMapping()
     @ApiResponses({@ApiResponse(code = 200, message = "자기소개서 제목 수정 성공"), @ApiResponse(code = 401, message = "자기소개서 제목 수정 실패"), @ApiResponse(code = 402, message = "해당 자기소개서 없음"), @ApiResponse(code = 500, message = "서버 오류")})
     @ApiOperation(value = "자기소개서 제목 수정", notes = "자기소개서 제목을 수정한다.")
@@ -78,7 +71,6 @@ public class ResumeController {
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "자기소게서 제목 수정에 성공했습니다."));
     }
 
-    // 삭제
     @DeleteMapping()
     @ApiResponses({@ApiResponse(code = 200, message = "자기소개서 삭제 성공"), @ApiResponse(code = 401, message = "자기소개서 삭제 실패"), @ApiResponse(code = 500, message = "서버 오류")})
     @ApiOperation(value = "자기소개서 삭제", notes = "자기소개서를 삭제한다.")
@@ -88,12 +80,6 @@ public class ResumeController {
         else return ResponseEntity.status(401).body(BaseResponseBody.of(401, "자기소개서 생성에 실패하였습니다."));
     }
 
-
-    /**
-     * 자기소개서 상세
-     */
-
-    //상세 작성
     @PostMapping("/detail")
     @ApiOperation(value = "자기소개서 상세 작성", notes = "자기소개서를 작성한다..")
     @ApiResponses({@ApiResponse(code = 200, message = "자기소개서 작성 성공"), @ApiResponse(code = 401, message = "자기소개서 작성 실패"), @ApiResponse(code = 500, message = "서버 오류")})
@@ -106,7 +92,6 @@ public class ResumeController {
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "자기소개서 작성에 성공하였습니다."));
     }
 
-    //상세 조회
     @GetMapping("/detail")
     @ApiOperation(value = "자기소개서 상세 조회", notes = "자기소개서를 상세 조회한다.")
     @ApiResponses({@ApiResponse(code = 200, message = "자기소개서 상세 조회 성공"), @ApiResponse(code = 401, message = "자기소개서 상세 조회 실패"), @ApiResponse(code = 500, message = "서버 오류")})
@@ -117,7 +102,6 @@ public class ResumeController {
         return ResponseEntity.status(200).body(ResumeRes.of(resumeDetail, 200, "자기소개서 상세조회에 성공하였습니다."));
     }
 
-    //상세 수정
     @PutMapping("/{detailno}")
     @ApiOperation(value = "자기소개서 상세 수정", notes = "자기소개서 상세 내용을 수정한다.")
     @ApiResponses({@ApiResponse(code = 200, message = "자기소개서 상세 수정 성공"), @ApiResponse(code = 401, message = "자기소개서 상세 수정 실패"), @ApiResponse(code = 402, message = "자기소개서 상세 없음"), @ApiResponse(code = 500, message = "서버 오류")})
@@ -134,7 +118,6 @@ public class ResumeController {
         }
     }
 
-    //상세 삭제
     @DeleteMapping("/{detailno}")
     @ApiOperation(value = "자기소개서 상세 삭제", notes = "자기소개서 상세 내용을 삭제한다.")
     @ApiResponses({@ApiResponse(code = 200, message = "자기소개서 상세 삭제 성공"), @ApiResponse(code = 401, message = "자기소개서 상세 삭제 실패"), @ApiResponse(code = 500, message = "서버 오류")})
