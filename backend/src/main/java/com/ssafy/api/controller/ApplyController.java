@@ -25,12 +25,9 @@ public class ApplyController {
     public ResponseEntity<? extends BaseResponseBody> applyRecruit(@ApiIgnore Authentication authentication, @PathVariable @ApiParam(value = "모집글 번호", required = true) Long recruitNo) throws Exception {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         Long userNo = userDetails.getUserNo();
-        try {
-            applyService.applyRecruit(userNo, recruitNo);
-        } catch (Exception e) {
-            return ResponseEntity.status(401).body(BaseResponseBody.of(401, "스터디 모집 신청에 실패하였습니다."));
-        }
-        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "스터디 모집 신청이 완료되었습니다."));
+        int result = applyService.applyRecruit(userNo, recruitNo);
+        if (result == 0) return ResponseEntity.status(401).body(BaseResponseBody.of(401, "스터디 모집 신청에 실패하였습니다."));
+        else return ResponseEntity.status(200).body(BaseResponseBody.of(200, "스터디 모집 신청이 완료되었습니다."));
     }
 
     @DeleteMapping("/{recruitNo}")

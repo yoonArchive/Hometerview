@@ -28,13 +28,19 @@ public class ApplyServiceImpl implements ApplyService {
     ApplyRepositorySupport applyRepositorySupport;
 
     @Override
-    public void applyRecruit(Long userNo, Long recruitNo) {
-        User user = userRepository.findByUserNo(userNo).get();
-        Recruit recruit = recruitRepository.findByRecruitNo(recruitNo).get();
-        Apply apply = new Apply();
-        apply.setUser(user);
-        apply.setRecruit(recruit);
-        applyRepository.save(apply);
+    public int applyRecruit(Long userNo, Long recruitNo) {
+        try {
+            applyRepositorySupport.findApplyByUserNoAndRecruitNo(userNo, recruitNo).get();
+        } catch (Exception e) {
+            User user = userRepository.findByUserNo(userNo).get();
+            Recruit recruit = recruitRepository.findByRecruitNo(recruitNo).get();
+            Apply apply = new Apply();
+            apply.setUser(user);
+            apply.setRecruit(recruit);
+            applyRepository.save(apply);
+            return 1;
+        }
+        return 0;
     }
 
     @Override
