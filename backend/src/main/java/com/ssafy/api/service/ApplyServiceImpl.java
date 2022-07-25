@@ -62,7 +62,7 @@ public class ApplyServiceImpl implements ApplyService {
         long[] applyCount = new long[recruits.size()];
         int idx = 0;
         for (Recruit recruit : recruits) {
-            applyCount[idx++] = applyRepositorySupport.CountByRecruitNo(recruit.getRecruitNo());
+            applyCount[idx++] = applyRepositorySupport.CountByRecruitNo(recruit.getRecruitNo()) + 1;
         }
         return applyCount;
     }
