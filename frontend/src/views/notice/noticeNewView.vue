@@ -15,7 +15,8 @@
         notice: {
           noticeNo: null,
           noticeContents: '',
-          content: '',
+          noticeTitle: '',
+          noticeDate: ''
         }
       }
     },

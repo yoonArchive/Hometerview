@@ -5,15 +5,27 @@ import ConferencesDetail from '@/views/conferences/conference-detail'
 import History from '@/views/history/history'
 import Main from '@/views/main/main'
 
+/* 로그인 회원가입 등 계정 관련 페이지 */
 import LoginView from '@/views/accounts/LoginView'
 import SignupView from '@/views/accounts/SignupView'
 import LogoutView from '@/views/accounts/LogoutView'
 import FindUseridView from '@/views/accounts/FindUseridView'
+import FindUserPassword from '@/views/accounts/FindUserPassword'
 
+/* 스터디 모집 페이지 */
 import StudyRecruitment from '@/views/home/components/study-recruitment'
 
+/* 공지사항 */
 import noticeList from '@/views/notice/noticeListView'
 import noticeNewView from '@/views/notice/noticeNewView'
+import noticeDetailView from '@/views/notice/noticeDetailView'
+import noticeEditView from '@/views/notice/noticeEditView'
+
+/* 마이 페이지 */
+import MyPage from '@/views/mypage/MyPage'
+import ChangePassword from '@/views/mypage/changepassword/ChangePassword'
+import MyAccount from '@/views/mypage/myaccount/MyAccount'
+import Withdrawal from '@/views/mypage/withdrawal/Withdrawal'
 
 const fullMenu = require('@/views/main/menu.json')
 function makeRoutesFromMenu () {
@@ -56,9 +68,35 @@ function makeRoutesFromMenu () {
       name: 'logout',
       component: LogoutView
     },{
+<<<<<<< HEAD
       path: 'findid',
       name: 'findid',
       component:FindUseridView
+=======
+      path:'finduserpassword',
+      name: 'finduserpassword',
+      component :FindUserPassword
+    },{
+      path:'mypage',
+      name: 'mypage',
+      component :MyPage,
+      redirect: '/home/mypage/myaccount',
+      children : [
+        {
+          path: 'myaccount',
+          name: 'myaccount',
+          component :MyAccount,
+        },{
+          path: 'changepassword',
+          name: 'changepassword',
+          component :ChangePassword,
+        },{
+          path: 'withdrawal',
+          name: 'withdrawal',
+          component :Withdrawal,
+        }
+      ]
+>>>>>>> b8b04c460e26b16e0a60de498fc308852b8b3700
     }]
   },{
     path: '/',
@@ -66,13 +104,21 @@ function makeRoutesFromMenu () {
     component:Main
   },{
     path: '/notice',
+    name: 'notices',
+    component: noticeList
+  },{
+    path: '/notice/new',
+    name: 'noticeNew',
+    component: noticeNewView
+  },{
+    path: '/notice/:noticeNo',
     name: 'notice',
-    component: noticeList,
-    children : [{
-      path: 'new',
-      name: 'noticeNew',
-      component: noticeNewView
-    }]
+    component: noticeDetailView
+  },
+  {
+    path: '/notice/:noticeNo/edit',
+    name: 'noticeEdit',
+    component: noticeEditView
   },
 
   )

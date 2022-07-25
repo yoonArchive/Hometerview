@@ -6,6 +6,7 @@ import com.ssafy.db.entity.Notice;
 import com.ssafy.db.repository.NoticeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -27,13 +28,11 @@ public class NoticeServiceImpl implements NoticeService {
         Notice notice = new Notice();
         notice.setNoticeTitle(noticeWritePostReq.getNoticeTitle());
         notice.setNoticeContents(noticeWritePostReq.getNoticeContents());
-
         // 작성일자
         SimpleDateFormat dataFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date now = new Date();
         notice.setWriteDate(dataFormat.format(now));
         noticeRepository.save(notice);
-
         return notice;
     }
 
@@ -42,22 +41,18 @@ public class NoticeServiceImpl implements NoticeService {
         return noticeRepository.findAll();
     }
 
-//    @Override
-//    public Notice detailNotice(long noticeNo) {
-//        return noticeRepository.getOne(noticeNo);
-//    }
-
     @Override
+    @Transactional
     public void updateNotice(Notice notice, UpdateNoticePutReq updateNoticePutReq) {
         notice.setNoticeTitle(updateNoticePutReq.getNoticeTitle());
         notice.setNoticeContents(updateNoticePutReq.getNoticeContents());
         SimpleDateFormat dataFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date now = new Date();
         notice.setWriteDate(dataFormat.format(now));
-        noticeRepository.save(notice);
     }
 
     @Override
+    @Transactional
     public int deleteNotice(long noticeNo) {
         try {
             noticeRepository.findByNoticeNo(noticeNo).get();
