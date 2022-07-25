@@ -11,12 +11,12 @@
         <label for="userId">ID: </label>
         <input class="round-box" v-model="credentials.userId" type="text" id="id"  required/>
         <form @submit.prevent="idDuplicateCheck(credentials.userId)">
-          <button>check</button>
+          <button>중복체크</button>
         </form>
       </div>
       <div class="pwd-input">
         <label for="userPw">Password: </label>
-        <input class="round-box" v-model="credentials.userPw" type="password" id="userPw" required />
+        <input class="round-box" v-model="credentials.userPw" type="password" id="userPw" placeholder="영문자+숫자+특수문자 조합으로 9~16자리" required />
       </div>
       <div class="pwd-comfirm-input">
         <label for="userPw2">Password Confirmation:</label>
@@ -28,9 +28,9 @@
       </div>
       <div class="email-input">
         <label for="userEmail">e-mail: </label>
-        <input class="round-box" v-model="credentials.userEmail" type="email" id="userEmail"  required/>
+        <input class="round-box" v-model="credentials.userEmail" type="email" id="userEmail" placeholder="ssafy@gmail.com" required/>
         <form @submit.prevent="emailDuplicateCheck(credentials.userEmail)">
-          <button>check</button>
+          <button>중복체크</button>
         </form>
       </div>
 
