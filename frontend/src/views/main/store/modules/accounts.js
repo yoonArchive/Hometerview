@@ -1,6 +1,7 @@
 import axios from 'axios'
 import api_url from '@/api/api_url'
 import http from '@/api/api_url'
+import router from "@/common/lib/vue-router.js";
 
 export default {
 
@@ -14,8 +15,8 @@ export default {
   mutations:{
     SET_TOKEN: (state, token) => state.token = token,
     SET_CURRENT_USER: (state, user) => state.currentUser = user,
-    SET_AUTH_ERROR: (state, error) => state.authError = error
-
+    SET_AUTH_ERROR: (state, error) => state.authError = error,
+    CLEER_CURRENT_USER : (state) => state.currentUser = {},
   },
   getters:{
     isLoggedIn: state => !!state.token,
@@ -42,18 +43,18 @@ export default {
       localStorage.setItem('token', '')
     },
     updateUser({dispatch, getters}, credentials){
-      axios({
-        url: api_url.accounts.updateUser,
-        method:'put',
-        data:{
-          userEmail:credentials.userEmail,
-          userImg:credentials.userImg,
-          userName:credentials.userName,
-        },
-        headers:getters.authHeader
+      console.log(credentials);
+      const updateUserPutReq = {
+        userEmail:credentials.userEmail,
+        userImg:credentials.userImg,
+        userName:credentials.userName,
+      }
+      axios.put(api_url.accounts.updateUser(), updateUserPutReq ,{
+        headers: getters.authHeader
       }).then(data=>{
         console.log(data);
-        dispatch('fetchCurrentUser')
+        dispatch('logout');
+
       }).catch(err=>{
         console.log(err)
       })
@@ -90,7 +91,7 @@ export default {
         })
     },
 
-    logout({ getters, dispatch }) {
+    logout({ getters, dispatch, commit }) {
       /*
       POST: token을 logout URL로 보내기
         성공하면
@@ -100,23 +101,27 @@ export default {
         실패하면
           에러 메시지 표시
       */
-      axios({
-        url: api_url.accounts.logout(),
-        method: 'post',
-        headers: getters.authHeader,
-      })
-        .then(() => {
-          dispatch('removeToken')
-          alert('성공적으로 logout!')
-          router.push({ name: 'login' })
-        })
-        .error(err => {
-          console.error(err.response)
-        })
+      console.log("로그 아웃");
+      dispatch('removeToken');
+      router.push({ name: 'login' })
+      // commit('CLEER_CURRENT_USER');
+      // axios({
+      //   url: api_url.accounts.logout(),
+      //   method: 'post',
+      //   headers: getters.authHeader,
+      // })
+      //   .then(() => {
+      //     dispatch('removeToken')
+      //     alert('성공적으로 logout!')
+      //     router.push({ name: 'login' })
+      //   })
+      //   .error(err => {
+      //     console.error(err.response)
+      //   })
     },
 
 
-    signup({ commit, dispatch }, credentials) {
+    signup({ commit, dispatch, router }, credentials) {
       /*
       POST: 사용자 입력정보를 signup URL로 보내기
         성공하면
@@ -132,10 +137,8 @@ export default {
         data: credentials
       })
         .then(res => {
-          const token = res.data.key
-          dispatch('saveToken', token)
-          dispatch('fetchCurrentUser')
-          router.push({ name: 'articles' })
+          console.log(res);
+
         })
         .catch(err => {
           console.error(err.response.data)
@@ -145,7 +148,7 @@ export default {
     },
 
 
-    fetchCurrentUser({ commit, getters, dispatch }) {
+    async fetchCurrentUser({ commit, getters, dispatch }) {
       /*
       GET: 사용자가 로그인 했다면(토큰이 있다면)
         currentUserInfo URL로 요청보내기
@@ -156,7 +159,7 @@ export default {
             LoginView로 이동
       */
       if (getters.isLoggedIn) {
-        axios({
+        await axios({
           url: api_url.accounts.currentUserInfo(),
           method: 'get',
           headers: getters.authHeader,
