@@ -48,7 +48,7 @@ public class RecruitServiceImpl implements RecruitService {
 
     @Override
     public List<Recruit> search(String keyword) {
-        return recruitRepository.findByRecruitTitleContainingIgnoreCase(keyword);
+        return recruitRepository.findByRecruitTitleContainingIgnoreCaseOrComNameContainingIgnoreCase(keyword, keyword);
     }
 
     @Override

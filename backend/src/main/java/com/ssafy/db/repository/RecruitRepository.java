@@ -21,7 +21,7 @@ public interface RecruitRepository extends JpaRepository<Recruit, Long> {
 
     List<Recruit> findAllByStdTypeOrderByRecruitNoDesc(StdType stdType);
 
-    List<Recruit> findByRecruitTitleContainingIgnoreCase(String keyword);
+    List<Recruit> findByRecruitTitleContainingIgnoreCaseOrComNameContainingIgnoreCase(String titleKeyword, String comNameKeyword);
 
     @Transactional
     Optional<Recruit> deleteByRecruitNo(Long recruitNo);
