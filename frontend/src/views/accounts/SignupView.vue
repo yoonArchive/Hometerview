@@ -1,41 +1,43 @@
 <template>
 
-    <h1>Signup</h1>
+    <h1 class="signup-title">Signup</h1>
 
     <!-- <account-error-list v-if="authError"></account-error-list> -->
 
     <!-- <div v-if="sdf"></div> -->
 
     <form @submit.prevent="signupComfirmation(credentials)" >
-      <div>
-        <label for="userEmail">e-mail: </label>
-        <input v-model="credentials.userEmail" type="email" id="userEmail"  required/>
-        <form @submit.prevent="emailDuplicateCheck(credentials.userEmail)">
-          <button>check</button>
-        </form>
-      </div>
-      <div>
-        <label for="userName">User Name: </label>
-        <input  v-model="credentials.userName" type="text" id="userName" required/>
-      </div>
-      <div>
+      <div class="id-input">
         <label for="userId">ID: </label>
-        <input  v-model="credentials.userId" type="text" id="id"  required/>
+        <input class="round-box" v-model="credentials.userId" type="text" id="id"  required/>
         <form @submit.prevent="idDuplicateCheck(credentials.userId)">
-          <button>check</button>
+          <button>중복체크</button>
         </form>
-
       </div>
-      <div>
+      <div class="pwd-input">
         <label for="userPw">Password: </label>
-        <input v-model="credentials.userPw" type="password" id="userPw" required />
+        <input class="round-box" v-model="credentials.userPw" type="password" id="userPw" placeholder="영문자+숫자+특수문자 조합으로 9~16자리" required />
       </div>
-      <div>
+      <div class="pwd-comfirm-input">
         <label for="userPw2">Password Confirmation:</label>
-        <input v-model="credentials.userPw2" type="password" id="userPw2" required />
+        <input class="round-box" v-model="credentials.userPw2" type="password" id="userPw2" required />
       </div>
+      <div class="user-name-input">
+        <label for="userName">User Name: </label>
+        <input class="round-box"  v-model="credentials.userName" type="text" id="userName" required/>
+      </div>
+      <div class="email-input">
+        <label for="userEmail">e-mail: </label>
+        <input class="round-box" v-model="credentials.userEmail" type="email" id="userEmail" placeholder="ssafy@gmail.com" required/>
+        <form @submit.prevent="emailDuplicateCheck(credentials.userEmail)">
+          <button>중복체크</button>
+        </form>
+      </div>
+
+
+
       <div>
-        <button>Signup</button>
+        <button class="signup-button">Signup</button>
       </div>
     </form>
     
@@ -125,6 +127,84 @@
 </script>
 
 <style>
+ .signup-title{
+  position: absolute;
+  width: 350px;
+  height: 82px;
+  left: 545px;
+  top: 120px;
+
+  font-family: 'BM JUA_TTF';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 60px;
+  line-height: 82px;
+  /* identical to box height, or 137% */
+
+  letter-spacing: 0.1px;
+
+  /* neutral/black */
+
+  color: #2B2B43;
+ }
+ .id-input{
+  position: absolute;
+  width: 350px;
+  height: 84px;
+  left: 545px;
+  top: 252px;
+ }
+ .pwd-input{
+  position: absolute;
+  width: 350px;
+  height: 84px;
+  left: 545px;
+  top: 336px;
+ }
+ .pwd-comfirm-input{
+  position: absolute;
+  width: 350px;
+  height: 84px;
+  left: 545px;
+  top: 420px;
+ }
+ .user-name-input{
+  position: absolute;
+  width: 350px;
+  height: 84px;
+  left: 545px;
+  top: 504px;
+ }
+ .email-input{
+  position: absolute;
+  width: 350px;
+  height: 123px;
+  left: 545px;
+  top: 588px;
+ }
+
+ .signup-button{
+  position: absolute;
+  width: 200px;
+  height: 40px;
+  left: 634px;
+  top: 761px;
+
+  background: #653FD3;
+  border-radius: 8px;
+ }
+
+
+ .round-box{
+  box-sizing: border-box;
+  
+  width: 350px;
+  height: 40px;
+
+  border: 1px solid #C7C8D2;
+  border-radius: 8px;
+ }
+
 
 
 </style>
