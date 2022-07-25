@@ -1,6 +1,5 @@
 package com.ssafy.api.service;
 
-import com.fasterxml.jackson.databind.BeanProperty;
 import com.ssafy.api.request.RecruitReq;
 import com.ssafy.db.entity.Recruit;
 import com.ssafy.db.entity.RecruitStatus;
@@ -45,6 +44,11 @@ public class RecruitServiceImpl implements RecruitService {
         } else {
             return recruitRepository.findAllByStdTypeOrderByRecruitNoDesc(StdType.FREE);
         }
+    }
+
+    @Override
+    public List<Recruit> search(String keyword) {
+        return recruitRepository.findByRecruitTitleContainingIgnoreCase(keyword);
     }
 
     @Override

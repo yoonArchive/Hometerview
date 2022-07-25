@@ -64,6 +64,15 @@ public class RecruitController {
         return ResponseEntity.status(200).body(RecruitListRes.of(recruits, applyCounts, 200, "필터링 된 결과입니다."));
     }
 
+    @GetMapping("/search")
+    @ApiOperation(value = "모집글 검색", notes = "모집글 제목 또는 기업명으로 모집글을 검색한다.")
+    @ApiResponses({@ApiResponse(code = 200, message = "검색 성공"), @ApiResponse(code = 401, message = "검색 실패"), @ApiResponse(code = 500, message = "서버 오류")})
+    public ResponseEntity<RecruitListRes> searchRecruit(@RequestParam String keyword) throws Exception {
+        List<Recruit> recruits = recruitService.search(keyword);
+        long[] applyCounts = applyService.getApplyCount(recruits);
+        return ResponseEntity.status(200).body(RecruitListRes.of(recruits, applyCounts, 200, "검색 결과입니다."));
+    }
+
     @GetMapping("/{recruitNo}")
     @ApiOperation(value = "모집글 상세조회", notes = "스터디 모집글 상세정보를 조회한다.")
     @ApiResponses({@ApiResponse(code = 200, message = "스터디 모집글 상세정보 조회 성공"), @ApiResponse(code = 401, message = "스터디 모집글 상세정보 조회 실패"), @ApiResponse(code = 500, message = "서버 오류")})
