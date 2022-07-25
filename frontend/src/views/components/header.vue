@@ -16,15 +16,22 @@
     </div>
 
     <div id="headerBtnGroup">
-      <router-link to="/home/login" class="header-routerlink-decoration">
-        <div class="header-btn">
+      <router-link to="/home/login" class="header-routerlink-decoration" >
+        <div class="header-btn" v-if="!isLoggedIn">
           <div class="header-btn-text">
             login
           </div>
         </div>
       </router-link>
+      <router-link to="/home/logout" class="header-routerlink-decoration" >
+        <div class="header-btn" v-if="isLoggedIn">
+          <div class="header-btn-text">
+            logout
+          </div>
+        </div>
+      </router-link>
       <router-link to="/home/signup" class="header-routerlink-decoration">
-        <div class="header-btn" style="background-color:#653FD3;">
+        <div class="header-btn" v-if="!isLoggedIn" style="background-color:#653FD3;">
           <div class="header-btn-text" style="color:white">
             sign up
           </div>
@@ -62,7 +69,10 @@ export default {
         return headmenu;
       })
     });
-    return { state };
+    return { 
+      state,
+      isLoggedIn: computed(() => store.getters.isLoggedIn)
+    };
   }
 };
 </script>

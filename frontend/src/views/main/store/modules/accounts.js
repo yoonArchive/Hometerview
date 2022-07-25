@@ -66,21 +66,15 @@ export default {
           alert('로그인 실패')
         })
     },
-
     logout({ getters, dispatch }) {
-      axios({
-        url: api_url.accounts.logout(),
-        method: 'post',
-        headers: getters.authHeader,
-      })
-        .then(() => {
-          dispatch('removeToken')
-          alert('성공적으로 logout!')
-          router.push({ name: 'login' })
-        })
-        .error(err => {
-          console.error(err.response)
-        })
+      if(getters.isLoggedIn){
+        dispatch('removeToken')
+        alert('성공적으로 logout!')
+        router.push({ name: 'login' })
+      }
+      else{
+        alert('로그인을 진행해 주세요')
+      }
     },
     signup({ commit }, credentials) {
     delete credentials.userPw2

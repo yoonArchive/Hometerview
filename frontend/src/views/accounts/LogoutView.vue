@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Logout</h1>
+    <h1>잘못된 접근입니다.</h1>
   </div>
 </template>
 
