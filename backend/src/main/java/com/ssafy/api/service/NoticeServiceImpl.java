@@ -20,7 +20,7 @@ public class NoticeServiceImpl implements NoticeService {
     private final NoticeRepository noticeRepository;
 
     @Override
-    public Notice getByNoticeNo(long noticeNo) {
+    public Notice getByNoticeNo(Long noticeNo) {
         return noticeRepository.findByNoticeNo(noticeNo).orElse(null);
     }
 
@@ -29,7 +29,6 @@ public class NoticeServiceImpl implements NoticeService {
         Notice notice = new Notice();
         notice.setNoticeTitle(noticeWritePostReq.getNoticeTitle());
         notice.setNoticeContents(noticeWritePostReq.getNoticeContents());
-        // 작성일자
         SimpleDateFormat dataFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date now = new Date();
         notice.setWriteDate(dataFormat.format(now));
@@ -54,7 +53,7 @@ public class NoticeServiceImpl implements NoticeService {
 
     @Override
     @Transactional
-    public int deleteNotice(long noticeNo) {
+    public int deleteNotice(Long noticeNo) {
         try {
             noticeRepository.findByNoticeNo(noticeNo).get();
         } catch (Exception e) {

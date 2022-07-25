@@ -10,9 +10,9 @@ import lombok.Setter;
 @ApiModel("UpdateNoticePutRequest")
 public class UpdateNoticePutReq {
 
-    @ApiModelProperty(name = "공지사항 제목", example = "공지사항 제목입니다.")
+    @ApiModelProperty(name = "공지사항 제목", example = "수정된 공지사항 제목입니다.")
     String noticeTitle;
 
-    @ApiModelProperty(name = "공지사항 내용", example = "공지사항 내용입니다.")
+    @ApiModelProperty(name = "공지사항 내용", example = "수정된 공지사항 내용입니다.")
     String noticeContents;
 }

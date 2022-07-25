@@ -17,8 +17,8 @@ public class Apply {
     private Long applyNo;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "post_no")
-    private Posts posts;
+    @JoinColumn(name = "recruit_no")
+    private Recruit recruit;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_no")

@@ -36,7 +36,9 @@ public class UserDetails implements org.springframework.security.core.userdetail
     }
 
     @Override
-    public String getUsername() { return this.user.getUserId(); }
+    public String getUsername() {
+        return this.user.getUserId();
+    }
 
     public Long getUserNo() {
         return this.user.getUserNo();
