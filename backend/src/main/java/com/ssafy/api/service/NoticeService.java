@@ -7,13 +7,27 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
 public interface NoticeService {
 
+<<<<<<< HEAD
     Notice getByNoticeNo(long NoticeNo);
+=======
+    Notice getByNoticeNo(Long NoticeNo);
+>>>>>>> ccfc7cc558e0327edda16edb4938549edb466966
+
     Notice writeNotice(NoticeWritePostReq noticeWritePostReq);
+
     List<Notice> listNotice();
+
+<<<<<<< HEAD
    // Notice detailNotice(long noticeNo);
     void updateNotice(Notice notice, UpdateNoticePutReq updateNoticePutReq);
+
     int deleteNotice(long noticeNo);
+
+=======
+    void updateNotice(Notice notice, UpdateNoticePutReq updateNoticePutReq);
+
+    int deleteNotice(Long noticeNo);
+>>>>>>> ccfc7cc558e0327edda16edb4938549edb466966
 }

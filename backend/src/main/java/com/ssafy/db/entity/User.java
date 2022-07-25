@@ -45,6 +45,7 @@ public class User {
     @Column(name = "user_type")
     private UserType userType;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<Resume> resumes = new ArrayList<>();
 

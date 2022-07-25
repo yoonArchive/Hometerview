@@ -1,5 +1,6 @@
 package com.ssafy.db.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,16 +11,16 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@Table(name = "posts")
-public class Posts {
+@Table(name = "recruit")
+public class Recruit {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "post_no")
-    private Long postNo;
+    @Column(name = "recruit_no")
+    private Long recruitNo;
 
-    @Column(name = "post_title")
-    private String postTitle;
+    @Column(name = "recruit_title")
+    private String recruitTitle;
 
     @Column(name = "std_name")
     private String stdName;
@@ -49,7 +50,12 @@ public class Posts {
     @Column(name = "std_limit")
     private int stdLimit;
 
-    @OneToMany(mappedBy = "posts")
+    @Enumerated(EnumType.STRING)
+    @Column(name="recruit_status")
+    private RecruitStatus recruitStatus;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "recruit")
     private List<Apply> applies = new ArrayList<>();
 
 }
