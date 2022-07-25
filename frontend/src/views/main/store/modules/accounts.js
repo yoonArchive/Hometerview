@@ -20,9 +20,12 @@ export default {
     SET_AUTH_ERROR: (state, error) => state.authError = error,
     SET_CHECK_EMAIL: (state, isDuplicatedEmail) => state.isDuplicatedEmail = isDuplicatedEmail,
     SET_CHECK_ID: (state, isDuplicatedId) => state.isDuplicatedId = isDuplicatedId,
+    
+
 
   },
   getters:{
+    isValidedEmail : state => state.isValidedEmail,
     isDuplicatedEmail : state => state.isDuplicatedEmail,
     isDuplicatedId : state => state.isDuplicatedId,
     isLoggedIn: state => !!state.token,
@@ -32,33 +35,19 @@ export default {
 
   },
   actions:{
+
+
     saveToken({ commit }, token) {
-      /*
-      state.token 추가
-      localStorage에 token 추가
-      */
       commit('SET_TOKEN', token)
       localStorage.setItem('token', token)
     },
 
     removeToken({ commit }) {
-      /*
-      state.token 삭제
-      localStorage에 token 추가
-      */
       commit('SET_TOKEN', '')
       localStorage.setItem('token', '')
     },
     login({ commit, dispatch }, credentials) {
-      /*
-      POST: 사용자 입력정보를 login URL로 보내기
-        성공하면
-          응답 토큰 저장
-          현재 사용자 정보 받기
-          메인 페이지(ArticleListView)로 이동
-        실패하면
-          에러 메시지 표시
-      */
+
       axios({
         url: api_url.accounts.login(),
         method: 'post',
@@ -79,15 +68,6 @@ export default {
     },
 
     logout({ getters, dispatch }) {
-      /*
-      POST: token을 logout URL로 보내기
-        성공하면
-          토큰 삭제
-          사용자 알람
-          LoginView로 이동
-        실패하면
-          에러 메시지 표시
-      */
       axios({
         url: api_url.accounts.logout(),
         method: 'post',
@@ -102,16 +82,7 @@ export default {
           console.error(err.response)
         })
     },
-    signup({ commit, dispatch }, credentials) {
-      /*
-      POST: 사용자 입력정보를 signup URL로 보내기
-        성공하면
-          응답 토큰 저장
-          현재 사용자 정보 받기
-          메인 페이지(ArticleListView)로 이동
-        실패하면
-          에러 메시지 표시
-      */
+    signup({ commit }, credentials) {
     delete credentials.userPw2
     // const credentialsForLogin = {
     //   userId : credentials.userId,
@@ -128,6 +99,10 @@ export default {
           // dispatch('saveToken', token)
           // dispatch('fetchCurrentUser')
           alert('회원가입 성공')
+
+          // 중복검사 초기화 : 뒤로가기 하면 false가 그대로이기 떄문
+          commit('SET_CHECK_EMAIL', true)
+          commit('SET_CHECK_ID', true)
           router.push({ name: 'login' })
 
         })
@@ -174,7 +149,6 @@ export default {
         method: 'get',
       })
         .then(res=>{
-
           const userId = res.data.userId
           console.log(userId)
           alert(`당신의 ID는 ${userId} 입니다`)
@@ -205,13 +179,12 @@ export default {
         })
         .catch(err => {
           console.log(err.response)
-          // console.log(err.request)
+          commit('SET_CHECK_EMAIL', true)
           alert('사용중인 이메일 입니다')
         })
     },
-    idDuplicateCheck({commit}, id){
+    idDuplicateCheck({commit, getters}, id){
 
-      // console.log(getters.isDuplicatedId)
       const idForSubmit = `?id=${id}`
       axios({
         url: api_url.accounts.idDuplicateCheck() + idForSubmit,
@@ -221,10 +194,13 @@ export default {
           // 응답에 성공을 하면
           console.log(res.data)
           commit('SET_CHECK_ID', false)
+          console.log(getters.isDuplicatedId)
           alert('사용가능한 아이디입니다')
         })
         .catch(err => {
           console.log(err.response)
+          commit('SET_CHECK_ID', true)
+          console.log(getters.isDuplicatedId)
           alert('사용중인 아이디 입니다')
         })
     },
