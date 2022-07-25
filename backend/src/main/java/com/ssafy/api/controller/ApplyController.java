@@ -38,7 +38,7 @@ public class ApplyController {
         Long userNo = userDetails.getUserNo();
         int result = applyService.deleteApply(userNo, recruitNo);
         if (result == 1) return ResponseEntity.status(200).body(BaseResponseBody.of(200, "모집 신청 취소가 완료되었습니다."));
-        else return ResponseEntity.status(200).body(BaseResponseBody.of(401, "모집 신청 취소에 실패하였습니다."));
+        else return ResponseEntity.status(401).body(BaseResponseBody.of(401, "모집 신청 취소에 실패하였습니다."));
     }
 
 }

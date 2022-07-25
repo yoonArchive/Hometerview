@@ -78,7 +78,7 @@ public class RecruitController {
     @ApiResponses({@ApiResponse(code = 200, message = "모집글 수정 성공"), @ApiResponse(code = 401, message = "모집글 수정 실패"), @ApiResponse(code = 402, message = "해당 모집글 없음"), @ApiResponse(code = 500, message = "서버 오류")})
     public ResponseEntity<?> updateRecruit(@PathVariable @ApiParam(value = "모집글 번호", required = true) Long recruitNo, @RequestBody @ApiParam(value = "모집글 변경 내용", required = true) RecruitReq recruitReq) {
         Recruit recruit = recruitService.getByRecruitNo(recruitNo);
-        if (recruit == null) return ResponseEntity.status(401).body(BaseResponseBody.of(402, "해당하는 스터디 모집글이 없습니다."));
+        if (recruit == null) return ResponseEntity.status(402).body(BaseResponseBody.of(402, "해당하는 스터디 모집글이 없습니다."));
         try {
             recruitService.updateRecruit(recruit, recruitReq);
             Recruit updatedRecruit = recruitService.getByRecruitNo(recruitNo);
@@ -94,7 +94,7 @@ public class RecruitController {
     public ResponseEntity<?> deleteRecruit(@PathVariable @ApiParam(value = "모집글 번호", required = true) Long recruitNo) throws Exception {
         int result = recruitService.deleteRecruit(recruitNo);
         if (result == 1) return ResponseEntity.status(200).body(BaseResponseBody.of(200, "스터디 모집글 삭제가 완료되었습니다."));
-        else return ResponseEntity.status(200).body(BaseResponseBody.of(401, "스터디 모집글 삭제에 실패하였습니다."));
+        else return ResponseEntity.status(401).body(BaseResponseBody.of(401, "스터디 모집글 삭제에 실패하였습니다."));
     }
 
 }
