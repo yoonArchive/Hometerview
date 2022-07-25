@@ -12,7 +12,7 @@ export default {
     authError: null,
     isDuplicatedEmail: true,
     isDuplicatedId: true,
-
+    isPasswordConfirm: false,
   }),
 
   mutations:{
@@ -21,7 +21,7 @@ export default {
     SET_AUTH_ERROR: (state, error) => state.authError = error,
     SET_CHECK_EMAIL: (state, isDuplicatedEmail) => state.isDuplicatedEmail = isDuplicatedEmail,
     SET_CHECK_ID: (state, isDuplicatedId) => state.isDuplicatedId = isDuplicatedId,
-
+    SET_PASSWORD_CONFIRM: (state, ispasswordconfirm) => state.isPasswordConfirm = ispasswordconfirm,
 
 
     CLEER_CURRENT_USER : (state) => state.currentUser = {},
@@ -33,7 +33,8 @@ export default {
     isLoggedIn: state => !!state.token,
     currentUser: state => state.currentUser,
     authError: state => state.authError,
-    authHeader: state => ({ Authorization: `Bearer ${state.token}`})
+    authHeader: state => ({ Authorization: `Bearer ${state.token}`}),
+    isPasswordConfirm: state=> state.isPasswordConfirm,
   },
   actions:{
 
@@ -46,6 +47,18 @@ export default {
     removeToken({ commit }) {
       commit('SET_TOKEN', '')
       localStorage.setItem('token', '')
+    },
+    passwordConfirm({commit, getters}, credentials){
+      axios
+      .get(api_url.accounts.passwordConfirm(),{
+        params : credentials,
+        headers : getters.authHeader,
+      }).then(()=>{
+        commit('SET_PASSWORD_CONFIRM',true);
+        router.push({name:'mypage'})
+      }).catch(()=>{
+        alert('인증에 실패했습니다.')
+      })
     },
 
     deleteUser({dispatch, getters}){
@@ -103,6 +116,7 @@ export default {
         dispatch('removeToken')
         alert('성공적으로 logout!')
         commit('CLEER_CURRENT_USER');
+        commit('SET_PASSWORD_CONFIRM',false);
         router.push({ name: 'login' })
       }
       else{
