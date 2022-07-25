@@ -3,13 +3,13 @@ package com.ssafy.api.service;
 import com.ssafy.api.request.RecruitReq;
 import com.ssafy.db.entity.Recruit;
 import com.ssafy.db.entity.RecruitStatus;
-import com.ssafy.db.entity.UserType;
 import com.ssafy.db.repository.RecruitRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RecruitServiceImpl implements RecruitService {
@@ -28,6 +28,11 @@ public class RecruitServiceImpl implements RecruitService {
     @Override
     public List<Recruit> getList() {
         return recruitRepository.findAll();
+    }
+
+    @Override
+    public List<Recruit> getRecruitingList() {
+        return recruitRepository.findAllByRecruitStatus(RecruitStatus.RECRUITING);
     }
 
     @Override
