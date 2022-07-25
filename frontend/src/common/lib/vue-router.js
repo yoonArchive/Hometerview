@@ -68,11 +68,10 @@ function makeRoutesFromMenu () {
       name: 'logout',
       component: LogoutView
     },{
-<<<<<<< HEAD
       path: 'findid',
       name: 'findid',
       component:FindUseridView
-=======
+    },{  
       path:'finduserpassword',
       name: 'finduserpassword',
       component :FindUserPassword
@@ -96,7 +95,6 @@ function makeRoutesFromMenu () {
           component :Withdrawal,
         }
       ]
->>>>>>> b8b04c460e26b16e0a60de498fc308852b8b3700
     }]
   },{
     path: '/',

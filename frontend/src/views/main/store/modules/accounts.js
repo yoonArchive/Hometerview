@@ -185,7 +185,6 @@ export default {
     },
     idDuplicateCheck({commit, getters}, id){
 
-<<<<<<< HEAD
       const idForSubmit = `?id=${id}`
       axios({
         url: api_url.accounts.idDuplicateCheck() + idForSubmit,
@@ -205,7 +204,6 @@ export default {
           alert('사용중인 아이디 입니다')
         })
     },
-=======
     },
 
     changePassword({getters}, credentials){
@@ -224,6 +222,5 @@ export default {
         console.log(err);
       })
     }
->>>>>>> b8b04c460e26b16e0a60de498fc308852b8b3700
   }
-}
+
