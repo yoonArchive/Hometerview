@@ -49,6 +49,10 @@ public class Recruit {
     @Column(name = "std_limit")
     private int stdLimit;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name="recruit_status")
+    private RecruitStatus recruitStatus;
+
     @OneToMany(mappedBy = "recruit")
     private List<Apply> applies = new ArrayList<>();
 
