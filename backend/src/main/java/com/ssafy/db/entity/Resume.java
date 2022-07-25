@@ -19,5 +19,10 @@ public class Resume {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_no")
     private User user;
+
+    @JoinColumn(name = "resume_title")
+    private String resumeTitle;
+
+
     
 }
