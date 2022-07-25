@@ -1,21 +1,22 @@
 package com.ssafy.api.service;
 
+import com.fasterxml.jackson.databind.BeanProperty;
 import com.ssafy.api.request.RecruitReq;
 import com.ssafy.db.entity.Recruit;
 import com.ssafy.db.entity.RecruitStatus;
+import com.ssafy.db.entity.StdType;
 import com.ssafy.db.repository.RecruitRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class RecruitServiceImpl implements RecruitService {
 
-    @Autowired
-    RecruitRepository recruitRepository;
+    private final RecruitRepository recruitRepository;
 
     @Override
     public void writeRecruit(RecruitReq recruitReq) {
@@ -33,6 +34,17 @@ public class RecruitServiceImpl implements RecruitService {
     @Override
     public List<Recruit> getRecruitingList() {
         return recruitRepository.findAllByRecruitStatus(RecruitStatus.RECRUITING);
+    }
+
+    @Override
+    public List<Recruit> getFilteredList(int type) {
+        if (type == 1) {
+            return recruitRepository.findAll();
+        } else if (type == 2) {
+            return recruitRepository.findAllByStdType(StdType.COM);
+        } else {
+            return recruitRepository.findAllByStdType(StdType.FREE);
+        }
     }
 
     @Override

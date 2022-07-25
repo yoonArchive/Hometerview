@@ -8,6 +8,7 @@ import com.ssafy.db.repository.ApplyRepositorySupport;
 import com.ssafy.db.repository.RecruitRepository;
 import com.ssafy.db.repository.UserRepository;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,19 +16,16 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ApplyServiceImpl implements ApplyService {
 
-    @Autowired
-    UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    RecruitRepository recruitRepository;
+    private final RecruitRepository recruitRepository;
 
-    @Autowired
-    ApplyRepository applyRepository;
+    private final ApplyRepository applyRepository;
 
-    @Autowired
-    ApplyRepositorySupport applyRepositorySupport;
+    private final ApplyRepositorySupport applyRepositorySupport;
 
     @Override
     public int applyRecruit(Long userNo, Long recruitNo) {
