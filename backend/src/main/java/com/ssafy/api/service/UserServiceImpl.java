@@ -2,27 +2,25 @@ package com.ssafy.api.service;
 
 import com.ssafy.api.request.UpdateUserPutReq;
 import com.ssafy.db.entity.UserType;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.api.request.UserRegisterPostReq;
 import com.ssafy.db.entity.User;
 import com.ssafy.db.repository.UserRepository;
-import com.ssafy.db.repository.UserRepositorySupport;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 유저 관련 비즈니스 로직 처리를 위한 서비스 구현 정의.
  */
-@Service("userService")
+@Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
-    @Autowired
-    UserRepository userRepository;
 
-    @Autowired
-    PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
+
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public void createUser(UserRegisterPostReq userRegisterInfo) {
