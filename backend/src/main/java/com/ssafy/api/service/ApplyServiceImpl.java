@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class ApplyServiceImpl implements ApplyService {
 
@@ -55,6 +57,16 @@ public class ApplyServiceImpl implements ApplyService {
         Long applyNo = apply.getApplyNo();
         applyRepository.deleteByApplyNo(applyNo);
         return 1;
+    }
+
+    @Override
+    public long[] getApplyCount(List<Recruit> recruits) {
+        long[] applyCount = new long[recruits.size()];
+        int idx = 0;
+        for (Recruit recruit : recruits) {
+            applyCount[idx++] = applyRepositorySupport.CountByRecruitNo(recruit.getRecruitNo());
+        }
+        return applyCount;
     }
 
 }

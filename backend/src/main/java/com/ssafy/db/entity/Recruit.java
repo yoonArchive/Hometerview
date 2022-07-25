@@ -1,5 +1,6 @@
 package com.ssafy.db.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -53,6 +54,7 @@ public class Recruit {
     @Column(name="recruit_status")
     private RecruitStatus recruitStatus;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "recruit")
     private List<Apply> applies = new ArrayList<>();
 
