@@ -50,4 +50,5 @@ public class RecruitReq {
 
     @ApiModelProperty(name = "정원", example = "5")
     int stdLimit;
+
 }

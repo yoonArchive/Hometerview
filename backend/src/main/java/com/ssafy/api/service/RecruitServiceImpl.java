@@ -2,6 +2,8 @@ package com.ssafy.api.service;
 
 import com.ssafy.api.request.RecruitReq;
 import com.ssafy.db.entity.Recruit;
+import com.ssafy.db.entity.RecruitStatus;
+import com.ssafy.db.entity.UserType;
 import com.ssafy.db.repository.RecruitRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,7 @@ public class RecruitServiceImpl implements RecruitService {
     public void writeRecruit(RecruitReq recruitReq) {
         Recruit recruit = new Recruit();
         initRecruit(recruitReq, recruit);
+        recruit.setRecruitStatus(RecruitStatus.RECRUITING);
         recruitRepository.save(recruit);
     }
 

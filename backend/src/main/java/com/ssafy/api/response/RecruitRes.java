@@ -2,6 +2,7 @@ package com.ssafy.api.response;
 
 import com.ssafy.common.model.response.BaseResponseBody;
 import com.ssafy.db.entity.Recruit;
+import com.ssafy.db.entity.RecruitStatus;
 import com.ssafy.db.entity.StdType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -13,35 +14,38 @@ import lombok.Setter;
 @ApiModel("RecruitResponse")
 public class RecruitRes extends BaseResponseBody {
 
-    @ApiModelProperty(name = "모집글 제목", example = "모집글 제목입니다.")
+    @ApiModelProperty(name = "모집글 제목")
     String recruitTitle;
 
-    @ApiModelProperty(name = "스터디 이름", example = "스터디 이름입니다.")
+    @ApiModelProperty(name = "스터디 이름")
     String stdName;
 
-    @ApiModelProperty(name = "스터디 설명", example = "스터디 설명입니다.")
+    @ApiModelProperty(name = "스터디 설명")
     String stdDetail;
 
-    @ApiModelProperty(name = "썸네일 이미지", example = "썸네일 이미지입니다.")
+    @ApiModelProperty(name = "썸네일 이미지")
     String stdImg;
 
-    @ApiModelProperty(name = "스터디 카테고리", example = "COM")
+    @ApiModelProperty(name = "스터디 카테고리")
     StdType stdType;
 
-    @ApiModelProperty(name = "기업명", example = "기업명입니다.")
+    @ApiModelProperty(name = "기업명")
     String comName;
 
-    @ApiModelProperty(name = "시작일", example = "2022-08-01")
+    @ApiModelProperty(name = "시작일")
     String startDate;
 
-    @ApiModelProperty(name = "종료일", example = "2022-08-10")
+    @ApiModelProperty(name = "종료일")
     String endDate;
 
-    @ApiModelProperty(name = "진행일시", example = "진행일시입니다.")
+    @ApiModelProperty(name = "진행일시")
     String stdDay;
 
-    @ApiModelProperty(name = "정원", example = "5")
+    @ApiModelProperty(name = "정원")
     int stdLimit;
+
+    @ApiModelProperty(name = "모집 현황")
+    RecruitStatus recruitStatus;
 
     public static RecruitRes of(Recruit recruit, Integer statusCode, String message) {
         RecruitRes res = new RecruitRes();
@@ -55,6 +59,7 @@ public class RecruitRes extends BaseResponseBody {
         res.setEndDate(recruit.getEndDate());
         res.setStdDay(recruit.getStdDay());
         res.setStdLimit(recruit.getStdLimit());
+        res.setRecruitStatus(recruit.getRecruitStatus());
         res.setStatusCode(statusCode);
         res.setMessage(message);
         return res;
