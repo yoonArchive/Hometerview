@@ -53,7 +53,7 @@ public class ResumeController {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         Long userNo = userDetails.getUserNo();
         List<Resume> resumes = resumeService.listResume(userNo);
-        return ResponseEntity.status(200).body(ResumeListRes.of(resumes,200, "자기소개서 생성에 성공하였습니다."));
+        return ResponseEntity.status(200).body(ResumeListRes.of(resumes,200, "자기소개서 목록조회에 성공하였습니다."));
     }
 
     @PutMapping()
