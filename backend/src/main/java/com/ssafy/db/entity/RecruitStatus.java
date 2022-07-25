@@ -17,13 +17,4 @@ public enum RecruitStatus {
         return this.status;
     }
 
-    public static RecruitStatus nameOf(String status) {
-        for (RecruitStatus recruitStatus : RecruitStatus.values()) {
-            if (recruitStatus.getStatus().equals(status)) {
-                return recruitStatus;
-            }
-        }
-        return null;
-    }
-
 }
