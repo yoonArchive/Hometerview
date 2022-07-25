@@ -28,12 +28,12 @@ public class RecruitServiceImpl implements RecruitService {
 
     @Override
     public List<Recruit> getList() {
-        return recruitRepository.findAll();
+        return recruitRepository.findAllByOrderByRecruitNoDesc();
     }
 
     @Override
     public List<Recruit> getRecruitingList() {
-        return recruitRepository.findAllByRecruitStatus(RecruitStatus.RECRUITING);
+        return recruitRepository.findAllByRecruitStatusOrderByRecruitNoDesc(RecruitStatus.RECRUITING);
     }
 
     @Override
@@ -41,9 +41,9 @@ public class RecruitServiceImpl implements RecruitService {
         if (type == 1) {
             return recruitRepository.findAll();
         } else if (type == 2) {
-            return recruitRepository.findAllByStdType(StdType.COM);
+            return recruitRepository.findAllByStdTypeOrderByRecruitNoDesc(StdType.COM);
         } else {
-            return recruitRepository.findAllByStdType(StdType.FREE);
+            return recruitRepository.findAllByStdTypeOrderByRecruitNoDesc(StdType.FREE);
         }
     }
 
