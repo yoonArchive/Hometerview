@@ -6,7 +6,6 @@
     <input type="file"
       @change="readURL"
       id="profileimg"
-
       accept=".jpg, .png, .gif"
       class="mt-3"
       plain

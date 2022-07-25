@@ -12,7 +12,7 @@ export default {
     findUserid: () => HOST + USERS + 'findid/',
     emailDuplicateCheck:() => HOST + USERS + 'checkemail/',
     idDuplicateCheck:() => HOST + USERS + 'checkid/',
-
+    deleteUser: () => HOST + USERS,
 
     findMyAccount: () => HOST + USERS + 'findid/',
     findUserPassword: () => HOST + USERS + 'findpw/',

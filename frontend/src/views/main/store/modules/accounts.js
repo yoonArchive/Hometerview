@@ -47,6 +47,18 @@ export default {
       commit('SET_TOKEN', '')
       localStorage.setItem('token', '')
     },
+
+    deleteUser({dispatch, getters}){
+      axios.delete(api_url.accounts.deleteUser(), {
+        headers: getters.authHeader,
+      }).then(()=>{
+        dispatch('logout');
+        router.push({name:'main'});
+      }).catch(err=>{
+        console.log(err);
+      })
+    },
+
     updateUser({dispatch, getters}, credentials){
       console.log(credentials);
       const updateUserPutReq = {
@@ -55,11 +67,10 @@ export default {
         userName:credentials.userName,
       }
       axios.put(api_url.accounts.updateUser(), updateUserPutReq ,{
-        headers: getters.authHeader
+        headers: getters.authHeader,
       }).then(data=>{
         console.log(data);
         dispatch('logout');
-
       }).catch(err=>{
         console.log(err)
       })
@@ -87,10 +98,11 @@ export default {
           alert('로그인 실패')
         })
     },
-    logout({ getters, dispatch }) {
+    logout({ getters, dispatch, commit }) {
       if(getters.isLoggedIn){
         dispatch('removeToken')
         alert('성공적으로 logout!')
+        commit('CLEER_CURRENT_USER');
         router.push({ name: 'login' })
       }
       else{
