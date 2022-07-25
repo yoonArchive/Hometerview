@@ -4,7 +4,6 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssafy.db.entity.Apply;
 import com.ssafy.db.entity.QApply;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -29,4 +28,5 @@ public class ApplyRepositorySupport {
         return jpaQueryFactory.selectFrom(qApply)
                 .where(qApply.recruit.recruitNo.eq(recruitNo)).fetchCount();
     }
+
 }
