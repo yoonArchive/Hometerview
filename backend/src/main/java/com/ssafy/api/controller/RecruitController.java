@@ -79,13 +79,14 @@ public class RecruitController {
     public ResponseEntity<?> updateRecruit(@PathVariable @ApiParam(value = "모집글 번호", required = true) Long recruitNo, @RequestBody @ApiParam(value = "모집글 변경 내용", required = true) RecruitReq recruitReq) {
         Recruit recruit = recruitService.getByRecruitNo(recruitNo);
         if (recruit == null) return ResponseEntity.status(402).body(BaseResponseBody.of(402, "해당하는 스터디 모집글이 없습니다."));
+        Recruit updatedRecruit;
         try {
             recruitService.updateRecruit(recruit, recruitReq);
-            Recruit updatedRecruit = recruitService.getByRecruitNo(recruitNo);
-            return ResponseEntity.status(200).body(RecruitRes.of(updatedRecruit, 200, "스터디 모집글이 수정되었습니다."));
+            updatedRecruit = recruitService.getByRecruitNo(recruitNo);
         } catch (Exception e) {
             return ResponseEntity.status(401).body(BaseResponseBody.of(401, "스터디 모집글 수정에 실패하였습니다."));
         }
+        return ResponseEntity.status(200).body(RecruitRes.of(updatedRecruit, 200, "스터디 모집글이 수정되었습니다."));
     }
 
     @DeleteMapping("/{recruitNo}")
