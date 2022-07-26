@@ -1,6 +1,8 @@
 package com.ssafy.db.entity;
 
 import lombok.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
 
 import javax.persistence.*;
 
@@ -21,6 +23,7 @@ public class StudyJoin {
     @JoinColumn(name = "user_no")
     private User user;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "std_no")
     private Study study;

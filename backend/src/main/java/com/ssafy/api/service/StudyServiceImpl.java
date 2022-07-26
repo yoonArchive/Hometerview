@@ -1,16 +1,12 @@
 package com.ssafy.api.service;
 
-import com.ssafy.db.entity.Apply;
-import com.ssafy.db.entity.Recruit;
-import com.ssafy.db.entity.Study;
-import com.ssafy.db.entity.StudyJoin;
-import com.ssafy.db.repository.ApplyRepositorySupport;
-import com.ssafy.db.repository.RecruitRepository;
-import com.ssafy.db.repository.StudyJoinRepository;
-import com.ssafy.db.repository.StudyRepository;
+import com.ssafy.db.entity.*;
+import com.ssafy.db.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -27,6 +23,12 @@ public class StudyServiceImpl implements StudyService{
 
     @Autowired
     StudyJoinRepository studyJoinRepository;
+
+    @Autowired
+    UserRepository userRepository;
+
+    @Autowired
+    StudyJoinRepositorySupport studyJoinRepositorySupport;
 
     @Override
     public void createStudy(Long recruitNo){
@@ -52,9 +54,31 @@ public class StudyServiceImpl implements StudyService{
             studyJoin.setStudy(study);
             studyJoinRepository.save(studyJoin);
         }
-
     }
-
-
+    @Override
+    public List<Study> getStudyList(Long userNo){
+        User user = userRepository.findByUserNo(userNo).orElse(null);
+        List<StudyJoin> studyJoinList = user.getStudyJoins();
+        List<Study> studyList = new ArrayList<>();
+        for(StudyJoin studyJoin: studyJoinList){
+            studyList.add(studyJoin.getStudy());
+        }
+        return studyList;
+    }
+    @Override
+    public Study detailStudy(Long stdNo){
+        Study study = studyRepository.findByStdNo(stdNo).orElse(null);
+        return study;
+    }
+    @Override
+    @Transactional
+    public int leaveStudy(Long userNo, Long stdNo){
+        StudyJoin studyJoin = studyJoinRepositorySupport.findStudyJoinByUserNoAndStdNo(userNo, stdNo).orElse(null);
+        if(studyJoin == null) return 0;
+        else {
+            studyJoinRepository.deleteByJoinNo(studyJoin.getJoinNo());
+        }
+        return 1;
+    }
 
 }

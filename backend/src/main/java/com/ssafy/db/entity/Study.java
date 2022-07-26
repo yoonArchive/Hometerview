@@ -1,6 +1,8 @@
 package com.ssafy.db.entity;
 
 import lombok.*;
+import lombok.Getter;
+
 
 import javax.persistence.*;
 import java.util.ArrayList;

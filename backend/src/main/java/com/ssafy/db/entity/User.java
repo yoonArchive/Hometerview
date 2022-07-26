@@ -52,10 +52,12 @@ public class User {
     private List<Resume> resumes = new ArrayList<>();
 
     @Builder.Default
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<Apply> applies = new ArrayList<>();
 
     @Builder.Default
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<StudyJoin> studyJoins = new ArrayList<>();
 
