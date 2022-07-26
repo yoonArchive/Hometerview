@@ -56,12 +56,13 @@ public class ResumeController {
         return ResponseEntity.status(200).body(ResumeListRes.of(resumes, 200, "자기소개서 목록조회에 성공하였습니다."));
     }
 
-    // 본인 자기소개서만 수정 가능하게
     @PutMapping()
     @ApiResponses({@ApiResponse(code = 200, message = "자기소개서 제목 수정 성공"), @ApiResponse(code = 401, message = "자기소개서 제목 수정 실패"), @ApiResponse(code = 402, message = "해당 자기소개서 없음"), @ApiResponse(code = 500, message = "서버 오류")})
     @ApiOperation(value = "자기소개서 제목 수정", notes = "자기소개서 제목을 수정한다.")
-    public ResponseEntity<?> updateResume(@RequestParam @ApiParam(value = "자기소개서 번호", required = true) Long resumeNo, @RequestParam @ApiParam(value = "자기소개서 제목", required = true) String resumeTitle) {
-        Resume resume = resumeService.getByResumeNo(resumeNo);
+    public ResponseEntity<?> updateResume(@ApiIgnore Authentication authentication, @RequestParam @ApiParam(value = "자기소개서 번호", required = true) Long resumeNo, @RequestParam @ApiParam(value = "자기소개서 제목", required = true) String resumeTitle) {
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        Long userNo = userDetails.getUserNo();
+        Resume resume = resumeService.getResume(resumeNo, userNo);
         if (resume == null) return ResponseEntity.status(402).body(BaseResponseBody.of(402, "해당 자기소개서가 없습니다."));
         try {
             resumeService.updateResume(resume, resumeTitle);
@@ -71,11 +72,14 @@ public class ResumeController {
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "자기소개서 제목 수정에 성공했습니다."));
     }
 
-    // 본인 자기소개서만 삭제 가능하게
     @DeleteMapping()
     @ApiResponses({@ApiResponse(code = 200, message = "자기소개서 삭제 성공"), @ApiResponse(code = 401, message = "자기소개서 삭제 실패"), @ApiResponse(code = 500, message = "서버 오류")})
     @ApiOperation(value = "자기소개서 삭제", notes = "자기소개서를 삭제한다.")
-    public ResponseEntity<?> deleteResume(@RequestParam @ApiParam(value = "자기소개서 번호", required = true) Long resumeNo) {
+    public ResponseEntity<?> deleteResume(@ApiIgnore Authentication authentication, @RequestParam @ApiParam(value = "자기소개서 번호", required = true) Long resumeNo) {
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        Long userNo = userDetails.getUserNo();
+        Resume resume = resumeService.getResume(resumeNo, userNo);
+        if (resume == null) return ResponseEntity.status(402).body(BaseResponseBody.of(402, "해당 자기소개서가 없습니다."));
         int result = resumeService.deleteResume(resumeNo);
         if (result == 1) return ResponseEntity.status(200).body(BaseResponseBody.of(200, "자기소개서가 삭제되었습니다."));
         else return ResponseEntity.status(401).body(BaseResponseBody.of(401, "자기소개서 삭제에 실패하였습니다."));

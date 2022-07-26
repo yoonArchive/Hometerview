@@ -40,8 +40,8 @@ public class ResumeServiceImpl implements ResumeService {
     }
 
     @Override
-    public Resume getByResumeNo(Long resumeNo) {
-        return resumeRepository.findByResumeNo(resumeNo).orElse(null);
+    public Resume getResume(Long resumeNo, Long userNo) {
+        return resumeRepositorySupport.findResumeByResumeNoAndUserNo(resumeNo, userNo);
     }
 
     @Override

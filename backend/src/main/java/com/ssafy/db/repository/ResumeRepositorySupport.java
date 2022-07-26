@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -19,10 +20,13 @@ public class ResumeRepositorySupport {
     QResume qResume = QResume.resume;
 
     public List<Resume> findAllResumeByUserNo(Long userNo) {
-        List<Resume> resumeDetails = jpaQueryFactory.select(qResume).from(qResume)
+        return jpaQueryFactory.select(qResume).from(qResume)
                 .where(qResume.user.userNo.eq(userNo)).fetch();
-        if (resumeDetails == null) return null;
-        return resumeDetails;
     }
 
+    public Resume findResumeByResumeNoAndUserNo(Long resumeNo, Long userNo) {
+        return jpaQueryFactory.select(qResume).from(qResume)
+                .where(qResume.resumeNo.eq(resumeNo))
+                .where(qResume.user.userNo.eq(userNo)).fetchOne();
+    }
 }
