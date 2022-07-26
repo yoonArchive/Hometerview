@@ -2,6 +2,7 @@ const HOST = 'http://localhost:8080/api/v1/'
 const USERS = 'users/'
 const AUTH = 'auth/'
 const NOTICE = 'notice/'
+const RECRUITS = 'recruits/'
 
 
 export default {
@@ -25,6 +26,12 @@ export default {
   notice: {
     notices: () => HOST + NOTICE,
     notice: (noticeNo) => HOST + NOTICE + `${noticeNo}`,
-
+  },
+  membersrecruitment:{
+    membersrecruitments: () => HOST + RECRUITS,
+    membersrecruitment: (recruitNo) => HOST + RECRUITS +`${recruitNo}`,
+    membersrecruiting: () => HOST + RECRUITS + 'recruiting/',
+    membersrecruitsearch: () => HOST + RECRUITS + 'search/',
+    membersrecruittype: () => HOST + RECRUITS + 'type/',
   }
 }

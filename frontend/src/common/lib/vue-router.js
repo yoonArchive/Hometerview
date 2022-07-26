@@ -15,6 +15,9 @@ import FindUseridView from '@/views/accounts/FindUseridView'
 import FindUserPassword from '@/views/accounts/FindUserPassword'
 
 /* 스터디 모집 페이지 */
+import CreateMembersRecruitmentView from '@/views/membersrecruitment/CreateMembersRecruitmentView'
+import MembersRecruitmentView from '@/views/membersrecruitment/MembersRecruitmentView'
+
 import StudyRecruitment from '@/views/home/components/study-recruitment'
 
 /* 공지사항 */
@@ -110,6 +113,14 @@ function makeRoutesFromMenu () {
       path : 'passwordconfirm',
       name : 'passwordconfirm',
       component : PasswordConfirm,
+    },{
+      path : 'createmembersrecruitment',
+      name : 'createmembersrecruitment',
+      component : CreateMembersRecruitmentView,
+    },{
+      path : 'membersrecruitment',
+      name : 'membersrecruitment',
+      component : MembersRecruitmentView,
     }]
   },{
     path: '/',

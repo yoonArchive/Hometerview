@@ -33,7 +33,6 @@
 <script>
   import { mapActions, mapGetters } from 'vuex'
   // import AccountErrorList from './components/AccountErrorList.vue'
-  // import { mapGetters,mapActions } from './map_state.js'
 
 
   export default {
