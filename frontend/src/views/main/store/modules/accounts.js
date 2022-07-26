@@ -36,10 +36,7 @@ export default {
     currentUser: state => state.currentUser,
     authError: state => state.authError,
     authHeader: state => ({ Authorization: `Bearer ${state.token}`}),
-<<<<<<< HEAD
-=======
     isPasswordConfirm: state=> state.isPasswordConfirm,
->>>>>>> a935c6fb03e04648100529daa98313a3a09745a1
   },
   actions:{
 
