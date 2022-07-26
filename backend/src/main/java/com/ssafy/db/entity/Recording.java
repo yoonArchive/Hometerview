@@ -32,6 +32,7 @@ public class Recording {
     @Column(name = "video_url")
     private String videoUrl;
 
+    @Builder.Default
     @OneToMany(mappedBy = "recording")
     private List<Feedback> feedbacks = new ArrayList<>();
 

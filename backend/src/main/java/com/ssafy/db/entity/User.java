@@ -47,12 +47,15 @@ public class User {
     private UserType userType;
 
     @JsonIgnore
+    @Builder.Default
     @OneToMany(mappedBy = "user")
     private List<Resume> resumes = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "user")
     private List<Apply> applies = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "user")
     private List<StudyJoin> studyJoins = new ArrayList<>();
 

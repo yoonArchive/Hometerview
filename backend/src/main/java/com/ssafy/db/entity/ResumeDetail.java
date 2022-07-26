@@ -32,6 +32,7 @@ public class ResumeDetail {
     @Column(name = "answer")
     private String answer;
 
+    @Builder.Default
     @OneToMany(mappedBy = "resumeDetail")
     private List<PersonalQuestion> personalQuestions = new ArrayList<>();
 

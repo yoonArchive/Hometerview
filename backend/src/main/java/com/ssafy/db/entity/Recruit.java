@@ -56,6 +56,7 @@ public class Recruit {
     private RecruitStatus recruitStatus;
 
     @JsonIgnore
+    @Builder.Default
     @OneToMany(mappedBy = "recruit")
     private List<Apply> applies = new ArrayList<>();
 

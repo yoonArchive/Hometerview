@@ -50,15 +50,19 @@ public class Study {
     @Column(name = "std_notice")
     private String stdNotice;
 
+    @Builder.Default
     @OneToMany(mappedBy = "study")
     private List<StudyJoin> studyJoins = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "study")
     private List<Recording> recordings = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "study")
     private List<CommonQuestion> commonQuestions = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "study")
     private List<RegistResume> registResumes = new ArrayList<>();
 
