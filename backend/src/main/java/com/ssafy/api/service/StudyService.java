@@ -9,4 +9,5 @@ public interface StudyService {
 
     void createStudy(Long recruitNo);
     List<Study> getStudyList(Long userNo);
+    Study detailStudy(Long stdNo);
 }

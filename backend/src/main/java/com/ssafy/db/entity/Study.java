@@ -50,7 +50,6 @@ public class Study {
     @Column(name = "std_notice")
     private String stdNotice;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "study")
     private List<StudyJoin> studyJoins = new ArrayList<>();
 

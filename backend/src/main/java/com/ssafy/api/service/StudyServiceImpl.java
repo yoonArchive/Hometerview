@@ -62,5 +62,9 @@ public class StudyServiceImpl implements StudyService{
         return studyList;
     }
 
+    public Study detailStudy(Long stdNo){
+        Study study = studyRepository.findByStdNo(stdNo).orElse(null);
+        return study;
+    }
 
 }

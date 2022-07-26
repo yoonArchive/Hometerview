@@ -1,6 +1,7 @@
 package com.ssafy.api.controller;
 
 import com.ssafy.api.response.StudyListRes;
+import com.ssafy.api.response.StudyRes;
 import com.ssafy.api.service.StudyService;
 import com.ssafy.common.auth.UserDetails;
 import com.ssafy.common.model.response.BaseResponseBody;
@@ -45,5 +46,21 @@ public class StudyController {
         List<Study> studyList = studyService.getStudyList(userNo);
         return ResponseEntity.status(200).body(StudyListRes.of(studyList,200, "스터디 목록 조회를 성공하였습니다."));
     }
+
+    //스터디 상세 조회
+    @GetMapping("/{stdNo}")
+    @ApiOperation(value = "스터디 상세 조회", notes = "스터디 상세정보를 조회한다.")
+    @ApiResponses({@ApiResponse(code = 200, message = "스터디 상세 조회 성공"), @ApiResponse(code = 401, message = "스터디 상세 조회 실패"), @ApiResponse(code = 500, message = "서버 오류")})
+    public ResponseEntity<? extends BaseResponseBody> studyDetail(@PathVariable Long stdNo) throws Exception{
+        Study study;
+        try {
+            study = studyService.detailStudy(stdNo);
+        } catch (Exception e){
+            return ResponseEntity.status(401).body(BaseResponseBody.of(401, "스터디 상세 조회를 실패하였습니다."));
+        }
+        return ResponseEntity.status(200).body(StudyRes.of(study,200, "스터디 상세 조회를 성공하였습니다."));
+    }
+
+
 
 }
