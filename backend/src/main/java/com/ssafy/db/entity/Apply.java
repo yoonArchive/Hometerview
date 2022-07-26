@@ -1,13 +1,14 @@
 package com.ssafy.db.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
-@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "apply")
 public class Apply {
 
@@ -23,5 +24,10 @@ public class Apply {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_no")
     private User user;
+
+    public void createApply(User user, Recruit recruit) {
+        this.user = user;
+        this.recruit = recruit;
+    }
 
 }

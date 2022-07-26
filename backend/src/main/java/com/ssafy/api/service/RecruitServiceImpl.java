@@ -20,8 +20,8 @@ public class RecruitServiceImpl implements RecruitService {
     @Override
     public void writeRecruit(RecruitReq recruitReq) {
         Recruit recruit = new Recruit();
-        initRecruit(recruitReq, recruit);
-        recruit.setRecruitStatus(RecruitStatus.RECRUITING);
+        initialize(recruit, recruitReq);
+        recruit.initStatus(RecruitStatus.RECRUITING);
         recruitRepository.save(recruit);
     }
 
@@ -59,7 +59,7 @@ public class RecruitServiceImpl implements RecruitService {
     @Override
     @Transactional
     public void updateRecruit(Recruit recruit, RecruitReq recruitReq) {
-        initRecruit(recruitReq, recruit);
+        initialize(recruit, recruitReq);
     }
 
     @Override
@@ -74,17 +74,18 @@ public class RecruitServiceImpl implements RecruitService {
         return 1;
     }
 
-    private void initRecruit(RecruitReq recruitReq, Recruit recruit) {
-        recruit.setRecruitTitle(recruitReq.getRecruitTitle());
-        recruit.setStdName(recruitReq.getStdName());
-        recruit.setStdDetail(recruitReq.getStdDetail());
-        recruit.setStdImg(recruitReq.getStdImg());
-        recruit.setStdType(recruitReq.getStdType());
-        recruit.setComName(recruitReq.getComName());
-        recruit.setStartDate(recruitReq.getStartDate());
-        recruit.setEndDate(recruitReq.getEndDate());
-        recruit.setStdDay(recruitReq.getStdDay());
-        recruit.setStdLimit(recruitReq.getStdLimit());
+    private void initialize(Recruit recruit, RecruitReq recruitReq) {
+        String recruitTitle = recruitReq.getRecruitTitle();
+        String stdName = recruitReq.getStdName();
+        String stdDetail = recruitReq.getStdDetail();
+        String stdImg = recruitReq.getStdImg();
+        StdType stdType = recruitReq.getStdType();
+        String comName = recruitReq.getComName();
+        String startDate = recruitReq.getStartDate();
+        String endDate = recruitReq.getEndDate();
+        String stdDay = recruitReq.getStdDay();
+        int stdLimit = recruitReq.getStdLimit();
+        recruit.initRecruit(recruitTitle, stdName, stdDetail, stdImg, stdType, comName, startDate, endDate, stdDay, stdLimit);
     }
 
 }

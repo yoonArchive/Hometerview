@@ -2,7 +2,6 @@ package com.ssafy.api.service;
 
 import com.ssafy.api.request.UpdateUserPutReq;
 import com.ssafy.db.entity.UserType;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -26,19 +25,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void createUser(UserRegisterPostReq userRegisterInfo) {
-        User user = new User();
-        user.setUserId(userRegisterInfo.getUserId());
-        // 보안을 위해서 유저 패스워드 암호화 하여 디비에 저장.
-        user.setUserPw(passwordEncoder.encode(userRegisterInfo.getUserPw()));
-        user.setUserName(userRegisterInfo.getUserName());
-        user.setUserEmail(userRegisterInfo.getUserEmail());
-        user.setUserType(UserType.USER);
+        User user = User.builder()
+                .userId(userRegisterInfo.getUserId())
+                .userPw(passwordEncoder.encode(userRegisterInfo.getUserPw()))
+                .userName(userRegisterInfo.getUserName())
+                .userEmail(userRegisterInfo.getUserEmail())
+                .userType(UserType.USER)
+                .build();
         userRepository.save(user);
     }
 
     @Override
     public User getByUserId(String userId) {
-        // 디비에 유저 정보 조회 (userId를 통한 조회).
         return userRepository.findByUserId(userId).orElse(null);
     }
 
@@ -64,16 +62,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void updatePassword(User user, String temPw) {
-        user.setUserPw(passwordEncoder.encode(temPw));
+    public void updatePassword(User user, String newPw) {
+        user.updatePw(passwordEncoder.encode(newPw));
     }
 
     @Override
     @Transactional
     public void updateUser(User user, UpdateUserPutReq updateUserPutReq) {
-        user.setUserName(updateUserPutReq.getUserName());
-        user.setUserEmail(updateUserPutReq.getUserEmail());
-        user.setUserImg(updateUserPutReq.getUserImg());
+        String userName = updateUserPutReq.getUserName();
+        String userEmail = updateUserPutReq.getUserEmail();
+        String userImg = updateUserPutReq.getUserImg();
+        user.updateUser(userName, userEmail, userImg);
     }
 
 }

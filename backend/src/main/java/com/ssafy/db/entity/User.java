@@ -3,8 +3,7 @@ package com.ssafy.db.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -15,7 +14,9 @@ import java.util.List;
  */
 @Entity
 @Getter
-@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "user")
 public class User {
 
@@ -54,5 +55,15 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private List<StudyJoin> studyJoins = new ArrayList<>();
+
+    public void updatePw(String newPw) {
+        this.userPw = newPw;
+    }
+
+    public void updateUser(String userName, String userEmail, String userImg) {
+        this.userName = userName;
+        this.userEmail = userEmail;
+        this.userImg = userImg;
+    }
 
 }

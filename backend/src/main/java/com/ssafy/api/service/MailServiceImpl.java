@@ -1,9 +1,7 @@
 package com.ssafy.api.service;
 
 import com.ssafy.api.dto.Mail;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -15,13 +13,13 @@ import java.util.Random;
 public class MailServiceImpl implements MailService {
 
     private final JavaMailSender mailSender;
+
     private final RedisUtil redisUtil;
 
     private static final String fromAddress = "giyoontest@gmail.com";
 
     @Override
     public Mail createTempPwMail(String tmpPw, String userEmail) {
-
         Mail mail = Mail.builder()
                 .toAddress(userEmail)
                 .title("[study] 임시 비밀번호 안내 이메일입니다.")
@@ -65,7 +63,6 @@ public class MailServiceImpl implements MailService {
         mailMessage.setText(mail.getMessage());
         mailMessage.setFrom(mail.getFromAddress());
         mailMessage.setReplyTo(mail.getFromAddress());
-
         mailSender.send(mailMessage);
     }
 

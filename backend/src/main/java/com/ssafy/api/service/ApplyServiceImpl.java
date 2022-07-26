@@ -9,7 +9,6 @@ import com.ssafy.db.repository.RecruitRepository;
 import com.ssafy.db.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,8 +34,7 @@ public class ApplyServiceImpl implements ApplyService {
             User user = userRepository.findByUserNo(userNo).get();
             Recruit recruit = recruitRepository.findByRecruitNo(recruitNo).get();
             Apply apply = new Apply();
-            apply.setUser(user);
-            apply.setRecruit(recruit);
+            apply.createApply(user, recruit);
             applyRepository.save(apply);
             return 1;
         }
