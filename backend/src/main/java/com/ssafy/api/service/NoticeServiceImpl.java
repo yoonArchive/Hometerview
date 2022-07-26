@@ -4,6 +4,7 @@ import com.ssafy.api.request.NoticeWritePostReq;
 import com.ssafy.api.request.UpdateNoticePutReq;
 import com.ssafy.db.entity.Notice;
 import com.ssafy.db.repository.NoticeRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,13 +14,13 @@ import java.util.Date;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class NoticeServiceImpl implements NoticeService {
 
-    @Autowired
-    NoticeRepository noticeRepository;
+    private final NoticeRepository noticeRepository;
 
     @Override
-    public Notice getByNoticeNo(long noticeNo) {
+    public Notice getByNoticeNo(Long noticeNo) {
         return noticeRepository.findByNoticeNo(noticeNo).orElse(null);
     }
 
@@ -28,7 +29,6 @@ public class NoticeServiceImpl implements NoticeService {
         Notice notice = new Notice();
         notice.setNoticeTitle(noticeWritePostReq.getNoticeTitle());
         notice.setNoticeContents(noticeWritePostReq.getNoticeContents());
-        // 작성일자
         SimpleDateFormat dataFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date now = new Date();
         notice.setWriteDate(dataFormat.format(now));
@@ -53,7 +53,7 @@ public class NoticeServiceImpl implements NoticeService {
 
     @Override
     @Transactional
-    public int deleteNotice(long noticeNo) {
+    public int deleteNotice(Long noticeNo) {
         try {
             noticeRepository.findByNoticeNo(noticeNo).get();
         } catch (Exception e) {

@@ -13,7 +13,7 @@ export default {
     authError: null,
     isDuplicatedEmail: true,
     isDuplicatedId: true,
-
+    isPasswordConfirm: false,
   }),
 
   mutations:{
@@ -23,7 +23,7 @@ export default {
     SET_AUTH_ERROR: (state, error) => state.authError = error,
     SET_CHECK_EMAIL: (state, isDuplicatedEmail) => state.isDuplicatedEmail = isDuplicatedEmail,
     SET_CHECK_ID: (state, isDuplicatedId) => state.isDuplicatedId = isDuplicatedId,
-
+    SET_PASSWORD_CONFIRM: (state, ispasswordconfirm) => state.isPasswordConfirm = ispasswordconfirm,
 
 
     CLEER_CURRENT_USER : (state) => state.currentUser = {},
@@ -36,6 +36,10 @@ export default {
     currentUser: state => state.currentUser,
     authError: state => state.authError,
     authHeader: state => ({ Authorization: `Bearer ${state.token}`}),
+<<<<<<< HEAD
+=======
+    isPasswordConfirm: state=> state.isPasswordConfirm,
+>>>>>>> a935c6fb03e04648100529daa98313a3a09745a1
   },
   actions:{
 
@@ -49,6 +53,30 @@ export default {
       commit('SET_TOKEN', '')
       localStorage.setItem('token', '')
     },
+    passwordConfirm({commit, getters}, credentials){
+      axios
+      .get(api_url.accounts.passwordConfirm(),{
+        params : credentials,
+        headers : getters.authHeader,
+      }).then(()=>{
+        commit('SET_PASSWORD_CONFIRM',true);
+        router.push({name:'mypage'})
+      }).catch(()=>{
+        alert('인증에 실패했습니다.')
+      })
+    },
+
+    deleteUser({dispatch, getters}){
+      axios.delete(api_url.accounts.deleteUser(), {
+        headers: getters.authHeader,
+      }).then(()=>{
+        dispatch('logout');
+        router.push({name:'main'});
+      }).catch(err=>{
+        console.log(err);
+      })
+    },
+
     updateUser({dispatch, getters}, credentials){
       console.log(credentials);
       const updateUserPutReq = {
@@ -57,11 +85,10 @@ export default {
         userName:credentials.userName,
       }
       axios.put(api_url.accounts.updateUser(), updateUserPutReq ,{
-        headers: getters.authHeader
+        headers: getters.authHeader,
       }).then(data=>{
         console.log(data);
         dispatch('logout');
-
       }).catch(err=>{
         console.log(err)
       })
@@ -153,6 +180,8 @@ export default {
       if(getters.isLoggedIn){
         dispatch('removeToken')
         alert('성공적으로 logout!')
+        commit('CLEER_CURRENT_USER');
+        commit('SET_PASSWORD_CONFIRM',false);
         router.push({ name: 'login' })
       }
       else{

@@ -12,8 +12,8 @@ export default {
     findUserid: () => HOST + USERS + 'findid/',
     emailDuplicateCheck:() => HOST + USERS + 'checkemail/',
     idDuplicateCheck:() => HOST + USERS + 'checkid/',
-
-
+    deleteUser: () => HOST + USERS,
+    passwordConfirm: () => HOST + USERS + 'pw/',
     findMyAccount: () => HOST + USERS + 'findid/',
     findUserPassword: () => HOST + USERS + 'findpw/',
     changepassword: () => HOST + USERS + 'pw/',
