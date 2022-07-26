@@ -1,12 +1,14 @@
 package com.ssafy.api.service;
 
 import com.ssafy.api.request.QuestionReq;
+import com.ssafy.api.request.QuestionUpdateReq;
 import com.ssafy.db.entity.*;
 import com.ssafy.db.repository.PersonalQuestionRepository;
 import com.ssafy.db.repository.PersonalQuestionRepositorySupport;
 import com.ssafy.db.repository.ResumeDetailRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -38,7 +40,21 @@ public class PersonalQuestionServiceImpl implements PersonalQuestionService {
         return personalQuestionRepositorySupport.findAllPersonalQuestionByDetailNo(detailNo);
     }
 
+    @Override
+    public PersonalQuestion getByQuestionNo(Long questionNo) {
+        return personalQuestionRepository.findByQuestionNo(questionNo).get();
+    }
 
+    @Override
+    public PersonalQuestion getPersonalQuestion(Long questionNo, Long detailNo, Long writerNo) {
+        return personalQuestionRepositorySupport.findPersonalQuestionByQuestionNoAndDetailNoAndUserNo(questionNo, detailNo, writerNo);
+    }
+
+    @Override
+    @Transactional
+    public void updatePersonalQuestion(PersonalQuestion personalQuestion, QuestionUpdateReq questionUpdateReq) {
+
+    }
 
 
 }

@@ -1,12 +1,10 @@
 package com.ssafy.api.controller;
 
 import com.ssafy.api.request.QuestionReq;
+import com.ssafy.api.request.QuestionUpdateReq;
 import com.ssafy.api.request.ResumeWritePostReq;
 import com.ssafy.api.request.UpdateResumePutReq;
-import com.ssafy.api.response.PersonalQuestionListRes;
-import com.ssafy.api.response.RecruitListRes;
-import com.ssafy.api.response.ResumeListRes;
-import com.ssafy.api.response.ResumeRes;
+import com.ssafy.api.response.*;
 import com.ssafy.api.service.PersonalQuestionService;
 import com.ssafy.api.service.ResumeService;
 import com.ssafy.common.auth.UserDetails;
@@ -151,7 +149,23 @@ public class ResumeController {
         return ResponseEntity.status(200).body(PersonalQuestionListRes.of(personalQuestions, 200, "해당 자기소개서 항목에 등록된 개인질문입니다."));
     }
 
-
-
+    @PutMapping("/detail/{detailNo}/question/{questionNo}")
+    public ResponseEntity<?> updatePersonalQuestion(@ApiIgnore Authentication authentication,
+                                                    @PathVariable Long detailNo,
+                                                    @PathVariable Long questionNo,
+                                                    @RequestBody @ApiParam(value = "수정내용", required = true) @Valid QuestionUpdateReq questionUpdateReq) {
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        Long userNo = userDetails.getUserNo();
+        PersonalQuestion personalQuestion = personalQuestionService.getPersonalQuestion(questionNo, detailNo, userNo);
+        if (personalQuestion == null)
+            return ResponseEntity.status(402).body(BaseResponseBody.of(402, "해당하는 개인 질문이 없습니다."));
+        try {
+            personalQuestionService.updatePersonalQuestion(personalQuestion, questionUpdateReq);
+        } catch (Exception e) {
+            return ResponseEntity.status(401).body(BaseResponseBody.of(401, "회고 수정에 실패하였습니다."));
+        }
+        List<PersonalQuestion> personalQuestions = personalQuestionService.getList(detailNo);
+        return ResponseEntity.status(200).body(PersonalQuestionListRes.of(personalQuestions, 200, "회고 수정이 완료되었습니다."));
+    }
 
 }

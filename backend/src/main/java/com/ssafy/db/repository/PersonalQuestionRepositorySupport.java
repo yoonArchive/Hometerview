@@ -21,4 +21,11 @@ public class PersonalQuestionRepositorySupport {
                 .where(qPersonalQuestion.resumeDetail.detailNo.eq(detailNo)).fetch();
     }
 
+    public PersonalQuestion findPersonalQuestionByQuestionNoAndDetailNoAndUserNo(Long questionNo, Long detailNo, Long writerNo) {
+        return jpaQueryFactory.select(qPersonalQuestion).from(qPersonalQuestion)
+                .where(qPersonalQuestion.questionNo.eq(questionNo))
+                .where(qPersonalQuestion.resumeDetail.detailNo.eq(detailNo))
+                .where(qPersonalQuestion.writerNo.eq(writerNo)).fetchOne();
+    }
+
 }
