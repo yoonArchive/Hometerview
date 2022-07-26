@@ -68,4 +68,20 @@ public class Study {
     @OneToMany(mappedBy = "study")
     private List<RegistResume> registResumes = new ArrayList<>();
 
+    public void updateNotice(String newStdNotice) {
+        this.stdNotice = newStdNotice;
+    }
+
+    public void updateEndDate(String newEndDate) {
+        this.endDate = newEndDate;
+    }
+
+    public void updateStdImg(String newStdImg){
+        this.stdImg = newStdImg;
+    }
+
+    public void updateStdDay(String newStdDay) {
+        this.stdDay = newStdDay;
+    }
+
 }

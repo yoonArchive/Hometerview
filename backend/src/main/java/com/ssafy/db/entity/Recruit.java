@@ -77,4 +77,8 @@ public class Recruit {
         this.stdLimit = stdLimit;
     }
 
+    public void recruitComplete() {
+        this.recruitStatus = RecruitStatus.COMPLETED;
+    }
+
 }

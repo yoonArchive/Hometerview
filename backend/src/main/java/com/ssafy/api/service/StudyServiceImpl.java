@@ -30,6 +30,9 @@ public class StudyServiceImpl implements StudyService {
     @Autowired
     StudyJoinRepositorySupport studyJoinRepositorySupport;
 
+    @Autowired
+    ApplyRepository applyRepository;
+
     @Override
     public void createStudy(Long recruitNo) {
         // 스터디 생성
@@ -46,6 +49,7 @@ public class StudyServiceImpl implements StudyService {
                 .stdLimit(recruit.getStdLimit())
                 .build();
         studyRepository.save(study);
+        this.recruitComplete(recruit);
 
         //스터디 조인
         List<Apply> applyList = applyRepositorySupport.findApplyByRecruitNo(recruitNo);
@@ -55,6 +59,7 @@ public class StudyServiceImpl implements StudyService {
                     .study(study)
                     .build();
             studyJoinRepository.save(studyJoin);
+            applyRepository.deleteByApplyNo(apply.getApplyNo());
         }
     }
 
@@ -86,4 +91,33 @@ public class StudyServiceImpl implements StudyService {
         return 1;
     }
 
+    @Override
+    @Transactional
+    public void updateNotice(Study study, String newNotice){
+        study.updateNotice(newNotice);
+    }
+
+    @Override
+    @Transactional
+    public void updateEndDate(Study study, String newEndDate){
+        study.updateEndDate(newEndDate);
+    }
+
+    @Override
+    @Transactional
+    public void updateStdImg(Study study, String newStdImg){
+        study.updateStdImg(newStdImg);
+    }
+
+    @Override
+    @Transactional
+    public void updateStdDay(Study study, String newStdDay){
+        study.updateStdDay(newStdDay);
+    }
+
+    @Override
+    @Transactional
+    public void recruitComplete(Recruit recruit){
+        recruit.recruitComplete();
+    }
 }

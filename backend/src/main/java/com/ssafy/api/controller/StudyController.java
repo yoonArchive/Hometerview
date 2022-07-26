@@ -1,5 +1,6 @@
 package com.ssafy.api.controller;
 
+import com.ssafy.api.request.UpdateStdNoticePutReq;
 import com.ssafy.api.response.StudyListRes;
 import com.ssafy.api.response.StudyRes;
 import com.ssafy.api.service.StudyService;
@@ -84,12 +85,18 @@ public class StudyController {
     }
 
     // 공지사항 작성
-//    @PutMapping()
-//    @ApiOperation(value = "공지사항 작성", notes = "공지사항을 작성한다.")
-//    @ApiResponses({@ApiResponse(code = 200, message = "공지사항 작성 성공"), @ApiResponse(code = 401, message = "공지사항 작성 실패"), @ApiResponse(code = 500, message = "서버 오류")})
-//    public ResponseEntity<?> writeNotice(Long stdNo){
-//        Study study = studyService.detailStudy(stdNo);
-//        study.setStdNotice();
-//    }
+    @PutMapping("/{stdNo}")
+    @ApiOperation(value = "스터디 공지사항 작성", notes = "스터디 공지사항을 작성한다.")
+    @ApiResponses({@ApiResponse(code = 200, message = "스터디 공지사항 작성 성공"), @ApiResponse(code = 401, message = "스터디 공지사항 작성 실패"), @ApiResponse(code = 402, message = "해당 스터디 없음"),  @ApiResponse(code = 500, message = "서버 오류")})
+    public ResponseEntity<?> writeNotice(@PathVariable @ApiParam(value = "스터디 번호", required = true) Long stdNo,@RequestBody @ApiParam(value = "비밀번호 변경 정보", required = true) UpdateStdNoticePutReq updateStdNoticePutReq) throws  Exception{
+        Study study = studyService.detailStudy(stdNo);
+        if(study == null) return ResponseEntity.status(401).body(BaseResponseBody.of(402, "스터디가 존재하지 않습니다."));
+        try{
+            studyService.updateNotice(study, updateStdNoticePutReq.getNewStdNotice());
+        }catch (Exception e){
+            return ResponseEntity.status(401).body(BaseResponseBody.of(401, "스터디 공지사항 작성에 실패하였습니다."));
+        }
+        return ResponseEntity.status(401).body(BaseResponseBody.of(200, "스터디 공지사항 작성에 성공하였습니다."));
+    }
 
 }
