@@ -3,14 +3,18 @@ package com.ssafy.api.controller;
 import com.ssafy.api.request.QuestionReq;
 import com.ssafy.api.request.ResumeWritePostReq;
 import com.ssafy.api.request.UpdateResumePutReq;
+import com.ssafy.api.response.PersonalQuestionListRes;
+import com.ssafy.api.response.RecruitListRes;
 import com.ssafy.api.response.ResumeListRes;
 import com.ssafy.api.response.ResumeRes;
 import com.ssafy.api.service.PersonalQuestionService;
 import com.ssafy.api.service.ResumeService;
 import com.ssafy.common.auth.UserDetails;
 import com.ssafy.common.model.response.BaseResponseBody;
+import com.ssafy.db.entity.PersonalQuestion;
 import com.ssafy.db.entity.Resume;
 import com.ssafy.db.entity.ResumeDetail;
+import com.ssafy.db.entity.Review;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -136,6 +140,13 @@ public class ResumeController {
             return ResponseEntity.status(401).body(BaseResponseBody.of(401, "개인 질문 등록에 실패하였습니다."));
         }
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "개인 질문이 등록되었습니다."));
+    }
+
+    @GetMapping("/detail/{detailNo}/question")
+    @ApiOperation(value = "개인 질문 목록", notes = "자기소개서 상세에 등록된 개인 질문을 조회한다.")
+    public ResponseEntity<?> getPersonalQuestionList(@PathVariable Long detailNo) {
+        List<PersonalQuestion> personalQuestions = personalQuestionService.getList(detailNo);
+        return ResponseEntity.status(200).body(PersonalQuestionListRes.of(personalQuestions, 200, "해당 자기소개서 항목에 등록된 개인질문입니다."));
     }
 
 
