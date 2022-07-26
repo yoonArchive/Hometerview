@@ -25,8 +25,8 @@ public class ReviewRes extends BaseResponseBody {
     @ApiModelProperty(name = "회고 타입")
     ReviewType reviewType;
 
-    @ApiModelProperty(name = "작성일자")
-    String writeDate;
+    @ApiModelProperty(name = "회고 일자")
+    String reviewDate;
 
     public static ReviewRes of(Review review, Integer statusCode, String message) {
         ReviewRes res = new ReviewRes();
@@ -34,7 +34,7 @@ public class ReviewRes extends BaseResponseBody {
         res.setReviewTitle(review.getReviewTitle());
         res.setReviewContents(review.getReviewContents());
         res.setReviewType(review.getReviewType());
-        res.setWriteDate(review.getWriteDate());
+        res.setReviewDate(review.getReviewDate());
         res.setStatusCode(statusCode);
         res.setMessage(message);
         return res;

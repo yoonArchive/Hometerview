@@ -31,13 +31,14 @@ public class Review {
     @Column(name = "review_type")
     private ReviewType reviewType;
 
-    @Column(name = "write_date")
-    private String writeDate;
+    @Column(name = "review_date")
+    private String reviewDate;
 
-    public void initReview(String reviewTitle, String reviewContents, ReviewType reviewType) {
+    public void initReview(String reviewTitle, String reviewContents, ReviewType reviewType, String reviewDate) {
         this.reviewTitle = reviewTitle;
         this.reviewContents = reviewContents;
         this.reviewType = reviewType;
+        this.reviewDate = reviewDate;
     }
 
     public void setUser(User user) {
