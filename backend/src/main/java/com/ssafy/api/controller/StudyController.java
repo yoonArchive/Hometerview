@@ -38,7 +38,7 @@ public class StudyController {
 
     //내 스터디 조회
     @GetMapping()
-    @ApiOperation(value = "내 스터디 조회", notes = "내 스터디 목록을 조회한다.")
+    @ApiOperation(value = "스터디 목록 조회", notes = "스터디 목록을 조회한다.")
     @ApiResponses({@ApiResponse(code = 200, message = "스터디 목록 조회 성공"), @ApiResponse(code = 401, message = "스터디 목록 조회 실패"), @ApiResponse(code = 500, message = "서버 오류")})
     public ResponseEntity<StudyListRes> studyList(@ApiIgnore Authentication authentication) throws Exception{
         UserDetails userDetails = (UserDetails) authentication.getDetails();
@@ -72,5 +72,24 @@ public class StudyController {
         if (result == 1) return ResponseEntity.status(200).body(BaseResponseBody.of(200, "스터디 탈퇴가 완료되었습니다."));
         else return ResponseEntity.status(401).body(BaseResponseBody.of(401, "스터디 탈퇴에 실패하였습니다."));
     }
+
+    // 스터디원 추방
+    @DeleteMapping()
+    @ApiOperation(value = "스터디 추방", notes = "스터디원을 추방한다.")
+    @ApiResponses({@ApiResponse(code = 200, message = "스터디원 추방 성공"), @ApiResponse(code = 401, message = "스터디원 추방 실패"), @ApiResponse(code = 500, message = "서버 오류")})
+    public ResponseEntity<?> exileStudy(@RequestParam @ApiParam(value = "유저 번호", required = true) Long userNo, @RequestParam @ApiParam(value = "스터디 번호", required = true) Long stdNo) throws Exception {
+        int result = studyService.leaveStudy(userNo, stdNo);
+        if (result == 1) return ResponseEntity.status(200).body(BaseResponseBody.of(200, "스터디원 추방이 완료되었습니다."));
+        else return ResponseEntity.status(401).body(BaseResponseBody.of(401, "스터디원 추방에 실패하였습니다."));
+    }
+
+    // 공지사항 작성
+//    @PutMapping()
+//    @ApiOperation(value = "공지사항 작성", notes = "공지사항을 작성한다.")
+//    @ApiResponses({@ApiResponse(code = 200, message = "공지사항 작성 성공"), @ApiResponse(code = 401, message = "공지사항 작성 실패"), @ApiResponse(code = 500, message = "서버 오류")})
+//    public ResponseEntity<?> writeNotice(Long stdNo){
+//        Study study = studyService.detailStudy(stdNo);
+//        study.setStdNotice();
+//    }
 
 }
