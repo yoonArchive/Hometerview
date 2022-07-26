@@ -223,28 +223,28 @@ public class UserController {
     @GetMapping("/review/{reviewNo}")
     @ApiOperation(value = "회고 상세 조회", notes = "회고 상세 정보를 조회한다.")
     @ApiResponses({@ApiResponse(code = 200, message = "회고 상세 정보 조회 성공"), @ApiResponse(code = 401, message = "회고 상세 정보 조회 실패"), @ApiResponse(code = 500, message = "서버 오류")})
-    public ResponseEntity<? extends BaseResponseBody> getReviewDetail(@ApiIgnore Authentication authentication, @PathVariable @ApiParam(value = "회고 번호", required = true) Long reviewNo) throws Exception {
+    public ResponseEntity<ReviewRes> getReviewDetail(@ApiIgnore Authentication authentication, @PathVariable @ApiParam(value = "회고 번호", required = true) Long reviewNo) throws Exception {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         Long userNo = userDetails.getUserNo();
         Review review = reviewService.getReviewDetail(reviewNo, userNo);
-        if (review == null) return ResponseEntity.status(402).body(BaseResponseBody.of(402, "해당하는 회고가 없습니다."));
+        if (review == null) return ResponseEntity.status(402).body(ReviewRes.of(null, 402, "해당하는 회고가 없습니다."));
         return ResponseEntity.status(200).body(ReviewRes.of(review, 200, "회고 상세 정보 조회에 성공하였습니다."));
     }
 
     @PutMapping("/review/{reviewNo}")
     @ApiOperation(value = "회고 수정", notes = "회고 내용을 수정한다.")
     @ApiResponses({@ApiResponse(code = 200, message = "회고 수정 성공"), @ApiResponse(code = 401, message = "회고 수정 실패"), @ApiResponse(code = 500, message = "서버 오류")})
-    public ResponseEntity<? extends BaseResponseBody> updateReview(@ApiIgnore Authentication authentication, @PathVariable @ApiParam(value = "회고 번호", required = true) Long reviewNo, @RequestBody @ApiParam(value = "회고 변경 내용", required = true) ReviewReq reviewReq) throws Exception {
+    public ResponseEntity<ReviewRes> updateReview(@ApiIgnore Authentication authentication, @PathVariable @ApiParam(value = "회고 번호", required = true) Long reviewNo, @RequestBody @ApiParam(value = "회고 변경 내용", required = true) ReviewReq reviewReq) throws Exception {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         Long userNo = userDetails.getUserNo();
         Review review = reviewService.getReviewDetail(reviewNo, userNo);
-        if (review == null) return ResponseEntity.status(402).body(BaseResponseBody.of(402, "해당하는 회고가 없습니다."));
+        if (review == null) return ResponseEntity.status(402).body(ReviewRes.of(null, 402, "해당하는 회고가 없습니다."));
         Review updatedReview;
         try {
             reviewService.updateReview(review, reviewReq);
             updatedReview = reviewService.getByReviewNo(reviewNo);
         } catch (Exception e) {
-            return ResponseEntity.status(401).body(BaseResponseBody.of(401, "회고 수정에 실패하였습니다."));
+            return ResponseEntity.status(401).body(ReviewRes.of(null, 401, "회고 수정에 실패하였습니다."));
         }
         return ResponseEntity.status(200).body(ReviewRes.of(updatedReview, 200, "회고 수정이 완료되었습니다."));
     }
