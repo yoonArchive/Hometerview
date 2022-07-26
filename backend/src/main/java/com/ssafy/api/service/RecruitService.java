@@ -16,6 +16,8 @@ public interface RecruitService {
 
     List<Recruit> getFilteredList(int type);
 
+    List<Recruit> search(String keyword);
+
     Recruit getByRecruitNo(Long recruitNo);
 
     void updateRecruit(Recruit recruit, RecruitReq recruitReq);
