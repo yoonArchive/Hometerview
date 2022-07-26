@@ -25,4 +25,5 @@ public interface StudyService {
     void updateStdDay(Study study, String newStdDay);
 
     void recruitComplete(Recruit recruit);
+
 }

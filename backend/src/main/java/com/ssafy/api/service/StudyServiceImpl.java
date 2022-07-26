@@ -2,6 +2,7 @@ package com.ssafy.api.service;
 
 import com.ssafy.db.entity.*;
 import com.ssafy.db.repository.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,28 +11,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class StudyServiceImpl implements StudyService {
 
-    @Autowired
-    RecruitRepository recruitRepository;
+    private final RecruitRepository recruitRepository;
 
-    @Autowired
-    StudyRepository studyRepository;
+    private final StudyRepository studyRepository;
 
-    @Autowired
-    ApplyRepositorySupport applyRepositorySupport;
+    private final ApplyRepositorySupport applyRepositorySupport;
 
-    @Autowired
-    StudyJoinRepository studyJoinRepository;
+    private final StudyJoinRepository studyJoinRepository;
 
-    @Autowired
-    UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    StudyJoinRepositorySupport studyJoinRepositorySupport;
+    private final StudyJoinRepositorySupport studyJoinRepositorySupport;
 
-    @Autowired
-    ApplyRepository applyRepository;
+    private final ApplyRepository applyRepository;
 
     @Override
     public void createStudy(Long recruitNo) {
@@ -93,31 +88,32 @@ public class StudyServiceImpl implements StudyService {
 
     @Override
     @Transactional
-    public void updateNotice(Study study, String newNotice){
+    public void updateNotice(Study study, String newNotice) {
         study.updateNotice(newNotice);
     }
 
     @Override
     @Transactional
-    public void updateEndDate(Study study, String newEndDate){
+    public void updateEndDate(Study study, String newEndDate) {
         study.updateEndDate(newEndDate);
     }
 
     @Override
     @Transactional
-    public void updateStdImg(Study study, String newStdImg){
+    public void updateStdImg(Study study, String newStdImg) {
         study.updateStdImg(newStdImg);
     }
 
     @Override
     @Transactional
-    public void updateStdDay(Study study, String newStdDay){
+    public void updateStdDay(Study study, String newStdDay) {
         study.updateStdDay(newStdDay);
     }
 
     @Override
     @Transactional
-    public void recruitComplete(Recruit recruit){
+    public void recruitComplete(Recruit recruit) {
         recruit.recruitComplete();
     }
+
 }
