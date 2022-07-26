@@ -59,7 +59,7 @@ public class ResumeController {
     @PutMapping()
     @ApiResponses({@ApiResponse(code = 200, message = "자기소개서 제목 수정 성공"), @ApiResponse(code = 401, message = "자기소개서 제목 수정 실패"), @ApiResponse(code = 402, message = "해당 자기소개서 없음"), @ApiResponse(code = 500, message = "서버 오류")})
     @ApiOperation(value = "자기소개서 제목 수정", notes = "자기소개서 제목을 수정한다.")
-    public ResponseEntity<?> updateResume(@ApiIgnore Authentication authentication, @RequestParam @ApiParam(value = "자기소개서 번호", required = true) Long resumeNo, @RequestParam @ApiParam(value = "자기소개서 제목", required = true) String resumeTitle) {
+    public ResponseEntity<? extends BaseResponseBody> updateResume(@ApiIgnore Authentication authentication, @RequestParam @ApiParam(value = "자기소개서 번호", required = true) Long resumeNo, @RequestParam @ApiParam(value = "자기소개서 제목", required = true) String resumeTitle) {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         Long userNo = userDetails.getUserNo();
         Resume resume = resumeService.getResume(resumeNo, userNo);
@@ -75,7 +75,7 @@ public class ResumeController {
     @DeleteMapping()
     @ApiResponses({@ApiResponse(code = 200, message = "자기소개서 삭제 성공"), @ApiResponse(code = 401, message = "자기소개서 삭제 실패"), @ApiResponse(code = 500, message = "서버 오류")})
     @ApiOperation(value = "자기소개서 삭제", notes = "자기소개서를 삭제한다.")
-    public ResponseEntity<?> deleteResume(@ApiIgnore Authentication authentication, @RequestParam @ApiParam(value = "자기소개서 번호", required = true) Long resumeNo) {
+    public ResponseEntity<? extends BaseResponseBody> deleteResume(@ApiIgnore Authentication authentication, @RequestParam @ApiParam(value = "자기소개서 번호", required = true) Long resumeNo) {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         Long userNo = userDetails.getUserNo();
         Resume resume = resumeService.getResume(resumeNo, userNo);
@@ -112,7 +112,7 @@ public class ResumeController {
     @PutMapping("/{detailNo}")
     @ApiOperation(value = "자기소개서 상세 수정", notes = "자기소개서 상세 내용을 수정한다.")
     @ApiResponses({@ApiResponse(code = 200, message = "자기소개서 상세 수정 성공"), @ApiResponse(code = 401, message = "자기소개서 상세 수정 실패"), @ApiResponse(code = 402, message = "자기소개서 상세 없음"), @ApiResponse(code = 500, message = "서버 오류")})
-    public ResponseEntity<?> updateResume(@PathVariable @ApiParam(value = "상세번호", required = true) Long detailNo, @RequestBody @ApiParam(value = "상세내용", required = true) UpdateResumePutReq updateResumePutReq) throws Exception {
+    public ResponseEntity<? extends BaseResponseBody> updateResume(@PathVariable @ApiParam(value = "상세번호", required = true) Long detailNo, @RequestBody @ApiParam(value = "상세내용", required = true) UpdateResumePutReq updateResumePutReq) throws Exception {
         ResumeDetail resumeDetail = resumeService.getByDetailNo(detailNo);
         if (resumeDetail == null)
             return ResponseEntity.status(402).body(BaseResponseBody.of(402, "해당하는 자기소개서 상세가 없습니다."));
@@ -129,7 +129,7 @@ public class ResumeController {
     @DeleteMapping("/{detailNo}")
     @ApiOperation(value = "자기소개서 상세 삭제", notes = "자기소개서 상세 내용을 삭제한다.")
     @ApiResponses({@ApiResponse(code = 200, message = "자기소개서 상세 삭제 성공"), @ApiResponse(code = 401, message = "자기소개서 상세 삭제 실패"), @ApiResponse(code = 500, message = "서버 오류")})
-    public ResponseEntity<?> deleteResumeDetail(@PathVariable @ApiParam(value = "상세번호", required = true) Long detailNo) throws Exception {
+    public ResponseEntity<? extends BaseResponseBody> deleteResumeDetail(@PathVariable @ApiParam(value = "상세번호", required = true) Long detailNo) throws Exception {
         int result = resumeService.deleteResumeDetail(detailNo);
         if (result == 1) return ResponseEntity.status(200).body(BaseResponseBody.of(200, "자기소개서 상세 삭제가 완료되었습니다."));
         else return ResponseEntity.status(200).body(BaseResponseBody.of(401, "자기소개서 상세가 삭제되었습니다."));
@@ -138,7 +138,7 @@ public class ResumeController {
     @PostMapping({"/detail/{detailNo}/question"})
     @ApiOperation(value = "개인 질문 등록", notes = "자기소개서 상세에 개인 질문을 등록한다.")
     @ApiResponses({@ApiResponse(code = 200, message = "개인 질문 등록 성공"), @ApiResponse(code = 401, message = "개인 질문 등록 실패"), @ApiResponse(code = 500, message = "서버 오류")})
-    public ResponseEntity<?> registerQuestion(@ApiIgnore Authentication authentication, @PathVariable("detailNo") @ApiParam(value = "상세번호", required = true) Long detailNo, @RequestBody @ApiParam(value = "질문내용", required = true) @Valid QuestionReq questionReq) {
+    public ResponseEntity<? extends BaseResponseBody> registerQuestion(@ApiIgnore Authentication authentication, @PathVariable("detailNo") @ApiParam(value = "상세번호", required = true) Long detailNo, @RequestBody @ApiParam(value = "질문내용", required = true) @Valid QuestionReq questionReq) {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         Long userNo = userDetails.getUserNo();
         try {
@@ -152,7 +152,7 @@ public class ResumeController {
     @GetMapping({"/detail/{detailNo}/question"})
     @ApiOperation(value = "개인 질문 목록 조회", notes = "자기소개서 상세에 등록된 개인 질문을 조회한다.")
     @ApiResponses({@ApiResponse(code = 200, message = "개인 질문 조회 성공"), @ApiResponse(code = 401, message = "개인 질문 조회 실패"), @ApiResponse(code = 500, message = "서버 오류")})
-    public ResponseEntity<?> getPersonalQuestionList(@PathVariable("detailNo") @ApiParam(value = "상세번호", required = true) Long detailNo) {
+    public ResponseEntity<PersonalQuestionListRes> getPersonalQuestionList(@PathVariable("detailNo") @ApiParam(value = "상세번호", required = true) Long detailNo) {
         List<PersonalQuestion> personalQuestions = personalQuestionService.getList(detailNo);
         return ResponseEntity.status(200).body(PersonalQuestionListRes.of(personalQuestions, 200, "해당 자기소개서 항목에 등록된 개인 질문입니다."));
     }
@@ -160,10 +160,10 @@ public class ResumeController {
     @PutMapping({"/detail/{detailNo}/question/{questionNo}"})
     @ApiOperation(value = "개인 질문 수정", notes = "자기소개서 상세에 등록된 개인 질문을 수정한다.")
     @ApiResponses({@ApiResponse(code = 200, message = "개인 질문 수정 성공"), @ApiResponse(code = 401, message = "개인 질문 수정 실패"), @ApiResponse(code = 402, message = "해당 질문 없음"), @ApiResponse(code = 500, message = "서버 오류")})
-    public ResponseEntity<?> updatePersonalQuestion(@ApiIgnore Authentication authentication,
-                                                    @PathVariable("detailNo") Long detailNo,
-                                                    @PathVariable("questionNo") Long questionNo,
-                                                    @RequestBody @ApiParam(value = "수정내용", required = true) @Valid QuestionUpdateReq questionUpdateReq) {
+    public ResponseEntity<? extends BaseResponseBody> updatePersonalQuestion(@ApiIgnore Authentication authentication,
+                                                                             @PathVariable("detailNo") Long detailNo,
+                                                                             @PathVariable("questionNo") Long questionNo,
+                                                                             @RequestBody @ApiParam(value = "수정내용", required = true) @Valid QuestionUpdateReq questionUpdateReq) {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         Long userNo = userDetails.getUserNo();
         PersonalQuestion personalQuestion = personalQuestionService.getPersonalQuestion(questionNo, detailNo, userNo);
@@ -181,7 +181,7 @@ public class ResumeController {
     @DeleteMapping({"/detail/{detailNo}/question/{questionNo}"})
     @ApiOperation(value = "개인 질문 삭제", notes = "자기소개서 상세에 등록된 개인 질문을 삭제한다.")
     @ApiResponses({@ApiResponse(code = 200, message = "개인 질문 삭제 성공"), @ApiResponse(code = 401, message = "개인 질문 삭제 실패"), @ApiResponse(code = 402, message = "해당 질문 없음"), @ApiResponse(code = 500, message = "서버 오류")})
-    public ResponseEntity<?> deletePersonalQuestion(@ApiIgnore Authentication authentication, @PathVariable("detailNo") Long detailNo, @PathVariable("questionNo") Long questionNo) {
+    public ResponseEntity<? extends BaseResponseBody> deletePersonalQuestion(@ApiIgnore Authentication authentication, @PathVariable("detailNo") Long detailNo, @PathVariable("questionNo") Long questionNo) {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         Long userNo = userDetails.getUserNo();
         PersonalQuestion personalQuestion = personalQuestionService.getPersonalQuestion(questionNo, detailNo, userNo);
