@@ -179,6 +179,8 @@ public class ResumeController {
     }
 
     @DeleteMapping({"/detail/{detailNo}/question/{questionNo}"})
+    @ApiOperation(value = "개인 질문 삭제", notes = "자기소개서 상세에 등록된 개인 질문을 삭제한다.")
+    @ApiResponses({@ApiResponse(code = 200, message = "개인 질문 삭제 성공"), @ApiResponse(code = 401, message = "개인 질문 삭제 실패"), @ApiResponse(code = 402, message = "해당 질문 없음"), @ApiResponse(code = 500, message = "서버 오류")})
     public ResponseEntity<?> deletePersonalQuestion(@ApiIgnore Authentication authentication, @PathVariable("detailNo") Long detailNo, @PathVariable("questionNo") Long questionNo) {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         Long userNo = userDetails.getUserNo();
