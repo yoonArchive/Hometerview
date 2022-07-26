@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -20,6 +19,12 @@ public class ReviewRepositorySupport {
     public List<Review> findAllReviewByUserNo(Long userNo) {
         return jpaQueryFactory.select(qReview).from(qReview)
                 .where(qReview.user.userNo.eq(userNo)).fetch();
+    }
+
+    public Review findReviewByReviewNoAndUserNo(Long reviewNo, Long userNo){
+        return jpaQueryFactory.select(qReview).from(qReview)
+                .where(qReview.reviewNo.eq(reviewNo))
+                .where(qReview.user.userNo.eq(userNo)).fetchOne();
     }
 
 }

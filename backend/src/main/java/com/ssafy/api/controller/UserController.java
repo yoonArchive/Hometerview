@@ -1,13 +1,10 @@
 package com.ssafy.api.controller;
 
 import com.ssafy.api.dto.Mail;
-import com.ssafy.api.request.ReviewReq;
-import com.ssafy.api.request.UpdatePwPutReq;
-import com.ssafy.api.request.UpdateUserPutReq;
+import com.ssafy.api.request.*;
 import com.ssafy.api.response.*;
 import com.ssafy.api.service.MailService;
 import com.ssafy.api.service.ReviewService;
-import com.ssafy.db.entity.Resume;
 import com.ssafy.db.entity.Review;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +12,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import com.ssafy.api.request.UserRegisterPostReq;
 import com.ssafy.api.service.UserService;
 import com.ssafy.common.auth.UserDetails;
 import com.ssafy.common.model.response.BaseResponseBody;
@@ -217,7 +213,7 @@ public class UserController {
     @GetMapping("/review")
     @ApiOperation(value = "회고 목록 조회", notes = "회고 목록을 조회한다.")
     @ApiResponses({@ApiResponse(code = 200, message = "회고 목록 조회 성공"), @ApiResponse(code = 401, message = "회고 목록 조회 실패"), @ApiResponse(code = 500, message = "서버 오류")})
-    public ResponseEntity<?> getReviewList(@ApiIgnore Authentication authentication) {
+    public ResponseEntity<?> getReviewList(@ApiIgnore Authentication authentication) throws Exception {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         Long userNo = userDetails.getUserNo();
         List<Review> reviews = reviewService.getList(userNo);
@@ -226,10 +222,31 @@ public class UserController {
 
     @GetMapping("/review/{reviewNo}")
     @ApiOperation(value = "회고 상세 조회", notes = "회고 상세 정보를 조회한다.")
-    public ResponseEntity<?> getReviewDetail(@ApiIgnore Authentication authentication, @PathVariable @ApiParam(value = "회고 번호", required = true) Long reviewNo) {
-        Review review = reviewService.getByReviewNo(reviewNo);
-        if (review == null) return ResponseEntity.status(402).body(BaseResponseBody.of(402, "해당하는 공지사항이 없습니다."));
-        return ResponseEntity.status(200).body(ReviewRes.of(review, 200, "공지사항 상세조회를 성공하였습니다."));
+    @ApiResponses({@ApiResponse(code = 200, message = "회고 상세 정보 조회 성공"), @ApiResponse(code = 401, message = "회고 상세 정보 조회 실패"), @ApiResponse(code = 500, message = "서버 오류")})
+    public ResponseEntity<?> getReviewDetail(@ApiIgnore Authentication authentication, @PathVariable @ApiParam(value = "회고 번호", required = true) Long reviewNo) throws Exception {
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        Long userNo = userDetails.getUserNo();
+        Review review = reviewService.getReviewDetail(reviewNo, userNo);
+        if (review == null) return ResponseEntity.status(402).body(BaseResponseBody.of(402, "해당하는 회고가 없습니다."));
+        return ResponseEntity.status(200).body(ReviewRes.of(review, 200, "회고 상세 정보 조회에 성공하였습니다."));
+    }
+
+    @PutMapping("/review/{reviewNo}")
+    @ApiOperation(value = "회고 수정", notes = "회고 내용을 수정한다.")
+    @ApiResponses({@ApiResponse(code = 200, message = "회고 수정 성공"), @ApiResponse(code = 401, message = "회고 수정 실패"), @ApiResponse(code = 500, message = "서버 오류")})
+    public ResponseEntity<?> updateReview(@ApiIgnore Authentication authentication, @PathVariable @ApiParam(value = "회고 번호", required = true) Long reviewNo, @RequestBody @ApiParam(value = "회고 변경 내용", required = true) ReviewReq reviewReq) throws Exception {
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        Long userNo = userDetails.getUserNo();
+        Review review = reviewService.getReviewDetail(reviewNo, userNo);
+        if (review == null) return ResponseEntity.status(402).body(BaseResponseBody.of(402, "해당하는 회고가 없습니다."));
+        Review updatedReview;
+        try {
+            reviewService.updateReview(review, reviewReq);
+            updatedReview = reviewService.getByReviewNo(reviewNo);
+        } catch (Exception e) {
+            return ResponseEntity.status(401).body(BaseResponseBody.of(401, "회고 수정에 실패하였습니다."));
+        }
+        return ResponseEntity.status(200).body(ReviewRes.of(updatedReview, 200, "회고 수정이 완료되었습니다."));
     }
 
 }

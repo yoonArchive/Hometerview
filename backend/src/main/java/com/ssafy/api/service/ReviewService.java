@@ -11,6 +11,10 @@ public interface ReviewService {
 
     List<Review> getList(Long userNo);
 
+    Review getReviewDetail(Long reviewNo, Long userNo);
+
+    void updateReview(Review review, ReviewReq reviewReq);
+
     Review getByReviewNo(Long reviewNo);
 
 }

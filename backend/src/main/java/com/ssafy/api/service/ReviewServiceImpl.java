@@ -7,6 +7,7 @@ import com.ssafy.db.repository.ReviewRepositorySupport;
 import com.ssafy.db.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -43,15 +44,22 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public Review getByReviewNo(Long reviewNo) {
-        return reviewRepository.findByReviewNo(reviewNo).orElse(null);
+    public Review getReviewDetail(Long reviewNo, Long userNo) {
+        return reviewRepositorySupport.findReviewByReviewNoAndUserNo(reviewNo, userNo);
     }
 
-    private void initialize(Review review, ReviewReq reviewReq) {
+    @Override
+    @Transactional
+    public void updateReview(Review review, ReviewReq reviewReq) {
         String reviewTitle = reviewReq.getReviewTitle();
         String reviewContents = reviewReq.getReviewContents();
         ReviewType reviewType = reviewReq.getReviewType();
         review.initReview(reviewTitle, reviewContents, reviewType);
+    }
+
+    @Override
+    public Review getByReviewNo(Long reviewNo) {
+        return reviewRepository.findByReviewNo(reviewNo).orElse(null);
     }
 
 }
