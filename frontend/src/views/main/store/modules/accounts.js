@@ -1,6 +1,7 @@
 import axios from 'axios'
 import api_url from '@/api/api_url'
-import router from '@/common/lib/vue-router'
+import http from '@/api/api_url'
+import router from "@/common/lib/vue-router.js";
 
 export default {
 
@@ -11,7 +12,7 @@ export default {
     authError: null,
     isDuplicatedEmail: true,
     isDuplicatedId: true,
-
+    isPasswordConfirm: false,
   }),
 
   mutations:{
@@ -20,9 +21,10 @@ export default {
     SET_AUTH_ERROR: (state, error) => state.authError = error,
     SET_CHECK_EMAIL: (state, isDuplicatedEmail) => state.isDuplicatedEmail = isDuplicatedEmail,
     SET_CHECK_ID: (state, isDuplicatedId) => state.isDuplicatedId = isDuplicatedId,
-    
+    SET_PASSWORD_CONFIRM: (state, ispasswordconfirm) => state.isPasswordConfirm = ispasswordconfirm,
 
 
+    CLEER_CURRENT_USER : (state) => state.currentUser = {},
   },
   getters:{
     isValidedEmail : state => state.isValidedEmail,
@@ -31,7 +33,8 @@ export default {
     isLoggedIn: state => !!state.token,
     currentUser: state => state.currentUser,
     authError: state => state.authError,
-    authHeader: state => ({ Authorization: `Bearer ${state.token}`})
+    authHeader: state => ({ Authorization: `Bearer ${state.token}`}),
+    isPasswordConfirm: state=> state.isPasswordConfirm,
   },
   actions:{
 
@@ -45,6 +48,48 @@ export default {
       commit('SET_TOKEN', '')
       localStorage.setItem('token', '')
     },
+    passwordConfirm({commit, getters}, credentials){
+      axios
+      .get(api_url.accounts.passwordConfirm(),{
+        params : credentials,
+        headers : getters.authHeader,
+      }).then(()=>{
+        commit('SET_PASSWORD_CONFIRM',true);
+        router.push({name:'mypage'})
+      }).catch(()=>{
+        alert('인증에 실패했습니다.')
+      })
+    },
+
+    deleteUser({dispatch, getters}){
+      axios.delete(api_url.accounts.deleteUser(), {
+        headers: getters.authHeader,
+      }).then(()=>{
+        dispatch('logout');
+        router.push({name:'main'});
+      }).catch(err=>{
+        console.log(err);
+      })
+    },
+
+    updateUser({dispatch, getters}, credentials){
+      console.log(credentials);
+      const updateUserPutReq = {
+        userEmail:credentials.userEmail,
+        userImg:credentials.userImg,
+        userName:credentials.userName,
+      }
+      axios.put(api_url.accounts.updateUser(), updateUserPutReq ,{
+        headers: getters.authHeader,
+      }).then(data=>{
+        console.log(data);
+        dispatch('logout');
+      }).catch(err=>{
+        console.log(err)
+      })
+    },
+
+
     login({ commit, dispatch }, credentials) {
 
       axios({
@@ -66,10 +111,12 @@ export default {
           alert('로그인 실패')
         })
     },
-    logout({ getters, dispatch }) {
+    logout({ getters, dispatch, commit }) {
       if(getters.isLoggedIn){
         dispatch('removeToken')
         alert('성공적으로 logout!')
+        commit('CLEER_CURRENT_USER');
+        commit('SET_PASSWORD_CONFIRM',false);
         router.push({ name: 'login' })
       }
       else{
@@ -107,7 +154,9 @@ export default {
         })
         // dispatch('login', credentialsForLogin)
     },
-    fetchCurrentUser({ commit, getters, dispatch }) {
+
+
+    async fetchCurrentUser({ commit, getters, dispatch }) {
       /*
       GET: 사용자가 로그인 했다면(토큰이 있다면)
         currentUserInfo URL로 요청보내기
@@ -118,12 +167,22 @@ export default {
             LoginView로 이동
       */
       if (getters.isLoggedIn) {
-        axios({
+        await axios({
           url: api_url.accounts.currentUserInfo(),
           method: 'get',
           headers: getters.authHeader,
+        }).then(res =>{
+          console.log(res);
+          const tempuser = {
+            userEmail : res.data.userEmail,
+            userImg : res.data.userImg,
+            userId : res.data.userId,
+            userName : res.data.userName,
+          }
+          console.log(tempuser);
+          commit('SET_CURRENT_USER', tempuser);
+
         })
-          .then(res => commit('SET_CURRENT_USER', res.data))
           .catch(err => {
             if (err.response.status === 401) {
               dispatch('removeToken')
@@ -133,7 +192,7 @@ export default {
       }
     },
     findUserid({ commit },credentials){
-      
+
       const splitedEmail = credentials.userEmail.split('@')
       const emailId = splitedEmail[0]
       const emailaddress = splitedEmail[1]
@@ -160,7 +219,7 @@ export default {
       const emailId = splitedEmail[0]
       const emailaddress = splitedEmail[1]
       const emailForSubmit = `?email=${emailId}%40${emailaddress}`
-      
+
       axios({
         url: api_url.accounts.emailDuplicateCheck() + emailForSubmit,
         method : 'get',

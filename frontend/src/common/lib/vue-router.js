@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '@/views/home/home'
+import store from '@/common/lib/store.js'
 import ConferencesDetail from '@/views/conferences/conference-detail'
+
 
 import History from '@/views/history/history'
 import Main from '@/views/main/main'
@@ -26,6 +28,7 @@ import MyPage from '@/views/mypage/MyPage'
 import ChangePassword from '@/views/mypage/changepassword/ChangePassword'
 import MyAccount from '@/views/mypage/myaccount/MyAccount'
 import Withdrawal from '@/views/mypage/withdrawal/Withdrawal'
+import PasswordConfirm from '@/views/mypage/passwordconfirm/PasswordConfirm'
 
 const fullMenu = require('@/views/main/menu.json')
 function makeRoutesFromMenu () {
@@ -71,7 +74,7 @@ function makeRoutesFromMenu () {
       path: 'findid',
       name: 'findid',
       component:FindUseridView
-    },{  
+    },{
       path:'finduserpassword',
       name: 'finduserpassword',
       component :FindUserPassword
@@ -80,6 +83,14 @@ function makeRoutesFromMenu () {
       name: 'mypage',
       component :MyPage,
       redirect: '/home/mypage/myaccount',
+      beforeEnter:((to, from, next)=>{
+        const isPasswordConfirm = store.getters['isPasswordConfirm'];
+        if(!isPasswordConfirm){
+          next({name : 'passwordconfirm'});
+        }else{
+          next();
+        }
+      }),
       children : [
         {
           path: 'myaccount',
@@ -95,6 +106,10 @@ function makeRoutesFromMenu () {
           component :Withdrawal,
         }
       ]
+    },{
+      path : 'passwordconfirm',
+      name : 'passwordconfirm',
+      component : PasswordConfirm,
     }]
   },{
     path: '/',
