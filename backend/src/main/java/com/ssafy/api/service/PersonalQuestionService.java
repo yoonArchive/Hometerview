@@ -12,10 +12,10 @@ public interface PersonalQuestionService {
 
     List<PersonalQuestion> getList(Long detailNo);
 
-    PersonalQuestion getByQuestionNo(Long questionNo);
-
     PersonalQuestion getPersonalQuestion(Long questionNo, Long detailNo, Long userNo);
 
     void updatePersonalQuestion(PersonalQuestion personalQuestion, QuestionUpdateReq questionUpdateReq);
+
+    int deletePersonalQuestion(Long questionNo);
 
 }

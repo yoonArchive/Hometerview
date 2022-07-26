@@ -41,11 +41,6 @@ public class PersonalQuestionServiceImpl implements PersonalQuestionService {
     }
 
     @Override
-    public PersonalQuestion getByQuestionNo(Long questionNo) {
-        return personalQuestionRepository.findByQuestionNo(questionNo).get();
-    }
-
-    @Override
     public PersonalQuestion getPersonalQuestion(Long questionNo, Long detailNo, Long writerNo) {
         return personalQuestionRepositorySupport.findPersonalQuestionByQuestionNoAndDetailNoAndUserNo(questionNo, detailNo, writerNo);
     }
@@ -53,8 +48,20 @@ public class PersonalQuestionServiceImpl implements PersonalQuestionService {
     @Override
     @Transactional
     public void updatePersonalQuestion(PersonalQuestion personalQuestion, QuestionUpdateReq questionUpdateReq) {
-
+        String contents = questionUpdateReq.getContents();
+        personalQuestion.updatePersonalQuestion(contents);
     }
 
+    @Override
+    @Transactional
+    public int deletePersonalQuestion(Long questionNo) {
+        try {
+            personalQuestionRepository.findByQuestionNo(questionNo).get();
+        } catch (Exception e) {
+            return 0;
+        }
+        personalQuestionRepository.deleteByQuestionNo(questionNo);
+        return 1;
+    }
 
 }

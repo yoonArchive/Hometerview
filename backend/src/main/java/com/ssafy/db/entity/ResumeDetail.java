@@ -1,5 +1,6 @@
 package com.ssafy.db.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -32,6 +33,7 @@ public class ResumeDetail {
     @Column(name = "answer")
     private String answer;
 
+    @JsonIgnore
     @Builder.Default
     @OneToMany(mappedBy = "resumeDetail")
     private List<PersonalQuestion> personalQuestions = new ArrayList<>();
