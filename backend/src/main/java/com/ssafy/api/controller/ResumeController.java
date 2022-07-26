@@ -131,6 +131,7 @@ public class ResumeController {
 
     @PostMapping("/detail/{detailNo}/question")
     @ApiOperation(value = "개인 질문 등록", notes = "자기소개서 상세에 개인 질문을 등록한다.")
+    @ApiResponses({@ApiResponse(code = 200, message = "개인 질문 등록 성공"), @ApiResponse(code = 401, message = "개인 질문 등록 실패"), @ApiResponse(code = 500, message = "서버 오류")})
     public ResponseEntity<?> registerQuestion(@ApiIgnore Authentication authentication, @PathVariable @ApiParam(value = "상세번호", required = true) Long detailNo, @RequestBody @ApiParam(value = "질문내용", required = true) @Valid QuestionReq questionReq) {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         Long userNo = userDetails.getUserNo();
@@ -143,11 +144,13 @@ public class ResumeController {
     }
 
     @GetMapping("/detail/{detailNo}/question")
-    @ApiOperation(value = "개인 질문 목록", notes = "자기소개서 상세에 등록된 개인 질문을 조회한다.")
-    public ResponseEntity<?> getPersonalQuestionList(@PathVariable Long detailNo) {
+    @ApiOperation(value = "개인 질문 목록 조회", notes = "자기소개서 상세에 등록된 개인 질문을 조회한다.")
+    @ApiResponses({@ApiResponse(code = 200, message = "개인 질문 조회 성공"), @ApiResponse(code = 401, message = "개인 질문 조회 실패"), @ApiResponse(code = 500, message = "서버 오류")})
+    public ResponseEntity<?> getPersonalQuestionList(@PathVariable @ApiParam(value = "상세번호", required = true) Long detailNo) {
         List<PersonalQuestion> personalQuestions = personalQuestionService.getList(detailNo);
         return ResponseEntity.status(200).body(PersonalQuestionListRes.of(personalQuestions, 200, "해당 자기소개서 항목에 등록된 개인질문입니다."));
     }
+
 
 
 
