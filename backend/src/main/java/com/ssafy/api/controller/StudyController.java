@@ -61,6 +61,16 @@ public class StudyController {
         return ResponseEntity.status(200).body(StudyRes.of(study,200, "스터디 상세 조회를 성공하였습니다."));
     }
 
-
+    // 스터디 탈퇴
+    @DeleteMapping("/{stdNo}")
+    @ApiOperation(value = "스터디 탈퇴", notes = "스터디에서 탈퇴한다.")
+    @ApiResponses({@ApiResponse(code = 200, message = "스터디 탈퇴 성공"), @ApiResponse(code = 401, message = "스터디 탈퇴 실패"), @ApiResponse(code = 500, message = "서버 오류")})
+    public ResponseEntity<?> leaveStudy(@ApiIgnore Authentication authentication, @PathVariable @ApiParam(value = "스터디 번호", required = true) Long stdNo) throws Exception {
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        Long userNo = userDetails.getUserNo();
+        int result = studyService.leaveStudy(userNo, stdNo);
+        if (result == 1) return ResponseEntity.status(200).body(BaseResponseBody.of(200, "스터디 탈퇴가 완료되었습니다."));
+        else return ResponseEntity.status(401).body(BaseResponseBody.of(401, "스터디 탈퇴에 실패하였습니다."));
+    }
 
 }

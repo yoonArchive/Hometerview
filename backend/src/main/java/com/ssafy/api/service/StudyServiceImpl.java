@@ -4,6 +4,7 @@ import com.ssafy.db.entity.*;
 import com.ssafy.db.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +26,9 @@ public class StudyServiceImpl implements StudyService{
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    StudyJoinRepositorySupport studyJoinRepositorySupport;
 
     @Override
     public void createStudy(Long recruitNo){
@@ -51,7 +55,7 @@ public class StudyServiceImpl implements StudyService{
             studyJoinRepository.save(studyJoin);
         }
     }
-
+    @Override
     public List<Study> getStudyList(Long userNo){
         User user = userRepository.findByUserNo(userNo).orElse(null);
         List<StudyJoin> studyJoinList = user.getStudyJoins();
@@ -61,10 +65,20 @@ public class StudyServiceImpl implements StudyService{
         }
         return studyList;
     }
-
+    @Override
     public Study detailStudy(Long stdNo){
         Study study = studyRepository.findByStdNo(stdNo).orElse(null);
         return study;
+    }
+    @Override
+    @Transactional
+    public int leaveStudy(Long userNo, Long stdNo){
+        StudyJoin studyJoin = studyJoinRepositorySupport.findStudyJoinByUserNoAndStdNo(userNo, stdNo).orElse(null);
+        if(studyJoin == null) return 0;
+        else {
+            studyJoinRepository.deleteByJoinNo(studyJoin.getJoinNo());
+        }
+        return 1;
     }
 
 }
