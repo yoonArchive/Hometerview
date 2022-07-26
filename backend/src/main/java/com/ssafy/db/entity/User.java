@@ -52,6 +52,7 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Apply> applies = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<StudyJoin> studyJoins = new ArrayList<>();
 

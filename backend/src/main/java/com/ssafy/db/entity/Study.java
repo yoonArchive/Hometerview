@@ -1,5 +1,6 @@
 package com.ssafy.db.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -49,6 +50,7 @@ public class Study {
     @Column(name = "std_notice")
     private String stdNotice;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "study")
     private List<StudyJoin> studyJoins = new ArrayList<>();
 
