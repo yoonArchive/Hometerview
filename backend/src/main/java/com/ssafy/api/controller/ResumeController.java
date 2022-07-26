@@ -1,20 +1,16 @@
 package com.ssafy.api.controller;
 
 import com.ssafy.api.request.ResumeWritePostReq;
-import com.ssafy.api.request.UpdateNoticePutReq;
 import com.ssafy.api.request.UpdateResumePutReq;
-import com.ssafy.api.response.NoticeRes;
 import com.ssafy.api.response.ResumeListRes;
 import com.ssafy.api.response.ResumeRes;
 import com.ssafy.api.service.ResumeService;
 import com.ssafy.common.auth.UserDetails;
 import com.ssafy.common.model.response.BaseResponseBody;
-import com.ssafy.db.entity.Notice;
 import com.ssafy.db.entity.Resume;
 import com.ssafy.db.entity.ResumeDetail;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
