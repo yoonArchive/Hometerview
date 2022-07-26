@@ -38,13 +38,12 @@
         <button>Signup</button>
       </div>
     </form>
-    
-  
+
+
 </template>
 
 <script>
   import { mapActions, mapGetters } from 'vuex'
-
   // import AccountErrorList from '@/components/AccountErrorList'
 
   export default {
@@ -86,9 +85,9 @@
           this.credentials.userPw2=== ''
         ){
           alert("모든 내용을 입력해주세요")
-          
+
           return
-        } 
+        }
         else if(!this.validationPattern.idCheckPattern.test(this.credentials.userId)){
           console.log()
           console.log(!this.validationPattern.idCheckPattern.test(this.credentials.userId))
@@ -110,7 +109,7 @@
         else if (this.isDuplicatedEmail){
           alert('이메일 중복검사를 해주세요')
           return
-        } 
+        }
         else if (this.isDuplicatedId){
           alert('아이디 중복검사를 해주세요')
           return
@@ -118,6 +117,8 @@
         else{
           this.signup(this.credentials)
         }
+
+
       },
 
     },
