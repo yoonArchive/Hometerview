@@ -258,6 +258,4 @@ public class UserController {
         else return ResponseEntity.status(401).body(BaseResponseBody.of(401, "회고 삭제에 실패하였습니다."));
     }
 
-
-
 }
