@@ -1,13 +1,14 @@
 package com.ssafy.db.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
-@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "resume")
 public class Resume {
 
@@ -23,6 +24,13 @@ public class Resume {
     @JoinColumn(name = "resume_title")
     private String resumeTitle;
 
+    public void createResume(User user, String resumeTitle) {
+        this.user = user;
+        this.resumeTitle = resumeTitle;
+    }
 
-    
+    public void updateTitle(String resumeTitle) {
+        this.resumeTitle = resumeTitle;
+    }
+
 }

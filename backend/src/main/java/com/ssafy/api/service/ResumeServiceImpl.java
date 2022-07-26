@@ -1,7 +1,6 @@
 package com.ssafy.api.service;
 
 import com.ssafy.api.request.ResumeWritePostReq;
-import com.ssafy.api.request.UpdateNoticePutReq;
 import com.ssafy.api.request.UpdateResumePutReq;
 import com.ssafy.db.entity.Resume;
 import com.ssafy.db.entity.ResumeDetail;
@@ -31,8 +30,7 @@ public class ResumeServiceImpl implements ResumeService {
     public void createResume(Long userNo, String resumeTitle) {
         Resume resume = new Resume();
         User user = userRepository.findByUserNo(userNo).get();
-        resume.setUser(user);
-        resume.setResumeTitle(resumeTitle);
+        resume.createResume(user, resumeTitle);
         resumeRepository.save(resume);
     }
 
@@ -42,14 +40,14 @@ public class ResumeServiceImpl implements ResumeService {
     }
 
     @Override
-    public Resume getByResumeNo(Long resumeNo){
+    public Resume getByResumeNo(Long resumeNo) {
         return resumeRepository.findByResumeNo(resumeNo).orElse(null);
     }
 
     @Override
     @Transactional
-    public void updateResume(Resume resume, String resumeTitle){
-        resume.setResumeTitle(resumeTitle);
+    public void updateResume(Resume resume, String resumeTitle) {
+        resume.updateTitle(resumeTitle);
     }
 
     @Override
@@ -58,7 +56,7 @@ public class ResumeServiceImpl implements ResumeService {
         try {
             resumeRepository.findByResumeNo(resumeNo).get();
             List<ResumeDetail> detailList = this.listResumeDetail(resumeNo);
-            for(ResumeDetail resumeDetail : detailList) {
+            for (ResumeDetail resumeDetail : detailList) {
                 resumeDetailRepository.deleteByDetailNo(resumeDetail.getDetailNo());
             }
             resumeRepository.deleteByResumeNo(resumeNo);
@@ -72,16 +70,16 @@ public class ResumeServiceImpl implements ResumeService {
     public ResumeDetail writeResumeDetail(ResumeWritePostReq resumeWritePostReq) {
         ResumeDetail resumeDetail = new ResumeDetail();
         Resume resume = resumeRepository.findByResumeNo(resumeWritePostReq.getResumeNo()).orElse(null);
-        resumeDetail.setResume(resume);
-        resumeDetail.setItemNo(resumeWritePostReq.getItemNo());
-        resumeDetail.setItem(resumeWritePostReq.getItem());
-        resumeDetail.setAnswer(resumeWritePostReq.getAnswer());
+        Long itemNo = resumeWritePostReq.getItemNo();
+        String item = resumeWritePostReq.getItem();
+        String answer = resumeWritePostReq.getAnswer();
+        resumeDetail.createResumeDetail(resume, itemNo, item, answer);
         resumeDetailRepository.save(resumeDetail);
         return resumeDetail;
     }
 
     @Override
-    public ResumeDetail getByDetailNo(Long detailNo){
+    public ResumeDetail getByDetailNo(Long detailNo) {
         return resumeDetailRepository.findByDetailNo(detailNo).orElse(null);
     }
 
@@ -91,15 +89,16 @@ public class ResumeServiceImpl implements ResumeService {
     }
 
     @Override
-    public List<ResumeDetail> listResumeDetail(Long resumeNo){
+    public List<ResumeDetail> listResumeDetail(Long resumeNo) {
         return resumeDetailRepositorySupport.findAllResumeDetailByResumeNo(resumeNo);
     }
 
     @Override
     @Transactional
     public void updateResumeDetail(ResumeDetail resumeDetail, UpdateResumePutReq updateResumePutReq) {
-        resumeDetail.setItem(updateResumePutReq.getItem());
-        resumeDetail.setAnswer(updateResumePutReq.getAnswer());
+        String item = updateResumePutReq.getItem();
+        String answer = updateResumePutReq.getAnswer();
+        resumeDetail.updateResumeDetail(item, answer);
     }
 
     @Override

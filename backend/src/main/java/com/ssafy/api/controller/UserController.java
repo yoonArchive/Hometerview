@@ -1,15 +1,12 @@
 package com.ssafy.api.controller;
 
-import ch.qos.logback.core.net.SyslogOutputStream;
 import com.ssafy.api.dto.Mail;
 import com.ssafy.api.request.UpdatePwPutReq;
 import com.ssafy.api.request.UpdateUserPutReq;
 import com.ssafy.api.response.UserFindIdGetRes;
 import com.ssafy.api.response.UserFindPwGetRes;
 import com.ssafy.api.service.MailService;
-import com.ssafy.api.service.RedisUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
