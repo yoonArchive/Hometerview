@@ -31,4 +31,17 @@ public class Review {
     @Column(name = "review_type")
     private ReviewType reviewType;
 
+    @Column(name = "write_date")
+    private String writeDate;
+
+    public void initReview(String reviewTitle, String reviewContents, ReviewType reviewType) {
+        this.reviewTitle = reviewTitle;
+        this.reviewContents = reviewContents;
+        this.reviewType = reviewType;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
 }

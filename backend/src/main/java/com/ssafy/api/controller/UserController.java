@@ -1,19 +1,17 @@
 package com.ssafy.api.controller;
 
 import com.ssafy.api.dto.Mail;
-import com.ssafy.api.request.UpdatePwPutReq;
-import com.ssafy.api.request.UpdateUserPutReq;
-import com.ssafy.api.response.UserFindIdGetRes;
-import com.ssafy.api.response.UserFindPwGetRes;
+import com.ssafy.api.request.*;
+import com.ssafy.api.response.*;
 import com.ssafy.api.service.MailService;
+import com.ssafy.api.service.ReviewService;
+import com.ssafy.db.entity.Review;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import com.ssafy.api.request.UserRegisterPostReq;
-import com.ssafy.api.response.UserRes;
 import com.ssafy.api.service.UserService;
 import com.ssafy.common.auth.UserDetails;
 import com.ssafy.common.model.response.BaseResponseBody;
@@ -27,6 +25,7 @@ import io.swagger.annotations.ApiResponses;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * 유저 관련 API 요청 처리를 위한 컨트롤러 정의.
@@ -38,7 +37,11 @@ import javax.validation.Valid;
 public class UserController {
 
     private final UserService userService;
+
     private final MailService mailService;
+
+    private final ReviewService reviewService;
+
     private final PasswordEncoder passwordEncoder;
 
     @PostMapping()
@@ -137,7 +140,6 @@ public class UserController {
     @ApiResponses({@ApiResponse(code = 200, message = "임시 비밀번호 발급 성공"), @ApiResponse(code = 401, message = "임시 비밀번호 발급 실패"), @ApiResponse(code = 500, message = "서버 오류")})
     public ResponseEntity<?> findPw(@RequestParam @ApiParam(value = "회원 이름", required = true) String userName, @RequestParam @ApiParam(value = "회원 이메일", required = true) String userEmail, @RequestParam @ApiParam(value = "회원 아이디", required = true) String userId) throws Exception {
         User user = userService.getByUserNameAndUserEmailAndUserId(userName, userEmail, userId);
-
         if (user == null) return ResponseEntity.status(401).body(UserFindPwGetRes.of(401, "입력한 정보를 다시 확인해주세요.", null));
         else {
 
@@ -192,6 +194,68 @@ public class UserController {
     public ResponseEntity<?> deleteUser(@ApiIgnore Authentication authentication) throws Exception {
         userService.deleteUser(((UserDetails) authentication.getDetails()).getUsername());
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "회원탈퇴가 완료되었습니다."));
+    }
+
+    @PostMapping("/review")
+    @ApiOperation(value = "회고 작성", notes = "면접 회고를 작성한다.")
+    @ApiResponses({@ApiResponse(code = 200, message = "회고 작성 성공"), @ApiResponse(code = 401, message = "회고 작성 실패"), @ApiResponse(code = 500, message = "서버 오류")})
+    public ResponseEntity<?> createReview(@ApiIgnore Authentication authentication, @RequestBody @ApiParam(value = "회고 내용", required = true) @Valid ReviewReq reviewReq) throws Exception {
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        Long userNo = userDetails.getUserNo();
+        try {
+            reviewService.writeReview(userNo, reviewReq);
+        } catch (Exception e) {
+            return ResponseEntity.status(401).body(BaseResponseBody.of(401, "회고 작성에 실패하였습니다."));
+        }
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "회고가 등록되었습니다."));
+    }
+
+    @GetMapping("/review")
+    @ApiOperation(value = "회고 목록 조회", notes = "회고 목록을 조회한다.")
+    @ApiResponses({@ApiResponse(code = 200, message = "회고 목록 조회 성공"), @ApiResponse(code = 401, message = "회고 목록 조회 실패"), @ApiResponse(code = 500, message = "서버 오류")})
+    public ResponseEntity<?> getReviewList(@ApiIgnore Authentication authentication) throws Exception {
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        Long userNo = userDetails.getUserNo();
+        List<Review> reviews = reviewService.getList(userNo);
+        return ResponseEntity.status(200).body(ReviewListRes.of(reviews, 200, "회고 목록 조회에 성공하였습니다."));
+    }
+
+    @GetMapping("/review/{reviewNo}")
+    @ApiOperation(value = "회고 상세 조회", notes = "회고 상세 정보를 조회한다.")
+    @ApiResponses({@ApiResponse(code = 200, message = "회고 상세 정보 조회 성공"), @ApiResponse(code = 401, message = "회고 상세 정보 조회 실패"), @ApiResponse(code = 500, message = "서버 오류")})
+    public ResponseEntity<?> getReviewDetail(@ApiIgnore Authentication authentication, @PathVariable @ApiParam(value = "회고 번호", required = true) Long reviewNo) throws Exception {
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        Long userNo = userDetails.getUserNo();
+        Review review = reviewService.getReviewDetail(reviewNo, userNo);
+        if (review == null) return ResponseEntity.status(402).body(BaseResponseBody.of(402, "해당하는 회고가 없습니다."));
+        return ResponseEntity.status(200).body(ReviewRes.of(review, 200, "회고 상세 정보 조회에 성공하였습니다."));
+    }
+
+    @PutMapping("/review/{reviewNo}")
+    @ApiOperation(value = "회고 수정", notes = "회고 내용을 수정한다.")
+    @ApiResponses({@ApiResponse(code = 200, message = "회고 수정 성공"), @ApiResponse(code = 401, message = "회고 수정 실패"), @ApiResponse(code = 500, message = "서버 오류")})
+    public ResponseEntity<?> updateReview(@ApiIgnore Authentication authentication, @PathVariable @ApiParam(value = "회고 번호", required = true) Long reviewNo, @RequestBody @ApiParam(value = "회고 변경 내용", required = true) ReviewReq reviewReq) throws Exception {
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        Long userNo = userDetails.getUserNo();
+        Review review = reviewService.getReviewDetail(reviewNo, userNo);
+        if (review == null) return ResponseEntity.status(402).body(BaseResponseBody.of(402, "해당하는 회고가 없습니다."));
+        Review updatedReview;
+        try {
+            reviewService.updateReview(review, reviewReq);
+            updatedReview = reviewService.getByReviewNo(reviewNo);
+        } catch (Exception e) {
+            return ResponseEntity.status(401).body(BaseResponseBody.of(401, "회고 수정에 실패하였습니다."));
+        }
+        return ResponseEntity.status(200).body(ReviewRes.of(updatedReview, 200, "회고 수정이 완료되었습니다."));
+    }
+
+    @DeleteMapping("/review/{reviewNo}")
+    @ApiOperation(value = "회고 삭제", notes = "회고를 삭제한다.")
+    @ApiResponses({@ApiResponse(code = 200, message = "회고 삭제 성공"), @ApiResponse(code = 401, message = "회고 삭제 실패"), @ApiResponse(code = 500, message = "서버 오류")})
+    public ResponseEntity<?> deleteReview(@PathVariable @ApiParam(value = "모집글 번호", required = true) Long reviewNo) throws Exception {
+        int result = reviewService.deleteReview(reviewNo);
+        if (result == 1) return ResponseEntity.status(200).body(BaseResponseBody.of(200, "회고 삭제가 완료되었습니다."));
+        else return ResponseEntity.status(401).body(BaseResponseBody.of(401, "회고 삭제에 실패하였습니다."));
     }
 
 }

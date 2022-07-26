@@ -19,9 +19,19 @@ public class RecruitServiceImpl implements RecruitService {
 
     @Override
     public void writeRecruit(RecruitReq recruitReq) {
-        Recruit recruit = new Recruit();
-        initialize(recruit, recruitReq);
-        recruit.initStatus(RecruitStatus.RECRUITING);
+        Recruit recruit = Recruit.builder()
+                .recruitTitle(recruitReq.getRecruitTitle())
+                .stdName(recruitReq.getStdName())
+                .stdDetail(recruitReq.getStdDetail())
+                .stdImg(recruitReq.getStdImg())
+                .stdType(recruitReq.getStdType())
+                .comName(recruitReq.getComName())
+                .startDate(recruitReq.getStartDate())
+                .endDate(recruitReq.getEndDate())
+                .stdDay(recruitReq.getStdDay())
+                .stdLimit(recruitReq.getStdLimit())
+                .recruitStatus(RecruitStatus.RECRUITING)
+                .build();
         recruitRepository.save(recruit);
     }
 
@@ -59,7 +69,17 @@ public class RecruitServiceImpl implements RecruitService {
     @Override
     @Transactional
     public void updateRecruit(Recruit recruit, RecruitReq recruitReq) {
-        initialize(recruit, recruitReq);
+        String recruitTitle = recruitReq.getRecruitTitle();
+        String stdName = recruitReq.getStdName();
+        String stdDetail = recruitReq.getStdDetail();
+        String stdImg = recruitReq.getStdImg();
+        StdType stdType = recruitReq.getStdType();
+        String comName = recruitReq.getComName();
+        String startDate = recruitReq.getStartDate();
+        String endDate = recruitReq.getEndDate();
+        String stdDay = recruitReq.getStdDay();
+        int stdLimit = recruitReq.getStdLimit();
+        recruit.initRecruit(recruitTitle, stdName, stdDetail, stdImg, stdType, comName, startDate, endDate, stdDay, stdLimit);
     }
 
     @Override
@@ -72,20 +92,6 @@ public class RecruitServiceImpl implements RecruitService {
         }
         recruitRepository.deleteByRecruitNo(recruitNo);
         return 1;
-    }
-
-    private void initialize(Recruit recruit, RecruitReq recruitReq) {
-        String recruitTitle = recruitReq.getRecruitTitle();
-        String stdName = recruitReq.getStdName();
-        String stdDetail = recruitReq.getStdDetail();
-        String stdImg = recruitReq.getStdImg();
-        StdType stdType = recruitReq.getStdType();
-        String comName = recruitReq.getComName();
-        String startDate = recruitReq.getStartDate();
-        String endDate = recruitReq.getEndDate();
-        String stdDay = recruitReq.getStdDay();
-        int stdLimit = recruitReq.getStdLimit();
-        recruit.initRecruit(recruitTitle, stdName, stdDetail, stdImg, stdType, comName, startDate, endDate, stdDay, stdLimit);
     }
 
 }
