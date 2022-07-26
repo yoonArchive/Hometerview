@@ -17,4 +17,6 @@ public interface ReviewService {
 
     Review getByReviewNo(Long reviewNo);
 
+    int deleteReview(Long reviewNo);
+
 }

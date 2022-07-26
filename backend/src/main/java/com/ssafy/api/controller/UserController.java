@@ -249,4 +249,13 @@ public class UserController {
         return ResponseEntity.status(200).body(ReviewRes.of(updatedReview, 200, "회고 수정이 완료되었습니다."));
     }
 
+    @DeleteMapping("/review/{reviewNo}")
+    @ApiOperation(value = "회고 삭제", notes = "회고를 삭제한다.")
+    @ApiResponses({@ApiResponse(code = 200, message = "회고 삭제 성공"), @ApiResponse(code = 401, message = "회고 삭제 실패"), @ApiResponse(code = 500, message = "서버 오류")})
+    public ResponseEntity<?> deleteReview(@PathVariable @ApiParam(value = "모집글 번호", required = true) Long reviewNo) throws Exception {
+        int result = reviewService.deleteReview(reviewNo);
+        if (result == 1) return ResponseEntity.status(200).body(BaseResponseBody.of(200, "회고 삭제가 완료되었습니다."));
+        else return ResponseEntity.status(401).body(BaseResponseBody.of(401, "회고 삭제에 실패하였습니다."));
+    }
+
 }

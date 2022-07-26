@@ -62,4 +62,16 @@ public class ReviewServiceImpl implements ReviewService {
         return reviewRepository.findByReviewNo(reviewNo).orElse(null);
     }
 
+    @Override
+    @Transactional
+    public int deleteReview(Long reviewNo) {
+        try {
+            reviewRepository.findByReviewNo(reviewNo).get();
+        } catch (Exception e) {
+            return 0;
+        }
+        reviewRepository.deleteByReviewNo(reviewNo);
+        return 1;
+    }
+
 }
