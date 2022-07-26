@@ -80,7 +80,7 @@ public class UserController {
         return ResponseEntity.status(200).body(UserRes.of(user, 200, "회원 정보 조회 성공"));
     }
 
-    @GetMapping("/checkid")
+    @GetMapping("/checkId")
     @ApiOperation(value = "아이디 중복 검사", notes = "회원가입 시 아이디 중복을 체크한다.")
     @ApiResponses({@ApiResponse(code = 200, message = "사용 가능"), @ApiResponse(code = 401, message = "아이디 중복"), @ApiResponse(code = 500, message = "서버 오류")})
     public ResponseEntity<? extends BaseResponseBody> checkId(@RequestParam @ApiParam(value = "회원 아이디", required = true) String id) throws Exception {
@@ -89,7 +89,7 @@ public class UserController {
         else return ResponseEntity.status(401).body(BaseResponseBody.of(401, "사용 중인 아이디입니다."));
     }
 
-    @GetMapping("/checkemail")
+    @GetMapping("/checkEmail")
     @ApiOperation(value = "이메일 중복 검사", notes = "회원가입 시 이메일 중복을 체크한다.")
     @ApiResponses({@ApiResponse(code = 200, message = "사용 가능"), @ApiResponse(code = 401, message = "이메일 중복"), @ApiResponse(code = 500, message = "서버 오류")})
     public ResponseEntity<? extends BaseResponseBody> checkEmail(@RequestParam @ApiParam(value = "회원 이메일", required = true) String email) throws Exception {
@@ -125,7 +125,7 @@ public class UserController {
         }
     }
 
-    @GetMapping("/findid")
+    @GetMapping("/findId")
     @ApiOperation(value = "아이디 찾기", notes = "회원의 이름과 이메일에 해당하는 회원 아이디를 찾는다.")
     @ApiResponses({@ApiResponse(code = 200, message = "아이디 찾기 성공"), @ApiResponse(code = 401, message = "아이디 찾기 실패"), @ApiResponse(code = 500, message = "서버 오류")})
     public ResponseEntity<UserFindIdGetRes> findId(@RequestParam @ApiParam(value = "회원 이름", required = true) String userName, @RequestParam @ApiParam(value = "회원 이메일", required = true) String userEmail) throws Exception {
@@ -135,7 +135,7 @@ public class UserController {
         else return ResponseEntity.status(200).body(UserFindIdGetRes.of(200, "아이디 찾기 성공", user.getUserId()));
     }
 
-    @PostMapping("/findpw")
+    @PostMapping("/findPw")
     @ApiOperation(value = "임시 비밀번호 전송", notes = "회원 정보를 입력하고 일치하면 임시 비밀번호를 메일로 전송한다.")
     @ApiResponses({@ApiResponse(code = 200, message = "임시 비밀번호 발급 성공"), @ApiResponse(code = 401, message = "임시 비밀번호 발급 실패"), @ApiResponse(code = 500, message = "서버 오류")})
     public ResponseEntity<UserFindPwGetRes> findPw(@RequestParam @ApiParam(value = "회원 이름", required = true) String userName, @RequestParam @ApiParam(value = "회원 이메일", required = true) String userEmail, @RequestParam @ApiParam(value = "회원 아이디", required = true) String userId) throws Exception {
@@ -252,10 +252,17 @@ public class UserController {
     @DeleteMapping("/review/{reviewNo}")
     @ApiOperation(value = "회고 삭제", notes = "회고를 삭제한다.")
     @ApiResponses({@ApiResponse(code = 200, message = "회고 삭제 성공"), @ApiResponse(code = 401, message = "회고 삭제 실패"), @ApiResponse(code = 500, message = "서버 오류")})
-    public ResponseEntity<? extends BaseResponseBody> deleteReview(@PathVariable @ApiParam(value = "모집글 번호", required = true) Long reviewNo) throws Exception {
-        int result = reviewService.deleteReview(reviewNo);
-        if (result == 1) return ResponseEntity.status(200).body(BaseResponseBody.of(200, "회고 삭제가 완료되었습니다."));
-        else return ResponseEntity.status(401).body(BaseResponseBody.of(401, "회고 삭제에 실패하였습니다."));
+    public ResponseEntity<? extends BaseResponseBody> deleteReview(@ApiIgnore Authentication authentication, @PathVariable @ApiParam(value = "모집글 번호", required = true) Long reviewNo) throws Exception {
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        Long userNo = userDetails.getUserNo();
+        Review review = reviewService.getReviewDetail(reviewNo, userNo);
+        if (review == null) return ResponseEntity.status(402).body(BaseResponseBody.of(402, "해당하는 회고가 없습니다."));
+        try {
+            reviewService.deleteReview(reviewNo);
+        } catch (Exception e) {
+            return ResponseEntity.status(401).body(BaseResponseBody.of(401, "회고 삭제에 실패하였습니다."));
+        }
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "회고 삭제가 완료되었습니다."));
     }
 
 }

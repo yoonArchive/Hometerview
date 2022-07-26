@@ -63,14 +63,8 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     @Transactional
-    public int deleteReview(Long reviewNo) {
-        try {
-            reviewRepository.findByReviewNo(reviewNo).get();
-        } catch (Exception e) {
-            return 0;
-        }
+    public void deleteReview(Long reviewNo) {
         reviewRepository.deleteByReviewNo(reviewNo);
-        return 1;
     }
 
 }

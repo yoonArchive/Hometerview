@@ -1,5 +1,6 @@
 package com.ssafy.db.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -17,6 +18,7 @@ public class Review {
     @Column(name = "review_no")
     private Long reviewNo;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_no")
     private User user;
