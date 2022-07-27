@@ -1,6 +1,7 @@
 package com.ssafy.api.service;
 
 import com.ssafy.db.entity.Apply;
+import com.ssafy.db.entity.ApplyType;
 import com.ssafy.db.entity.Recruit;
 import com.ssafy.db.entity.User;
 import com.ssafy.db.repository.ApplyRepository;
@@ -27,14 +28,14 @@ public class ApplyServiceImpl implements ApplyService {
     private final ApplyRepositorySupport applyRepositorySupport;
 
     @Override
-    public int applyRecruit(Long userNo, Long recruitNo) {
+    public int applyRecruit(Long userNo, Long recruitNo, ApplyType applyType) {
         try {
             applyRepositorySupport.findApplyByUserNoAndRecruitNo(userNo, recruitNo).get();
         } catch (Exception e) {
             User user = userRepository.findByUserNo(userNo).get();
             Recruit recruit = recruitRepository.findByRecruitNo(recruitNo).get();
             Apply apply = new Apply();
-            apply.createApply(user, recruit);
+            apply.createApply(user, recruit, applyType);
             applyRepository.save(apply);
             return 1;
         }
@@ -60,7 +61,7 @@ public class ApplyServiceImpl implements ApplyService {
         long[] applyCount = new long[recruits.size()];
         int idx = 0;
         for (Recruit recruit : recruits) {
-            applyCount[idx++] = applyRepositorySupport.CountByRecruitNo(recruit.getRecruitNo()) + 1;
+            applyCount[idx++] = applyRepositorySupport.CountByRecruitNo(recruit.getRecruitNo());
         }
         return applyCount;
     }

@@ -5,12 +5,16 @@ import com.ssafy.api.response.RecruitListRes;
 import com.ssafy.api.response.RecruitRes;
 import com.ssafy.api.service.ApplyService;
 import com.ssafy.api.service.RecruitService;
+import com.ssafy.common.auth.UserDetails;
 import com.ssafy.common.model.response.BaseResponseBody;
+import com.ssafy.db.entity.ApplyType;
 import com.ssafy.db.entity.Recruit;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -28,12 +32,17 @@ public class RecruitController {
     @PostMapping()
     @ApiOperation(value = "모집글 작성", notes = "스터디 모집글을 작성한다.")
     @ApiResponses({@ApiResponse(code = 200, message = "모집글 작성 성공"), @ApiResponse(code = 401, message = "모집글 작성 실패"), @ApiResponse(code = 500, message = "서버 오류")})
-    public ResponseEntity<? extends BaseResponseBody> register(@RequestBody @ApiParam(value = "모집글 정보", required = true) @Valid RecruitReq recruitReq) throws Exception {
+    public ResponseEntity<? extends BaseResponseBody> register(@ApiIgnore Authentication authentication, @RequestBody @ApiParam(value = "모집글 정보", required = true) @Valid RecruitReq recruitReq) throws Exception {
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        Long userNo = userDetails.getUserNo();
+        Recruit recruit;
         try {
-            recruitService.writeRecruit(recruitReq);
+            recruit = recruitService.writeRecruit(recruitReq);
         } catch (Exception e) {
             return ResponseEntity.status(401).body(BaseResponseBody.of(401, "스터디 모집글 작성에 실패하였습니다."));
         }
+        Long recruitNo = recruit.getRecruitNo();
+        applyService.applyRecruit(userNo, recruitNo, ApplyType.LEADER);
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "스터디 모집글 작성에 성공하였습니다."));
     }
 

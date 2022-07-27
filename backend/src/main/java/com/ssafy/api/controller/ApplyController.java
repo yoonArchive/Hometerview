@@ -3,6 +3,7 @@ package com.ssafy.api.controller;
 import com.ssafy.api.service.ApplyService;
 import com.ssafy.common.auth.UserDetails;
 import com.ssafy.common.model.response.BaseResponseBody;
+import com.ssafy.db.entity.ApplyType;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +26,7 @@ public class ApplyController {
     public ResponseEntity<? extends BaseResponseBody> applyRecruit(@ApiIgnore Authentication authentication, @PathVariable @ApiParam(value = "모집글 번호", required = true) Long recruitNo) throws Exception {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         Long userNo = userDetails.getUserNo();
-        int result = applyService.applyRecruit(userNo, recruitNo);
+        int result = applyService.applyRecruit(userNo, recruitNo, ApplyType.NORMAL);
         if (result == 0) return ResponseEntity.status(401).body(BaseResponseBody.of(401, "스터디 모집 신청에 실패하였습니다."));
         else return ResponseEntity.status(200).body(BaseResponseBody.of(200, "스터디 모집 신청이 완료되었습니다."));
     }

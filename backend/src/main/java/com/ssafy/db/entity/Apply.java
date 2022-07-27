@@ -29,9 +29,10 @@ public class Apply {
     @Column(name = "apply_type")
     private ApplyType applyType;
 
-    public void createApply(User user, Recruit recruit) {
+    public void createApply(User user, Recruit recruit, ApplyType applyType) {
         this.user = user;
         this.recruit = recruit;
+        this.applyType = applyType;
     }
 
 }
