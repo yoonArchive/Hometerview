@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ReviewService {
 
-    void writeReview(Long userNo, ReviewReq reviewReq);
+    Review writeReview(Long userNo, ReviewReq reviewReq);
 
     List<Review> getList(Long userNo);
 
