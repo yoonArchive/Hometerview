@@ -52,6 +52,7 @@ public class StudyServiceImpl implements StudyService {
             StudyJoin studyJoin = StudyJoin.builder()
                     .user(apply.getUser())
                     .study(study)
+                    .joinType(apply.getApplyType())
                     .build();
             studyJoinRepository.save(studyJoin);
             applyRepository.deleteByApplyNo(apply.getApplyNo());
