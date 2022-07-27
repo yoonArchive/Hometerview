@@ -2,6 +2,7 @@ package com.ssafy.api.service;
 
 import com.ssafy.api.request.ResumeWritePostReq;
 import com.ssafy.api.request.UpdateResumePutReq;
+import com.ssafy.db.entity.Recruit;
 import com.ssafy.db.entity.Resume;
 import com.ssafy.db.entity.ResumeDetail;
 import com.ssafy.db.entity.User;
@@ -111,6 +112,16 @@ public class ResumeServiceImpl implements ResumeService {
         }
         resumeDetailRepository.deleteByDetailNo(detailNo);
         return 1;
+    }
+
+    @Override
+    public long[] getDetailCount(List<Resume> resumes) {
+        long[] detailCounts = new long[resumes.size()];
+        int idx = 0;
+        for (Resume resume : resumes) {
+            detailCounts[idx++] = resumeDetailRepositorySupport.CountByResumeNo(resume.getResumeNo());
+        }
+        return detailCounts;
     }
 
 }

@@ -33,4 +33,9 @@ public class ResumeDetailRepositorySupport {
         return resumeDetails;
     }
 
+    public long CountByResumeNo(Long resumeNo) {
+        return jpaQueryFactory.selectFrom(qResumeDetail)
+                .where(qResumeDetail.resume.resumeNo.eq(resumeNo)).fetchCount();
+    }
+
 }
