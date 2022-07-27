@@ -3,8 +3,10 @@ package com.ssafy.api.controller;
 import com.ssafy.api.dto.Mail;
 import com.ssafy.api.request.*;
 import com.ssafy.api.response.*;
+import com.ssafy.api.service.DdayService;
 import com.ssafy.api.service.MailService;
 import com.ssafy.api.service.ReviewService;
+import com.ssafy.db.entity.Dday;
 import com.ssafy.db.entity.Review;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -41,6 +43,8 @@ public class UserController {
     private final MailService mailService;
 
     private final ReviewService reviewService;
+
+    private final DdayService ddayService;
 
     private final PasswordEncoder passwordEncoder;
 
@@ -332,6 +336,85 @@ public class UserController {
             return ResponseEntity.status(401).body(BaseResponseBody.of(401, "회고 삭제에 실패하였습니다."));
         }
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "회고 삭제가 완료되었습니다."));
+    }
+
+    @PostMapping("/dday")
+    @ApiOperation(value = "일정 등록", notes = "(token) 일정을 등록한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "일정 등록 성공", response = BaseResponseBody.class),
+            @ApiResponse(code = 401, message = "일정 등록 실패", response = BaseResponseBody.class),
+            @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
+    })
+    public ResponseEntity<? extends BaseResponseBody> registerDday(@ApiIgnore Authentication authentication, @RequestBody @ApiParam(value = "일정 정보", required = true) @Valid DdayReq ddayReq) {
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        Long userNo = userDetails.getUserNo();
+        try {
+            ddayService.writeDday(userNo, ddayReq);
+        } catch (Exception e) {
+            return ResponseEntity.status(401).body(BaseResponseBody.of(401, "일정 등록에 실패하였습니다."));
+        }
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "일정이 등록되었습니다."));
+    }
+
+    @GetMapping("/dday")
+    @ApiOperation(value = "D-day 목록 조회", notes = "(token) D-day 목록을 조회한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "D-day 목록 조회 성공", response = DdayListRes.class),
+            @ApiResponse(code = 401, message = "D-day 목록 조회 실패", response = BaseResponseBody.class),
+            @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
+    })
+    public ResponseEntity<DdayListRes> getDdayList(@ApiIgnore Authentication authentication) throws Exception {
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        Long userNo = userDetails.getUserNo();
+        List<Dday> ddays = ddayService.getList(userNo);
+        long[] results = ddayService.getResults(ddays);
+        return ResponseEntity.status(200).body(DdayListRes.of(ddays, results, 200, "D-day 목록 조회에 성공하였습니다."));
+    }
+
+    @PutMapping("/dday/{ddayNo}")
+    @ApiOperation(value = "일정 수정", notes = "(token) 일정을 수정한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "일정 수정 성공", response = BaseResponseBody.class),
+            @ApiResponse(code = 401, message = "일정 수정 실패", response = BaseResponseBody.class),
+            @ApiResponse(code = 402, message = "해당 일정 없음", response = BaseResponseBody.class),
+            @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
+    })
+    public ResponseEntity<? extends BaseResponseBody> updateDday(@ApiIgnore Authentication authentication,
+                                                                 @PathVariable @ApiParam(value = "D-day 번호", required = true) Long ddayNo,
+                                                                 @RequestBody @ApiParam(value = "일정 수정 내용", required = true) @Valid DdayReq ddayReq) throws Exception {
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        Long userNo = userDetails.getUserNo();
+        Dday dday = ddayService.getDday(ddayNo, userNo);
+        if (dday == null) return ResponseEntity.status(402).body(BaseResponseBody.of(402, "해당하는 D-day가 없습니다."));
+        Dday updatedDday;
+        try {
+            ddayService.updateDday(dday, ddayReq);
+            updatedDday = ddayService.getByDdayNo(ddayNo);
+        } catch (Exception e) {
+            return ResponseEntity.status(401).body(BaseResponseBody.of(401, "일정 수정에 실패하였습니다."));
+        }
+        return ResponseEntity.status(200).body(DdayRes.of(updatedDday, 200, "일정이 수정되었습니다."));
+    }
+
+    @DeleteMapping("/dday/{ddayNo}")
+    @ApiOperation(value = "일정 삭제", notes = "(token) 일정을 삭제한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "일정 삭제 성공", response = BaseResponseBody.class),
+            @ApiResponse(code = 401, message = "일정 삭제 실패", response = BaseResponseBody.class),
+            @ApiResponse(code = 402, message = "해당 일정 없음", response = BaseResponseBody.class),
+            @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
+    })
+    public ResponseEntity<? extends BaseResponseBody> deleteDday(@ApiIgnore Authentication authentication, @PathVariable @ApiParam(value = "D-day 번호", required = true) Long ddayNo) throws Exception {
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        Long userNo = userDetails.getUserNo();
+        Dday dday = ddayService.getDday(ddayNo, userNo);
+        if (dday == null) return ResponseEntity.status(402).body(BaseResponseBody.of(402, "해당하는 D-day가 없습니다."));
+        try {
+            ddayService.deleteDday(ddayNo);
+        } catch (Exception e) {
+            return ResponseEntity.status(401).body(BaseResponseBody.of(401, "일정 삭제에 실패하였습니다."));
+        }
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "일정이 삭제되었습니다."));
     }
 
 }
