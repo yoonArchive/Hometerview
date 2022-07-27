@@ -268,4 +268,21 @@ public class ResumeController {
         return ResponseEntity.status(200).body(PersonalQuestionListRes.of(personalQuestions, count, 200, "즐겨찾기 상태 변경이 완료되었습니다."));
     }
 
+    @GetMapping("/saved/{resumeNo}")
+    @ApiOperation(value = "자기소개서 별 즐겨찾기에 추가된 개인질문 조회", notes = "(token) 자기소개서 별 즐겨찾기에 추가된 개인질문을 조회한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "즐겨찾기 조회 성공", response = PersonalQuestionListRes.class),
+            @ApiResponse(code = 402, message = "해당 자기소개서 없음", response = BaseResponseBody.class),
+            @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
+    })
+    public ResponseEntity<? extends BaseResponseBody> getSavedPersonalQuestions(@ApiIgnore Authentication authentication, @PathVariable("resumeNo") Long resumeNo) {
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        Long userNo = userDetails.getUserNo();
+        Resume resume = resumeService.getResume(resumeNo, userNo);
+        if (resume == null) return ResponseEntity.status(402).body(BaseResponseBody.of(402, "해당 자기소개서가 없습니다."));
+        List<PersonalQuestion> personalQuestions = personalQuestionService.getSavedPersonalQuestionList(resumeNo);
+        int count = personalQuestions.size();
+        return ResponseEntity.status(200).body(PersonalQuestionListRes.of(personalQuestions, count, 200, "즐겨찾기 추가된 개인질문 리스트입니다."));
+    }
+
 }

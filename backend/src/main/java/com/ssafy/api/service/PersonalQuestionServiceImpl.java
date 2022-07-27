@@ -78,4 +78,9 @@ public class PersonalQuestionServiceImpl implements PersonalQuestionService {
         return personalQuestionRepositorySupport.findPersonalQuestion(questionNo, detailNo, userNo);
     }
 
+    @Override
+    public List<PersonalQuestion> getSavedPersonalQuestionList(Long resumeNo) {
+        return personalQuestionRepositorySupport.findPersonalQuestionsByResumeNo(resumeNo);
+    }
+
 }

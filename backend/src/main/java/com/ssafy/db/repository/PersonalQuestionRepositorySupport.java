@@ -1,10 +1,7 @@
 package com.ssafy.db.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.ssafy.db.entity.PersonalQuestion;
-import com.ssafy.db.entity.QPersonalQuestion;
-import com.ssafy.db.entity.QResume;
-import com.ssafy.db.entity.QResumeDetail;
+import com.ssafy.db.entity.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -35,8 +32,7 @@ public class PersonalQuestionRepositorySupport {
     }
 
     public PersonalQuestion findPersonalQuestion(Long questionNo, Long detailNo, Long userNo) {
-        return jpaQueryFactory.select(qPersonalQuestion)
-                .from(qPersonalQuestion)
+        return jpaQueryFactory.select(qPersonalQuestion).from(qPersonalQuestion)
                 .innerJoin(qPersonalQuestion.resumeDetail, qResumeDetail)
                 .innerJoin(qResumeDetail.resume, qResume)
                 .where(qResume.user.userNo.eq(userNo))
@@ -44,4 +40,14 @@ public class PersonalQuestionRepositorySupport {
                 .where(qPersonalQuestion.questionNo.eq(questionNo))
                 .fetchOne();
     }
+
+    public List<PersonalQuestion> findPersonalQuestionsByResumeNo(Long resumeNo) {
+        return jpaQueryFactory.select(qPersonalQuestion).from(qPersonalQuestion)
+                .innerJoin(qPersonalQuestion.resumeDetail, qResumeDetail)
+                .innerJoin(qResumeDetail.resume, qResume)
+                .where(qResume.resumeNo.eq(resumeNo))
+                .where(qPersonalQuestion.saved.eq(Saved.valueOf("TRUE")))
+                .fetch();
+    }
+
 }

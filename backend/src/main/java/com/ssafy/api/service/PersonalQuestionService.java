@@ -22,4 +22,6 @@ public interface PersonalQuestionService {
 
     PersonalQuestion validatePersonalQuestion(Long questionNo, Long detailNo, Long userNo);
 
+    List<PersonalQuestion> getSavedPersonalQuestionList(Long resumeNo);
+
 }
