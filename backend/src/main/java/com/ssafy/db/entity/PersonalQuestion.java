@@ -40,4 +40,8 @@ public class PersonalQuestion {
         this.contents = contents;
     }
 
+    public void updateSavedStatus(Saved saved) {
+        this.saved = saved;
+    }
+
 }

@@ -244,4 +244,28 @@ public class ResumeController {
         else return ResponseEntity.status(401).body(BaseResponseBody.of(401, "개인 질문 삭제에 실패하였습니다."));
     }
 
+    @PutMapping({"/detail/{detailNo}/question/{questionNo}/saved"})
+    @ApiOperation(value = "개인 질문 즐겨찾기 등록 여부 변경", notes = "(token) 자기소개서 상세에 등록된 개인 질문의 즐겨찾기 등록 여부를 변경한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "변경 성공", response = PersonalQuestionListRes.class),
+            @ApiResponse(code = 401, message = "변경 실패", response = BaseResponseBody.class),
+            @ApiResponse(code = 402, message = "해당 질문 없음", response = BaseResponseBody.class),
+            @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
+    })
+    public ResponseEntity<? extends BaseResponseBody> savePersonalQuestion(@ApiIgnore Authentication authentication, @PathVariable("detailNo") Long detailNo, @PathVariable("questionNo") Long questionNo) {
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        Long userNo = userDetails.getUserNo();
+        PersonalQuestion personalQuestion = personalQuestionService.getPersonalQuestion(questionNo, detailNo, userNo);
+        if (personalQuestion == null)
+            return ResponseEntity.status(402).body(BaseResponseBody.of(402, "해당하는 개인 질문이 없습니다."));
+        try {
+            personalQuestionService.updateSavedStatus(personalQuestion);
+        } catch (Exception e) {
+            return ResponseEntity.status(401).body(BaseResponseBody.of(401, "즐겨찾기 상태 변경에 실패하였습니다."));
+        }
+        List<PersonalQuestion> personalQuestions = personalQuestionService.getList(detailNo);
+        int count = personalQuestions.size();
+        return ResponseEntity.status(200).body(PersonalQuestionListRes.of(personalQuestions, count, 200, "즐겨찾기 상태 변경이 완료되었습니다."));
+    }
+
 }

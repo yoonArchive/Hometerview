@@ -18,4 +18,6 @@ public interface PersonalQuestionService {
 
     int deletePersonalQuestion(Long questionNo);
 
+    void updateSavedStatus(PersonalQuestion personalQuestion);
+
 }

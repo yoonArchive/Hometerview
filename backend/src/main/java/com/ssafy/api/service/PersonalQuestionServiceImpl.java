@@ -64,4 +64,12 @@ public class PersonalQuestionServiceImpl implements PersonalQuestionService {
         return 1;
     }
 
+    @Override
+    public void updateSavedStatus(PersonalQuestion personalQuestion) {
+        Saved saved = personalQuestion.getSaved();
+        if (saved == Saved.TRUE)
+            personalQuestion.updateSavedStatus(Saved.FALSE);
+        else personalQuestion.updateSavedStatus(Saved.TRUE);
+    }
+
 }
