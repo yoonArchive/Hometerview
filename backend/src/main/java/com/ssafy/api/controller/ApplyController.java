@@ -1,5 +1,6 @@
 package com.ssafy.api.controller;
 
+import com.ssafy.api.response.UserLoginPostRes;
 import com.ssafy.api.service.ApplyService;
 import com.ssafy.common.auth.UserDetails;
 import com.ssafy.common.model.response.BaseResponseBody;
@@ -22,7 +23,11 @@ public class ApplyController {
 
     @PostMapping("/{recruitNo}")
     @ApiOperation(value = "모집 신청", notes = "(token) 스터디 모집글에 가입 신청한다.")
-    @ApiResponses({@ApiResponse(code = 200, message = "신청 완료"), @ApiResponse(code = 401, message = "신청 실패"), @ApiResponse(code = 500, message = "서버 오류")})
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "신청 완료", response = BaseResponseBody.class),
+            @ApiResponse(code = 401, message = "신청 실패", response = BaseResponseBody.class),
+            @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
+    })
     public ResponseEntity<? extends BaseResponseBody> applyRecruit(@ApiIgnore Authentication authentication, @PathVariable @ApiParam(value = "모집글 번호", required = true) Long recruitNo) throws Exception {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         Long userNo = userDetails.getUserNo();
@@ -33,7 +38,11 @@ public class ApplyController {
 
     @DeleteMapping("/{recruitNo}")
     @ApiOperation(value = "모집 신청 취소", notes = "(token) 스터디 모집 신청을 취소한다.")
-    @ApiResponses({@ApiResponse(code = 200, message = "취소 완료"), @ApiResponse(code = 401, message = "취소 실패"), @ApiResponse(code = 500, message = "서버 오류")})
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "취소 완료", response = BaseResponseBody.class),
+            @ApiResponse(code = 401, message = "취소 실패", response = BaseResponseBody.class),
+            @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
+    })
     public ResponseEntity<? extends BaseResponseBody> deleteApply(@ApiIgnore Authentication authentication, @PathVariable @ApiParam(value = "모집글 번호", required = true) Long recruitNo) throws Exception {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         Long userNo = userDetails.getUserNo();
