@@ -18,7 +18,7 @@ public class RecruitServiceImpl implements RecruitService {
     private final RecruitRepository recruitRepository;
 
     @Override
-    public void writeRecruit(RecruitReq recruitReq) {
+    public Recruit writeRecruit(RecruitReq recruitReq) {
         Recruit recruit = Recruit.builder()
                 .recruitTitle(recruitReq.getRecruitTitle())
                 .stdName(recruitReq.getStdName())
@@ -32,7 +32,7 @@ public class RecruitServiceImpl implements RecruitService {
                 .stdLimit(recruitReq.getStdLimit())
                 .recruitStatus(RecruitStatus.RECRUITING)
                 .build();
-        recruitRepository.save(recruit);
+        return recruitRepository.save(recruit);
     }
 
     @Override
