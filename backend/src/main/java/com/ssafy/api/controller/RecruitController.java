@@ -30,7 +30,7 @@ public class RecruitController {
     private final ApplyService applyService;
 
     @PostMapping()
-    @ApiOperation(value = "모집글 작성", notes = "스터디 모집글을 작성한다.")
+    @ApiOperation(value = "모집글 작성", notes = "(token) 스터디 모집글을 작성한다.")
     @ApiResponses({@ApiResponse(code = 200, message = "모집글 작성 성공"), @ApiResponse(code = 401, message = "모집글 작성 실패"), @ApiResponse(code = 500, message = "서버 오류")})
     public ResponseEntity<? extends BaseResponseBody> register(@ApiIgnore Authentication authentication, @RequestBody @ApiParam(value = "모집글 정보", required = true) @Valid RecruitReq recruitReq) throws Exception {
         UserDetails userDetails = (UserDetails) authentication.getDetails();

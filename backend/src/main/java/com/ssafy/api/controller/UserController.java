@@ -67,7 +67,7 @@ public class UserController {
     }
 
     @GetMapping("/me")
-    @ApiOperation(value = "회원 본인 정보 조회", notes = "로그인한 회원 본인의 정보를 응답한다.")
+    @ApiOperation(value = "회원 본인 정보 조회", notes = "(token) 로그인한 회원 본인의 정보를 응답한다.")
     @ApiResponses({@ApiResponse(code = 200, message = "성공"), @ApiResponse(code = 500, message = "서버 오류")})
     public ResponseEntity<UserRes> getUserInfo(@ApiIgnore Authentication authentication) throws Exception {
         /**
@@ -99,7 +99,7 @@ public class UserController {
     }
 
     @GetMapping("/pw")
-    @ApiOperation(value = "비밀번호 인증", notes = "비밀번호 인증을 위해 로그인한 회원의 비밀번호와 일치하는 비밀번호를 입력한다.")
+    @ApiOperation(value = "비밀번호 인증", notes = "(token) 비밀번호 인증을 위해 로그인한 회원의 비밀번호와 일치하는 비밀번호를 입력한다.")
     @ApiResponses({@ApiResponse(code = 200, message = "비밀번호 인증 성공"), @ApiResponse(code = 401, message = "비밀번호 인증 실패"), @ApiResponse(code = 500, message = "서버 오류")})
     public ResponseEntity<? extends BaseResponseBody> certifyPw(@ApiIgnore Authentication authentication, @RequestParam String userPw) throws Exception {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
@@ -109,7 +109,7 @@ public class UserController {
     }
 
     @PutMapping("/pw")
-    @ApiOperation(value = "비밀번호 변경", notes = "회원의 비밀번호를 변경한다.")
+    @ApiOperation(value = "비밀번호 변경", notes = "(token) 회원의 비밀번호를 변경한다.")
     @ApiResponses({@ApiResponse(code = 200, message = "비밀번호 변경 성공"), @ApiResponse(code = 401, message = "비밀번호 변경 실패"), @ApiResponse(code = 500, message = "서버 오류")})
     public ResponseEntity<? extends BaseResponseBody> updatePw(Authentication authentication, @RequestBody @ApiParam(value = "비밀번호 변경 정보", required = true) UpdatePwPutReq updatePwPutReq) {
         String userPw = updatePwPutReq.getUserPw();
@@ -176,7 +176,7 @@ public class UserController {
     }
 
     @PutMapping()
-    @ApiOperation(value = "회원 정보 수정", notes = "회원의 프로필 이미지, 이름 혹은 이메일을 수정한다.")
+    @ApiOperation(value = "회원 정보 수정", notes = "(token) 회원의 프로필 이미지, 이름 혹은 이메일을 수정한다.")
     @ApiResponses({@ApiResponse(code = 200, message = "회원 정보 수정 성공"), @ApiResponse(code = 401, message = "회원 정보 수정 실패"), @ApiResponse(code = 500, message = "서버 오류")})
     public ResponseEntity<UserRes> updateUser(@ApiIgnore Authentication authentication, @RequestBody @ApiParam(value = "변경된 회원 정보", required = true) @Valid UpdateUserPutReq updateUserPutReq) throws Exception {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
@@ -188,7 +188,7 @@ public class UserController {
     }
 
     @DeleteMapping()
-    @ApiOperation(value = "회원 탈퇴", notes = "회원 탈퇴")
+    @ApiOperation(value = "회원 탈퇴", notes = "(token) 회원 탈퇴")
     @ApiResponses({@ApiResponse(code = 200, message = "회원 탈퇴 성공"), @ApiResponse(code = 401, message = "회원 탈퇴 실패"), @ApiResponse(code = 500, message = "서버 오류")})
     public ResponseEntity<? extends BaseResponseBody> deleteUser(@ApiIgnore Authentication authentication) throws Exception {
         userService.deleteUser(((UserDetails) authentication.getDetails()).getUsername());
@@ -196,7 +196,7 @@ public class UserController {
     }
 
     @PostMapping("/review")
-    @ApiOperation(value = "회고 작성", notes = "면접 회고를 작성한다.")
+    @ApiOperation(value = "회고 작성", notes = "(token) 면접 회고를 작성한다.")
     @ApiResponses({@ApiResponse(code = 200, message = "회고 작성 성공"), @ApiResponse(code = 401, message = "회고 작성 실패"), @ApiResponse(code = 500, message = "서버 오류")})
     public ResponseEntity<? extends BaseResponseBody> createReview(@ApiIgnore Authentication authentication, @RequestBody @ApiParam(value = "회고 내용", required = true) @Valid ReviewReq reviewReq) throws Exception {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
@@ -210,7 +210,7 @@ public class UserController {
     }
 
     @GetMapping("/review")
-    @ApiOperation(value = "회고 목록 조회", notes = "회고 목록을 조회한다.")
+    @ApiOperation(value = "회고 목록 조회", notes = "(token) 회고 목록을 조회한다.")
     @ApiResponses({@ApiResponse(code = 200, message = "회고 목록 조회 성공"), @ApiResponse(code = 401, message = "회고 목록 조회 실패"), @ApiResponse(code = 500, message = "서버 오류")})
     public ResponseEntity<ReviewListRes> getReviewList(@ApiIgnore Authentication authentication) throws Exception {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
@@ -220,7 +220,7 @@ public class UserController {
     }
 
     @GetMapping("/review/{reviewNo}")
-    @ApiOperation(value = "회고 상세 조회", notes = "회고 상세 정보를 조회한다.")
+    @ApiOperation(value = "회고 상세 조회", notes = "(token) 회고 상세 정보를 조회한다.")
     @ApiResponses({@ApiResponse(code = 200, message = "회고 상세 정보 조회 성공"), @ApiResponse(code = 401, message = "회고 상세 정보 조회 실패"), @ApiResponse(code = 500, message = "서버 오류")})
     public ResponseEntity<? extends BaseResponseBody> getReviewDetail(@ApiIgnore Authentication authentication, @PathVariable @ApiParam(value = "회고 번호", required = true) Long reviewNo) throws Exception {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
@@ -231,7 +231,7 @@ public class UserController {
     }
 
     @PutMapping("/review/{reviewNo}")
-    @ApiOperation(value = "회고 수정", notes = "회고 내용을 수정한다.")
+    @ApiOperation(value = "회고 수정", notes = "(token) 회고 내용을 수정한다.")
     @ApiResponses({@ApiResponse(code = 200, message = "회고 수정 성공"), @ApiResponse(code = 401, message = "회고 수정 실패"), @ApiResponse(code = 500, message = "서버 오류")})
     public ResponseEntity<? extends BaseResponseBody> updateReview(@ApiIgnore Authentication authentication, @PathVariable @ApiParam(value = "회고 번호", required = true) Long reviewNo, @RequestBody @ApiParam(value = "회고 변경 내용", required = true) ReviewReq reviewReq) throws Exception {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
@@ -249,7 +249,7 @@ public class UserController {
     }
 
     @DeleteMapping("/review/{reviewNo}")
-    @ApiOperation(value = "회고 삭제", notes = "회고를 삭제한다.")
+    @ApiOperation(value = "회고 삭제", notes = "(token) 회고를 삭제한다.")
     @ApiResponses({@ApiResponse(code = 200, message = "회고 삭제 성공"), @ApiResponse(code = 401, message = "회고 삭제 실패"), @ApiResponse(code = 500, message = "서버 오류")})
     public ResponseEntity<? extends BaseResponseBody> deleteReview(@ApiIgnore Authentication authentication, @PathVariable @ApiParam(value = "모집글 번호", required = true) Long reviewNo) throws Exception {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
