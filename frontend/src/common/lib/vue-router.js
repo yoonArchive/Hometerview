@@ -30,6 +30,12 @@ import MyAccount from '@/views/mypage/myaccount/MyAccount'
 import Withdrawal from '@/views/mypage/withdrawal/Withdrawal'
 import PasswordConfirm from '@/views/mypage/passwordconfirm/PasswordConfirm'
 
+/** 자소서 페이지 */
+import CoverLetterView from '@/views/myinterview/coverletter/CoverLetterView'
+
+/** 마이 인터뷰 */
+import MyInterviewView from '@/views/myinterview/MyInterviewView'
+
 const fullMenu = require('@/views/main/menu.json')
 function makeRoutesFromMenu () {
   let routes = Object.keys(fullMenu).map((key) => {
@@ -110,6 +116,14 @@ function makeRoutesFromMenu () {
       path : 'passwordconfirm',
       name : 'passwordconfirm',
       component : PasswordConfirm,
+    },{
+      path: 'coverletter/:resumeNo',
+      name : 'coverletter',
+      component : CoverLetterView,
+    },{
+      path: 'myinterview',
+      name: 'myinterview',
+      component : MyInterviewView,
     }]
   },{
     path: '/',
