@@ -2,7 +2,7 @@
 
   <h1> 모집글 작성 </h1>
 
-  <create-members-recruitment-form></create-members-recruitment-form>
+  <create-members-recruitment-form action='create'></create-members-recruitment-form>
 
 
 </template>

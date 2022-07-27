@@ -18,6 +18,7 @@ import FindUserPassword from '@/views/accounts/FindUserPassword'
 import CreateMembersRecruitmentView from '@/views/membersrecruitment/CreateMembersRecruitmentView'
 import MembersRecruitmentView from '@/views/membersrecruitment/MembersRecruitmentView'
 import MembersRecruitmentDetailView from '@/views/membersrecruitment/MembersRecruitmentDetailView'
+import MembersRecruitmentEditView from '@/views/membersrecruitment/MembersRecruitmentEditView'
 
 import StudyRecruitment from '@/views/home/components/study-recruitment'
 
@@ -126,7 +127,12 @@ function makeRoutesFromMenu () {
       path : 'membersrecruitment/:recruitNo',
       name : 'membersrecruitmentdetail',
       component : MembersRecruitmentDetailView,
-    }]
+    },{
+      path : 'membersrecruitment/:recruitNo/update',
+      name : 'membersrecruitmentedit',
+      component : MembersRecruitmentEditView,
+    }
+  ]
   },{
     path: '/',
     name: 'main',

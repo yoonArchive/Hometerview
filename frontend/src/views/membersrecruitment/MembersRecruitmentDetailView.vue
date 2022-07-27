@@ -1,4 +1,5 @@
 <template>
+ <h1>Detail Page</h1>
     <div>
       대표 이미지 : 
       <img src="{{ recruitDetail.stdImg }}" alt=""><br>
@@ -13,11 +14,12 @@
     스터디 현황 : {{ recruitDetail.recruitStatus }} <br>
     스터디 소개 : <br>
     {{ recruitDetail.stdDetail }} <br>
-    <button @click="editRecruitmentDetail">수정</button>
+    <button @click="moveToUpdate">수정</button>
 
 </template>
 
 <script>
+  import router from '@/common/lib/vue-router'
   import { mapActions, mapGetters } from 'vuex'
   
 
@@ -41,9 +43,14 @@
           this.studyType = '기업 면접'
         }else{
           this.studyType = '자율 면접'
-
         }
-      }
+      },
+      moveToUpdate(){
+        router.push({
+        name:'membersrecruitmentedit',
+        params:{recruitNo:this.recruitNo}
+        })
+      },
 
 
     },

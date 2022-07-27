@@ -60,15 +60,26 @@ export default {
         console.log(err.response)
       })
     },
-    updateRecruitmentDetail({ commit }, recruitNo, recruitDetail){
+    updateRecruitmentDetail({ commit }, recruitInfo){
+      const recruitNo = recruitInfo[0]
+      const recruitmentInfo = recruitInfo[1]
+      console.log(1)
+      console.log(recruitmentInfo)
       axios({
         url : api_url.membersrecruitment.membersrecruitment(recruitNo),
         method : 'put',
-        data : {recruitNo, recruitDetail}
+        data : recruitmentInfo
+
       })
       .then(res => {
+        console.log(2)
         console.log(res.data)
         commit('SET_RECRUIT_DETAIL',res.data)
+        
+        router.push({ 
+          name: 'membersrecruitmentdetail',
+          params : {recruitNo:recruitNo}
+        })
       })
       .catch(err => {
         console.log(err.response)
