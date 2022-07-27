@@ -33,7 +33,7 @@ public class ApplyController {
     @DeleteMapping("/{recruitNo}")
     @ApiOperation(value = "모집 신청 취소", notes = "스터디 모집 신청을 취소한다.")
     @ApiResponses({@ApiResponse(code = 200, message = "취소 완료"), @ApiResponse(code = 401, message = "취소 실패"), @ApiResponse(code = 500, message = "서버 오류")})
-    public ResponseEntity<?> deleteApply(@ApiIgnore Authentication authentication, @PathVariable @ApiParam(value = "모집글 번호", required = true) Long recruitNo) throws Exception {
+    public ResponseEntity<? extends BaseResponseBody> deleteApply(@ApiIgnore Authentication authentication, @PathVariable @ApiParam(value = "모집글 번호", required = true) Long recruitNo) throws Exception {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         Long userNo = userDetails.getUserNo();
         int result = applyService.deleteApply(userNo, recruitNo);

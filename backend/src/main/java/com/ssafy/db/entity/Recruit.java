@@ -60,10 +60,6 @@ public class Recruit {
     @OneToMany(mappedBy = "recruit")
     private List<Apply> applies = new ArrayList<>();
 
-    public void initStatus(RecruitStatus recruiting) {
-        this.recruitStatus = recruiting;
-    }
-
     public void initRecruit(String recruitTitle, String stdName, String stdDetail, String stdImg, StdType stdType, String comName, String startDate, String endDate, String stdDay, int stdLimit) {
         this.recruitTitle = recruitTitle;
         this.stdName = stdName;

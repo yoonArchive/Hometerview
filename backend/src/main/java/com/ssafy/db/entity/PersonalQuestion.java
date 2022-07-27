@@ -1,5 +1,6 @@
 package com.ssafy.db.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -17,8 +18,9 @@ public class PersonalQuestion {
     @Column(name = "question_no")
     private Long questionNo;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="detail_no")
+    @JoinColumn(name = "detail_no")
     private ResumeDetail resumeDetail;
 
     @Column(name = "std_no")
@@ -33,5 +35,9 @@ public class PersonalQuestion {
     @Enumerated(EnumType.STRING)
     @Column(name = "saved")
     private Saved saved;
+
+    public void updatePersonalQuestion(String contents) {
+        this.contents = contents;
+    }
 
 }

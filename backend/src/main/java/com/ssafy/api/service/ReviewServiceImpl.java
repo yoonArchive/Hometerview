@@ -26,14 +26,12 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public void writeReview(Long userNo, ReviewReq reviewReq) {
         User user = userRepository.findByUserNo(userNo).get();
-        SimpleDateFormat dataFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date now = new Date();
         Review review = Review.builder()
                 .user(user)
                 .reviewTitle(reviewReq.getReviewTitle())
                 .reviewContents(reviewReq.getReviewContents())
                 .reviewType(reviewReq.getReviewType())
-                .writeDate(dataFormat.format(now))
+                .reviewDate(reviewReq.getReviewDate())
                 .build();
         reviewRepository.save(review);
     }
@@ -54,7 +52,8 @@ public class ReviewServiceImpl implements ReviewService {
         String reviewTitle = reviewReq.getReviewTitle();
         String reviewContents = reviewReq.getReviewContents();
         ReviewType reviewType = reviewReq.getReviewType();
-        review.initReview(reviewTitle, reviewContents, reviewType);
+        String reviewDate = reviewReq.getReviewDate();
+        review.initReview(reviewTitle, reviewContents, reviewType, reviewDate);
     }
 
     @Override
@@ -64,14 +63,8 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     @Transactional
-    public int deleteReview(Long reviewNo) {
-        try {
-            reviewRepository.findByReviewNo(reviewNo).get();
-        } catch (Exception e) {
-            return 0;
-        }
+    public void deleteReview(Long reviewNo) {
         reviewRepository.deleteByReviewNo(reviewNo);
-        return 1;
     }
 
 }

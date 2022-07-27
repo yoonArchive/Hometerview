@@ -27,4 +27,8 @@ public class ReviewReq {
     @ApiModelProperty(name = "회고 타입", example = "REAL")
     ReviewType reviewType;
 
+    @NotEmpty
+    @ApiModelProperty(name = "회고 일자", example = "2022-08-01")
+    String reviewDate;
+
 }

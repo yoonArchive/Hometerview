@@ -80,19 +80,19 @@ public class UserController {
         return ResponseEntity.status(200).body(UserRes.of(user, 200, "회원 정보 조회 성공"));
     }
 
-    @GetMapping("/checkid")
+    @GetMapping("/checkId")
     @ApiOperation(value = "아이디 중복 검사", notes = "회원가입 시 아이디 중복을 체크한다.")
     @ApiResponses({@ApiResponse(code = 200, message = "사용 가능"), @ApiResponse(code = 401, message = "아이디 중복"), @ApiResponse(code = 500, message = "서버 오류")})
-    public ResponseEntity<?> checkId(@RequestParam @ApiParam(value = "회원 아이디", required = true) String id) throws Exception {
+    public ResponseEntity<? extends BaseResponseBody> checkId(@RequestParam @ApiParam(value = "회원 아이디", required = true) String id) throws Exception {
         User user = userService.getByUserId(id);
         if (user == null) return ResponseEntity.status(200).body(BaseResponseBody.of(200, "사용 가능한 아이디입니다."));
         else return ResponseEntity.status(401).body(BaseResponseBody.of(401, "사용 중인 아이디입니다."));
     }
 
-    @GetMapping("/checkemail")
+    @GetMapping("/checkEmail")
     @ApiOperation(value = "이메일 중복 검사", notes = "회원가입 시 이메일 중복을 체크한다.")
     @ApiResponses({@ApiResponse(code = 200, message = "사용 가능"), @ApiResponse(code = 401, message = "이메일 중복"), @ApiResponse(code = 500, message = "서버 오류")})
-    public ResponseEntity<?> checkEmail(@RequestParam @ApiParam(value = "회원 이메일", required = true) String email) throws Exception {
+    public ResponseEntity<? extends BaseResponseBody> checkEmail(@RequestParam @ApiParam(value = "회원 이메일", required = true) String email) throws Exception {
         User user = userService.getByUserEmail(email);
         if (user == null) return ResponseEntity.status(200).body(BaseResponseBody.of(200, "사용 가능한 이메일입니다."));
         else return ResponseEntity.status(401).body(BaseResponseBody.of(401, "사용 중인 이메일입니다."));
@@ -101,7 +101,7 @@ public class UserController {
     @GetMapping("/pw")
     @ApiOperation(value = "비밀번호 인증", notes = "비밀번호 인증을 위해 로그인한 회원의 비밀번호와 일치하는 비밀번호를 입력한다.")
     @ApiResponses({@ApiResponse(code = 200, message = "비밀번호 인증 성공"), @ApiResponse(code = 401, message = "비밀번호 인증 실패"), @ApiResponse(code = 500, message = "서버 오류")})
-    public ResponseEntity<?> certifyPw(@ApiIgnore Authentication authentication, @RequestParam String userPw) throws Exception {
+    public ResponseEntity<? extends BaseResponseBody> certifyPw(@ApiIgnore Authentication authentication, @RequestParam String userPw) throws Exception {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         if (passwordEncoder.matches(userPw, userDetails.getPassword()))
             return ResponseEntity.status(200).body(BaseResponseBody.of(200, "비밀번호 인증 성공"));
@@ -111,7 +111,7 @@ public class UserController {
     @PutMapping("/pw")
     @ApiOperation(value = "비밀번호 변경", notes = "회원의 비밀번호를 변경한다.")
     @ApiResponses({@ApiResponse(code = 200, message = "비밀번호 변경 성공"), @ApiResponse(code = 401, message = "비밀번호 변경 실패"), @ApiResponse(code = 500, message = "서버 오류")})
-    public ResponseEntity<?> updatePw(Authentication authentication, @RequestBody @ApiParam(value = "비밀번호 변경 정보", required = true) UpdatePwPutReq updatePwPutReq) {
+    public ResponseEntity<? extends BaseResponseBody> updatePw(Authentication authentication, @RequestBody @ApiParam(value = "비밀번호 변경 정보", required = true) UpdatePwPutReq updatePwPutReq) {
         String userPw = updatePwPutReq.getUserPw();
         String newPw = updatePwPutReq.getNewPw();
         UserDetails userDetails = (UserDetails) authentication.getDetails();
@@ -125,24 +125,23 @@ public class UserController {
         }
     }
 
-    @GetMapping("/findid")
+    @GetMapping("/findId")
     @ApiOperation(value = "아이디 찾기", notes = "회원의 이름과 이메일에 해당하는 회원 아이디를 찾는다.")
     @ApiResponses({@ApiResponse(code = 200, message = "아이디 찾기 성공"), @ApiResponse(code = 401, message = "아이디 찾기 실패"), @ApiResponse(code = 500, message = "서버 오류")})
-    public ResponseEntity<?> findId(@RequestParam @ApiParam(value = "회원 이름", required = true) String userName, @RequestParam @ApiParam(value = "회원 이메일", required = true) String userEmail) throws Exception {
+    public ResponseEntity<UserFindIdGetRes> findId(@RequestParam @ApiParam(value = "회원 이름", required = true) String userName, @RequestParam @ApiParam(value = "회원 이메일", required = true) String userEmail) throws Exception {
         User user = userService.getByUserNameAndUserEmail(userName, userEmail);
         if (user == null)
             return ResponseEntity.status(401).body(UserFindIdGetRes.of(401, "고객님의 정보와 일치하는 아이디가 없습니다.", null));
         else return ResponseEntity.status(200).body(UserFindIdGetRes.of(200, "아이디 찾기 성공", user.getUserId()));
     }
 
-    @PostMapping("/findpw")
+    @PostMapping("/findPw")
     @ApiOperation(value = "임시 비밀번호 전송", notes = "회원 정보를 입력하고 일치하면 임시 비밀번호를 메일로 전송한다.")
     @ApiResponses({@ApiResponse(code = 200, message = "임시 비밀번호 발급 성공"), @ApiResponse(code = 401, message = "임시 비밀번호 발급 실패"), @ApiResponse(code = 500, message = "서버 오류")})
-    public ResponseEntity<?> findPw(@RequestParam @ApiParam(value = "회원 이름", required = true) String userName, @RequestParam @ApiParam(value = "회원 이메일", required = true) String userEmail, @RequestParam @ApiParam(value = "회원 아이디", required = true) String userId) throws Exception {
+    public ResponseEntity<UserFindPwGetRes> findPw(@RequestParam @ApiParam(value = "회원 이름", required = true) String userName, @RequestParam @ApiParam(value = "회원 이메일", required = true) String userEmail, @RequestParam @ApiParam(value = "회원 아이디", required = true) String userId) throws Exception {
         User user = userService.getByUserNameAndUserEmailAndUserId(userName, userEmail, userId);
         if (user == null) return ResponseEntity.status(401).body(UserFindPwGetRes.of(401, "입력한 정보를 다시 확인해주세요.", null));
         else {
-
             // 랜덤 임시 비밀번호 생성
             String tmpPw = mailService.getTmpPassword();
             // 비밀번호 값 변경
@@ -157,7 +156,7 @@ public class UserController {
     @PostMapping("/authEmail")
     @ApiOperation(value = "이메일 인증번호 전송", notes = "이메일 인증번호를 전송한다.")
     @ApiResponses({@ApiResponse(code = 200, message = "임시 비밀번호 발급 성공"), @ApiResponse(code = 401, message = "임시 비밀번호 발급 실패"), @ApiResponse(code = 500, message = "서버 오류")})
-    public ResponseEntity<?> authEmail(@RequestParam @ApiParam(value = "회원 이메일", required = true) String userEmail) throws Exception {
+    public ResponseEntity<? extends BaseResponseBody> authEmail(@RequestParam @ApiParam(value = "회원 이메일", required = true) String userEmail) throws Exception {
         Mail mail = mailService.createAuthMail(userEmail);
         mailService.sendMail(mail);
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "인증번호 발송 성공"));
@@ -166,7 +165,7 @@ public class UserController {
     @GetMapping("/checkAuthKey")
     @ApiOperation(value = "인증번호 확인", notes = "인증번호를 확인한다.")
     @ApiResponses({@ApiResponse(code = 200, message = "인증 성공"), @ApiResponse(code = 401, message = "인증 실패"), @ApiResponse(code = 500, message = "서버 오류")})
-    public ResponseEntity<?> checkAuthKey(@RequestParam @ApiParam(value = "회원 이메일", required = true) String userEmail, @RequestParam @ApiParam(value = "인증번호", required = true) String authKey) throws Exception {
+    public ResponseEntity<? extends BaseResponseBody> checkAuthKey(@RequestParam @ApiParam(value = "회원 이메일", required = true) String userEmail, @RequestParam @ApiParam(value = "인증번호", required = true) String authKey) throws Exception {
         String email = mailService.checkAuthKey(authKey);
         if (!email.equals(userEmail))
             return ResponseEntity.status(401).body(BaseResponseBody.of(401, "인증번호가 옳바르지 않습니다."));
@@ -179,7 +178,7 @@ public class UserController {
     @PutMapping()
     @ApiOperation(value = "회원 정보 수정", notes = "회원의 프로필 이미지, 이름 혹은 이메일을 수정한다.")
     @ApiResponses({@ApiResponse(code = 200, message = "회원 정보 수정 성공"), @ApiResponse(code = 401, message = "회원 정보 수정 실패"), @ApiResponse(code = 500, message = "서버 오류")})
-    public ResponseEntity<?> updateUser(@ApiIgnore Authentication authentication, @RequestBody @ApiParam(value = "변경된 회원 정보", required = true) @Valid UpdateUserPutReq updateUserPutReq) throws Exception {
+    public ResponseEntity<UserRes> updateUser(@ApiIgnore Authentication authentication, @RequestBody @ApiParam(value = "변경된 회원 정보", required = true) @Valid UpdateUserPutReq updateUserPutReq) throws Exception {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         String userId = userDetails.getUsername();
         User user = userService.getByUserId(userId);
@@ -191,7 +190,7 @@ public class UserController {
     @DeleteMapping()
     @ApiOperation(value = "회원 탈퇴", notes = "회원 탈퇴")
     @ApiResponses({@ApiResponse(code = 200, message = "회원 탈퇴 성공"), @ApiResponse(code = 401, message = "회원 탈퇴 실패"), @ApiResponse(code = 500, message = "서버 오류")})
-    public ResponseEntity<?> deleteUser(@ApiIgnore Authentication authentication) throws Exception {
+    public ResponseEntity<? extends BaseResponseBody> deleteUser(@ApiIgnore Authentication authentication) throws Exception {
         userService.deleteUser(((UserDetails) authentication.getDetails()).getUsername());
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "회원탈퇴가 완료되었습니다."));
     }
@@ -199,7 +198,7 @@ public class UserController {
     @PostMapping("/review")
     @ApiOperation(value = "회고 작성", notes = "면접 회고를 작성한다.")
     @ApiResponses({@ApiResponse(code = 200, message = "회고 작성 성공"), @ApiResponse(code = 401, message = "회고 작성 실패"), @ApiResponse(code = 500, message = "서버 오류")})
-    public ResponseEntity<?> createReview(@ApiIgnore Authentication authentication, @RequestBody @ApiParam(value = "회고 내용", required = true) @Valid ReviewReq reviewReq) throws Exception {
+    public ResponseEntity<? extends BaseResponseBody> createReview(@ApiIgnore Authentication authentication, @RequestBody @ApiParam(value = "회고 내용", required = true) @Valid ReviewReq reviewReq) throws Exception {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         Long userNo = userDetails.getUserNo();
         try {
@@ -213,7 +212,7 @@ public class UserController {
     @GetMapping("/review")
     @ApiOperation(value = "회고 목록 조회", notes = "회고 목록을 조회한다.")
     @ApiResponses({@ApiResponse(code = 200, message = "회고 목록 조회 성공"), @ApiResponse(code = 401, message = "회고 목록 조회 실패"), @ApiResponse(code = 500, message = "서버 오류")})
-    public ResponseEntity<?> getReviewList(@ApiIgnore Authentication authentication) throws Exception {
+    public ResponseEntity<ReviewListRes> getReviewList(@ApiIgnore Authentication authentication) throws Exception {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         Long userNo = userDetails.getUserNo();
         List<Review> reviews = reviewService.getList(userNo);
@@ -223,7 +222,7 @@ public class UserController {
     @GetMapping("/review/{reviewNo}")
     @ApiOperation(value = "회고 상세 조회", notes = "회고 상세 정보를 조회한다.")
     @ApiResponses({@ApiResponse(code = 200, message = "회고 상세 정보 조회 성공"), @ApiResponse(code = 401, message = "회고 상세 정보 조회 실패"), @ApiResponse(code = 500, message = "서버 오류")})
-    public ResponseEntity<?> getReviewDetail(@ApiIgnore Authentication authentication, @PathVariable @ApiParam(value = "회고 번호", required = true) Long reviewNo) throws Exception {
+    public ResponseEntity<? extends BaseResponseBody> getReviewDetail(@ApiIgnore Authentication authentication, @PathVariable @ApiParam(value = "회고 번호", required = true) Long reviewNo) throws Exception {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         Long userNo = userDetails.getUserNo();
         Review review = reviewService.getReviewDetail(reviewNo, userNo);
@@ -234,7 +233,7 @@ public class UserController {
     @PutMapping("/review/{reviewNo}")
     @ApiOperation(value = "회고 수정", notes = "회고 내용을 수정한다.")
     @ApiResponses({@ApiResponse(code = 200, message = "회고 수정 성공"), @ApiResponse(code = 401, message = "회고 수정 실패"), @ApiResponse(code = 500, message = "서버 오류")})
-    public ResponseEntity<?> updateReview(@ApiIgnore Authentication authentication, @PathVariable @ApiParam(value = "회고 번호", required = true) Long reviewNo, @RequestBody @ApiParam(value = "회고 변경 내용", required = true) ReviewReq reviewReq) throws Exception {
+    public ResponseEntity<? extends BaseResponseBody> updateReview(@ApiIgnore Authentication authentication, @PathVariable @ApiParam(value = "회고 번호", required = true) Long reviewNo, @RequestBody @ApiParam(value = "회고 변경 내용", required = true) ReviewReq reviewReq) throws Exception {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         Long userNo = userDetails.getUserNo();
         Review review = reviewService.getReviewDetail(reviewNo, userNo);
@@ -252,10 +251,17 @@ public class UserController {
     @DeleteMapping("/review/{reviewNo}")
     @ApiOperation(value = "회고 삭제", notes = "회고를 삭제한다.")
     @ApiResponses({@ApiResponse(code = 200, message = "회고 삭제 성공"), @ApiResponse(code = 401, message = "회고 삭제 실패"), @ApiResponse(code = 500, message = "서버 오류")})
-    public ResponseEntity<?> deleteReview(@PathVariable @ApiParam(value = "모집글 번호", required = true) Long reviewNo) throws Exception {
-        int result = reviewService.deleteReview(reviewNo);
-        if (result == 1) return ResponseEntity.status(200).body(BaseResponseBody.of(200, "회고 삭제가 완료되었습니다."));
-        else return ResponseEntity.status(401).body(BaseResponseBody.of(401, "회고 삭제에 실패하였습니다."));
+    public ResponseEntity<? extends BaseResponseBody> deleteReview(@ApiIgnore Authentication authentication, @PathVariable @ApiParam(value = "모집글 번호", required = true) Long reviewNo) throws Exception {
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        Long userNo = userDetails.getUserNo();
+        Review review = reviewService.getReviewDetail(reviewNo, userNo);
+        if (review == null) return ResponseEntity.status(402).body(BaseResponseBody.of(402, "해당하는 회고가 없습니다."));
+        try {
+            reviewService.deleteReview(reviewNo);
+        } catch (Exception e) {
+            return ResponseEntity.status(401).body(BaseResponseBody.of(401, "회고 삭제에 실패하였습니다."));
+        }
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "회고 삭제가 완료되었습니다."));
     }
 
 }

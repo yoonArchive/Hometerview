@@ -15,7 +15,7 @@ public interface ResumeService {
 
     List<Resume> listResume(Long userNo);
 
-    Resume getByResumeNo(Long resumeNo);
+    Resume getResume(Long resumeNo, Long userNo);
 
     void updateResume(Resume resume, String resumeTitle);
 
