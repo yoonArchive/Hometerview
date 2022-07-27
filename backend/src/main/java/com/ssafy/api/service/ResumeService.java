@@ -33,4 +33,6 @@ public interface ResumeService {
 
     int deleteResumeDetail(Long detailNo);
 
+    long[] getDetailCount(List<Resume> resumes);
+
 }
