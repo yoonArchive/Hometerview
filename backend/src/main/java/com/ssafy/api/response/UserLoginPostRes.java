@@ -2,6 +2,7 @@ package com.ssafy.api.response;
 
 import com.ssafy.common.model.response.BaseResponseBody;
 
+import com.ssafy.db.entity.UserType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -13,15 +14,24 @@ import lombok.Setter;
 @Getter
 @Setter
 @ApiModel("UserLoginPostResponse")
-public class UserLoginPostRes extends BaseResponseBody{
-	@ApiModelProperty(name="JWT 인증 토큰", example="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN...")
-	String accessToken;
+public class UserLoginPostRes extends BaseResponseBody {
 
-	public static UserLoginPostRes of(Integer statusCode, String message, String accessToken) {
-		UserLoginPostRes res = new UserLoginPostRes();
-		res.setStatusCode(statusCode);
-		res.setMessage(message);
-		res.setAccessToken(accessToken);
-		return res;
-	}
+    @ApiModelProperty(name = "JWT 인증 토큰", example = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN...")
+    String accessToken;
+
+    @ApiModelProperty(name = "유저 타입")
+    UserType userType;
+
+    @ApiModelProperty(name = "유저 이름")
+    String userName;
+
+    public static UserLoginPostRes of(UserType userType, String userName, Integer statusCode, String message, String accessToken) {
+        UserLoginPostRes res = new UserLoginPostRes();
+        res.setStatusCode(statusCode);
+        res.setUserType(userType);
+        res.setUserName(userName);
+        res.setMessage(message);
+        res.setAccessToken(accessToken);
+        return res;
+    }
 }
