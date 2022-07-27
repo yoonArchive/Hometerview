@@ -8,7 +8,7 @@
     {{ recruitment.stdImg }}
     <button @click="moveToDetail()"> 상세보기 </button>
     <hr>
-
+  
   </div>
 
 </template>

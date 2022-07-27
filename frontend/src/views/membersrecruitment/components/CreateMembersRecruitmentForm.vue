@@ -45,7 +45,7 @@
     </div>
     <button>{{ action }}</button>
   </form>
-    <button @click="deleteRecruitmentDetail(recruitNo)">삭제 </button>
+    <!-- <button @click="deleteRecruitmentDetail(recruitNo)">삭제 </button> -->
   
 </template>
 
@@ -64,8 +64,9 @@
 
     data(){
       return{
-        // recruitNo : this.,
+
         company : false,
+
         newrecruitmentInfo:{
           comName: this.recruitDetail.comName,
           endDate: this.recruitDetail.endDate,
@@ -97,7 +98,8 @@
       },
       submitType(action){
         if(action==='create'){
-          this.createRecruitment(this.newrecruitmentInfo)
+          console.log(action)
+          this.createRecruitment(this.recruitmentInfo)
         }
         else if (action==='update'){
           this.updateRecruitmentDetail([this.recruitNo,this.newrecruitmentInfo])

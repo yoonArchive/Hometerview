@@ -28,16 +28,17 @@ export default {
   computed: {
     ...mapGetters(['recruitmentList']),
 
-
   },
   methods: {
-    ...mapActions(['bringRecruitmentList'])
+    ...mapActions(['bringRecruitmentList']),
   },
   
   created(){
     this.bringRecruitmentList()
     console.log('되니?')
-  }
+    
+  },
+
 }
 </script>
 
