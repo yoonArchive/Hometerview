@@ -1,5 +1,6 @@
 package com.ssafy.api.controller;
 
+import com.ssafy.db.entity.UserType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -46,16 +47,18 @@ public class AuthController {
     public ResponseEntity<UserLoginPostRes> login(@RequestBody @ApiParam(value = "로그인 정보", required = true) UserLoginPostReq loginInfo) {
         String userId = loginInfo.getUserId();
         String userPw = loginInfo.getUserPw();
-
         User user = userService.getByUserId(userId);
         // 로그인 요청한 유저로부터 입력된 패스워드 와 디비에 저장된 유저의 암호화된 패스워드가 같은지 확인.(유효한 패스워드인지 여부 확인)
-        if (user == null) return ResponseEntity.status(404).body(UserLoginPostRes.of(404, "Not Registered", null));
+        if (user == null)
+            return ResponseEntity.status(404).body(UserLoginPostRes.of(null, null, 404, "Not Registered", null));
         else if (passwordEncoder.matches(userPw, user.getUserPw())) {
+            UserType userType = user.getUserType();
+            String userName = user.getUserName();
             // 유효한 패스워드가 맞는 경우, 로그인 성공으로 응답.(액세스 토큰을 포함하여 응답값 전달)
-            return ResponseEntity.ok(UserLoginPostRes.of(200, "Success", JwtTokenUtil.getToken(userId)));
+            return ResponseEntity.ok(UserLoginPostRes.of(userType, userName, 200, "Success", JwtTokenUtil.getToken(userId)));
         }
         // 유효하지 않는 패스워드인 경우, 로그인 실패로 응답.
-        return ResponseEntity.status(401).body(UserLoginPostRes.of(401, "Invalid Password", null));
+        return ResponseEntity.status(401).body(UserLoginPostRes.of(null, null, 401, "Invalid Password", null));
     }
 
 }
