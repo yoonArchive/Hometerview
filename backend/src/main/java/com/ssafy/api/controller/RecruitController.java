@@ -77,7 +77,7 @@ public class RecruitController {
     }
 
     @GetMapping("/type") // 전체: 1, 기업: 2, 자율: 3
-    @ApiOperation(value = "전체, 기업, 자율 스터디 필터링", notes = "스터디 모집글 목록에서 전체, 기업, 자율 스터디를 필터링한다.")
+    @ApiOperation(value = "전체, 기업, 자율 스터디 필터링", notes = "스터디 모집글 목록에서 전체, 기업, 자율 스터디를 필터링한다. (전체: 1, 기업: 2, 자율:3) ")
     @ApiResponses({
             @ApiResponse(code = 200, message = "필터링 성공", response = RecruitListRes.class),
             @ApiResponse(code = 401, message = "필터링 실패", response = BaseResponseBody.class),
