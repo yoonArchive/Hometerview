@@ -6,6 +6,7 @@ import com.ssafy.db.entity.*;
 import com.ssafy.db.repository.CommonQuestionRepository;
 import com.ssafy.db.repository.CommonQuestionRepositorySupport;
 import com.ssafy.db.repository.StudyRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,16 +14,14 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class CommonQuestionServiceImpl implements CommonQuestionService {
 
-    @Autowired
-    StudyRepository studyRepository;
+    private final StudyRepository studyRepository;
 
-    @Autowired
-    CommonQuestionRepository commonQuestionRepository;
+    private final CommonQuestionRepository commonQuestionRepository;
 
-    @Autowired
-    CommonQuestionRepositorySupport commonQuestionRepositorySupport;
+    private final CommonQuestionRepositorySupport commonQuestionRepositorySupport;
 
     @Override
     public void registerCommonQuestion(Long userNo, Long stdNo, CommonQuestionReq commonQuestionReq) {
