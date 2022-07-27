@@ -10,6 +10,8 @@ public interface ApplyService {
 
     int deleteApply(Long userNo, Long recruitNo);
 
-    long[] getApplyCount(List<Recruit> recruits);
+    long[] getApplyCounts(List<Recruit> recruits);
+
+    long getApplyCount(Recruit recruit);
 
 }

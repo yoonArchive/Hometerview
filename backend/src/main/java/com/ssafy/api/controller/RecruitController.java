@@ -42,7 +42,7 @@ public class RecruitController {
     @ApiResponses({@ApiResponse(code = 200, message = "스터디 모집글 목록 조회 성공"), @ApiResponse(code = 401, message = "스터디 모집글 목록 조회 실패"), @ApiResponse(code = 500, message = "서버 오류")})
     public ResponseEntity<RecruitListRes> getRecruitList() throws Exception {
         List<Recruit> recruits = recruitService.getList();
-        long[] applyCounts = applyService.getApplyCount(recruits);
+        long[] applyCounts = applyService.getApplyCounts(recruits);
         return ResponseEntity.status(200).body(RecruitListRes.of(recruits, applyCounts, 200, "스터디 모집글 목록 조회를 성공하였습니다."));
     }
 
@@ -51,7 +51,7 @@ public class RecruitController {
     @ApiResponses({@ApiResponse(code = 200, message = "스터디 모집글 목록 조회 성공"), @ApiResponse(code = 401, message = "스터디 모집글 목록 조회 실패"), @ApiResponse(code = 500, message = "서버 오류")})
     public ResponseEntity<RecruitListRes> getRecruitingList() throws Exception {
         List<Recruit> recruitings = recruitService.getRecruitingList();
-        long[] applyCounts = applyService.getApplyCount(recruitings);
+        long[] applyCounts = applyService.getApplyCounts(recruitings);
         return ResponseEntity.status(200).body(RecruitListRes.of(recruitings, applyCounts, 200, "모집 중인 스터디 모집글 목록 조회를 성공하였습니다."));
     }
 
@@ -60,7 +60,7 @@ public class RecruitController {
     @ApiResponses({@ApiResponse(code = 200, message = "필터링 성공"), @ApiResponse(code = 401, message = "필터링 실패"), @ApiResponse(code = 500, message = "서버 오류")})
     public ResponseEntity<RecruitListRes> getFilteredList(@RequestParam int type) throws Exception {
         List<Recruit> recruits = recruitService.getFilteredList(type);
-        long[] applyCounts = applyService.getApplyCount(recruits);
+        long[] applyCounts = applyService.getApplyCounts(recruits);
         return ResponseEntity.status(200).body(RecruitListRes.of(recruits, applyCounts, 200, "필터링 된 결과입니다."));
     }
 
@@ -69,7 +69,7 @@ public class RecruitController {
     @ApiResponses({@ApiResponse(code = 200, message = "검색 성공"), @ApiResponse(code = 401, message = "검색 실패"), @ApiResponse(code = 500, message = "서버 오류")})
     public ResponseEntity<RecruitListRes> searchRecruit(@RequestParam String keyword) throws Exception {
         List<Recruit> recruits = recruitService.search(keyword);
-        long[] applyCounts = applyService.getApplyCount(recruits);
+        long[] applyCounts = applyService.getApplyCounts(recruits);
         return ResponseEntity.status(200).body(RecruitListRes.of(recruits, applyCounts, 200, "검색 결과입니다."));
     }
 
@@ -79,7 +79,8 @@ public class RecruitController {
     public ResponseEntity<? extends BaseResponseBody> getRecruitDetail(@PathVariable @ApiParam(value = "모집글 번호", required = true) Long recruitNo) throws Exception {
         Recruit recruit = recruitService.getByRecruitNo(recruitNo);
         if (recruit == null) return ResponseEntity.status(401).body(BaseResponseBody.of(401, "해당하는 스터디 모집글이 없습니다."));
-        return ResponseEntity.status(200).body(RecruitRes.of(recruit, 200, "스터디 모집글 상세조회를 성공하였습니다."));
+        long count = applyService.getApplyCount(recruit);
+        return ResponseEntity.status(200).body(RecruitRes.of(recruit, count, 200, "스터디 모집글 상세조회를 성공하였습니다."));
     }
 
     @PutMapping("/{recruitNo}")
@@ -96,7 +97,8 @@ public class RecruitController {
         } catch (Exception e) {
             return ResponseEntity.status(401).body(BaseResponseBody.of(401, "스터디 모집글 수정에 실패하였습니다."));
         }
-        return ResponseEntity.status(200).body(RecruitRes.of(updatedRecruit, 200, "스터디 모집글이 수정되었습니다."));
+        long count = applyService.getApplyCount(recruit);
+        return ResponseEntity.status(200).body(RecruitRes.of(updatedRecruit, count, 200, "스터디 모집글이 수정되었습니다."));
     }
 
     @DeleteMapping("/{recruitNo}")

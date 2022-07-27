@@ -56,13 +56,18 @@ public class ApplyServiceImpl implements ApplyService {
     }
 
     @Override
-    public long[] getApplyCount(List<Recruit> recruits) {
+    public long[] getApplyCounts(List<Recruit> recruits) {
         long[] applyCount = new long[recruits.size()];
         int idx = 0;
         for (Recruit recruit : recruits) {
             applyCount[idx++] = applyRepositorySupport.CountByRecruitNo(recruit.getRecruitNo()) + 1;
         }
         return applyCount;
+    }
+
+    @Override
+    public long getApplyCount(Recruit recruit) {
+        return applyRepositorySupport.CountByRecruitNo(recruit.getRecruitNo()) + 1;
     }
 
 }
