@@ -249,19 +249,20 @@ public class UserController {
     @PostMapping("/review")
     @ApiOperation(value = "회고 작성", notes = "(token) 면접 회고를 작성한다.")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "회고 작성 성공", response = BaseResponseBody.class),
+            @ApiResponse(code = 200, message = "회고 작성 성공", response = ReviewRes.class),
             @ApiResponse(code = 401, message = "회고 작성 실패", response = BaseResponseBody.class),
             @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
     })
     public ResponseEntity<? extends BaseResponseBody> createReview(@ApiIgnore Authentication authentication, @RequestBody @ApiParam(value = "회고 내용", required = true) @Valid ReviewReq reviewReq) throws Exception {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         Long userNo = userDetails.getUserNo();
+        Review review;
         try {
-            reviewService.writeReview(userNo, reviewReq);
+            review = reviewService.writeReview(userNo, reviewReq);
         } catch (Exception e) {
             return ResponseEntity.status(401).body(BaseResponseBody.of(401, "회고 작성에 실패하였습니다."));
         }
-        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "회고가 등록되었습니다."));
+        return ResponseEntity.status(200).body(ReviewRes.of(review, 200, "회고가 등록되었습니다."));
     }
 
     @GetMapping("/review")

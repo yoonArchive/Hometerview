@@ -24,7 +24,7 @@ public class ReviewServiceImpl implements ReviewService {
     private final UserRepository userRepository;
 
     @Override
-    public void writeReview(Long userNo, ReviewReq reviewReq) {
+    public Review writeReview(Long userNo, ReviewReq reviewReq) {
         User user = userRepository.findByUserNo(userNo).get();
         Review review = Review.builder()
                 .user(user)
@@ -33,7 +33,7 @@ public class ReviewServiceImpl implements ReviewService {
                 .reviewType(reviewReq.getReviewType())
                 .reviewDate(reviewReq.getReviewDate())
                 .build();
-        reviewRepository.save(review);
+        return reviewRepository.save(review);
     }
 
     @Override
