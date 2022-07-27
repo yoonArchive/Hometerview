@@ -20,4 +20,6 @@ public interface PersonalQuestionService {
 
     void updateSavedStatus(PersonalQuestion personalQuestion);
 
+    PersonalQuestion validatePersonalQuestion(Long questionNo, Long detailNo, Long userNo);
+
 }

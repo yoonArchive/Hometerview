@@ -255,9 +255,9 @@ public class ResumeController {
     public ResponseEntity<? extends BaseResponseBody> savePersonalQuestion(@ApiIgnore Authentication authentication, @PathVariable("detailNo") Long detailNo, @PathVariable("questionNo") Long questionNo) {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         Long userNo = userDetails.getUserNo();
-        PersonalQuestion personalQuestion = personalQuestionService.getPersonalQuestion(questionNo, detailNo, userNo);
+        PersonalQuestion personalQuestion = personalQuestionService.validatePersonalQuestion(questionNo, detailNo, userNo);
         if (personalQuestion == null)
-            return ResponseEntity.status(402).body(BaseResponseBody.of(402, "해당하는 개인 질문이 없습니다."));
+            return ResponseEntity.status(402).body(BaseResponseBody.of(402, "즐겨찾기 상태를 변경할 수 없는 개인 질문입니다."));
         try {
             personalQuestionService.updateSavedStatus(personalQuestion);
         } catch (Exception e) {
