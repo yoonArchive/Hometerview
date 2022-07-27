@@ -8,13 +8,13 @@
     <div>
       카테고리 :
       <label for="stdType">기업 면접</label>
-      <input v-model="recruitmentInfo.stdType" type="radio" id="stdType" value="COM" @click="isCompany('COM')"/>
+      <input v-model="recruitmentInfo.stdType" type="radio" id="stdType" value="COM" @click="isCompany('COM')" checked/>
       <label for="stdType">자율 면접</label>
       <input v-model="recruitmentInfo.stdType" type="radio" id="stdType" value="FREE" @click="isCompany('FREE')"/>
     </div>
     <div>
       <label for="comName">기업명 : </label>
-      <input v-model="recruitmentInfo.comName" type="text" id="comName"/>
+      <input v-model="recruitmentInfo.comName" type="text" id="comName" :disabled="company"/>
     </div>
     <div>
       <label for="startDate"> 시작일 : </label>
@@ -57,7 +57,7 @@
 
     data(){
       return{
-        company : true,
+        company : false,
         recruitmentInfo:{
           comName: "",
           endDate: "",
@@ -83,13 +83,9 @@
       },
       isCompany(type){
         if(type==="COM"){
-          this.company = true
-          // $("#comName").attr("disabled",true)
-          console.log(this.company)
-        }else{
           this.company = false
-          // $("#comName").attr("disabled",false)
-          console.log(this.company)
+        }else{
+          this.company = true
         }
       }
 
