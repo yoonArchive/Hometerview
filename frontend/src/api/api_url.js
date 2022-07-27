@@ -25,7 +25,7 @@ export default {
   resumes : {
     //자소서
     getResumeInfo: () => HOST + RESUME,
-    getResumeDetail : () =>HOST + RESUME + '/detail'
+    getResumeDetail : () =>HOST + RESUME + 'detail/',
   },
   notice: {
     notices: () => HOST + NOTICE,

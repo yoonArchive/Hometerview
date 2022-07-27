@@ -1,7 +1,7 @@
 <template>
 
   <div v-for="(item, index) in numberOfResume" :key="index">
-    <router-link :to="{name : 'coverletter', params : {'resumeNo' : item - 1}}">
+    <router-link :to="{name : 'coverletter', params : {'resumeindex' : item - 1}}">
       <div>{{resumeContents[item-1].resumeTitle}}</div>
     </router-link>
 

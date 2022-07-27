@@ -117,7 +117,7 @@ function makeRoutesFromMenu () {
       name : 'passwordconfirm',
       component : PasswordConfirm,
     },{
-      path: 'coverletter/:resumeNo',
+      path: 'coverletter/:resumeindex',
       name : 'coverletter',
       component : CoverLetterView,
     },{
