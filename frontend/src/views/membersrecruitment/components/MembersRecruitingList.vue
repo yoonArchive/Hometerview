@@ -1,6 +1,6 @@
 <template>
-  
-  <h2>모두</h2>
+
+  <h2>모집중</h2>
   <members-recruitment-item
     v-for="recruitment in recruitmentList"
     :key="recruitment.recruitNo"
@@ -8,37 +8,28 @@
   >
   </members-recruitment-item>
 
+
 </template>
 
 <script>
-import { mapActions,mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import MembersRecruitmentItem from './MembersRecruitmentItem.vue'
 
 export default {
-
-  name: 'MembersRecruitmentList',
+  name:"MembersRecruitingList",
   components :{
     MembersRecruitmentItem,
   },
 
-  data(){
-    return{
-      }
-    },
-  computed: {
-    ...mapGetters(['recruitmentList']),
-
+  computed:{
+    ...mapGetters(['recruitmentList'])
   },
-  methods: {
-    ...mapActions(['bringRecruitmentList']),
+  methods:{
+    ...mapActions(['bringRecruitingList'])
   },
-  
   created(){
-    this.bringRecruitmentList()
-    console.log('되니?')
-    
-  },
-
+    this.bringRecruitingList()
+  }
 }
 </script>
 

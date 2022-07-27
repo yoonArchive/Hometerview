@@ -20,7 +20,6 @@ export default {
   },
   actions:{
     createRecruitment({},recruitmentInfo){
-      console.log(recruitmentInfo.stdType)
       axios({
         url : api_url.membersrecruitment.membersrecruitments(),
         method : 'post',
@@ -63,8 +62,6 @@ export default {
     updateRecruitmentDetail({ commit }, recruitInfo){
       const recruitNo = recruitInfo[0]
       const recruitmentInfo = recruitInfo[1]
-      console.log(1)
-      console.log(recruitmentInfo)
       axios({
         url : api_url.membersrecruitment.membersrecruitment(recruitNo),
         method : 'put',
@@ -72,7 +69,6 @@ export default {
 
       })
       .then(res => {
-        console.log(2)
         console.log(res.data)
         commit('SET_RECRUIT_DETAIL',res.data)
         
@@ -102,5 +98,35 @@ export default {
         console.log(err)
       })
     },
+    bringRecruitingList({ commit }){
+      axios({
+        url : api_url.membersrecruitment.membersrecruiting(),
+        method : 'get'
+      })
+      .then(res => {
+        console.log(res.data)
+        commit('SET_RECRUITMENT_LIST',res.data.recruits)
+      })
+      .catch(err => {
+        console.log(err.response)
+      })
+    },
+    bringRecruitSearchList({ commit },recruitSearchKeyword){
+      console.log(recruitSearchKeyword)
+      const encodeSearchKeyword = `?keyword=${encodeURIComponent(recruitSearchKeyword)}`
+
+      axios({
+        url : api_url.membersrecruitment.membersrecruitsearch()+encodeSearchKeyword,
+        method : 'get'
+      })
+      .then(res => {
+        console.log(res.data)
+        commit('SET_RECRUITMENT_LIST',res.data.recruits)
+      })
+      .catch(err => {
+        console.log(err.response)
+      })
+    },
+    
   }
 }

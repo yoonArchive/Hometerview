@@ -8,9 +8,9 @@
     <div>
       카테고리 :
       <label for="stdType">기업 면접</label>
-      <input v-model="newrecruitmentInfo.stdType" type="radio" id="stdType" value="COM" @click="isCompany('COM')" checked/>
+      <input v-model="newrecruitmentInfo.stdType" name="stdType" type="radio" id="stdType" value="COM" @click="isCompany('COM')" checked/>
       <label for="stdType">자율 면접</label>
-      <input v-model="newrecruitmentInfo.stdType" type="radio" id="stdType" value="FREE" @click="isCompany('FREE')"/>
+      <input v-model="newrecruitmentInfo.stdType" name="stdType" type="radio" id="stdType" value="FREE" @click="isCompany('FREE')"/>
     </div>
     <div>
       <label for="comName">기업명 : </label>
