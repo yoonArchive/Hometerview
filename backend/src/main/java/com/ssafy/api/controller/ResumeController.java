@@ -151,7 +151,8 @@ public class ResumeController {
     @ApiResponses({@ApiResponse(code = 200, message = "개인 질문 조회 성공"), @ApiResponse(code = 401, message = "개인 질문 조회 실패"), @ApiResponse(code = 500, message = "서버 오류")})
     public ResponseEntity<PersonalQuestionListRes> getPersonalQuestionList(@PathVariable("detailNo") @ApiParam(value = "상세번호", required = true) Long detailNo) {
         List<PersonalQuestion> personalQuestions = personalQuestionService.getList(detailNo);
-        return ResponseEntity.status(200).body(PersonalQuestionListRes.of(personalQuestions, 200, "해당 자기소개서 항목에 등록된 개인 질문입니다."));
+        int count = personalQuestions.size();
+        return ResponseEntity.status(200).body(PersonalQuestionListRes.of(personalQuestions, count, 200, "해당 자기소개서 항목에 등록된 개인 질문입니다."));
     }
 
     @PutMapping({"/detail/{detailNo}/question/{questionNo}"})
@@ -172,7 +173,8 @@ public class ResumeController {
             return ResponseEntity.status(401).body(BaseResponseBody.of(401, "개인 질문 수정에 실패하였습니다."));
         }
         List<PersonalQuestion> personalQuestions = personalQuestionService.getList(detailNo);
-        return ResponseEntity.status(200).body(PersonalQuestionListRes.of(personalQuestions, 200, "개인 질문 수정이 완료되었습니다."));
+        int count = personalQuestions.size();
+        return ResponseEntity.status(200).body(PersonalQuestionListRes.of(personalQuestions, count, 200, "개인 질문 수정이 완료되었습니다."));
     }
 
     @DeleteMapping({"/detail/{detailNo}/question/{questionNo}"})

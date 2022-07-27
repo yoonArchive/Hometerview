@@ -15,12 +15,16 @@ import java.util.List;
 @ApiModel("PersonalQuestionListResponse")
 public class PersonalQuestionListRes extends BaseResponseBody {
 
-    @ApiModelProperty(name = "모집글 목록")
+    @ApiModelProperty(name = "개인질문 목록")
     List<PersonalQuestion> personalQuestions;
 
-    public static PersonalQuestionListRes of(List<PersonalQuestion> personalQuestions, Integer statusCode, String message) {
+    @ApiModelProperty(name = "질문 갯수")
+    int count;
+
+    public static PersonalQuestionListRes of(List<PersonalQuestion> personalQuestions, int count, Integer statusCode, String message) {
         PersonalQuestionListRes res = new PersonalQuestionListRes();
         res.setPersonalQuestions(personalQuestions);
+        res.setCount(count);
         res.setStatusCode(statusCode);
         res.setMessage(message);
         return res;
