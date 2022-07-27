@@ -45,7 +45,7 @@
     </div>
     <button>{{ action }}</button>
   </form>
-
+    <button @click="deleteRecruitmentDetail(recruitNo)">삭제 </button>
   
 </template>
 
@@ -83,9 +83,8 @@
     computed:{
 
     },
-
     methods:{
-      ...mapActions(['createRecruitment','updateRecruitmentDetail']),
+      ...mapActions(['createRecruitment','updateRecruitmentDetail','deleteRecruitmentDetail' ]),
       onInputimage(){
         this.recruitmentInfo.stdImg = this.$refs.studyImage.files[0]['name']
       },

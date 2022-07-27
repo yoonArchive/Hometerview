@@ -85,5 +85,22 @@ export default {
         console.log(err.response)
       })
     },
+    deleteRecruitmentDetail({},recruitNo){
+      axios({
+        url : api_url.membersrecruitment.membersrecruitment(recruitNo),
+        method : 'delete',
+      })
+      .then(res => {
+        console.log('성공?')
+        console.log(res.data)
+        router.push({ 
+          name: 'membersrecruitment',
+        })
+      })
+      .catch(err => {
+        console.log('에러?'+ recruitNo)
+        console.log(err)
+      })
+    },
   }
 }

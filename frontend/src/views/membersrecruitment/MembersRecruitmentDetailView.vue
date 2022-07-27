@@ -15,6 +15,7 @@
     스터디 소개 : <br>
     {{ recruitDetail.stdDetail }} <br>
     <button @click="moveToUpdate">수정</button>
+    <button @click="deleteRecruitmentDetail([recruitNo])"> 삭제 </button>
 
 </template>
 
@@ -34,11 +35,13 @@
     },
     computed:{
       ...mapGetters(['recruitDetail'])
+      
     },
     methods:{
-      ...mapActions(['bringRecruitmentDetail','updateRecruitmentDetail']),
+      ...mapActions(['bringRecruitmentDetail','updateRecruitmentDetail','deleteRecruitmentDetail']),
       interviewType(){
-        console.log(this.recruitDetail)
+        console.log('test')
+        console.log(this.recruitNo)
         if(this.recruitDetail.stdType === 'COM'){
           this.studyType = '기업 면접'
         }else{
