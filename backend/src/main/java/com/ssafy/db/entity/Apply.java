@@ -25,6 +25,10 @@ public class Apply {
     @JoinColumn(name = "user_no")
     private User user;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "apply_type")
+    private ApplyType applyType;
+
     public void createApply(User user, Recruit recruit) {
         this.user = user;
         this.recruit = recruit;
