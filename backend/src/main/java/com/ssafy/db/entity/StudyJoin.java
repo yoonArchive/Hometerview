@@ -7,7 +7,6 @@ import lombok.Getter;
 import javax.persistence.*;
 
 @Entity
-@Setter
 @Getter
 @Builder
 @NoArgsConstructor
@@ -28,5 +27,9 @@ public class StudyJoin {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "std_no")
     private Study study;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "join_type")
+    private ApplyType joinType;
 
 }
