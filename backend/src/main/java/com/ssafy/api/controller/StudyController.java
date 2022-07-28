@@ -3,13 +3,11 @@ package com.ssafy.api.controller;
 import com.ssafy.api.request.*;
 import com.ssafy.api.response.*;
 import com.ssafy.api.service.CommonQuestionService;
+import com.ssafy.api.service.ResumeService;
 import com.ssafy.api.service.StudyService;
 import com.ssafy.common.auth.UserDetails;
 import com.ssafy.common.model.response.BaseResponseBody;
-import com.ssafy.db.entity.CommonQuestion;
-import com.ssafy.db.entity.PersonalQuestion;
-import com.ssafy.db.entity.Recruit;
-import com.ssafy.db.entity.Study;
+import com.ssafy.db.entity.*;
 import com.ssafy.db.repository.CommonQuestionRepository;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +27,8 @@ import java.util.List;
 public class StudyController {
 
     private final StudyService studyService;
+
+    private final ResumeService resumeService;
 
     private final CommonQuestionService commonQuestionService;
 
@@ -232,17 +232,16 @@ public class StudyController {
             @ApiResponse(code = 402, message = "공통 질문 없음", response = BaseResponseBody.class),
             @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)})
     public ResponseEntity<? extends BaseResponseBody> deleteCommonQuestion(@ApiIgnore Authentication authentication,
-                                                                             @PathVariable("stdNo") @ApiParam(value = "스터디 번호", required = true) Long stdNo,
-                                                                             @PathVariable("questionNo") @ApiParam(value = "공통 질문 번호", required = true) Long questionNo) {
+                                                                           @PathVariable("stdNo") @ApiParam(value = "스터디 번호", required = true) Long stdNo,
+                                                                           @PathVariable("questionNo") @ApiParam(value = "공통 질문 번호", required = true) Long questionNo) {
         CommonQuestion commonQuestion = commonQuestionService.getCommonQuestion(questionNo);
         if (commonQuestion == null)
             return ResponseEntity.status(402).body(BaseResponseBody.of(402, "해당하는 개인 질문이 없습니다."));
         int result = commonQuestionService.deleteCommonQuestion(questionNo);
         if (result == 1) {
             List<CommonQuestion> commonQuestions = commonQuestionService.getList(stdNo);
-            return ResponseEntity.status(200).body(CommonQuestionListRes.of(commonQuestions,200, "개인 질문이 삭제되었습니다."));
-        }
-        else return ResponseEntity.status(401).body(BaseResponseBody.of(401, "개인 질문 삭제에 실패하였습니다."));
+            return ResponseEntity.status(200).body(CommonQuestionListRes.of(commonQuestions, 200, "개인 질문이 삭제되었습니다."));
+        } else return ResponseEntity.status(401).body(BaseResponseBody.of(401, "개인 질문 삭제에 실패하였습니다."));
     }
 
     @GetMapping("{stdNo}/common/type")
@@ -255,6 +254,29 @@ public class StudyController {
                                                                  @RequestParam @ApiParam(value = "필터 타입", required = true) int type) throws Exception {
         List<CommonQuestion> commonQuestions = commonQuestionService.getFilteredList(stdNo, type);
         return ResponseEntity.status(200).body(CommonQuestionListRes.of(commonQuestions, 200, "필터링 된 결과입니다."));
+    }
+
+    @PutMapping({"/resume/{stdNo}/{resumeNo}"})
+    @ApiOperation(value = "스터디 스페이스에 자기소개서 등록", notes = "스터디 스페이스에 자기소개서를 등록한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "자기소개서 등록 성공", response = BaseResponseBody.class),
+            @ApiResponse(code = 401, message = "자기소개서 등록 실패", response = BaseResponseBody.class),
+            @ApiResponse(code = 402, message = "해당 자기소개서 없음", response = BaseResponseBody.class),
+            @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)})
+    public ResponseEntity<? extends BaseResponseBody> updateRegistedResume(@ApiIgnore Authentication authentication,
+                                                                           @PathVariable("stdNo") @ApiParam(value = "스터디 번호", required = true) Long stdNo,
+                                                                           @PathVariable("resumeNo") @ApiParam(value = "자기소개서 번호", required = true) Long resumeNo) throws Exception {
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        Long userNo = userDetails.getUserNo();
+        StudyJoin studyJoin = studyService.findStudyJoin(stdNo, userNo);
+        Resume resume = resumeService.getResume(resumeNo, userNo);
+        if (resume == null) return ResponseEntity.status(402).body(BaseResponseBody.of(402, "등록된 자기소개서가 아닙니다."));
+        try {
+            studyService.updateRegistedResume(studyJoin, resumeNo);
+        } catch (Exception e) {
+            return ResponseEntity.status(401).body(BaseResponseBody.of(401, "자기소개서 등록에 실패하였습니다."));
+        }
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "자기소개서가 등록되었습니다."));
     }
 
 }
