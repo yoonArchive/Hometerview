@@ -20,37 +20,37 @@ import java.util.List;
 @ApiModel("StudyResponse")
 public class StudyRes extends BaseResponseBody {
 
-    @ApiModelProperty(name = "스터디 이름", example = "스터디 이름입니다.")
+    @ApiModelProperty(name = "스터디 이름")
     String stdName;
 
-    @ApiModelProperty(name = "스터디 설명", example = "스터디 설명입니다.")
+    @ApiModelProperty(name = "스터디 설명")
     String stdDetail;
 
-    @ApiModelProperty(name = "썸네일 이미지", example = "썸네일 이미지입니다.")
+    @ApiModelProperty(name = "썸네일 이미지")
     String stdImg;
 
-    @ApiModelProperty(name = "스터디 카테고리", example = "COM")
+    @ApiModelProperty(name = "스터디 카테고리")
     StdType stdType;
 
-    @ApiModelProperty(name = "기업명", example = "기업명입니다.")
+    @ApiModelProperty(name = "기업명")
     String comName;
 
-    @ApiModelProperty(name = "시작일", example = "2022-08-01")
+    @ApiModelProperty(name = "시작일")
     String startDate;
 
-    @ApiModelProperty(name = "종료일", example = "2022-08-10")
+    @ApiModelProperty(name = "종료일")
     String endDate;
 
-    @ApiModelProperty(name = "진행일시", example = "진행일시입니다.")
+    @ApiModelProperty(name = "진행일시")
     String stdDay;
 
-    @ApiModelProperty(name = "정원", example = "5")
+    @ApiModelProperty(name = "정원")
     int stdLimit;
 
-    @ApiModelProperty(name = "스터디 공지", example = "공지사항입니다.")
+    @ApiModelProperty(name = "스터디 공지")
     String stdNotice;
 
-    @ApiModelProperty(name = "스터디 참여 멤버", example = "공지사항입니다.")
+    @ApiModelProperty(name = "스터디 참여 멤버")
     List<StudyJoin> studyJoins;
 
     public static StudyRes of(Study study, Integer statusCode, String message) {
