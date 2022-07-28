@@ -1,13 +1,15 @@
 package com.ssafy.db.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
-@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "d_day")
 public class Dday {
 
@@ -16,11 +18,20 @@ public class Dday {
     @Column(name = "dday_no")
     private Long ddayNo;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_no")
     private User user;
 
     @Column(name = "dday_title")
     private String ddayTitle;
+
+    @Column(name = "dday_date")
+    private String ddayDate;
+
+    public void initDday(String ddayTitle, String ddayDate) {
+        this.ddayTitle = ddayTitle;
+        this.ddayDate = ddayDate;
+    }
 
 }

@@ -30,6 +30,18 @@ import MyAccount from '@/views/mypage/myaccount/MyAccount'
 import Withdrawal from '@/views/mypage/withdrawal/Withdrawal'
 import PasswordConfirm from '@/views/mypage/passwordconfirm/PasswordConfirm'
 
+/* 자소서 페이지 */
+import CoverLetterView from '@/views/myinterview/coverletter/CoverLetterView'
+
+/* 마이 인터뷰 */
+import MyInterviewView from '@/views/myinterview/MyInterviewView'
+
+/* 회고 페이지 */
+import ReviewView from '@/views/myinterview/review/ReviewView'
+import ReviewNew from '@/views/myinterview/review/ReviewNewView'
+import ReviewEdit from '@/views/myinterview/review/ReviewEditView'
+
+
 const fullMenu = require('@/views/main/menu.json')
 function makeRoutesFromMenu () {
   let routes = Object.keys(fullMenu).map((key) => {
@@ -110,6 +122,26 @@ function makeRoutesFromMenu () {
       path : 'passwordconfirm',
       name : 'passwordconfirm',
       component : PasswordConfirm,
+    },{
+      path: 'coverletter/:resumeNo',
+      name : 'coverletter',
+      component : CoverLetterView,
+    },{
+      path: 'myinterview',
+      name: 'myinterview',
+      component : MyInterviewView,
+    },{
+      path: 'review/:reviewNo',
+      name: 'review',
+      component : ReviewView
+    },{
+      path: 'review/new',
+      name: 'reviewNew',
+      component : ReviewNew
+    },{
+      path: 'review/:reviewNo/edit',
+      name: 'reviewEdit',
+      component : ReviewEdit
     }]
   },{
     path: '/',

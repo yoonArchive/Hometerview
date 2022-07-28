@@ -15,7 +15,7 @@ public interface ResumeService {
 
     List<Resume> listResume(Long userNo);
 
-    Resume getByResumeNo(Long resumeNo);
+    Resume getResume(Long resumeNo, Long userNo);
 
     void updateResume(Resume resume, String resumeTitle);
 
@@ -32,5 +32,7 @@ public interface ResumeService {
     void updateResumeDetail(ResumeDetail resumeDetail, UpdateResumePutReq updateResumePutReq);
 
     int deleteResumeDetail(Long detailNo);
+
+    long[] getDetailCount(List<Resume> resumes);
 
 }

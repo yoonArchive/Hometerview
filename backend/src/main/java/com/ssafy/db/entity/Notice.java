@@ -1,13 +1,14 @@
 package com.ssafy.db.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
-@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "notice")
 public class Notice {
 
@@ -24,5 +25,11 @@ public class Notice {
 
     @Column(name = "write_date")
     private String writeDate;
+
+    public void updateNotice(String noticeTitle, String noticeContents, String writeDate) {
+        this.noticeTitle = noticeTitle;
+        this.noticeContents = noticeContents;
+        this.writeDate = writeDate;
+    }
 
 }

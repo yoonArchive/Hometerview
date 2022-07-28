@@ -1,15 +1,19 @@
 package com.ssafy.db.entity;
 
+import lombok.*;
 import lombok.Getter;
-import lombok.Setter;
+
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Getter
 @Setter
+@Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "study")
 public class Study {
 
@@ -49,16 +53,36 @@ public class Study {
     @Column(name = "std_notice")
     private String stdNotice;
 
+    @Builder.Default
     @OneToMany(mappedBy = "study")
     private List<StudyJoin> studyJoins = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "study")
     private List<Recording> recordings = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "study")
     private List<CommonQuestion> commonQuestions = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "study")
     private List<RegistResume> registResumes = new ArrayList<>();
+
+    public void updateNotice(String newStdNotice) {
+        this.stdNotice = newStdNotice;
+    }
+
+    public void updateEndDate(String newEndDate) {
+        this.endDate = newEndDate;
+    }
+
+    public void updateStdImg(String newStdImg){
+        this.stdImg = newStdImg;
+    }
+
+    public void updateStdDay(String newStdDay) {
+        this.stdDay = newStdDay;
+    }
 
 }

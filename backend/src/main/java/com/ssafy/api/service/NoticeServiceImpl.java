@@ -5,7 +5,6 @@ import com.ssafy.api.request.UpdateNoticePutReq;
 import com.ssafy.db.entity.Notice;
 import com.ssafy.db.repository.NoticeRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,12 +25,13 @@ public class NoticeServiceImpl implements NoticeService {
 
     @Override
     public Notice writeNotice(NoticeWritePostReq noticeWritePostReq) {
-        Notice notice = new Notice();
-        notice.setNoticeTitle(noticeWritePostReq.getNoticeTitle());
-        notice.setNoticeContents(noticeWritePostReq.getNoticeContents());
         SimpleDateFormat dataFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date now = new Date();
-        notice.setWriteDate(dataFormat.format(now));
+        Notice notice = Notice.builder()
+                .noticeTitle(noticeWritePostReq.getNoticeTitle())
+                .noticeContents(noticeWritePostReq.getNoticeContents())
+                .writeDate(dataFormat.format(now))
+                .build();
         noticeRepository.save(notice);
         return notice;
     }
@@ -44,11 +44,11 @@ public class NoticeServiceImpl implements NoticeService {
     @Override
     @Transactional
     public void updateNotice(Notice notice, UpdateNoticePutReq updateNoticePutReq) {
-        notice.setNoticeTitle(updateNoticePutReq.getNoticeTitle());
-        notice.setNoticeContents(updateNoticePutReq.getNoticeContents());
+        String noticeTitle = updateNoticePutReq.getNoticeTitle();
+        String noticeContents = updateNoticePutReq.getNoticeContents();
         SimpleDateFormat dataFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date now = new Date();
-        notice.setWriteDate(dataFormat.format(now));
+        notice.updateNotice(noticeTitle, noticeContents, dataFormat.format(now));
     }
 
     @Override

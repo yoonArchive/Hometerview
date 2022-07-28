@@ -2,8 +2,8 @@ const HOST = 'http://localhost:8080/api/v1/'
 const USERS = 'users/'
 const AUTH = 'auth/'
 const NOTICE = 'notice/'
-
-
+const RESUME = 'resume/'
+const REVIEW = 'review/'
 export default {
   accounts: {
     login: () => HOST + AUTH + 'login/',
@@ -22,9 +22,19 @@ export default {
     currentUserInfo: () => HOST + USERS + 'me/', // 맞는지 확인
 
   },
+  resumes : {
+    //자소서
+    getResumeInfo: () => HOST + RESUME,
+    getResumeDetail : () =>HOST + RESUME + '/detail'
+  },
   notice: {
+    //공지사항
     notices: () => HOST + NOTICE,
     notice: (noticeNo) => HOST + NOTICE + `${noticeNo}`,
-
+  },
+  review:{
+    //회고
+    reviews: () => HOST + USERS + REVIEW,
+    review: (reviewNo) => HOST + USERS + REVIEW + `${reviewNo}`
   }
 }

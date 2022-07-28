@@ -7,6 +7,7 @@ export default {
 
   state: () => ({
     token: localStorage.getItem('token') || '' ,
+    kakaoToken:localStorage.getItem('token')|| '' ,
     currentUser: {},
     profile: {},
     authError: null,
@@ -17,6 +18,7 @@ export default {
 
   mutations:{
     SET_TOKEN: (state, token) => state.token = token,
+    SET_KAKAOTOKEN: (state, token) => state.kakaoToken = token,
     SET_CURRENT_USER: (state, user) => state.currentUser = user,
     SET_AUTH_ERROR: (state, error) => state.authError = error,
     SET_CHECK_EMAIL: (state, isDuplicatedEmail) => state.isDuplicatedEmail = isDuplicatedEmail,
@@ -111,7 +113,67 @@ export default {
           alert('로그인 실패')
         })
     },
-    logout({ getters, dispatch, commit }) {
+
+    kakaoLoginBtn({ commit, dispatch }) {
+
+      window.Kakao.init('c6a528688d515ebe962756d06b24577e') // Kakao Developers에서 요약 정보 -> JavaScript 키
+
+      if (window.Kakao.Auth.getAccessToken()) {
+        window.Kakao.API.request({
+          url: '/v1/user/unlink',
+          success: function (response) {
+            console.log('토큰성공'+JSON.stringify(response));
+            // saveToken(response)
+            const token = response.id
+            dispatch('saveToken', token)
+            // dispatch('fetchCurrentUser')
+            router.push({ name: 'home' })
+          },
+          fail: function (error) {
+            console.log(error)
+          },
+        })
+        window.Kakao.Auth.setAccessToken(undefined)
+      }
+
+
+      window.Kakao.Auth.login({
+        success: function () {
+          window.Kakao.API.request({
+            url: '/v2/user/me',
+            data: {
+              // property_keys: ["kakao_account.email", "kakao_account.nickname"]
+            },
+            success: async function (response) {
+              console.log('로그인성공'+JSON.stringify(response));
+              const kakaoacount = response.kakao_account;
+              const name = kakaoacount.nickname;
+              const email = kakaoacount.email;
+              const profile1 = kakaoacount.thumbnail_image_url
+              this.profile = profile1
+              // saveToken(response)
+              const token = response.id
+              dispatch('saveToken', token)
+              // dispatch('fetchCurrentUser')
+              router.push({ name: 'home' })
+
+            },
+            fail: function (error) {
+              console.log(error)
+            },
+          })
+        },
+        fail: function (error) {
+          console.log(error)
+      },
+    })
+  },
+
+
+
+
+
+    logout({ getters, dispatch }) {
       if(getters.isLoggedIn){
         dispatch('removeToken')
         alert('성공적으로 logout!')

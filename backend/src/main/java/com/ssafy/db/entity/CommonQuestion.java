@@ -1,13 +1,15 @@
 package com.ssafy.db.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
-@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "common_question")
 public class CommonQuestion {
 
@@ -16,6 +18,7 @@ public class CommonQuestion {
     @Column(name = "question_no")
     private Long questionNo;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "std_no")
     private Study study;
@@ -26,7 +29,12 @@ public class CommonQuestion {
     @Column(name = "writer_no")
     private Long writerNo;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "question_type")
-    private String questionType;
+    private QuestionType questionType;
+
+    public void updateCommonQuestion(String contents) {
+        this.contents = contents;
+    }
 
 }

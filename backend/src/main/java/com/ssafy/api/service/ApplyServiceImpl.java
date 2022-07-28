@@ -1,6 +1,7 @@
 package com.ssafy.api.service;
 
 import com.ssafy.db.entity.Apply;
+import com.ssafy.db.entity.ApplyType;
 import com.ssafy.db.entity.Recruit;
 import com.ssafy.db.entity.User;
 import com.ssafy.db.repository.ApplyRepository;
@@ -9,7 +10,6 @@ import com.ssafy.db.repository.RecruitRepository;
 import com.ssafy.db.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,15 +28,14 @@ public class ApplyServiceImpl implements ApplyService {
     private final ApplyRepositorySupport applyRepositorySupport;
 
     @Override
-    public int applyRecruit(Long userNo, Long recruitNo) {
+    public int applyRecruit(Long userNo, Long recruitNo, ApplyType applyType) {
         try {
             applyRepositorySupport.findApplyByUserNoAndRecruitNo(userNo, recruitNo).get();
         } catch (Exception e) {
             User user = userRepository.findByUserNo(userNo).get();
             Recruit recruit = recruitRepository.findByRecruitNo(recruitNo).get();
             Apply apply = new Apply();
-            apply.setUser(user);
-            apply.setRecruit(recruit);
+            apply.createApply(user, recruit, applyType);
             applyRepository.save(apply);
             return 1;
         }
@@ -58,13 +57,18 @@ public class ApplyServiceImpl implements ApplyService {
     }
 
     @Override
-    public long[] getApplyCount(List<Recruit> recruits) {
+    public long[] getApplyCounts(List<Recruit> recruits) {
         long[] applyCount = new long[recruits.size()];
         int idx = 0;
         for (Recruit recruit : recruits) {
-            applyCount[idx++] = applyRepositorySupport.CountByRecruitNo(recruit.getRecruitNo()) + 1;
+            applyCount[idx++] = applyRepositorySupport.CountByRecruitNo(recruit.getRecruitNo());
         }
         return applyCount;
+    }
+
+    @Override
+    public long getApplyCount(Recruit recruit) {
+        return applyRepositorySupport.CountByRecruitNo(recruit.getRecruitNo()) + 1;
     }
 
 }

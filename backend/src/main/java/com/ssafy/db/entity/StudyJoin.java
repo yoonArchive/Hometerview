@@ -1,13 +1,17 @@
 package com.ssafy.db.entity;
 
+import lombok.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
-import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
-@Getter
 @Setter
+@Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "study_join")
 public class StudyJoin {
 
@@ -20,6 +24,7 @@ public class StudyJoin {
     @JoinColumn(name = "user_no")
     private User user;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "std_no")
     private Study study;

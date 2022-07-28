@@ -8,12 +8,10 @@
       <label for="id">ID: </label>
       <input class="round-box" v-model="credentials.userId" type="text" id="id" required />
     </div>
-
     <div class="pwdInput">
       <label for="password">password: </label>
       <input class="round-box" v-model="credentials.userPw" type="password" id="password" required />
     </div>
-
     <button class="loginButton">Login</button>
   </form>
   <router-link to="/home/findid">
@@ -25,13 +23,19 @@
     <div class="find_pwd" >
       비밀번호 찾기
     </div>
-</router-link>
+  </router-link>
 
+  <section class="test">
+    <div v-on:click="kakaoLoginBtn" id="kakao">카카오 연동</div>
+  </section>
+  <img src="profile" alt="">
 </template>
 
 
 <script>
-  import { mapActions, mapGetters } from 'vuex'
+
+import { mapActions, mapGetters, mapState } from 'vuex'
+
   // import AccountErrorList from './components/AccountErrorList.vue'
   // import { mapGetters,mapActions } from './map_state.js'
 
@@ -47,23 +51,33 @@
         credentials: {
           userId: '',
           userPw: ''
-        }
+        },
+        profile:''
       }
     },
     computed: {
-      ...mapGetters(['authError'])
+      ...mapGetters(['authError']),
+      ...mapState(['token','kakaoToken']),
+
       },
     methods: {
 
-      ...mapActions(['login'])
+      ...mapActions(['login', 'kakaoLoginBtn']),
     },
+    setup() {
+      return { }
+    },
+    mounted() {
+
+    }
+
   }
 </script>
 
 
 
 
-<style>
+<style scoped>
  .round-box{
   box-sizing: border-box;
   
@@ -155,5 +169,13 @@
   border-radius: 8px;
 }
 
+.test{  display:flex; justify-content: center; align-items: center; height:100vh; }
+/* div{ width: 200px; height:40px; background-color:#fdd101; color:white; display:flex; align-items: center; justify-content: center; cursor:pointer; } */
+#kakao {
+  border-radius: 30px;
+  background-color:#fdd101;
+  color:white;
+  font-size: 15px
+}
 
 </style>

@@ -3,9 +3,11 @@ package com.ssafy.db.repository;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssafy.db.entity.Apply;
 import com.ssafy.db.entity.QApply;
+import com.ssafy.db.entity.ResumeDetail;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -27,6 +29,13 @@ public class ApplyRepositorySupport {
     public long CountByRecruitNo(Long recruitNo) {
         return jpaQueryFactory.selectFrom(qApply)
                 .where(qApply.recruit.recruitNo.eq(recruitNo)).fetchCount();
+    }
+
+    public List<Apply> findApplyByRecruitNo(Long recruitNo) {
+        List<Apply> applies = jpaQueryFactory.selectFrom(qApply)
+                .where(qApply.recruit.recruitNo.eq(recruitNo)).fetch();
+        if(applies == null) return null;
+        return applies;
     }
 
 }
