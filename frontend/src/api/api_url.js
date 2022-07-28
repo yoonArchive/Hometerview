@@ -3,7 +3,7 @@ const USERS = 'users/'
 const AUTH = 'auth/'
 const NOTICE = 'notice/'
 const RESUME = 'resume/'
-
+const REVIEW = 'review/'
 export default {
   accounts: {
     login: () => HOST + AUTH + 'login/',
@@ -28,8 +28,13 @@ export default {
     getResumeDetail : () =>HOST + RESUME + 'detail/',
   },
   notice: {
+    //공지사항
     notices: () => HOST + NOTICE,
     notice: (noticeNo) => HOST + NOTICE + `${noticeNo}`,
-
+  },
+  review:{
+    //회고
+    reviews: () => HOST + USERS + REVIEW,
+    review: (reviewNo) => HOST + USERS + REVIEW + `${reviewNo}`
   }
 }
