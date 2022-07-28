@@ -53,6 +53,7 @@ export default {
       this.getResumeInfo();
     },
     addResume(){
+    },
 
     findreveiw(){
       this.getReviewInfo();

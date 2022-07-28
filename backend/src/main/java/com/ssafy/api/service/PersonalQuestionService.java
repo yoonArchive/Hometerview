@@ -18,4 +18,10 @@ public interface PersonalQuestionService {
 
     int deletePersonalQuestion(Long questionNo);
 
+    void updateSavedStatus(PersonalQuestion personalQuestion);
+
+    PersonalQuestion validatePersonalQuestion(Long questionNo, Long detailNo, Long userNo);
+
+    List<PersonalQuestion> getSavedPersonalQuestionList(Long resumeNo);
+
 }
