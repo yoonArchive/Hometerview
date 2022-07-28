@@ -8,7 +8,7 @@
   <button @click="moveToCreate">새로 만들기</button>
   <div>
     <label for="recruitSearch"></label>
-    <input type="text" id="recruitSearch" v-model="recruitSearchKeyword" @keyup.enter="moveToRecruitSearch(recruitSearchKeyword)">
+    <input type="text" id="recruitSearch" v-model="recruitSearchKeyword" @keyup.enter="bringRecruitSearchList(recruitSearchKeyword)">
   </div>
 
   <members-recruitment-list v-if="recruitState"></members-recruitment-list>
@@ -47,11 +47,10 @@
       moveToCreate(){
         router.push({name:'createmembersrecruitment'})
       },
-      async moveToRecruitSearch(recruitSearchKeyword){
-        await this.bringRecruitSearchList(recruitSearchKeyword)
-        // await router.push({name:'createmembersrecruitment'})
+      // async moveToRecruitSearch(recruitSearchKeyword){
+      //   await this.bringRecruitSearchList(recruitSearchKeyword)
 
-      },
+      // },
       isRecruiting(){
         if(this.recruitState===true){
           this.recruitState = false
