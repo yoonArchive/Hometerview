@@ -32,4 +32,10 @@ public class StudyJoin {
     @Column(name = "join_type")
     private ApplyType joinType;
 
+    @Column(name = "resume_no")
+    private Long resumeNo;
+
+    public void updateResumeNo(Long resumeNo) {
+        this.resumeNo = resumeNo;
+    }
 }

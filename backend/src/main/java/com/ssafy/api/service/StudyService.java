@@ -3,6 +3,7 @@ package com.ssafy.api.service;
 import com.ssafy.api.request.StudyPostReq;
 import com.ssafy.db.entity.Recruit;
 import com.ssafy.db.entity.Study;
+import com.ssafy.db.entity.StudyJoin;
 
 import java.util.List;
 
@@ -25,5 +26,9 @@ public interface StudyService {
     void updateStdDay(Study study, String newStdDay);
 
     void recruitComplete(Recruit recruit);
+
+    StudyJoin findStudyJoin(Long stdNo, Long userNo);
+
+    void updateRegistedResume(StudyJoin studyJoin, Long resumeNo);
 
 }

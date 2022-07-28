@@ -117,4 +117,15 @@ public class StudyServiceImpl implements StudyService {
         recruit.recruitComplete();
     }
 
+    @Override
+    public StudyJoin findStudyJoin(Long stdNo, Long userNo) {
+        return studyJoinRepositorySupport.findStudyJoinByUserNoAndStdNo(userNo, stdNo).get();
+    }
+
+    @Override
+    @Transactional
+    public void updateRegistedResume(StudyJoin studyJoin, Long resumeNo) {
+        studyJoin.updateResumeNo(resumeNo);
+    }
+
 }
