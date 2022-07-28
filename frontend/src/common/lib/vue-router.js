@@ -15,6 +15,11 @@ import FindUseridView from '@/views/accounts/FindUseridView'
 import FindUserPassword from '@/views/accounts/FindUserPassword'
 
 /* 스터디 모집 페이지 */
+import CreateMembersRecruitmentView from '@/views/membersrecruitment/CreateMembersRecruitmentView'
+import MembersRecruitmentView from '@/views/membersrecruitment/MembersRecruitmentView'
+import MembersRecruitmentDetailView from '@/views/membersrecruitment/MembersRecruitmentDetailView'
+import MembersRecruitmentEditView from '@/views/membersrecruitment/MembersRecruitmentEditView'
+
 import StudyRecruitment from '@/views/home/components/study-recruitment'
 
 /* 공지사항 */
@@ -122,6 +127,22 @@ function makeRoutesFromMenu () {
       path : 'passwordconfirm',
       name : 'passwordconfirm',
       component : PasswordConfirm,
+    },{
+      path : 'createmembersrecruitment',
+      name : 'createmembersrecruitment',
+      component : CreateMembersRecruitmentView,
+    },{
+      path : 'membersrecruitment',
+      name : 'membersrecruitment',
+      component : MembersRecruitmentView,
+    },{
+      path : 'membersrecruitment/:recruitNo',
+      name : 'membersrecruitmentdetail',
+      component : MembersRecruitmentDetailView,
+    },{
+      path : 'membersrecruitment/:recruitNo/update',
+      name : 'membersrecruitmentedit',
+      component : MembersRecruitmentEditView,
     },{
       path: 'coverletter/:resumeNo',
       name : 'coverletter',

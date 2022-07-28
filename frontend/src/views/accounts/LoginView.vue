@@ -12,8 +12,10 @@
       <label for="password">password: </label>
       <input class="round-box" v-model="credentials.userPw" type="password" id="password" required />
     </div>
+
     <button class="loginButton">Login</button>
   </form>
+
   <router-link to="/home/findid">
     <div class="find_id" >
       아이디 찾기
@@ -37,7 +39,6 @@
 import { mapActions, mapGetters, mapState } from 'vuex'
 
   // import AccountErrorList from './components/AccountErrorList.vue'
-  // import { mapGetters,mapActions } from './map_state.js'
 
 
   export default {

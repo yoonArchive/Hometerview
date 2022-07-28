@@ -9,7 +9,7 @@
   "findstudy" : {
     "name" : "스터디 찾기",
     "hidden" : false,
-    "path" : "/",
+    "path" : "/home/membersrecruitment",
     "icon" : "el-icon-s-order",
     "children" : []
   },
