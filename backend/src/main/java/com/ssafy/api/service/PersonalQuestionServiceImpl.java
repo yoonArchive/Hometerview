@@ -64,4 +64,23 @@ public class PersonalQuestionServiceImpl implements PersonalQuestionService {
         return 1;
     }
 
+    @Override
+    @Transactional
+    public void updateSavedStatus(PersonalQuestion personalQuestion) {
+        Saved saved = personalQuestion.getSaved();
+        if (saved == Saved.TRUE)
+            personalQuestion.updateSavedStatus(Saved.FALSE);
+        else personalQuestion.updateSavedStatus(Saved.TRUE);
+    }
+
+    @Override
+    public PersonalQuestion validatePersonalQuestion(Long questionNo, Long detailNo, Long userNo) {
+        return personalQuestionRepositorySupport.findPersonalQuestion(questionNo, detailNo, userNo);
+    }
+
+    @Override
+    public List<PersonalQuestion> getSavedPersonalQuestionList(Long resumeNo) {
+        return personalQuestionRepositorySupport.findPersonalQuestionsByResumeNo(resumeNo);
+    }
+
 }
