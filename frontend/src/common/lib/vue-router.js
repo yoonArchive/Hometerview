@@ -128,9 +128,6 @@ function makeRoutesFromMenu () {
       name : 'passwordconfirm',
       component : PasswordConfirm,
     },{
-<<<<<<< HEAD
-      path: 'coverletter/:resumeindex',
-=======
       path : 'createmembersrecruitment',
       name : 'createmembersrecruitment',
       component : CreateMembersRecruitmentView,
@@ -147,8 +144,7 @@ function makeRoutesFromMenu () {
       name : 'membersrecruitmentedit',
       component : MembersRecruitmentEditView,
     },{
-      path: 'coverletter/:resumeNo',
->>>>>>> 9274e7143c76440cf01544e836aae4e960414343
+      path: 'coverletter/:resumeindex',
       name : 'coverletter',
       component : CoverLetterView,
     },{
