@@ -1,46 +1,43 @@
 <template>
   <div>
     <div>
-
-      {{resumeContents[resumeNo].resumeTitle}}
+      {{resumeContents[resumeindex].resumeTitle}}
     </div>
     <div>
 
     </div>
-    <cover-letter-detail :questionNum="resumeContents.length"></cover-letter-detail>
+    <cover-letter-detail :resumeindex="resumeindex"></cover-letter-detail>
 
 
   </div>
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import CoverLetterDetail from './components/CoverLetterDetail.vue'
 export default {
   data(){
     return{
-      resumeNo : this.$route.params.resumeNo
+      resumeindex : this.$route.params.resumeindex
     }
   },
-
+  created(){
+    this.getResumeInfo();
+    this.getCurrentResume(this.resumeindex);
+    this.settingResumeIndex(this.resumeindex);
+  },
+  methods:{
+    ...mapActions(['settingResumeIndex','getCurrentResume','getResumeInfo']),
+  },
   components:{
     CoverLetterDetail,
   },
 
   computed:{
-    ...mapGetters(['resumeContents']),
+    ...mapGetters(['resumeContents', 'currentResume']),
   },
-  methods:{
-    ...mapActions(["getResumeInfo"]),
-    findresumes(){
-      this.getResumeInfo(this.resumeNo);
 
-    }
-  },
-  created(){
-    this.findresumes();
 
-  }
 }
 </script>
 

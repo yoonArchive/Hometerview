@@ -1,7 +1,9 @@
 <template>
-  <h1>자소서</h1>
+  <div>자소서 추가 삭제 버튼</div>
+  <button @click="addResume">+</button>
+  <button>-</button>
   <div v-for="(item, index) in numberOfResume" :key="index">
-    <router-link :to="{name : 'coverletter', params : {'resumeNo' : item - 1}}">
+    <router-link :to="{name : 'coverletter', params : {'resumeindex' : item - 1}}">
       <div>{{resumeContents[item-1].resumeTitle}}</div>
     </router-link>
   </div>
@@ -50,6 +52,9 @@ export default {
     findresumes(){
       this.getResumeInfo();
     },
+    addResume(){
+    },
+
     findreveiw(){
       this.getReviewInfo();
     },
