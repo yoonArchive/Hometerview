@@ -18,12 +18,17 @@ public class ResumeListRes extends BaseResponseBody {
     @ApiModelProperty(name = "작성일자")
     List<Resume> resumes;
 
-    public static ResumeListRes of(List<Resume> resumes, Integer statusCode, String message) {
+    @ApiModelProperty(name = "항목갯수")
+    long[] detailCounts;
+
+    public static ResumeListRes of(List<Resume> resumes, long[] detailCounts, Integer statusCode, String message) {
         ResumeListRes res = new ResumeListRes();
         res.setResumes(resumes);
+        res.setDetailCounts(detailCounts);
         res.setStatusCode(statusCode);
         res.setMessage(message);
         return res;
     }
+
 }
 

@@ -18,11 +18,21 @@ public class RecruitServiceImpl implements RecruitService {
     private final RecruitRepository recruitRepository;
 
     @Override
-    public void writeRecruit(RecruitReq recruitReq) {
-        Recruit recruit = new Recruit();
-        initRecruit(recruitReq, recruit);
-        recruit.setRecruitStatus(RecruitStatus.RECRUITING);
-        recruitRepository.save(recruit);
+    public Recruit writeRecruit(RecruitReq recruitReq) {
+        Recruit recruit = Recruit.builder()
+                .recruitTitle(recruitReq.getRecruitTitle())
+                .stdName(recruitReq.getStdName())
+                .stdDetail(recruitReq.getStdDetail())
+                .stdImg(recruitReq.getStdImg())
+                .stdType(recruitReq.getStdType())
+                .comName(recruitReq.getComName())
+                .startDate(recruitReq.getStartDate())
+                .endDate(recruitReq.getEndDate())
+                .stdDay(recruitReq.getStdDay())
+                .stdLimit(recruitReq.getStdLimit())
+                .recruitStatus(RecruitStatus.RECRUITING)
+                .build();
+        return recruitRepository.save(recruit);
     }
 
     @Override
@@ -59,7 +69,17 @@ public class RecruitServiceImpl implements RecruitService {
     @Override
     @Transactional
     public void updateRecruit(Recruit recruit, RecruitReq recruitReq) {
-        initRecruit(recruitReq, recruit);
+        String recruitTitle = recruitReq.getRecruitTitle();
+        String stdName = recruitReq.getStdName();
+        String stdDetail = recruitReq.getStdDetail();
+        String stdImg = recruitReq.getStdImg();
+        StdType stdType = recruitReq.getStdType();
+        String comName = recruitReq.getComName();
+        String startDate = recruitReq.getStartDate();
+        String endDate = recruitReq.getEndDate();
+        String stdDay = recruitReq.getStdDay();
+        int stdLimit = recruitReq.getStdLimit();
+        recruit.initRecruit(recruitTitle, stdName, stdDetail, stdImg, stdType, comName, startDate, endDate, stdDay, stdLimit);
     }
 
     @Override
@@ -72,19 +92,6 @@ public class RecruitServiceImpl implements RecruitService {
         }
         recruitRepository.deleteByRecruitNo(recruitNo);
         return 1;
-    }
-
-    private void initRecruit(RecruitReq recruitReq, Recruit recruit) {
-        recruit.setRecruitTitle(recruitReq.getRecruitTitle());
-        recruit.setStdName(recruitReq.getStdName());
-        recruit.setStdDetail(recruitReq.getStdDetail());
-        recruit.setStdImg(recruitReq.getStdImg());
-        recruit.setStdType(recruitReq.getStdType());
-        recruit.setComName(recruitReq.getComName());
-        recruit.setStartDate(recruitReq.getStartDate());
-        recruit.setEndDate(recruitReq.getEndDate());
-        recruit.setStdDay(recruitReq.getStdDay());
-        recruit.setStdLimit(recruitReq.getStdLimit());
     }
 
 }

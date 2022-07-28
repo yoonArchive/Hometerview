@@ -3,7 +3,8 @@ const USERS = 'users/'
 const AUTH = 'auth/'
 const NOTICE = 'notice/'
 const RECRUITS = 'recruits/'
-
+const RESUME = 'resume/'
+const REVIEW = 'review/'
 
 export default {
   accounts: {
@@ -24,7 +25,13 @@ export default {
     currentUserInfo: () => HOST + USERS + 'me/', // 맞는지 확인
 
   },
+  resumes : {
+    //자소서
+    getResumeInfo: () => HOST + RESUME,
+    getResumeDetail : () =>HOST + RESUME + '/detail'
+  },
   notice: {
+    //공지사항
     notices: () => HOST + NOTICE,
     notice: (noticeNo) => HOST + NOTICE + `${noticeNo}`,
   },
@@ -35,5 +42,10 @@ export default {
     membersrecruiting: () => HOST + RECRUITS + 'recruiting/',
     membersrecruitsearch: () => HOST + RECRUITS + 'search/',
     membersrecruittype: () => HOST + RECRUITS + 'type/',
+  },
+  review:{
+    //회고
+    reviews: () => HOST + USERS + REVIEW,
+    review: (reviewNo) => HOST + USERS + REVIEW + `${reviewNo}`
   }
 }

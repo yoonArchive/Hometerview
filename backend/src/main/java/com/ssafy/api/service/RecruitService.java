@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface RecruitService {
 
-    void writeRecruit(RecruitReq recruitReq);
+    Recruit writeRecruit(RecruitReq recruitReq);
 
     List<Recruit> getList();
 

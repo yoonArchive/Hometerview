@@ -15,20 +15,21 @@ import javax.validation.constraints.NotNull;
 @ApiModel("ResumeResponse")
 public class ResumeRes extends BaseResponseBody {
 
-    @NotNull
-    @ApiModelProperty(name = "항목번호", example = "1")
+    @ApiModelProperty(name = "상세번호")
+    Long detailNo;
+
+    @ApiModelProperty(name = "항목번호")
     Long itemNo;
 
-    @NotEmpty
-    @ApiModelProperty(name = "항목내용", example = "항목내용입니다.")
+    @ApiModelProperty(name = "항목내용")
     String item;
 
-    @NotEmpty
-    @ApiModelProperty(name = "답변", example = "답변입니다.")
+    @ApiModelProperty(name = "답변")
     String answer;
 
-    public static ResumeRes of(ResumeDetail resumeDetail, Integer statusCode, String message){
+    public static ResumeRes of(ResumeDetail resumeDetail, Integer statusCode, String message) {
         ResumeRes res = new ResumeRes();
+        res.setDetailNo(resumeDetail.getDetailNo());
         res.setItemNo(resumeDetail.getItemNo());
         res.setItem(resumeDetail.getItem());
         res.setAnswer(resumeDetail.getAnswer());
@@ -36,4 +37,5 @@ public class ResumeRes extends BaseResponseBody {
         res.setMessage(message);
         return res;
     }
+
 }

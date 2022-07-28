@@ -1,8 +1,7 @@
 package com.ssafy.db.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -10,7 +9,9 @@ import java.util.List;
 
 @Entity
 @Getter
-@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "recruit")
 public class Recruit {
 
@@ -51,11 +52,29 @@ public class Recruit {
     private int stdLimit;
 
     @Enumerated(EnumType.STRING)
-    @Column(name="recruit_status")
+    @Column(name = "recruit_status")
     private RecruitStatus recruitStatus;
 
     @JsonIgnore
+    @Builder.Default
     @OneToMany(mappedBy = "recruit")
     private List<Apply> applies = new ArrayList<>();
+
+    public void initRecruit(String recruitTitle, String stdName, String stdDetail, String stdImg, StdType stdType, String comName, String startDate, String endDate, String stdDay, int stdLimit) {
+        this.recruitTitle = recruitTitle;
+        this.stdName = stdName;
+        this.stdDetail = stdDetail;
+        this.stdImg = stdImg;
+        this.stdType = stdType;
+        this.comName = comName;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.stdDay = stdDay;
+        this.stdLimit = stdLimit;
+    }
+
+    public void recruitComplete() {
+        this.recruitStatus = RecruitStatus.COMPLETED;
+    }
 
 }

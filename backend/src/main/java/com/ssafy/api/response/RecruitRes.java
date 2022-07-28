@@ -47,7 +47,10 @@ public class RecruitRes extends BaseResponseBody {
     @ApiModelProperty(name = "모집 현황")
     String recruitStatus;
 
-    public static RecruitRes of(Recruit recruit, Integer statusCode, String message) {
+    @ApiModelProperty(name = "신청자 수")
+    long count;
+
+    public static RecruitRes of(Recruit recruit, long count, Integer statusCode, String message) {
         RecruitRes res = new RecruitRes();
         res.setRecruitTitle(recruit.getRecruitTitle());
         res.setStdName(recruit.getStdName());
@@ -60,6 +63,7 @@ public class RecruitRes extends BaseResponseBody {
         res.setStdDay(recruit.getStdDay());
         res.setStdLimit(recruit.getStdLimit());
         res.setRecruitStatus(recruit.getRecruitStatus().getStatus());
+        res.setCount(count);
         res.setStatusCode(statusCode);
         res.setMessage(message);
         return res;

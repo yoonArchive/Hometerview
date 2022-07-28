@@ -1,7 +1,6 @@
 package com.ssafy.db.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -9,7 +8,9 @@ import java.util.List;
 
 @Entity
 @Getter
-@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "recording")
 public class Recording {
 
@@ -31,6 +32,7 @@ public class Recording {
     @Column(name = "video_url")
     private String videoUrl;
 
+    @Builder.Default
     @OneToMany(mappedBy = "recording")
     private List<Feedback> feedbacks = new ArrayList<>();
 
