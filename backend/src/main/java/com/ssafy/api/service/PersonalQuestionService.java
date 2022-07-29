@@ -8,9 +8,11 @@ import java.util.List;
 
 public interface PersonalQuestionService {
 
-    void registerQuestion(Long userNo, Long detailNo, QuestionReq questionReq);
+    void registerQuestion(Long userNo, Long stdNo, Long detailNo, QuestionReq questionReq);
 
-    List<PersonalQuestion> getList(Long detailNo);
+    List<PersonalQuestion> getListByDetailNo(Long detailNo);
+
+    List<PersonalQuestion> getList(Long stdNo, Long detailNo);
 
     PersonalQuestion getPersonalQuestion(Long questionNo, Long detailNo, Long userNo);
 

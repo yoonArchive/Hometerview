@@ -38,6 +38,9 @@ export default {
   },
 
   mutations: {
+    SET_TOKEN(state,data){
+      state.token = data;
+    },
     SET_IS_LODDING(state,data){
       state.isLodding = data;
     },
@@ -77,6 +80,50 @@ export default {
   },
 
   actions: {
+    async addNewResume({dispatch, getters}){
+      const titleOfResume = "새 자기소개서";
+      const data = {
+        resumeTitle : titleOfResume,
+      }
+      await axios.post(api_url.resumes.getResumeInfo(),{},{
+        params: data,
+        headers : getters.resumeHeader,
+      })
+      dispatch('getResumeInfo');
+    },
+    removeResumeAction({getters}, resumeindex){
+      const resumeNo =  getters.resumeContents[resumeindex].resumeNo;
+      const data = {
+        resumeNo : resumeNo,
+      }
+      axios.delete(api_url.resumes.getResumeInfo(),{
+        params: data,
+        headers : getters.resumeHeader,
+      }).then(()=>{
+        console.log("자소서 삭제 성공")
+      }).catch((error)=>{
+        console.log(error);
+      })
+      router.push({name : 'myinterview'});
+    },
+    changeNewResumeTitle({dispatch, getters}, resumeindex){
+      const resumeNo = getters.resumeContents[resumeindex].resumeNo;
+      const resumeTitle = getters.resumeContents[resumeindex].resumeTitle;
+      const data = {
+        resumeNo : resumeNo,
+        resumeTitle : resumeTitle,
+      }
+      axios.put(api_url.resumes.getResumeInfo(), {} , {
+        headers : getters.resumeHeader,
+        params : data,
+      }).then(()=>{
+        console.log("자소서 제목 수정 성공");
+        // dispatch('getResumeInfo');
+      }).catch((err)=>{
+        console.log(err);
+      })
+
+    },
     addItemCurrentResume({commit}){
       commit('ADD_ITEM_CURRENT_RESUME');
     },
@@ -141,12 +188,13 @@ export default {
     settingResumeIndex({commit}, data){
       commit('SET_RESUME_INDEX',data);
     },
-    getResumeInfo({commit, getters}){
-      axios.get(api_url.resumes.getResumeInfo(), {
+    async getResumeInfo({commit, getters}){
+      await axios.get(api_url.resumes.getResumeInfo(), {
         headers : getters.resumeHeader,
       }).then((data)=>{
         var length = data.data.resumes.length;
         console.log(data.data.resumes);
+
         commit('SET_RESUME_CONTENTS', data.data.resumes);
         commit('SET_NUMBER_RESUME', length);
         commit('SET_NUMBER_QUESTION',data.data.detailCounts);
@@ -155,13 +203,14 @@ export default {
       })
     },
     async getCurrentResume({commit , getters}, index){
+      console.log(getters.resumeContents);
       var length  = getters.numberOfQuestion[index];
       var resumeNo = getters.resumeContents[index].resumeNo;
       console.log(index);
 
       commit('RESET_CURRENT_RESUME');
       commit('RESET_ORIGINAL_NUMBER_QUESTION');
-      for(var i = 1, j = 0;i<=length;j++){
+      for(var i = 1, j = 1;i<=length;j++){
         const data = {
           resumeNo : resumeNo,
           itemNo : j,
@@ -181,7 +230,8 @@ export default {
           commit('PLUS_ORIGINAL_NUMBER_QUESTION');
           console.log(getters.currentResume);
         }).catch((err)=>{
-
+          // console.log(data);
+          console.log(err);
         })
       }
       commit('SET_IS_LODDING',true);

@@ -210,7 +210,7 @@ public class UserController {
     })
     public ResponseEntity<? extends BaseResponseBody> checkAuthKey(@RequestParam @ApiParam(value = "회원 이메일", required = true) String userEmail, @RequestParam @ApiParam(value = "인증번호", required = true) String authKey) throws Exception {
         String email = mailService.checkAuthKey(authKey);
-        if (!email.equals(userEmail))
+        if (email == null || !email.equals(userEmail))
             return ResponseEntity.status(401).body(BaseResponseBody.of(401, "인증번호가 옳바르지 않습니다."));
         else {
             mailService.deleteAuthKey(authKey);
