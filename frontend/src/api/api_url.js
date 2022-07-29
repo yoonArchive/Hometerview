@@ -35,7 +35,7 @@ export default {
     notices: () => HOST + NOTICE,
     notice: (noticeNo) => HOST + NOTICE + `${noticeNo}`,
   },
-  
+
   membersrecruitment:{
     membersrecruitments: () => HOST + RECRUITS,
     membersrecruitment: (recruitNo) => HOST + RECRUITS +`${recruitNo}`,
@@ -47,5 +47,8 @@ export default {
     //회고
     reviews: () => HOST + USERS + REVIEW,
     review: (reviewNo) => HOST + USERS + REVIEW + `${reviewNo}`
+  },
+  study:{
+
   }
 }
