@@ -2,6 +2,7 @@
 
     <h1 class="signup-title">Signup</h1>
 
+    {{ comfirmEmail }}
     <!-- <account-error-list v-if="authError"></account-error-list> -->
 
     <!-- <div v-if="sdf"></div> -->
@@ -32,16 +33,19 @@
         <form @submit.prevent="emailDuplicateCheck(credentials.userEmail)">
           <button>중복체크</button>
         </form>
+        <form @submit.prevent="sendAuthKeyToEmail(credentials.userEmail)">
+          <button>인증번호 받기</button>
+        </form>
+        <form @submit.prevent="checkAuthKey([authKey,credentials.userEmail])">
+          <label for="checkAuthKey"></label>
+          <input  v-model="authKey" type="text" id="checkAuthKey">
+          <button>인증번호 확인</button>
+        </form>
       </div>
-
-
-
       <div>
         <button class="signup-button">Signup</button>
       </div>
     </form>
-    
-  
 </template>
 
 <script>
@@ -61,7 +65,6 @@
           idCheckPattern : /^[a-zA-z0-9].{1,16}$/,
           eamilCheckPattern : /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/,
         },
-
         credentials: {
           userEmail:'',
           userName:'',
@@ -72,14 +75,25 @@
       }
     },
     computed: {
-      ...mapGetters(['authError','isDuplicatedEmail','isDuplicatedId']),
+      ...mapGetters([
+        'authError',
+        'isDuplicatedEmail',
+        'isDuplicatedId',
+        'isAuthorized',
+        'comfirmEmail',
+        ]),
     },
     methods: {
-      ...mapActions(['signup','emailDuplicateCheck', 'idDuplicateCheck']),
-
-
-
-      signupComfirmation(){
+      ...mapActions([
+        'signup',
+        'emailDuplicateCheck',
+        'idDuplicateCheck',
+        'sendAuthKeyToEmail',
+        'checkAuthKey',
+        'changeFalseAuthState',
+        'changeAuthState'
+        ]),
+      async signupComfirmation(){
         if(
           this.credentials.userEmail===''||
           this.credentials.userName===''||
@@ -88,7 +102,6 @@
           this.credentials.userPw2=== ''
         ){
           alert("모든 내용을 입력해주세요")
-          
           return
         } 
         else if(!this.validationPattern.idCheckPattern.test(this.credentials.userId)){
@@ -117,12 +130,32 @@
           alert('아이디 중복검사를 해주세요')
           return
         }
+        else if(this.isAuthorized===false){
+          alert('인증번호 확인을 해주세요')
+          return
+        }
         else{
-          this.signup(this.credentials)
+          await this.signup(this.credentials)
+          await this.changeFalseAuthState()
         }
       },
 
     },
+    watch:{
+      // 이메일창이랑 confirm함수가 다르면 changeAuthState=> false로 변환
+
+
+      
+      // checkSameEmail(){
+      //   console.log(this.comfirmEmail)
+      //   console.log(this.credentials.userEmail)
+      //   if (this.credentials.userEmail===this.comfirmEmail){
+      //     this.changeAuthState(true)
+      //   }else{
+      //     this.changeAuthState(false)
+      //   }
+      // }
+    }
   }
 </script>
 

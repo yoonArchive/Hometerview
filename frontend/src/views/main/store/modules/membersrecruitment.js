@@ -127,6 +127,20 @@ export default {
         console.log(err.response)
       })
     },
-    
+    bringRecruitTypeList({ commit },recruitType){
+      console.log(recruitType)
+
+      axios({
+        url : api_url.membersrecruitment.membersrecruittype() + `?type=${recruitType}`,
+        method : 'get'
+      })
+      .then(res => {
+        console.log(res.data)
+        commit('SET_RECRUITMENT_LIST',res.data.recruits)
+      })
+      .catch(err => {
+        console.log(err.response)
+      })
+    },
   }
 }

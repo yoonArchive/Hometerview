@@ -1,12 +1,14 @@
 <template>
   
   <h2>모두</h2>
-  <members-recruitment-item
-    v-for="recruitment in recruitmentList"
-    :key="recruitment.recruitNo"
-    :recruitment="recruitment"
-  >
-  </members-recruitment-item>
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    <members-recruitment-item
+      v-for="recruitment in recruitmentList"
+      :key="recruitment.recruitNo"
+      :recruitment="recruitment"
+    >
+    </members-recruitment-item>
+  </div>
 
 </template>
 
