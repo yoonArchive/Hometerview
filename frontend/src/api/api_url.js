@@ -5,21 +5,31 @@ const NOTICE = 'notice/'
 const RECRUITS = 'recruits/'
 const RESUME = 'resume/'
 const REVIEW = 'review/'
+const STUDY = 'study/'
+
 
 export default {
   accounts: {
     login: () => HOST + AUTH + 'login/',
     logout: () => HOST + USERS + 'logout/',
     signup: () => HOST + USERS,
-    findUserid: () => HOST + USERS + 'findid/',
-    emailDuplicateCheck:() => HOST + USERS + 'checkemail/',
-    idDuplicateCheck:() => HOST + USERS + 'checkid/',
     deleteUser: () => HOST + USERS,
-    passwordConfirm: () => HOST + USERS + 'pw/',
-    findMyAccount: () => HOST + USERS + 'findid/',
-    findUserPassword: () => HOST + USERS + 'findpw/',
-    changepassword: () => HOST + USERS + 'pw/',
     updateUser: () => HOST + USERS,
+    
+    // 중복검사
+    emailDuplicateCheck:() => HOST + USERS + 'checkEmail/',
+    idDuplicateCheck:() => HOST + USERS + 'checkId/',
+    
+    // 찾기
+    findUserid: () => HOST + USERS + 'findId/',
+    findUserPassword: () => HOST + USERS + 'findPw/',
+
+    // 인증
+    passwordConfirm: () => HOST + USERS + 'pw/',
+    changepassword: () => HOST + USERS + 'pw/',
+    authEmail : () => HOST + USERS + 'authEmail',
+    checkAuthKey : () => HOST + USERS + 'checkAuthKey',
+
 
     // Token 으로 현재 user 판단
     currentUserInfo: () => HOST + USERS + 'me/', // 맞는지 확인
@@ -47,5 +57,8 @@ export default {
     //회고
     reviews: () => HOST + USERS + REVIEW,
     review: (reviewNo) => HOST + USERS + REVIEW + `${reviewNo}`
+  },
+  study:{
+    studyspace : () => HOST +  STUDY
   }
 }
