@@ -14,6 +14,8 @@ export default {
     isDuplicatedEmail: true,
     isDuplicatedId: true,
     isPasswordConfirm: false,
+    isAuthorized :false,
+    comfirmEmail : '',
   }),
 
   mutations:{
@@ -24,7 +26,8 @@ export default {
     SET_CHECK_EMAIL: (state, isDuplicatedEmail) => state.isDuplicatedEmail = isDuplicatedEmail,
     SET_CHECK_ID: (state, isDuplicatedId) => state.isDuplicatedId = isDuplicatedId,
     SET_PASSWORD_CONFIRM: (state, ispasswordconfirm) => state.isPasswordConfirm = ispasswordconfirm,
-
+    SET_AUTHORIZED: (state, isAuthorized) => state.isAuthorized = isAuthorized,
+    SET_COMFIRM_EMAIL : (state,comfirmEmail) => state.comfirmEmail = comfirmEmail,
 
     CLEER_CURRENT_USER : (state) => state.currentUser = {},
   },
@@ -37,15 +40,14 @@ export default {
     authError: state => state.authError,
     authHeader: state => ({ Authorization: `Bearer ${state.token}`}),
     isPasswordConfirm: state=> state.isPasswordConfirm,
+    isAuthorized: state => state.isAuthorized,
+    comfirmEmail: state => state.comfirmEmail,
   },
   actions:{
-
-
     saveToken({ commit }, token) {
       commit('SET_TOKEN', token)
       localStorage.setItem('token', token)
     },
-
     removeToken({ commit }) {
       commit('SET_TOKEN', '')
       localStorage.setItem('token', '')
@@ -73,7 +75,6 @@ export default {
         console.log(err);
       })
     },
-
     updateUser({dispatch, getters}, credentials){
       console.log(credentials);
       const updateUserPutReq = {
@@ -90,8 +91,6 @@ export default {
         console.log(err)
       })
     },
-
-
     login({ commit, dispatch }, credentials) {
 
       axios({
@@ -113,7 +112,6 @@ export default {
           alert('로그인 실패')
         })
     },
-
     kakaoLoginBtn({ commit, dispatch }) {
 
       window.Kakao.init('c6a528688d515ebe962756d06b24577e') // Kakao Developers에서 요약 정보 -> JavaScript 키
@@ -168,22 +166,17 @@ export default {
       },
     })
   },
-
-
-
-
-
-    logout({ getters, dispatch }) {
-      if(getters.isLoggedIn){
-        dispatch('removeToken')
-        alert('성공적으로 logout!')
-        commit('CLEER_CURRENT_USER');
-        commit('SET_PASSWORD_CONFIRM',false);
-        router.push({ name: 'login' })
-      }
-      else{
-        alert('로그인을 진행해 주세요')
-      }
+  logout({ getters, dispatch }) {
+    if(getters.isLoggedIn){
+      dispatch('removeToken')
+      alert('성공적으로 logout!')
+      commit('CLEER_CURRENT_USER');
+      commit('SET_PASSWORD_CONFIRM',false);
+      router.push({ name: 'login' })
+    }
+    else{
+      alert('로그인을 진행해 주세요')
+    }
     },
     signup({ commit }, credentials) {
     delete credentials.userPw2
@@ -216,8 +209,6 @@ export default {
         })
         // dispatch('login', credentialsForLogin)
     },
-
-
     async fetchCurrentUser({ commit, getters, dispatch }) {
       /*
       GET: 사용자가 로그인 했다면(토큰이 있다면)
@@ -281,7 +272,6 @@ export default {
       const emailId = splitedEmail[0]
       const emailaddress = splitedEmail[1]
       const emailForSubmit = `?email=${emailId}%40${emailaddress}`
-
       axios({
         url: api_url.accounts.emailDuplicateCheck() + emailForSubmit,
         method : 'get',
@@ -318,24 +308,76 @@ export default {
           console.log(getters.isDuplicatedId)
           alert('사용중인 아이디 입니다')
         })
-    },
-    },
+      },
+      changePassword({getters}, credentials){
+        axios({
+          url:api_url.accounts.changepassword(),
+          method:'put',
+          data: {
+            userPw:credentials.userPw,
+            newPw : credentials.newPw,
+          },
+          headers : getters.authHeader
+        }).then(data =>{
+          console.log(data);
+        }).catch(err=>{
+          console.log(credentials);
+          console.log(err);
+        })
+      },
+      sendAuthKeyToEmail({commit},email){
+        console.log(email)
+        const splitedEmail = email.split('@')
+        const emailId = splitedEmail[0]
+        const emailaddress = splitedEmail[1]
+        const emailForSubmit = `?userEmail=${emailId}%40${emailaddress}`
+        console.log(emailForSubmit)
+        axios({
+          url: api_url.accounts.authEmail() + emailForSubmit,
+          method : 'post',
+        })
+        .then(res => {
+          console.log(res.data)
+        })
+        .catch(err=>{
+          console.log(err.response)
+        })
+      },
+      checkAuthKey({commit},authInfo){
+        console.log(authInfo[0])
+        console.log(authInfo[1])
 
-    changePassword({getters}, credentials){
-      axios({
-        url:api_url.accounts.changepassword(),
-        method:'put',
-        data: {
-          userPw:credentials.userPw,
-          newPw : credentials.newPw,
-        },
-        headers : getters.authHeader
-      }).then(data =>{
-        console.log(data);
-      }).catch(err=>{
-        console.log(credentials);
-        console.log(err);
-      })
-    }
+        const authKey = authInfo[0]
+        const email = authInfo[1]
+
+        const splitedEmail = email.split('@')
+        const emailId = splitedEmail[0]
+        const emailaddress = splitedEmail[1]
+        const emailForSubmit = `userEmail=${emailId}%40${emailaddress}`
+      
+        const keyAndEmailForSubmit = `?authKey=${authKey}&${emailForSubmit}`
+        axios({
+          url: api_url.accounts.checkAuthKey() + keyAndEmailForSubmit,
+          method : 'get',
+        })
+        .then(res => {
+          console.log(res.data)
+          commit('SET_AUTHORIZED', true)
+          commit('SET_COMFIRM_EMAIL', email)
+        })
+        .catch(err=>{
+          console.log(err.response)
+          commit('SET_AUTHORIZED', false)
+        })
+      },
+      changeAuthState({commit, getters},state){
+          commit('SET_AUTHORIZED', state)
+      },
+      changeFalseAuthState({commit, getters}){
+        if (getters.isAuthorized === true){
+          commit('SET_AUTHORIZED', false)
+        }
+      }
+    },
   }
 
