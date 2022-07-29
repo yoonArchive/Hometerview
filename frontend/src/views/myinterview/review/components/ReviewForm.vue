@@ -5,7 +5,7 @@
       <div class="review">
         <div class="review-top">
           <label class="col-sm-2" for="title">제목: </label>
-            {{ review.reviewType}}
+
           <input class="col-sm-10" v-model="newreview.reviewTitle" type="text" id="title" />
         </div>
         <div class="review-content">
@@ -32,7 +32,9 @@
 <script>
 import { mapActions } from 'vuex'
 // import review from '../../../main/store/modules/review'
-
+  const day1 = new Date();
+  const today = day1.toLocaleString('ko-kr');
+  //.toLocaleString('ko-kr')
   export default {
     name: 'reviewForm',
     props: {
@@ -44,12 +46,12 @@ import { mapActions } from 'vuex'
         newreview: {
           // title: this.review.reviewTitle,
           // content: this.review.reviewContents,
-          reviewNo : this.$route.params.reviewNo,
+          // reviewNo : this.$route.params.reviewNo,
           reviewContents: this.review.reviewContents,
           reviewTitle: this.review.reviewTitle,
-          reviewType: this.review.reviewType
-
-                  },
+          reviewType: this.review.reviewType,
+          reviewDate: today
+          }
 
 
 

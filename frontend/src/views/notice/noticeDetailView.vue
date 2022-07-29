@@ -1,34 +1,29 @@
 <template>
-  <div class="wrap">
-    <div class="notice">
-      <div class="notice-top">
-        <!-- {{notice}} -->
-        <p>번호 {{notice.noticeNo}} </p>
-        <p>제목 {{notice.noticeTitle}} </p>
+  <div class="container">
+    <div>
+        <p id="title">{{notice.noticeTitle}} </p>
+        <hr/>
         <p>작성자 : 관리자</p>
-      </div>
-      <div class="notice-content">
-        <h1>내용 {{notice.noticeContents}}</h1>
-      </div>
-      <div class="notice-bottom">
-        <!-- <div class="component1" v-if="isAuthor"> -->
-          <span class="edit">
-            <router-link :to="{ name: 'noticeEdit', params: { noticeNo } }">
-              <button>Edit</button>
-            </router-link>
-          </span>
-          <span class="delete">
-            <button @click="deleteNotice(noticeNo)">Delete</button>
-          </span>
-        </div>
-      </div>
     </div>
-  <!-- </div> -->
-      <div>
-        <router-link class="routerlink" :to="{ name: 'notices' }" id="a">
-            <button>목록으로</button>
+
+        <h1>{{notice.noticeContents}}</h1>
+        <!-- <div class="component1" v-if="isAuthor"> -->
+    <div class="buttonbundle">
+        <button id="button-review">
+          <router-link :to="{ name: 'noticeEdit', params: { noticeNo } }" id="a">
+            수정하기
           </router-link>
-      </div>
+        </button>
+        <button id="button-review" @click="deleteNotice(noticeNo)"><p id="a">삭제하기</p></button>
+        <button id="button-review">
+          <router-link class="routerlink" :to="{ name: 'notices' }" id="a">
+            <p id="a">목록으로</p>
+          </router-link>
+
+
+      </button>
+    </div>
+  </div>
 
 </template>
 
@@ -63,15 +58,57 @@ import { mapGetters, mapActions } from 'vuex'
     created() {
       this.fetchNotice(this.noticeNo)
     },
-    mounted(){
-      console.log('주소번호'+this.$route.params.noticeNo)
-
-
-
-    }
   }
 </script>
 
 <style scoped >
+#title{
+  font-size: 50px;
+  text-align: center;
+}
+
+#a {
+  text-decoration-line: none;
+  color: white;
+  font-size: 15px;
+  font-family: "티머니 둥근바람";
+}
+#button-review{
+   background-color: #653FD3;
+   border-color : #653FD3;
+   border-radius: 10%;
+   margin: 15px;
+   width: 100px;
+}
+.buttonbundle{
+
+  /* display: flex; */
+  /* justify-content: flex-start; */
+  flex-direction: row;
+  margin: 10px;
+  flex-basis: 150px;
+  flex-shrink: 0;
+  width: 100%;
+
+
+
+  /* justify-content: space-evenly; */
+  /* justify-content: space-between; */
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 5%;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  height: 70%;
+  background-color: white;
+  margin: 10%;
+}
+
+
+
 
 </style>

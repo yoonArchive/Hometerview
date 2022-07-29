@@ -1,5 +1,8 @@
 <template>
     <!-- table -->
+
+    <h1 id="title">저희의 신규 업데이트 소식을 알려드릴께요!</h1>
+
     <div class="table-cocover">
       <div class="table-cover">
         <table class="table table-hover">

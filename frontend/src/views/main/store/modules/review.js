@@ -64,6 +64,9 @@ export default {
     //회고 작성하기
     //데이터 도출할 수 있도록 기윤님께 부탁
     createReview({ commit, getters }, newreview) {
+
+
+
       axios({
         url: api_url.review.reviews(),
         method: 'post',

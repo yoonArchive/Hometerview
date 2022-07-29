@@ -17,7 +17,7 @@
     </div>
   </el-row>
 </template>
-<style>
+<style scoped>
 
 .word {
   float: left;
@@ -25,14 +25,14 @@
 #logo {
   width: 150px;
   height: 110px;
-  float: right;
-
+  float: right
 
 }
 #a {
   text-decoration-line: none;
   color: white;
   font-size: 20px;
+  margin-left: 30px;
   font-family: "티머니 둥근바람";
 }
 
