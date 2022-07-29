@@ -23,11 +23,11 @@ public class PersonalQuestionServiceImpl implements PersonalQuestionService {
     private final ResumeDetailRepository resumeDetailRepository;
 
     @Override
-    public void registerQuestion(Long userNo, Long detailNo, QuestionReq questionReq) {
+    public void registerQuestion(Long userNo, Long stdNo, Long detailNo, QuestionReq questionReq) {
         ResumeDetail resumeDetail = resumeDetailRepository.findByDetailNo(detailNo).get();
         PersonalQuestion personalQuestion = PersonalQuestion.builder()
                 .resumeDetail(resumeDetail)
-                .stdNo(questionReq.getStdNo())
+                .stdNo(stdNo)
                 .contents(questionReq.getContents())
                 .writerNo(userNo)
                 .saved(Saved.FALSE)
@@ -36,8 +36,13 @@ public class PersonalQuestionServiceImpl implements PersonalQuestionService {
     }
 
     @Override
-    public List<PersonalQuestion> getList(Long detailNo) {
+    public List<PersonalQuestion> getListByDetailNo(Long detailNo) {
         return personalQuestionRepositorySupport.findAllPersonalQuestionByDetailNo(detailNo);
+    }
+
+    @Override
+    public List<PersonalQuestion> getList(Long stdNo, Long detailNo) {
+        return personalQuestionRepositorySupport.findAllPersonalQuestionByStdNoAndDetailNo(stdNo, detailNo);
     }
 
     @Override

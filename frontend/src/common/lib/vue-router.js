@@ -144,7 +144,7 @@ function makeRoutesFromMenu () {
       name : 'membersrecruitmentedit',
       component : MembersRecruitmentEditView,
     },{
-      path: 'coverletter/:resumeNo',
+      path: 'coverletter/:resumeindex',
       name : 'coverletter',
       component : CoverLetterView,
     },{

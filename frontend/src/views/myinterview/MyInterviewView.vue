@@ -1,8 +1,9 @@
 <template>
   <div>자소서 추가 삭제 버튼</div>
+  <div>{{resumeContents.length}}</div>
   <button @click="addResume">+</button>
   <button>-</button>
-  <div v-for="(item, index) in numberOfResume" :key="index">
+  <div v-for="(item, index) in resumeContents.length" :key="index">
     <router-link :to="{name : 'coverletter', params : {'resumeindex' : item - 1}}">
       <div>{{resumeContents[item-1].resumeTitle}}</div>
     </router-link>
@@ -69,20 +70,20 @@ export default {
     ...mapGetters(['resumeContents','numberOfResume', 'reviewContents','numberOfReview']),
   },
   methods:{
-    ...mapActions(["getResumeInfo","getReviewInfo"]),
+    ...mapActions(["getResumeInfo","getReviewInfo","addNewResume"]),
     findresumes(){
       this.getResumeInfo();
     },
     addResume(){
+      this.addNewResume();
     },
 
     findreveiw(){
       this.getReviewInfo();
     },
-    changeName(){
-    }
+
   },
-  created(){
+  mounted(){
     this.findresumes();
     this.findreveiw();
   }
