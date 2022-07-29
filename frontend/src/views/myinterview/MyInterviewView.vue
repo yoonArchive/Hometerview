@@ -14,13 +14,13 @@
   <div class="review">
     <h1>회고록</h1>
   </div>
-      <table class="table table-hover">
+      <table class="table">
           <thead class="table-head">
             <tr>
               <th scope="col" v-for="(header,idx) in headers" :key="idx"> {{ header }}</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody class="t-body">
             <tr v-for="(reviews, index) in reviewContents" :key="index" >
               <th scope="row" >
                 <td>{{ reviews.reviewNo }}</td>
@@ -90,7 +90,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #button-review{
    width: 100px;
    height: 50px;
@@ -105,6 +105,7 @@ export default {
   color: white;
   font-size: 15px;
   font-family: "티머니 둥근바람";
+  margin: 3px;
 }
 .buttonbundle{
   flex-direction: row-reverse;
@@ -112,4 +113,14 @@ export default {
   width: 100px;
 
 }
+.table{
+  text-align: center;
+  padding: 10px;
+}
+th {
+    text-align: left;
+  }
+/* td {
+    text-align: right;
+  } */
 </style>

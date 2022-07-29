@@ -1,6 +1,6 @@
 <template>
 
-  <form @submit.prevent="onSubmit">
+  <!-- <form @submit.prevent="onSubmit">
     <div class="wrap">
       <div class="notice">
         <div class="notice-top">
@@ -15,7 +15,38 @@
         </div>
       </div>
     </div>
-  </form>
+  </form> -->
+
+
+    <div class="container">
+    <div class="title">
+      <h1>공지사항 작성</h1>
+    </div>
+    <div class="inner-container">
+    <form @submit.prevent="onSubmit">
+    <div class="mb-3">
+      <label for="title" class="form-label col-sm-2" >제목: </label>
+      <input type="text" class="form-control has-success col-sm-10" v-model="newnotice.noticeTitle" id="title" />
+    </div>
+    <div class="mb-3">
+      <label for="exampleFormControlTextarea1" class="form-label"></label>
+      <textarea class="form-control col-sm-12"  v-model="newnotice.noticeContents" type="text" id="content" rows="3"></textarea>
+    </div>
+    <div class="buttonbundle">
+        <button id="button-review" v-if="action==='create'"><p id="a">작성하기</p></button>
+        <button id="button-review" v-else><p id="a">수정하기</p></button>
+        <button id="button-review">
+          <router-link class="routerlink" :to="{ name: 'notices' }" >
+            <p id="a">목록</p>
+          </router-link>
+        </button>
+    </div>
+
+
+     </form>
+    </div>
+
+  </div>
 </template>
 
 <script>
@@ -62,13 +93,43 @@ import { mapActions } from 'vuex'
 </script>
 
 <style scoped>
-.wrap{  width: 70vw; height: 50vh; margin: auto; padding-top : 30px;}
-.notice{ display: flex; border: 1px solid; flex-direction: column; width: auto; height:100%; font-family : '엘리스디지털regular';}
-.notice-top{ border : 1px solid; background-color: white; padding: 10px; font-weight: bold;}
-.notice-content{padding: 20px; color:white;}
-.notice-textarea{resize : none; background-color: white; color: black}
-.form-button{ margin-left : auto; margin-top : auto;}
-#content{
-  height : 250px;
+
+
+.container{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 50%;
+
+}
+.inner-container{
+  padding-top: 100px;
+  height: 50%;
+}
+.title{
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+#a{
+  text-decoration-line: none;
+  color: white;
+  font-size: 15px;
+  font-family: "티머니 둥근바람";
+  margin: 2px;
+}
+#button-review{
+   background-color: #653FD3;
+   border-color : #653FD3;
+   border-radius: 10%;
+   margin: 15px;
+   width: 100px;
+   text-align: center;
+
+}
+
+.form-control{
+  background-color: #653FD3;
 }
 </style>

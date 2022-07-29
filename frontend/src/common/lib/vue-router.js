@@ -46,6 +46,12 @@ import ReviewView from '@/views/myinterview/review/ReviewView'
 import ReviewNew from '@/views/myinterview/review/ReviewNewView'
 import ReviewEdit from '@/views/myinterview/review/ReviewEditView'
 
+/* 마이스터디-공통질문 페이지 */
+// import CommonQuestionDetailView from '@/views/studyspace/components/CommonQuestionDetailView'
+// import CommonQuestionNewView from '@/views/studyspace/components/CommonQuestionNewView'
+// import CommonQuestionEditView from '@/views/studyspace/components/CommonQuestionEditView'
+
+
 
 const fullMenu = require('@/views/main/menu.json')
 function makeRoutesFromMenu () {
@@ -186,6 +192,23 @@ function makeRoutesFromMenu () {
     name: 'noticeEdit',
     component: noticeEditView
   },
+  // {
+  //   path: '/study/:studyNo/common/new',
+  //   name: 'commonNew',
+  //   component: CommonQuestionNewView
+  // },
+  // {
+  //   path: '/study/:studyNo/common/edit',
+  //   name: 'commonEdit',
+  //   component: CommonQuestionEditView
+  // },
+  // {
+  //   path: '/study/:studyNo/common/:qustionNo',
+  //   name: 'commonDetail',
+  //   component: CommonQuestionDetailView
+  // },
+
+
 
   )
   return routes
