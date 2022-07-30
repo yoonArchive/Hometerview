@@ -24,8 +24,6 @@
       </div>
     </div>
 
-  
-
     <members-recruitment-list v-if="recruitState"></members-recruitment-list>
     <members-recruiting-list v-if="recruitingState"></members-recruiting-list>
   </div>

@@ -6,28 +6,35 @@ export default {
 
   state: {
     recruitmentList : [],
-    recruitDetail : {}
+    recruitDetail : {},
+    token: localStorage.getItem('token') || '' ,
 
   },
   mutations: {
+    SET_TOKEN: (state, token) => state.token = token,
     SET_RECRUITMENT_LIST: (state,recruitmentList) => state.recruitmentList = recruitmentList,
-    SET_RECRUIT_DETAIL : (state,recruitDetail) => state.recruitDetail = recruitDetail
+    SET_RECRUIT_DETAIL : (state,recruitDetail) => state.recruitDetail = recruitDetail,
+    
   },
   getters:{
+    authHeader: state => ({ Authorization: `Bearer ${state.token}`}),
     isValidedEmail : state => state.isValidedEmail,
     recruitmentList : state => state.recruitmentList,
-    recruitDetail : state => state.recruitDetail
+    recruitDetail : state => state.recruitDetail,
   },
   actions:{
-    createRecruitment({},recruitmentInfo){
+    createRecruitment({getters},recruitmentInfo,token){
+      console.log(recruitmentInfo)
       axios({
         url : api_url.membersrecruitment.membersrecruitments(),
         method : 'post',
         data : recruitmentInfo,
+        headers : getters.authHeader
       })
       .then(res => {
         console.log(res.data)
         alert('성공하셨습니다.')
+        router.push({name:'MembersRecruitmentView'})
       })
       .catch(err => {
         console.log(err.response)

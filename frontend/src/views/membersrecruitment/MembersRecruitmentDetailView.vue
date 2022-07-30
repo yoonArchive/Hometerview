@@ -16,13 +16,14 @@
     {{ recruitDetail.stdDetail }} <br>
     <button @click="moveToUpdate">수정</button>
     <button @click="deleteRecruitmentDetail([recruitNo])"> 삭제 </button>
+    <button @click="studyStart(recruitNo)"> 스터디 시작 </button>
 
 </template>
 
 <script>
   import router from '@/common/lib/vue-router'
   import { mapActions, mapGetters } from 'vuex'
-  
+
 
   export default {
     name:'MembersRecruitmentDetailView',
@@ -30,7 +31,7 @@
     data(){
       return{
         recruitNo:this.$route.params.recruitNo,
-        studyType : ''
+        studyType : '',
       }
     },
     computed:{
@@ -38,10 +39,13 @@
       
     },
     methods:{
-      ...mapActions(['bringRecruitmentDetail','updateRecruitmentDetail','deleteRecruitmentDetail']),
+      ...mapActions([
+        'bringRecruitmentDetail',
+        'updateRecruitmentDetail',
+        'deleteRecruitmentDetail',
+        'createStudySpace'
+        ]),
       interviewType(){
-        console.log('test')
-        console.log(this.recruitNo)
         if(this.recruitDetail.stdType === 'COM'){
           this.studyType = '기업 면접'
         }else{
@@ -54,6 +58,10 @@
         params:{recruitNo:this.recruitNo}
         })
       },
+      async studyStart(){
+        await this.createStudySpace(this.recruitNo)
+        router.push({ name:'study'})
+      }
 
 
     },

@@ -6,10 +6,19 @@ import createPersistedState from 'vuex-persistedstate'
 import membersrecruitment from '@/views/main/store/modules/membersrecruitment'
 import resume from '@/views/main/store/modules/resume'
 import review from '@/views/main/store/modules/review'
+import studyspace from '@/views/main/store/modules/studyspace'
 
 
 export default createStore({
-  modules: { root, accounts, notice, resume, review, membersrecruitment},
+  modules: {
+    root,
+    accounts, 
+    notice, 
+    resume, 
+    review, 
+    membersrecruitment,
+    studyspace
+  },
   Plugins:[
     createPersistedState()
   ]

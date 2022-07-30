@@ -59,7 +59,6 @@
       recruitDetail:Object,
       action:String,
       recruitNo:String,
-
     },
 
     data(){
@@ -77,7 +76,7 @@
           stdImg: this.recruitDetail.stdImg,
           stdLimit: this.recruitDetail.stdLimit,
           stdName: this.recruitDetail.stdName,
-          stdType: this.recruitDetail.stdType
+          stdType: this.recruitDetail.stdType || "COM"
         }
       }
     },
@@ -87,7 +86,7 @@
     methods:{
       ...mapActions(['createRecruitment','updateRecruitmentDetail','deleteRecruitmentDetail' ]),
       onInputimage(){
-        this.recruitmentInfo.stdImg = this.$refs.studyImage.files[0]['name']
+        this.newrecruitmentInfo.stdImg = this.$refs.studyImage.files[0]['name']
       },
       isCompany(type){
         if(type==="COM"){
@@ -99,7 +98,7 @@
       submitType(action){
         if(action==='create'){
           console.log(action)
-          this.createRecruitment(this.recruitmentInfo)
+          this.createRecruitment(this.newrecruitmentInfo)
         }
         else if (action==='update'){
           this.updateRecruitmentDetail([this.recruitNo,this.newrecruitmentInfo])

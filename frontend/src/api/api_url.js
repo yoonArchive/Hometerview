@@ -5,7 +5,7 @@ const NOTICE = 'notice/'
 const RECRUITS = 'recruits/'
 const RESUME = 'resume/'
 const REVIEW = 'review/'
-const STUDY = 'study/'
+const STUDY = 'study'
 
 
 export default {
@@ -59,6 +59,7 @@ export default {
     review: (reviewNo) => HOST + USERS + REVIEW + `${reviewNo}`
   },
   study:{
-    studyspace : () => HOST +  STUDY
+    studyspace : () => HOST +  STUDY,
+    studyspacedetail : (stdNo) => HOST +  STUDY + `/${stdNo}`
   }
 }
