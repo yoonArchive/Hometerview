@@ -10,11 +10,14 @@
   진행 일자 : {{ studySpaceDetail.stdDay }}<br>
   모집 인원 : {{ studySpaceDetail.stdLimit }}<br>
 
-  <study-members
-    v-for="member in memberList"
-    :key="member.joinNo"
-    :member="member"
-  ></study-members>
+  <!-- {{ studySpaceDetail.studyJoins }} -->
+  <div>
+    <study-members
+      v-for="member in studySpaceDetail.studyJoins"
+      :key="member.joinNo"
+      :member="member"
+    ></study-members>
+  </div>
 
 
 </template>
@@ -34,6 +37,7 @@ export default {
   data(){
     return{
       stdNo:this.$route.params.stdNo,
+      // memberList: this.studySpaceDetail.studyJoins
     }
   },
   computed:{
