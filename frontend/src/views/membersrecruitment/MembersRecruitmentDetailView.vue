@@ -14,7 +14,7 @@
           스터디 이름 :{{ recruitDetail.stdName }} <br>
           활동기간 : {{ recruitDetail.startDate }} ~  {{ recruitDetail.endDate }}<br>
           진행 일자 : {{ recruitDetail.stdDay }} <br>
-          모집인원 :   {{ recruitDetail.stdLimit }}<br>
+          모집인원 :   {{ recruitDetail.count-1 }}/{{ recruitDetail.stdLimit }}<br>
           스터디 타입 : {{ recruitDetail.stdType }} <br>
         </div>
       </div><hr>
@@ -25,17 +25,27 @@
           <p class="card-text">{{ recruitDetail.stdDetail }}</p>
         </div>
       </div>
-      기업명 : {{ recruitDetail.comName }}
+      기업명 : {{ recruitDetail.comName }} <br>
       스터디 현황 : {{ recruitDetail.recruitStatus }} 
-      <button @click="moveToUpdate">수정</button>
-      <button @click="deleteRecruitmentDetail([recruitNo])"> 삭제 </button>
-      <button type="button" class="btn btn-bd-primary" style="color:indigo">Primary</button>
+      <div v-if="applyType==='LEADER'">
+        <button @click="moveToUpdate">수정</button>
+        <button @click="deleteRecruitmentDetail([recruitNo])"> 삭제 </button>
+        <button @click="studyStart(recruitNo)"> 스터디 시작 </button>
+        <button type="button" class="btn btn-bd-primary" style="color:indigo">Primary</button>
+      </div>
+      <div v-else-if="applyType==='NORMAL' && recruitDetail.recruitStatus==='모집 중'">
+        <button @click="studyApplyCancel(recruitNo)">스터디 신청 취소</button>
+      </div>
+      <div v-else-if="applyType===null && recruitDetail.recruitStatus==='모집 중'">
+        <button @click="studyApply(recruitNo)" > 스터디 신청하기</button>
+      </div>
+      <div v-if="recruitDetail.recruitStatus==='모집 완료'">
+        <button>모집 완료</button>
+      </div>
+      타입 : {{ applyType }} <br>
 
-      {{ recruitDetail.stdDetail }} <br>
-      <button @click="studyStart(recruitNo)"> 스터디 시작 </button>
-      <button @click="studyApply(recruitNo)"> 스터디 신청하기</button>
-      <button @click="studyApplyCancel(recruitNo)">스터디 신청 취소</button>
-      <button >{{ applyState }}</button><br>
+      {{ recruitDetail.recruitStatus }} <br>
+      {{ recruitDetail.count }}
 
     </div>
 
@@ -53,12 +63,10 @@
     data(){
       return{
         recruitNo:this.$route.params.recruitNo,
-        studyType : '',
-        applyState : '스터디 신청하기',
       }
     },
     computed:{
-      ...mapGetters(['recruitDetail','currentUser','isApplied'])
+      ...mapGetters(['recruitDetail','currentUser','isApplied','applyType'])
       
     },
     methods:{
@@ -71,14 +79,6 @@
         'studyApplyCancel',
 
         ]),
-      changeApplyState(){
-        if(this.isApplied==true){
-          this.applyState = '스터디 취소'
-        }else{
-          this.applyState = '스터디 신청'
-        }
-      },
-
       interviewType(){
         if(this.recruitDetail.stdType === 'COM'){
           this.studyType = '기업 면접'
@@ -94,11 +94,10 @@
       },
       async studyStart(){
         await this.createStudySpace(this.recruitNo)
-        router.push({ name:'study'})
+        await router.push({ name:'study'})
       }
     },
     created(){
-      this.interviewType()
       this.bringRecruitmentDetail(this.recruitNo)
     }
 

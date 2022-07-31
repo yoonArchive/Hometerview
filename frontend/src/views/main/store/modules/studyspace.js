@@ -15,13 +15,13 @@ export default {
   getters: {
     authHeader: state => ({ Authorization: `Bearer ${state.token}`}),
     studySpaceList : state => state.studySpaceList,
-    studySpaceDetail : state => state.recruitDetail,
+    studySpaceDetail : state => state.studySpaceDetail,
   },
 
   mutations: {
     SET_TOKEN: (state, token) => state.token = token,
     SET_RECRUITMENT_LIST: (state,studySpaceList) => state.studySpaceList = studySpaceList,
-    SET_RECRUIT_DETAIL : (state,recruitDetail) => state.recruitDetail = recruitDetail,
+    SET_RECRUIT_DETAIL : (state,studySpaceDetail) => state.studySpaceDetail = studySpaceDetail,
   },
 
   actions: {
@@ -57,6 +57,7 @@ export default {
       })
     },
     bringStudySpaceDetial({commit},stdNo){
+
       axios({
         url:api_url.study.studyspacedetail(stdNo),
         method : 'get'
@@ -85,8 +86,6 @@ export default {
     },
     leaveStudy({getters}, stdNo){
       console.log(api_url.study.studyspacedetail(stdNo))
-      console.log('http://localhost:8080/api/v1/study/123')
-      console.log(getters.authHeader)
       axios({
         url:api_url.study.studyspacedetail(stdNo),
         method:'delete',
