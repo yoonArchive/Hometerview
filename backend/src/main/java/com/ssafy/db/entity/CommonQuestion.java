@@ -33,7 +33,8 @@ public class CommonQuestion {
     @Column(name = "question_type")
     private QuestionType questionType;
 
-    public void updateCommonQuestion(String contents) {
+    public void updateCommonQuestion(QuestionType questionType, String contents) {
+        this.questionType = questionType;
         this.contents = contents;
     }
 

@@ -73,7 +73,8 @@ public class StudyController {
         } catch (Exception e) {
             return ResponseEntity.status(401).body(BaseResponseBody.of(401, "스터디 상세 조회를 실패하였습니다."));
         }
-        return ResponseEntity.status(200).body(StudyRes.of(study, 200, "스터디 상세 조회를 성공하였습니다."));
+        long[] detailCounts = studyService.getDetailCounts(stdNo);
+        return ResponseEntity.status(200).body(StudyRes.of(study, detailCounts, 200, "스터디 상세 조회를 성공하였습니다."));
     }
 
     @DeleteMapping("/{stdNo}")
@@ -177,10 +178,12 @@ public class StudyController {
     @PostMapping({"/{stdNo}/common"})
     @ApiOperation(value = "공통 질문 등록", notes = "스터디에 공통 질문을 등록한다.")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "공통 질문 등록 성공", response = BaseResponseBody.class),
+            @ApiResponse(code = 200, message = "공통 질문 등록 성공", response = CommonQuestionListRes.class),
             @ApiResponse(code = 401, message = "공통 질문 등록 실패", response = BaseResponseBody.class),
             @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)})
-    public ResponseEntity<? extends BaseResponseBody> registerCommonQuestion(@ApiIgnore Authentication authentication, @PathVariable("stdNo") @ApiParam(value = "스터디 번호", required = true) Long stdNo, @RequestBody @ApiParam(value = "질문내용", required = true) @Valid CommonQuestionReq commonQuestionReq) {
+    public ResponseEntity<? extends BaseResponseBody> registerCommonQuestion(@ApiIgnore Authentication authentication,
+                                                                             @PathVariable("stdNo") @ApiParam(value = "스터디 번호", required = true) Long stdNo,
+                                                                             @RequestBody @ApiParam(value = "질문내용", required = true) @Valid CommonQuestionReq commonQuestionReq) {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         Long userNo = userDetails.getUserNo();
         try {
@@ -188,7 +191,8 @@ public class StudyController {
         } catch (Exception e) {
             return ResponseEntity.status(401).body(BaseResponseBody.of(401, "공통 질문 등록에 실패하였습니다."));
         }
-        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "공통 질문이 등록되었습니다."));
+        List<CommonQuestion> commonQuestions = commonQuestionService.getList(stdNo);
+        return ResponseEntity.status(200).body(CommonQuestionListRes.of(commonQuestions, 200, "공통 질문 등록이 완료되었습니다."));
     }
 
     @GetMapping({"/{stdNo}/common"})
@@ -197,9 +201,9 @@ public class StudyController {
             @ApiResponse(code = 200, message = "공통 질문 조회 성공", response = CommonQuestionListRes.class),
             @ApiResponse(code = 401, message = "공통 질문 조회 실패", response = BaseResponseBody.class),
             @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)})
-    public ResponseEntity<CommonQuestionListRes> getCommonQuestionList(@PathVariable("stdNo") @ApiParam(value = "상세번호", required = true) Long stdNo) {
+    public ResponseEntity<CommonQuestionListRes> getCommonQuestionList(@PathVariable("stdNo") @ApiParam(value = "스터디 번호", required = true) Long stdNo) {
         List<CommonQuestion> commonQuestions = commonQuestionService.getList(stdNo);
-        return ResponseEntity.status(200).body(CommonQuestionListRes.of(commonQuestions, 200, "해당 자기소개서 항목에 등록된 개인 질문입니다."));
+        return ResponseEntity.status(200).body(CommonQuestionListRes.of(commonQuestions, 200, "스터디 스페이스에 등록된 공통 질문 목록입니다."));
     }
 
     @PutMapping({"{stdNo}/common/{questionNo}"})
@@ -211,12 +215,12 @@ public class StudyController {
             @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)})
     public ResponseEntity<? extends BaseResponseBody> updatePersonalQuestion(@PathVariable("stdNo") @ApiParam(value = "스터디 번호", required = true) Long stdNo,
                                                                              @PathVariable("questionNo") @ApiParam(value = "공통 질문 번호", required = true) Long questionNo,
-                                                                             @RequestBody @ApiParam(value = "수정내용", required = true) @Valid QuestionUpdateReq questionUpdateReq) {
+                                                                             @RequestBody @ApiParam(value = "수정내용", required = true) @Valid CommonQuestionReq commonQuestionReq) {
         CommonQuestion commonQuestion = commonQuestionService.getCommonQuestion(questionNo);
         if (commonQuestion == null)
             return ResponseEntity.status(402).body(BaseResponseBody.of(402, "해당하는 공통 질문이 없습니다."));
         try {
-            commonQuestionService.updateCommonQuestion(commonQuestion, questionUpdateReq);
+            commonQuestionService.updateCommonQuestion(commonQuestion, commonQuestionReq);
         } catch (Exception e) {
             return ResponseEntity.status(401).body(BaseResponseBody.of(401, "공통 질문 수정에 실패하였습니다."));
         }
@@ -236,12 +240,12 @@ public class StudyController {
                                                                            @PathVariable("questionNo") @ApiParam(value = "공통 질문 번호", required = true) Long questionNo) {
         CommonQuestion commonQuestion = commonQuestionService.getCommonQuestion(questionNo);
         if (commonQuestion == null)
-            return ResponseEntity.status(402).body(BaseResponseBody.of(402, "해당하는 개인 질문이 없습니다."));
+            return ResponseEntity.status(402).body(BaseResponseBody.of(402, "해당하는 공통 질문이 없습니다."));
         int result = commonQuestionService.deleteCommonQuestion(questionNo);
         if (result == 1) {
             List<CommonQuestion> commonQuestions = commonQuestionService.getList(stdNo);
-            return ResponseEntity.status(200).body(CommonQuestionListRes.of(commonQuestions, 200, "개인 질문이 삭제되었습니다."));
-        } else return ResponseEntity.status(401).body(BaseResponseBody.of(401, "개인 질문 삭제에 실패하였습니다."));
+            return ResponseEntity.status(200).body(CommonQuestionListRes.of(commonQuestions, 200, "공통 질문이 삭제되었습니다."));
+        } else return ResponseEntity.status(401).body(BaseResponseBody.of(401, "공통 질문 삭제에 실패하였습니다."));
     }
 
     @GetMapping("{stdNo}/common/type")
