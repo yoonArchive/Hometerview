@@ -23,13 +23,6 @@
           </div>
         </div>
       </router-link>
-      <router-link to="/home/logout" class="header-routerlink-decoration" >
-        <div class="header-btn" v-if="isLoggedIn">
-          <div class="header-btn-text">
-            logout
-          </div>
-        </div>
-      </router-link>
       <router-link to="/home/signup" class="header-routerlink-decoration">
         <div class="header-btn" v-if="!isLoggedIn" style="background-color:#653FD3;">
           <div class="header-btn-text" style="color:white">
@@ -39,6 +32,13 @@
       </router-link>
     </div>
     <div class="header-btngroup" v-else>
+      <router-link to="/home/logout" class="header-routerlink-decoration" >
+        <div class="header-btn" v-if="isLoggedIn">
+          <div class="header-btn-text">
+            logout
+          </div>
+        </div>
+      </router-link>
       <div>
         <router-link to="/home/mypage">
           <img :src="imagesrc" alt="" >

@@ -1,11 +1,20 @@
 <template>
-  
+
+  <study-space-list></study-space-list>
+
 </template>
 
 <script>
+import StudySpaceList from './components/StudySpaceList.vue'
 export default {
-  name : StudySpaceView
-  
+  name : 'StudySpaceView',
+  components :{
+    StudySpaceList,
+  },
+  data(){
+
+  }
+
 
 
 }

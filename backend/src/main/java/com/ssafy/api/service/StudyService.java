@@ -2,6 +2,7 @@ package com.ssafy.api.service;
 
 import com.ssafy.api.request.StudyPostReq;
 import com.ssafy.db.entity.Recruit;
+import com.ssafy.db.entity.Resume;
 import com.ssafy.db.entity.Study;
 import com.ssafy.db.entity.StudyJoin;
 
@@ -30,5 +31,7 @@ public interface StudyService {
     StudyJoin findStudyJoin(Long stdNo, Long userNo);
 
     void updateRegistedResume(StudyJoin studyJoin, Long resumeNo);
+
+    long[] getDetailCounts(Long stdNo);
 
 }

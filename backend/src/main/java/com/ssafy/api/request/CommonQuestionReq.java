@@ -16,7 +16,6 @@ import javax.validation.constraints.NotNull;
 @ApiModel("CommonQuestionRequest")
 public class CommonQuestionReq {
 
-
     @NotEmpty
     @ApiModelProperty(name = "질문 내용", example = "질문 내용입니다.")
     String contents;

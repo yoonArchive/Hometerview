@@ -1,10 +1,7 @@
 package com.ssafy.api.service;
 
 import com.ssafy.api.request.CommonQuestionReq;
-import com.ssafy.api.request.QuestionUpdateReq;
 import com.ssafy.db.entity.CommonQuestion;
-import com.ssafy.db.entity.PersonalQuestion;
-import com.ssafy.db.entity.Recruit;
 
 import java.util.List;
 
@@ -17,7 +14,7 @@ public interface CommonQuestionService {
 
     CommonQuestion getCommonQuestion(Long questionNo);
 
-    void updateCommonQuestion(CommonQuestion commonQuestion, QuestionUpdateReq questionUpdateReq);
+    void updateCommonQuestion(CommonQuestion commonQuestion, CommonQuestionReq commonQuestionReq);
 
     int deleteCommonQuestion(Long questionNo);
 

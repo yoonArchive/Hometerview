@@ -1,8 +1,6 @@
 /* 공통으로 적용되어야할 css */
 @media (max-width: 700px) {
-  .main-container {
-    height: calc(100% - 275px) !important;
-  }
+
 }
 
 #app,

@@ -1,13 +1,11 @@
 package com.ssafy.api.service;
 
 import com.ssafy.api.request.CommonQuestionReq;
-import com.ssafy.api.request.QuestionUpdateReq;
 import com.ssafy.db.entity.*;
 import com.ssafy.db.repository.CommonQuestionRepository;
 import com.ssafy.db.repository.CommonQuestionRepositorySupport;
 import com.ssafy.db.repository.StudyRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,9 +45,10 @@ public class CommonQuestionServiceImpl implements CommonQuestionService {
 
     @Override
     @Transactional
-    public void updateCommonQuestion(CommonQuestion commonQuestion, QuestionUpdateReq questionUpdateReq) {
-        String content = questionUpdateReq.getContents();
-        commonQuestion.updateCommonQuestion(content);
+    public void updateCommonQuestion(CommonQuestion commonQuestion, CommonQuestionReq commonQuestionReq) {
+        QuestionType questionType = commonQuestionReq.getQuestionType();
+        String content = commonQuestionReq.getContents();
+        commonQuestion.updateCommonQuestion(questionType, content);
     }
 
     @Override

@@ -109,11 +109,14 @@ public class RecruitController {
             @ApiResponse(code = 401, message = "스터디 모집글 상세정보 조회 실패", response = BaseResponseBody.class),
             @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
     })
-    public ResponseEntity<? extends BaseResponseBody> getRecruitDetail(@PathVariable @ApiParam(value = "모집글 번호", required = true) Long recruitNo) throws Exception {
+    public ResponseEntity<? extends BaseResponseBody> getRecruitDetail(@ApiIgnore Authentication authentication, @PathVariable @ApiParam(value = "모집글 번호", required = true) Long recruitNo) throws Exception {
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        Long userNo = userDetails.getUserNo();
         Recruit recruit = recruitService.getByRecruitNo(recruitNo);
         if (recruit == null) return ResponseEntity.status(401).body(BaseResponseBody.of(401, "해당하는 스터디 모집글이 없습니다."));
         long count = applyService.getApplyCount(recruit);
-        return ResponseEntity.status(200).body(RecruitRes.of(recruit, count, 200, "스터디 모집글 상세조회를 성공하였습니다."));
+        ApplyType applyType = applyService.getApplyType(recruitNo, userNo);
+        return ResponseEntity.status(200).body(RecruitRes.of(recruit, count, applyType, 200, "스터디 모집글 상세조회를 성공하였습니다."));
     }
 
     @PutMapping("/{recruitNo}")
@@ -124,7 +127,9 @@ public class RecruitController {
             @ApiResponse(code = 402, message = "해당 모집글 없음", response = BaseResponseBody.class),
             @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
     })
-    public ResponseEntity<? extends BaseResponseBody> updateRecruit(@PathVariable @ApiParam(value = "모집글 번호", required = true) Long recruitNo, @RequestBody @ApiParam(value = "모집글 변경 내용", required = true) RecruitReq recruitReq) {
+    public ResponseEntity<? extends BaseResponseBody> updateRecruit(@ApiIgnore Authentication authentication, @PathVariable @ApiParam(value = "모집글 번호", required = true) Long recruitNo, @RequestBody @ApiParam(value = "모집글 변경 내용", required = true) RecruitReq recruitReq) {
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        Long userNo = userDetails.getUserNo();
         Recruit recruit = recruitService.getByRecruitNo(recruitNo);
         if (recruit == null)
             return ResponseEntity.status(402).body(BaseResponseBody.of(402, "해당하는 스터디 모집글이 없습니다."));
@@ -136,7 +141,8 @@ public class RecruitController {
             return ResponseEntity.status(401).body(BaseResponseBody.of(401, "스터디 모집글 수정에 실패하였습니다."));
         }
         long count = applyService.getApplyCount(recruit);
-        return ResponseEntity.status(200).body(RecruitRes.of(updatedRecruit, count, 200, "스터디 모집글이 수정되었습니다."));
+        ApplyType applyType = applyService.getApplyType(recruitNo, userNo);
+        return ResponseEntity.status(200).body(RecruitRes.of(updatedRecruit, count, applyType, 200, "스터디 모집글이 수정되었습니다."));
     }
 
     @DeleteMapping("/{recruitNo}")
