@@ -15,13 +15,13 @@ export default {
   getters: {
     authHeader: state => ({ Authorization: `Bearer ${state.token}`}),
     studySpaceList : state => state.studySpaceList,
-    studySpaceDetail : state => state.recruitDetail,
+    studySpaceDetail : state => state.studySpaceDetail,
   },
 
   mutations: {
     SET_TOKEN: (state, token) => state.token = token,
     SET_RECRUITMENT_LIST: (state,studySpaceList) => state.studySpaceList = studySpaceList,
-    SET_RECRUIT_DETAIL : (state,recruitDetail) => state.recruitDetail = recruitDetail,
+    SET_RECRUIT_DETAIL : (state,studySpaceDetail) => state.studySpaceDetail = studySpaceDetail,
   },
 
   actions: {
@@ -57,6 +57,7 @@ export default {
       })
     },
     bringStudySpaceDetial({commit},stdNo){
+
       axios({
         url:api_url.study.studyspacedetail(stdNo),
         method : 'get'
@@ -68,7 +69,36 @@ export default {
       .catch(err=>{
         console.log(err.response)
       })
-    }
+    },
+    kickMember({getters}, stdMemberInfo){
+      const forURL = `?stdNo=${stdMemberInfo.stdNo}&userNo=${stdMemberInfo.userNo}`
+      axios({
+        url:api_url.study.studyspace()+forURL,
+        method:'delete',
+        headers:getters.authHeader
+      })
+      .then(res=>{
+        console.log(res.data)
+      })
+      .catch(err=>{
+        console.log(err.response)
+      })
+    },
+    leaveStudy({getters}, stdNo){
+      console.log(api_url.study.studyspacedetail(stdNo))
+      axios({
+        url:api_url.study.studyspacedetail(stdNo),
+        method:'delete',
+        headers:getters.authHeader
+      })
+      .then(res=>{
+        console.log(res.data)
+        router.push({name:'studyrecruitment'})
+      })
+      .catch(err=>{
+        console.log(err.response)
+      })
+    },
 
 
   },
