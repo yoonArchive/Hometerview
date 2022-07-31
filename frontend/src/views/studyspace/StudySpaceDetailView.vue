@@ -1,6 +1,6 @@
 <template>
   <h1>Detail Page</h1>
-
+  <button @click="leaveStudy(stdNo)"> 스터디 탈퇴 </button><br>
   대표 이미지 : {{ studySpaceDetail.stdImg }}<br>
   스터디 이름 : {{ studySpaceDetail.stdName }} <br>
   스터디 소개 : {{ studySpaceDetail.stdDetail }}<br>
@@ -9,6 +9,7 @@
   기간 : {{ studySpaceDetail.startDate }} ~ {{ studySpaceDetail.endDate }}<br>
   진행 일자 : {{ studySpaceDetail.stdDay }}<br>
   모집 인원 : {{ studySpaceDetail.stdLimit }}<br>
+
 
   <!-- {{ studySpaceDetail.studyJoins }} -->
   <div>
@@ -44,7 +45,7 @@ export default {
     ...mapGetters(['studySpaceDetail'])
   },
   methods:{
-    ...mapActions(['bringStudySpaceDetial'])
+    ...mapActions(['bringStudySpaceDetial','leaveStudy'])
   },
   created(){
     this.bringStudySpaceDetial(this.stdNo)

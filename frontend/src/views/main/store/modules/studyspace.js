@@ -68,7 +68,38 @@ export default {
       .catch(err=>{
         console.log(err.response)
       })
-    }
+    },
+    kickMember({getters}, stdMemberInfo){
+      const forURL = `?stdNo=${stdMemberInfo.stdNo}&userNo=${stdMemberInfo.userNo}`
+      axios({
+        url:api_url.study.studyspace()+forURL,
+        method:'delete',
+        headers:getters.authHeader
+      })
+      .then(res=>{
+        console.log(res.data)
+      })
+      .catch(err=>{
+        console.log(err.response)
+      })
+    },
+    leaveStudy({getters}, stdNo){
+      console.log(api_url.study.studyspacedetail(stdNo))
+      console.log('http://localhost:8080/api/v1/study/123')
+      console.log(getters.authHeader)
+      axios({
+        url:api_url.study.studyspacedetail(stdNo),
+        method:'delete',
+        headers:getters.authHeader
+      })
+      .then(res=>{
+        console.log(res.data)
+        router.push({name:'studyrecruitment'})
+      })
+      .catch(err=>{
+        console.log(err.response)
+      })
+    },
 
 
   },

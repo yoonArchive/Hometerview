@@ -31,11 +31,13 @@
       <button @click="deleteRecruitmentDetail([recruitNo])"> 삭제 </button>
       <button type="button" class="btn btn-bd-primary" style="color:indigo">Primary</button>
 
-    {{ recruitDetail.stdDetail }} <br>
-    <button @click="studyStart(recruitNo)"> 스터디 시작 </button>
-    <button @click="studyApply(recruitNo)"> 스터디 신청하기</button>
-    <button @click="studyApplyCancel(recruitNo)">스터디 신청 취소</button>
-    <button >{{ applyState }}</button><br>
+      {{ recruitDetail.stdDetail }} <br>
+      <button @click="studyStart(recruitNo)"> 스터디 시작 </button>
+      <button @click="studyApply(recruitNo)"> 스터디 신청하기</button>
+      <button @click="studyApplyCancel(recruitNo)">스터디 신청 취소</button>
+      <button >{{ applyState }}</button><br>
+
+    </div>
 
 
 </template>

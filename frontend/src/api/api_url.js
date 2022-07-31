@@ -6,6 +6,7 @@ const RECRUITS = 'recruits/'
 const RESUME = 'resume/'
 const REVIEW = 'review/'
 const STUDY = 'study'
+const APPLY = 'apply/'
 
 
 export default {
@@ -52,6 +53,7 @@ export default {
     membersrecruiting: () => HOST + RECRUITS + 'recruiting/',
     membersrecruitsearch: () => HOST + RECRUITS + 'search/',
     membersrecruittype: () => HOST + RECRUITS + 'type/',
+    studyApply: (recruitNo) => HOST + APPLY + `${recruitNo}`
   },
   review:{
     //회고

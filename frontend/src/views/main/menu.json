@@ -2,7 +2,7 @@
   "mystudy" : {
     "name" : "마이스터디",
     "hidden" : false,
-    "path" : "/",
+    "path" : "/home/study",
     "icon" : "el-icon-s-home",
     "children" : []
   },
