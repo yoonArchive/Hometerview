@@ -73,7 +73,8 @@ public class StudyController {
         } catch (Exception e) {
             return ResponseEntity.status(401).body(BaseResponseBody.of(401, "스터디 상세 조회를 실패하였습니다."));
         }
-        return ResponseEntity.status(200).body(StudyRes.of(study, 200, "스터디 상세 조회를 성공하였습니다."));
+        long[] detailCounts = studyService.getDetailCounts(stdNo);
+        return ResponseEntity.status(200).body(StudyRes.of(study, detailCounts, 200, "스터디 상세 조회를 성공하였습니다."));
     }
 
     @DeleteMapping("/{stdNo}")

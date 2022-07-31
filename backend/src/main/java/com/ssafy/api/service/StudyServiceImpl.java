@@ -3,7 +3,6 @@ package com.ssafy.api.service;
 import com.ssafy.db.entity.*;
 import com.ssafy.db.repository.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +26,8 @@ public class StudyServiceImpl implements StudyService {
     private final StudyJoinRepositorySupport studyJoinRepositorySupport;
 
     private final ApplyRepository applyRepository;
+
+    private final ResumeDetailRepositorySupport resumeDetailRepositorySupport;
 
     @Override
     public void createStudy(Long recruitNo) {
@@ -126,6 +127,17 @@ public class StudyServiceImpl implements StudyService {
     @Transactional
     public void updateRegistedResume(StudyJoin studyJoin, Long resumeNo) {
         studyJoin.updateResumeNo(resumeNo);
+    }
+
+    @Override
+    public long[] getDetailCounts(Long stdNo) {
+        List<StudyJoin> studyJoins = studyJoinRepositorySupport.findByStdNo(stdNo);
+        long[] detailCounts = new long[studyJoins.size()];
+        int idx = 0;
+        for (StudyJoin studyJoin : studyJoins) {
+            detailCounts[idx++] = studyJoin.getResumeNo() == null ? 0 : resumeDetailRepositorySupport.CountByResumeNo(studyJoin.getResumeNo());
+        }
+        return detailCounts;
     }
 
 }
