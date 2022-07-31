@@ -187,7 +187,7 @@ public class StudyController {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         Long userNo = userDetails.getUserNo();
         try {
-          commonQuestionService.registerCommonQuestion(userNo, stdNo, commonQuestionReq);
+            commonQuestionService.registerCommonQuestion(userNo, stdNo, commonQuestionReq);
         } catch (Exception e) {
             return ResponseEntity.status(401).body(BaseResponseBody.of(401, "공통 질문 등록에 실패하였습니다."));
         }
@@ -215,12 +215,12 @@ public class StudyController {
             @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)})
     public ResponseEntity<? extends BaseResponseBody> updatePersonalQuestion(@PathVariable("stdNo") @ApiParam(value = "스터디 번호", required = true) Long stdNo,
                                                                              @PathVariable("questionNo") @ApiParam(value = "공통 질문 번호", required = true) Long questionNo,
-                                                                             @RequestBody @ApiParam(value = "수정내용", required = true) @Valid QuestionUpdateReq questionUpdateReq) {
+                                                                             @RequestBody @ApiParam(value = "수정내용", required = true) @Valid CommonQuestionReq commonQuestionReq) {
         CommonQuestion commonQuestion = commonQuestionService.getCommonQuestion(questionNo);
         if (commonQuestion == null)
             return ResponseEntity.status(402).body(BaseResponseBody.of(402, "해당하는 공통 질문이 없습니다."));
         try {
-            commonQuestionService.updateCommonQuestion(commonQuestion, questionUpdateReq);
+            commonQuestionService.updateCommonQuestion(commonQuestion, commonQuestionReq);
         } catch (Exception e) {
             return ResponseEntity.status(401).body(BaseResponseBody.of(401, "공통 질문 수정에 실패하였습니다."));
         }

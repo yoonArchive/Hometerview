@@ -1,7 +1,6 @@
 package com.ssafy.api.controller;
 
-import com.ssafy.api.request.QuestionReq;
-import com.ssafy.api.request.QuestionUpdateReq;
+import com.ssafy.api.request.PersonalQuestionReq;
 import com.ssafy.api.request.ResumeWritePostReq;
 import com.ssafy.api.request.UpdateResumePutReq;
 import com.ssafy.api.response.*;
@@ -139,11 +138,11 @@ public class ResumeController {
     public ResponseEntity<? extends BaseResponseBody> registerQuestion(@ApiIgnore Authentication authentication,
                                                                        @PathVariable("stdNo") @ApiParam(value = "스터디번호", required = true) Long stdNo,
                                                                        @PathVariable("detailNo") @ApiParam(value = "상세번호", required = true) Long detailNo,
-                                                                       @RequestBody @ApiParam(value = "질문내용", required = true) @Valid QuestionReq questionReq) {
+                                                                       @RequestBody @ApiParam(value = "질문내용", required = true) @Valid PersonalQuestionReq personalQuestionReq) {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         Long userNo = userDetails.getUserNo();
         try {
-            personalQuestionService.registerQuestion(userNo, stdNo, detailNo, questionReq);
+            personalQuestionService.registerQuestion(userNo, stdNo, detailNo, personalQuestionReq);
         } catch (Exception e) {
             return ResponseEntity.status(401).body(BaseResponseBody.of(401, "개인 질문 등록에 실패하였습니다."));
         }
@@ -167,14 +166,14 @@ public class ResumeController {
                                                                              @PathVariable("stdNo") @ApiParam(value = "스터디번호", required = true) Long stdNo,
                                                                              @PathVariable("detailNo") @ApiParam(value = "상세번호", required = true) Long detailNo,
                                                                              @PathVariable("questionNo") @ApiParam(value = "질문번호", required = true) Long questionNo,
-                                                                             @RequestBody @ApiParam(value = "수정내용", required = true) @Valid QuestionUpdateReq questionUpdateReq) {
+                                                                             @RequestBody @ApiParam(value = "수정내용", required = true) @Valid PersonalQuestionReq personalQuestionReq) {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         Long userNo = userDetails.getUserNo();
         PersonalQuestion personalQuestion = personalQuestionService.getPersonalQuestion(questionNo, detailNo, userNo);
         if (personalQuestion == null)
             return ResponseEntity.status(402).body(BaseResponseBody.of(402, "해당하는 개인 질문이 없습니다."));
         try {
-            personalQuestionService.updatePersonalQuestion(personalQuestion, questionUpdateReq);
+            personalQuestionService.updatePersonalQuestion(personalQuestion, personalQuestionReq);
         } catch (Exception e) {
             return ResponseEntity.status(401).body(BaseResponseBody.of(401, "개인 질문 수정에 실패하였습니다."));
         }

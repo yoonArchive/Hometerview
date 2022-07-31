@@ -1,7 +1,6 @@
 package com.ssafy.api.service;
 
-import com.ssafy.api.request.QuestionReq;
-import com.ssafy.api.request.QuestionUpdateReq;
+import com.ssafy.api.request.PersonalQuestionReq;
 import com.ssafy.db.entity.*;
 import com.ssafy.db.repository.PersonalQuestionRepository;
 import com.ssafy.db.repository.PersonalQuestionRepositorySupport;
@@ -23,7 +22,7 @@ public class PersonalQuestionServiceImpl implements PersonalQuestionService {
     private final ResumeDetailRepository resumeDetailRepository;
 
     @Override
-    public void registerQuestion(Long userNo, Long stdNo, Long detailNo, QuestionReq questionReq) {
+    public void registerQuestion(Long userNo, Long stdNo, Long detailNo, PersonalQuestionReq questionReq) {
         ResumeDetail resumeDetail = resumeDetailRepository.findByDetailNo(detailNo).get();
         PersonalQuestion personalQuestion = PersonalQuestion.builder()
                 .resumeDetail(resumeDetail)
@@ -52,8 +51,8 @@ public class PersonalQuestionServiceImpl implements PersonalQuestionService {
 
     @Override
     @Transactional
-    public void updatePersonalQuestion(PersonalQuestion personalQuestion, QuestionUpdateReq questionUpdateReq) {
-        String contents = questionUpdateReq.getContents();
+    public void updatePersonalQuestion(PersonalQuestion personalQuestion, PersonalQuestionReq personalQuestionReq) {
+        String contents = personalQuestionReq.getContents();
         personalQuestion.updatePersonalQuestion(contents);
     }
 

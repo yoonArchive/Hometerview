@@ -1,14 +1,13 @@
 package com.ssafy.api.service;
 
-import com.ssafy.api.request.QuestionReq;
-import com.ssafy.api.request.QuestionUpdateReq;
+import com.ssafy.api.request.PersonalQuestionReq;
 import com.ssafy.db.entity.PersonalQuestion;
 
 import java.util.List;
 
 public interface PersonalQuestionService {
 
-    void registerQuestion(Long userNo, Long stdNo, Long detailNo, QuestionReq questionReq);
+    void registerQuestion(Long userNo, Long stdNo, Long detailNo, PersonalQuestionReq questionReq);
 
     List<PersonalQuestion> getListByDetailNo(Long detailNo);
 
@@ -16,7 +15,7 @@ public interface PersonalQuestionService {
 
     PersonalQuestion getPersonalQuestion(Long questionNo, Long detailNo, Long userNo);
 
-    void updatePersonalQuestion(PersonalQuestion personalQuestion, QuestionUpdateReq questionUpdateReq);
+    void updatePersonalQuestion(PersonalQuestion personalQuestion, PersonalQuestionReq personalQuestionReq);
 
     int deletePersonalQuestion(Long questionNo);
 
