@@ -10,7 +10,7 @@ import javax.validation.constraints.NotEmpty;
 @Getter
 @Setter
 @ApiModel("QuestionRequest")
-public class QuestionReq {
+public class PersonalQuestionReq {
 
     @NotEmpty
     @ApiModelProperty(name = "질문 내용", example = "질문 내용입니다.")

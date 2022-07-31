@@ -53,7 +53,10 @@ public class StudyRes extends BaseResponseBody {
     @ApiModelProperty(name = "스터디 참여 멤버")
     List<StudyJoin> studyJoins;
 
-    public static StudyRes of(Study study, Integer statusCode, String message) {
+    @ApiModelProperty(name = "항목갯수")
+    long[] detailCounts;
+
+    public static StudyRes of(Study study, long[] detailCounts, Integer statusCode, String message) {
         StudyRes res = new StudyRes();
         res.setStdName(study.getStdName());
         res.setStdDetail(study.getStdDetail());
@@ -66,6 +69,7 @@ public class StudyRes extends BaseResponseBody {
         res.setStdLimit(study.getStdLimit());
         res.setStdNotice(study.getStdNotice());
         res.setStudyJoins(study.getStudyJoins());
+        res.setDetailCounts(detailCounts);
         res.setStatusCode(statusCode);
         res.setMessage(message);
         return res;
