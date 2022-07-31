@@ -1,7 +1,7 @@
 <template>
     <!-- table -->
 
-    <h1 id="title">저희의 신규 업데이트 소식을 알려드릴께요!</h1>
+    <h1 id="title">저희의 신규 <p id="aa">업데이트</p> 소식을 알려드릴께요!</h1>
 
     <div class="table-cocover">
       <div class="table-cover">
@@ -146,5 +146,15 @@
    width: 100px;
    text-align: center;
 
+}
+#aa{
+  display: inline;
+  font-family: "티머니 둥근바람";
+  color: #653FD3;
+}
+#title{
+  font-family: "티머니 둥근바람";
+  text-align: center;
+  margin-top: 10px;
 }
 </style>

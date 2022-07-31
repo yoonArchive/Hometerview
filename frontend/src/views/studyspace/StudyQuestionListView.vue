@@ -2,42 +2,43 @@
   <div>
 
 
-
+    {{commonQuestions.commonQuestions}}
+    <div v-for="commonquesions in commonQuestions.commonQuestions">
+      {{ commonquesions.contents}}
+    </div>
+      <CommonQuestionList :commonquestions="commonQuestions.commonQuestions"></CommonQuestionList>
   </div>
 
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
-
+import CommonQuestionList from './components/CommonQuestionList.vue';
 
 export default {
+  name: 'StudyQuestionsListView',
+  components: {CommonQuestionList},
   data(){
     return {
       roomName : '',
-      headers: ['번호','제목', '작성시간', '유형']
+      //여기서 데이터를 넘겨줌
+      stdNo: this.$route.params.stdNo,
     }
   },
   computed:{
-    ...mapGetters(['resumeContents','numberOfResume', 'reviewContents','numberOfReview']),
+    ...mapGetters(['commonQuestion','commonQuestions']),
   },
   methods:{
-    ...mapActions(["getResumeInfo","getReviewInfo","addNewResume"]),
-    findresumes(){
-      this.getResumeInfo();
-    },
-    addResume(){
-      this.addNewResume();
-    },
-
-    findreveiw(){
-      this.getReviewInfo();
-    },
+    ...mapActions(['getStd','commonQuestions1']),
 
   },
   mounted(){
-    this.findresumes();
-    this.findreveiw();
+
+  },
+  created(){
+    // this.getStd(this.stdNo);
+    this.commonQuestions1(this.stdNo);
+    console.log(this.stdNo)
   }
 }
 </script>

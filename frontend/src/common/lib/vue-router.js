@@ -50,7 +50,7 @@ import ReviewEdit from '@/views/myinterview/review/ReviewEditView'
 // import CommonQuestionDetailView from '@/views/studyspace/components/CommonQuestionDetailView'
 // import CommonQuestionNewView from '@/views/studyspace/components/CommonQuestionNewView'
 // import CommonQuestionEditView from '@/views/studyspace/components/CommonQuestionEditView'
-
+import StudyQuestionListView from '@/views/studyspace/StudyQuestionListView'
 
 
 const fullMenu = require('@/views/main/menu.json')
@@ -169,29 +169,39 @@ function makeRoutesFromMenu () {
       path: 'review/:reviewNo/edit',
       name: 'reviewEdit',
       component : ReviewEdit
+    },{
+      path: '/notice',
+      name: 'notices',
+      component: noticeList
+    },{
+      path: '/notice/new',
+      name: 'noticeNew',
+      component: noticeNewView
+    },{
+      path: '/notice/:noticeNo',
+      name: 'notice',
+      component: noticeDetailView
+    },
+    {
+      path: '/notice/:noticeNo/edit',
+      name: 'noticeEdit',
+      component: noticeEditView
     }]
   },{
     path: '/',
     name: 'main',
     component:Main
-  },{
-    path: '/notice',
-    name: 'notices',
-    component: noticeList
-  },{
-    path: '/notice/new',
-    name: 'noticeNew',
-    component: noticeNewView
-  },{
-    path: '/notice/:noticeNo',
-    name: 'notice',
-    component: noticeDetailView
   },
   {
-    path: '/notice/:noticeNo/edit',
-    name: 'noticeEdit',
-    component: noticeEditView
+    path: '/study/:stdNo/questionList',
+    name: 'questionList',
+    component: StudyQuestionListView
   },
+
+
+
+
+
   // {
   //   path: '/study/:studyNo/common/new',
   //   name: 'commonNew',
@@ -207,6 +217,10 @@ function makeRoutesFromMenu () {
   //   name: 'commonDetail',
   //   component: CommonQuestionDetailView
   // },
+
+
+
+
 
 
 

@@ -1,22 +1,24 @@
 <template>
   <div class="container">
-    <div>
+    <div class="inner-container">
         <p id="title">{{notice.noticeTitle}} </p>
-        <hr/>
+
         <p>작성자 : 관리자</p>
+
+        <hr/>
     </div>
 
         <h1>{{notice.noticeContents}}</h1>
         <!-- <div class="component1" v-if="isAuthor"> -->
     <div class="buttonbundle">
         <button id="button-review">
-          <router-link :to="{ name: 'noticeEdit', params: { noticeNo } }" id="a">
-            수정하기
+          <router-link :to="{ name: 'noticeEdit', params: { noticeNo } }" >
+            <p id="a">수정하기</p>
           </router-link>
         </button>
         <button id="button-review" @click="deleteNotice(noticeNo)"><p id="a">삭제하기</p></button>
         <button id="button-review">
-          <router-link class="routerlink" :to="{ name: 'notices' }" id="a">
+          <router-link class="routerlink" :to="{ name: 'notices' }" >
             <p id="a">목록으로</p>
           </router-link>
 
@@ -64,7 +66,7 @@ import { mapGetters, mapActions } from 'vuex'
 <style scoped >
 #title{
   font-size: 50px;
-  text-align: center;
+  text-align: left;
 }
 
 #a {
@@ -72,6 +74,7 @@ import { mapGetters, mapActions } from 'vuex'
   color: white;
   font-size: 15px;
   font-family: "티머니 둥근바람";
+  margin-top: 1px;
 }
 #button-review{
    background-color: #653FD3;
@@ -85,10 +88,11 @@ import { mapGetters, mapActions } from 'vuex'
   /* display: flex; */
   /* justify-content: flex-start; */
   flex-direction: row;
-  margin: 10px;
+  margin: 20px;
   flex-basis: 150px;
   flex-shrink: 0;
   width: 100%;
+  text-align: center;
 
 
 
@@ -101,11 +105,16 @@ import { mapGetters, mapActions } from 'vuex'
   flex-direction: column;
   margin-top: 5%;
   justify-content: center;
-  text-align: center;
-  width: 100%;
+  /* text-align: center; */
+  width: 90%;
   height: 70%;
   background-color: white;
   margin: 10%;
+  border: 1px;
+}
+
+.inner-container{
+  width: 50;
 }
 
 
