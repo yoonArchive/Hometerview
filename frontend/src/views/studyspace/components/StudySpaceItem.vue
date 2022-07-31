@@ -10,11 +10,11 @@
     {{ studySpace.startDate }}<br>
     {{ studySpace.endDate }}<br>
     {{ studySpace.stdDay }}<br>
-    {{ studySpace.stdLimit }}<br>
+    {{ countStudyJoins }} / {{ studySpace.stdLimit }}<br>
     {{ studySpace.stdNotice }} <br>
-    Study Leader : {{ studySpace.studyJoins[0].user.userName }}
-    <button @click="moveToStudyDetail"> 스터디 가기 </button>
     
+    Study Leader : {{ studySpace.studyJoins[0].user.userName }} <br>
+    <button @click="moveToStudyDetail"> 스터디 가기 </button>
     <hr>
  
 
@@ -34,9 +34,15 @@ export default {
 
   data(){
     return{
+        studyJoins : this.studySpace.studyJoins
       }
     },
   computed: {
+    countStudyJoins(){
+        const count = this.studyJoins.length
+        return count
+    }
+
   },
   methods: {
     moveToStudyDetail(){

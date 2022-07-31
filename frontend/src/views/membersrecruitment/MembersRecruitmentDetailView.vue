@@ -94,11 +94,10 @@
       },
       async studyStart(){
         await this.createStudySpace(this.recruitNo)
-        router.push({ name:'study'})
+        await router.push({ name:'study'})
       }
     },
     created(){
-      this.interviewType()
       this.bringRecruitmentDetail(this.recruitNo)
     }
 
