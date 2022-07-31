@@ -24,7 +24,7 @@ public class CommonQuestionServiceImpl implements CommonQuestionService {
     private final CommonQuestionRepositorySupport commonQuestionRepositorySupport;
 
     @Override
-    public CommonQuestion registerCommonQuestion(Long userNo, Long stdNo, CommonQuestionReq commonQuestionReq) {
+    public void registerCommonQuestion(Long userNo, Long stdNo, CommonQuestionReq commonQuestionReq) {
         Study study = studyRepository.findByStdNo(stdNo).get();
         CommonQuestion commonQuestion = CommonQuestion.builder()
                 .study(study)
@@ -32,7 +32,7 @@ public class CommonQuestionServiceImpl implements CommonQuestionService {
                 .contents(commonQuestionReq.getContents())
                 .questionType(commonQuestionReq.getQuestionType())
                 .build();
-        return commonQuestionRepository.save(commonQuestion);
+        commonQuestionRepository.save(commonQuestion);
     }
 
     @Override
@@ -48,8 +48,9 @@ public class CommonQuestionServiceImpl implements CommonQuestionService {
     @Override
     @Transactional
     public void updateCommonQuestion(CommonQuestion commonQuestion, QuestionUpdateReq questionUpdateReq) {
+        QuestionType questionType = questionUpdateReq.getQuestionType();
         String content = questionUpdateReq.getContents();
-        commonQuestion.updateCommonQuestion(content);
+        commonQuestion.updateCommonQuestion(questionType, content);
     }
 
     @Override

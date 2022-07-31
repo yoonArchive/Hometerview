@@ -11,7 +11,7 @@ import java.util.List;
 public interface CommonQuestionService {
 
 
-    CommonQuestion registerCommonQuestion(Long userNo, Long stdNo, CommonQuestionReq commonQuestionReq);
+    void registerCommonQuestion(Long userNo, Long stdNo, CommonQuestionReq commonQuestionReq);
 
     List<CommonQuestion> getList(Long stdNo);
 

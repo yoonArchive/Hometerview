@@ -178,7 +178,7 @@ public class StudyController {
     @PostMapping({"/{stdNo}/common"})
     @ApiOperation(value = "공통 질문 등록", notes = "스터디에 공통 질문을 등록한다.")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "공통 질문 등록 성공", response = CommonQuestionRes.class),
+            @ApiResponse(code = 200, message = "공통 질문 등록 성공", response = CommonQuestionListRes.class),
             @ApiResponse(code = 401, message = "공통 질문 등록 실패", response = BaseResponseBody.class),
             @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)})
     public ResponseEntity<? extends BaseResponseBody> registerCommonQuestion(@ApiIgnore Authentication authentication,
@@ -186,13 +186,13 @@ public class StudyController {
                                                                              @RequestBody @ApiParam(value = "질문내용", required = true) @Valid CommonQuestionReq commonQuestionReq) {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         Long userNo = userDetails.getUserNo();
-        CommonQuestion commonQuestion;
         try {
-            commonQuestion=commonQuestionService.registerCommonQuestion(userNo, stdNo, commonQuestionReq);
+          commonQuestionService.registerCommonQuestion(userNo, stdNo, commonQuestionReq);
         } catch (Exception e) {
             return ResponseEntity.status(401).body(BaseResponseBody.of(401, "공통 질문 등록에 실패하였습니다."));
         }
-        return ResponseEntity.status(200).body(CommonQuestionRes.of(commonQuestion,200, "공통 질문이 등록되었습니다."));
+        List<CommonQuestion> commonQuestions = commonQuestionService.getList(stdNo);
+        return ResponseEntity.status(200).body(CommonQuestionListRes.of(commonQuestions, 200, "공통 질문 등록이 완료되었습니다."));
     }
 
     @GetMapping({"/{stdNo}/common"})
