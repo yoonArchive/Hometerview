@@ -20,7 +20,7 @@
     <button @click="studyApply(recruitNo)"> 스터디 신청하기</button>
     <button @click="studyApplyCancel(recruitNo)">스터디 신청 취소</button>
     <button >{{ applyState }}</button><br>
-    {{ recruitDetail }}
+
 
 </template>
 
@@ -37,11 +37,10 @@
         recruitNo:this.$route.params.recruitNo,
         studyType : '',
         applyState : '스터디 신청하기',
-        isApplied : true
       }
     },
     computed:{
-      ...mapGetters(['recruitDetail','currentUser'])
+      ...mapGetters(['recruitDetail','currentUser','isApplied'])
       
     },
     methods:{
@@ -56,9 +55,9 @@
         ]),
       changeApplyState(){
         if(this.isApplied==true){
-          this.isApplied=false
+          this.applyState = '스터디 취소'
         }else{
-          this.isApplied=true
+          this.applyState = '스터디 신청'
         }
       },
 

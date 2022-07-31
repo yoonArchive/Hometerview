@@ -8,12 +8,14 @@ export default {
     recruitmentList : [],
     recruitDetail : {},
     token: localStorage.getItem('token') || '' ,
+    isApplied : false,
 
   },
   mutations: {
     SET_TOKEN: (state, token) => state.token = token,
     SET_RECRUITMENT_LIST: (state,recruitmentList) => state.recruitmentList = recruitmentList,
     SET_RECRUIT_DETAIL : (state,recruitDetail) => state.recruitDetail = recruitDetail,
+    SET_APPLY_STATE : (state, isApplied) => state.isApplied = isApplied,
     
   },
   getters:{
@@ -149,8 +151,8 @@ export default {
         console.log(err.response)
       })
     },
-    studyApply({getters},recruitNo){
-
+    studyApply({commit,getters},recruitNo){
+      console.log(api_url.membersrecruitment.studyApply(recruitNo),)
       axios({
         url : api_url.membersrecruitment.studyApply(recruitNo),
         method :'post',
@@ -158,6 +160,7 @@ export default {
       })
       .then(res=>{
         console.log(res.data)
+        commit('SET_APPLY_STATE',true)
       })
       .catch(err=>{
         console.log(err.response)
@@ -171,6 +174,7 @@ export default {
       })
       .then(res=>{
         console.log(res.data)
+        commit('SET_APPLY_STATE',false)
       })
       .catch(err=>{
         console.log(err.response)
