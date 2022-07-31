@@ -27,16 +27,19 @@
       </div>
       기업명 : {{ recruitDetail.comName }}
       스터디 현황 : {{ recruitDetail.recruitStatus }} 
-      <button @click="moveToUpdate">수정</button>
-      <button @click="deleteRecruitmentDetail([recruitNo])"> 삭제 </button>
-      <button type="button" class="btn btn-bd-primary" style="color:indigo">Primary</button>
-
-      {{ recruitDetail.stdDetail }} <br>
-      <button @click="studyStart(recruitNo)"> 스터디 시작 </button>
-      <button @click="studyApply(recruitNo)"> 스터디 신청하기</button>
-      <button @click="studyApplyCancel(recruitNo)">스터디 신청 취소</button>
-      <button >{{ applyState }}</button><br>
-
+      <div v-if="applyType==='LEADER'">
+        <button @click="moveToUpdate">수정</button>
+        <button @click="deleteRecruitmentDetail([recruitNo])"> 삭제 </button>
+        <button @click="studyStart(recruitNo)"> 스터디 시작 </button>
+        <button type="button" class="btn btn-bd-primary" style="color:indigo">Primary</button>
+      </div>
+      <div v-else-if="applyType==='NORMAL'">
+        <button @click="studyApplyCancel(recruitNo)">스터디 신청 취소</button>
+      </div>
+      <div v-else-if="applyType===''">
+        <button @click="studyApply(recruitNo)"> 스터디 신청하기</button>
+      </div>
+      타입 : {{ applyType }}
     </div>
 
 
@@ -53,12 +56,10 @@
     data(){
       return{
         recruitNo:this.$route.params.recruitNo,
-        studyType : '',
-        applyState : '스터디 신청하기',
       }
     },
     computed:{
-      ...mapGetters(['recruitDetail','currentUser','isApplied'])
+      ...mapGetters(['recruitDetail','currentUser','isApplied','applyType'])
       
     },
     methods:{
@@ -71,14 +72,6 @@
         'studyApplyCancel',
 
         ]),
-      changeApplyState(){
-        if(this.isApplied==true){
-          this.applyState = '스터디 취소'
-        }else{
-          this.applyState = '스터디 신청'
-        }
-      },
-
       interviewType(){
         if(this.recruitDetail.stdType === 'COM'){
           this.studyType = '기업 면접'
