@@ -6,7 +6,8 @@
   {{ member.user.userEmail }}<br>
   {{ member.user.ueserImg }}<br>
   {{ member.user.joinTyp }}<br>
-  {{ member.user.resumeNo }}
+  {{ member.user.resumeNo }} <br>
+  <!-- {{ member }} -->
 
 
 </template>

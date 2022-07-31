@@ -14,7 +14,7 @@
           스터디 이름 :{{ recruitDetail.stdName }} <br>
           활동기간 : {{ recruitDetail.startDate }} ~  {{ recruitDetail.endDate }}<br>
           진행 일자 : {{ recruitDetail.stdDay }} <br>
-          모집인원 :   {{ recruitDetail.stdLimit }}<br>
+          모집인원 :   {{ recruitDetail.count-1 }}/{{ recruitDetail.stdLimit }}<br>
           스터디 타입 : {{ recruitDetail.stdType }} <br>
         </div>
       </div><hr>
@@ -25,7 +25,7 @@
           <p class="card-text">{{ recruitDetail.stdDetail }}</p>
         </div>
       </div>
-      기업명 : {{ recruitDetail.comName }}
+      기업명 : {{ recruitDetail.comName }} <br>
       스터디 현황 : {{ recruitDetail.recruitStatus }} 
       <div v-if="applyType==='LEADER'">
         <button @click="moveToUpdate">수정</button>
@@ -33,13 +33,20 @@
         <button @click="studyStart(recruitNo)"> 스터디 시작 </button>
         <button type="button" class="btn btn-bd-primary" style="color:indigo">Primary</button>
       </div>
-      <div v-else-if="applyType==='NORMAL'">
+      <div v-else-if="applyType==='NORMAL' && recruitDetail.recruitStatus==='모집 중'">
         <button @click="studyApplyCancel(recruitNo)">스터디 신청 취소</button>
       </div>
-      <div v-else-if="applyType===''">
-        <button @click="studyApply(recruitNo)"> 스터디 신청하기</button>
+      <div v-else-if="applyType===null && recruitDetail.recruitStatus==='모집 중'">
+        <button @click="studyApply(recruitNo)" > 스터디 신청하기</button>
       </div>
-      타입 : {{ applyType }}
+      <div v-if="recruitDetail.recruitStatus==='모집 완료'">
+        <button>모집 완료</button>
+      </div>
+      타입 : {{ applyType }} <br>
+
+      {{ recruitDetail.recruitStatus }} <br>
+      {{ recruitDetail.count }}
+
     </div>
 
 

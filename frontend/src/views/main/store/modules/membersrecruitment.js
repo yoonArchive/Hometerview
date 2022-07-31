@@ -17,7 +17,6 @@ export default {
     SET_TOKEN: (state, token) => state.token = token,
     SET_RECRUITMENT_LIST: (state,recruitmentList) => state.recruitmentList = recruitmentList,
     SET_RECRUIT_DETAIL : (state,recruitDetail) => state.recruitDetail = recruitDetail,
-    SET_APPLY_STATE : (state, isApplied) => state.isApplied = isApplied,
     SET_APPLY_TYPE : (state, applyType) => state.applyType = applyType,
     
   },
@@ -167,13 +166,13 @@ export default {
       })
       .then(res=>{
         console.log(res.data)
-        commit('SET_APPLY_STATE',true)
+        commit('SET_APPLY_TYPE','NORMAL')
       })
       .catch(err=>{
         console.log(err.response)
       })
     },
-    studyApplyCancel({getters},recruitNo){
+    studyApplyCancel({commit,getters},recruitNo){
       axios({
         url : api_url.membersrecruitment.studyApply(recruitNo),
         method :'delete',
@@ -181,7 +180,7 @@ export default {
       })
       .then(res=>{
         console.log(res.data)
-        commit('SET_APPLY_STATE',false)
+        commit('SET_APPLY_TYPE',null)
       })
       .catch(err=>{
         console.log(err.response)
