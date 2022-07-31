@@ -71,4 +71,9 @@ public class ApplyServiceImpl implements ApplyService {
         return applyRepositorySupport.CountByRecruitNo(recruit.getRecruitNo()) + 1;
     }
 
+    @Override
+    public ApplyType getApplyType(Long recruitNo, Long userNo) {
+        return applyRepositorySupport.findByRecruitNoAndUserNo(recruitNo, userNo);
+    }
+
 }
