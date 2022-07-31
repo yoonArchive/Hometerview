@@ -7,7 +7,7 @@
       </h2>
       <div class="d-flex justify-content-around">
         <div>
-          대표 이미지 : 
+          대표 이미지 :
           <img src="{{ recruitDetail.stdImg }}" alt="">
         </div>
         <div>
@@ -26,7 +26,7 @@
         </div>
       </div>
       기업명 : {{ recruitDetail.comName }}
-      스터디 현황 : {{ recruitDetail.recruitStatus }} 
+      스터디 현황 : {{ recruitDetail.recruitStatus }}
       <button @click="moveToUpdate">수정</button>
       <button @click="deleteRecruitmentDetail([recruitNo])"> 삭제 </button>
       <button type="button" class="btn btn-bd-primary" style="color:indigo">Primary</button>
@@ -36,7 +36,7 @@
     <button @click="studyApply(recruitNo)"> 스터디 신청하기</button>
     <button @click="studyApplyCancel(recruitNo)">스터디 신청 취소</button>
     <button >{{ applyState }}</button><br>
-
+    </div>
 
 </template>
 
@@ -57,7 +57,7 @@
     },
     computed:{
       ...mapGetters(['recruitDetail','currentUser','isApplied'])
-      
+
     },
     methods:{
       ...mapActions([
