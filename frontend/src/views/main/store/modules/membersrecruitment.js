@@ -149,5 +149,32 @@ export default {
         console.log(err.response)
       })
     },
+    studyApply({getters},recruitNo){
+
+      axios({
+        url : api_url.membersrecruitment.studyApply(recruitNo),
+        method :'post',
+        headers: getters.authHeader
+      })
+      .then(res=>{
+        console.log(res.data)
+      })
+      .catch(err=>{
+        console.log(err.response)
+      })
+    },
+    studyApplyCancel({getters},recruitNo){
+      axios({
+        url : api_url.membersrecruitment.studyApply(recruitNo),
+        method :'delete',
+        headers: getters.authHeader
+      })
+      .then(res=>{
+        console.log(res.data)
+      })
+      .catch(err=>{
+        console.log(err.response)
+      })
+    },
   }
 }

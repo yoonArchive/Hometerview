@@ -17,6 +17,10 @@
     <button @click="moveToUpdate">수정</button>
     <button @click="deleteRecruitmentDetail([recruitNo])"> 삭제 </button>
     <button @click="studyStart(recruitNo)"> 스터디 시작 </button>
+    <button @click="studyApply(recruitNo)"> 스터디 신청하기</button>
+    <button @click="studyApplyCancel(recruitNo)">스터디 신청 취소</button>
+    <button >{{ applyState }}</button><br>
+    {{ recruitDetail }}
 
 </template>
 
@@ -32,10 +36,12 @@
       return{
         recruitNo:this.$route.params.recruitNo,
         studyType : '',
+        applyState : '스터디 신청하기',
+        isApplied : true
       }
     },
     computed:{
-      ...mapGetters(['recruitDetail'])
+      ...mapGetters(['recruitDetail','currentUser'])
       
     },
     methods:{
@@ -43,8 +49,19 @@
         'bringRecruitmentDetail',
         'updateRecruitmentDetail',
         'deleteRecruitmentDetail',
-        'createStudySpace'
+        'createStudySpace',
+        'studyApply',
+        'studyApplyCancel',
+
         ]),
+      changeApplyState(){
+        if(this.isApplied==true){
+          this.isApplied=false
+        }else{
+          this.isApplied=true
+        }
+      },
+
       interviewType(){
         if(this.recruitDetail.stdType === 'COM'){
           this.studyType = '기업 면접'
@@ -62,8 +79,6 @@
         await this.createStudySpace(this.recruitNo)
         router.push({ name:'study'})
       }
-
-
     },
     created(){
       this.interviewType()

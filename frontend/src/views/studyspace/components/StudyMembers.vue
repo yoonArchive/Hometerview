@@ -3,8 +3,8 @@
   {{ member.user.userId }} <br>
   {{ member.user.userName }}<br>
   {{ member.user.userEmail }}<br>
-  {{ member.user.userImg }}<br>
-  {{ member.user.joinType }}<br>
+  {{ member.user.ueserImg }}<br>
+  {{ member.user.joinTyp }}<br>
   {{ member.user.resumeNo }}
 
 

@@ -167,7 +167,7 @@ export default {
       },
     })
   },
-  logout({ getters, dispatch }) {
+  logout({ getters, commit,dispatch }) {
     if(getters.isLoggedIn){
       dispatch('removeToken')
       alert('성공적으로 logout!')
@@ -181,10 +181,6 @@ export default {
     },
     signup({ commit }, credentials) {
     delete credentials.userPw2
-    // const credentialsForLogin = {
-    //   userId : credentials.userId,
-    //   userPw : credentials.userPw
-    // }
       axios({
         url: api_url.accounts.signup(),
         method: 'post',
@@ -211,29 +207,20 @@ export default {
         // dispatch('login', credentialsForLogin)
     },
     async fetchCurrentUser({ commit, getters, dispatch }) {
-      /*
-      GET: 사용자가 로그인 했다면(토큰이 있다면)
-        currentUserInfo URL로 요청보내기
-          성공하면
-            state.cuurentUser에 저장
-          실패하면(토큰이 잘못되었다면)
-            기존 토큰 삭제
-            LoginView로 이동
-      */
       if (getters.isLoggedIn) {
         await axios({
           url: api_url.accounts.currentUserInfo(),
           method: 'get',
           headers: getters.authHeader,
         }).then(res =>{
-          console.log(res);
+          console.log(res.data);
           const tempuser = {
             userEmail : res.data.userEmail,
             userImg : res.data.userImg,
             userId : res.data.userId,
             userName : res.data.userName,
           }
-          console.log(tempuser);
+          // console.log(tempuser);
           commit('SET_CURRENT_USER', tempuser);
 
         })
