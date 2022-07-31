@@ -31,15 +31,19 @@
       <button @click="deleteRecruitmentDetail([recruitNo])"> 삭제 </button>
       <button type="button" class="btn btn-bd-primary" style="color:indigo">Primary</button>
 
+    {{ recruitDetail.stdDetail }} <br>
+    <button @click="studyStart(recruitNo)"> 스터디 시작 </button>
+    <button @click="studyApply(recruitNo)"> 스터디 신청하기</button>
+    <button @click="studyApplyCancel(recruitNo)">스터디 신청 취소</button>
+    <button >{{ applyState }}</button><br>
 
-    </div>
 
 </template>
 
 <script>
   import router from '@/common/lib/vue-router'
   import { mapActions, mapGetters } from 'vuex'
-  
+
 
   export default {
     name:'MembersRecruitmentDetailView',
@@ -47,18 +51,33 @@
     data(){
       return{
         recruitNo:this.$route.params.recruitNo,
-        studyType : ''
+        studyType : '',
+        applyState : '스터디 신청하기',
       }
     },
     computed:{
-      ...mapGetters(['recruitDetail'])
+      ...mapGetters(['recruitDetail','currentUser','isApplied'])
       
     },
     methods:{
-      ...mapActions(['bringRecruitmentDetail','updateRecruitmentDetail','deleteRecruitmentDetail']),
+      ...mapActions([
+        'bringRecruitmentDetail',
+        'updateRecruitmentDetail',
+        'deleteRecruitmentDetail',
+        'createStudySpace',
+        'studyApply',
+        'studyApplyCancel',
+
+        ]),
+      changeApplyState(){
+        if(this.isApplied==true){
+          this.applyState = '스터디 취소'
+        }else{
+          this.applyState = '스터디 신청'
+        }
+      },
+
       interviewType(){
-        console.log('test')
-        console.log(this.recruitNo)
         if(this.recruitDetail.stdType === 'COM'){
           this.studyType = '기업 면접'
         }else{
@@ -71,8 +90,10 @@
         params:{recruitNo:this.recruitNo}
         })
       },
-
-
+      async studyStart(){
+        await this.createStudySpace(this.recruitNo)
+        router.push({ name:'study'})
+      }
     },
     created(){
       this.interviewType()

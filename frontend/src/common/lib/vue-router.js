@@ -22,6 +22,10 @@ import MembersRecruitmentEditView from '@/views/membersrecruitment/MembersRecrui
 
 import StudyRecruitment from '@/views/home/components/study-recruitment'
 
+/* 스터디 스페이스 페이지ㅣ*/
+import StudySpaceView from '@/views/studyspace/StudySpaceView'
+import StudySpaceDetailView from '@/views/studyspace/StudySpaceDetailView'
+
 /* 공지사항 */
 import noticeList from '@/views/notice/noticeListView'
 import noticeNewView from '@/views/notice/noticeNewView'
@@ -163,7 +167,16 @@ function makeRoutesFromMenu () {
       path: 'review/:reviewNo/edit',
       name: 'reviewEdit',
       component : ReviewEdit
-    }]
+    },{
+      path: 'study',
+      name: 'study',
+      component : StudySpaceView
+    },{
+      path: 'study/:stdNo',
+      name: 'studydetail',
+      component : StudySpaceDetailView
+    },
+  ]
   },{
     path: '/',
     name: 'main',
