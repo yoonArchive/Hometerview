@@ -32,8 +32,8 @@ export default {
     ...mapActions(['getStd','commonQuestions1']),
 
   },
-  mounted(){
-
+  async mounted(){
+    await this.commonQuestions1(this.stdNo)
   },
   created(){
     // this.getStd(this.stdNo);

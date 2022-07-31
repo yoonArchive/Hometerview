@@ -192,11 +192,11 @@ function makeRoutesFromMenu () {
       component: noticeEditView
     }],
 
-      path: 'study',
+      path: '/study',
       name: 'study',
       component : StudySpaceView
     },{
-      path: 'study/:stdNo',
+      path: '/study/:stdNo',
       name: 'studydetail',
       component : StudySpaceDetailView
     },

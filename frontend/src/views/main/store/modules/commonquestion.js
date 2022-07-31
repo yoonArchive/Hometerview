@@ -85,21 +85,27 @@ export default {
       })
     },
     //공통질문 작성하기
-    createcommonQuestion({ commit, getters }, stdNo, newcommonQuestion) {
-
+    createcommonQuestion({ commit, getters }, {stdNo,content,questionType} ) {
+      const newcommonQuestion = {
+        contents : content,
+        questionType : questionType
+       }
+       console.log(newcommonQuestion)
       axios({
         url: api_url.study.commonquestions(stdNo),
         method: 'post',
         data: newcommonQuestion,
-        headers: this.getters.authHeader,
+        headers: getters.authHeader
       })
         .then(res => {
           commit('SET_commonQuestion', res.data.commonQuestions)
-          console.log('공지사항 작성 성공' + res)
+          console.log('공통질문 작성 성공' + res)
           // router.push({
           //   name: 'commonQuestion',
           //   params: { commonQuestionNo: getters.commonQuestion.commonQuestionNo  }
           // })
+        }).catch((err)=>{
+          console.log('공통질문 등록 실패'+err)
         })
     },
     //공통질문 수정하기

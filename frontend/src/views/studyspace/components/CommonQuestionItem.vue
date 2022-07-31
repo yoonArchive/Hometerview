@@ -1,5 +1,4 @@
 <template>
-  <h1>{{commonquestion}}</h1>
   <li class="commonquestion-list-item">
     <div class="commonquestion-content">
       <div class="commonquestion-user">
