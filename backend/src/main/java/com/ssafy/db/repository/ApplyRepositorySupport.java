@@ -2,6 +2,7 @@ package com.ssafy.db.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssafy.db.entity.Apply;
+import com.ssafy.db.entity.ApplyType;
 import com.ssafy.db.entity.QApply;
 import com.ssafy.db.entity.ResumeDetail;
 import lombok.RequiredArgsConstructor;
@@ -34,8 +35,18 @@ public class ApplyRepositorySupport {
     public List<Apply> findApplyByRecruitNo(Long recruitNo) {
         List<Apply> applies = jpaQueryFactory.selectFrom(qApply)
                 .where(qApply.recruit.recruitNo.eq(recruitNo)).fetch();
-        if(applies == null) return null;
+        if (applies == null) return null;
         return applies;
+    }
+
+    public ApplyType findByRecruitNoAndUserNo(Long recruitNo, Long userNo) {
+        ApplyType applyType = jpaQueryFactory.select(qApply.applyType)
+                .from(qApply)
+                .where(qApply.recruit.recruitNo.eq(recruitNo))
+                .where(qApply.user.userNo.eq(userNo))
+                .fetchOne();
+        if (applyType == null) return null;
+        return applyType;
     }
 
 }

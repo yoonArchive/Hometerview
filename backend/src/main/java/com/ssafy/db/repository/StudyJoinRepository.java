@@ -13,4 +13,5 @@ public interface StudyJoinRepository extends JpaRepository<StudyJoin, Long> {
 
     @Transactional
     Optional<StudyJoin> deleteByJoinNo(Long joinNo);
+
 }

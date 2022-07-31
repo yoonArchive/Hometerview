@@ -1,6 +1,7 @@
 package com.ssafy.api.response;
 
 import com.ssafy.common.model.response.BaseResponseBody;
+import com.ssafy.db.entity.ApplyType;
 import com.ssafy.db.entity.Recruit;
 import com.ssafy.db.entity.RecruitStatus;
 import com.ssafy.db.entity.StdType;
@@ -50,7 +51,10 @@ public class RecruitRes extends BaseResponseBody {
     @ApiModelProperty(name = "신청자 수")
     long count;
 
-    public static RecruitRes of(Recruit recruit, long count, Integer statusCode, String message) {
+    @ApiModelProperty(name = "신청 타입")
+    ApplyType applyType;
+
+    public static RecruitRes of(Recruit recruit, long count, ApplyType applyType, Integer statusCode, String message) {
         RecruitRes res = new RecruitRes();
         res.setRecruitTitle(recruit.getRecruitTitle());
         res.setStdName(recruit.getStdName());
@@ -64,6 +68,7 @@ public class RecruitRes extends BaseResponseBody {
         res.setStdLimit(recruit.getStdLimit());
         res.setRecruitStatus(recruit.getRecruitStatus().getStatus());
         res.setCount(count);
+        res.setApplyType(applyType);
         res.setStatusCode(statusCode);
         res.setMessage(message);
         return res;
