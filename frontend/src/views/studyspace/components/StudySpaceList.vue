@@ -1,5 +1,5 @@
 <template>
-  
+
   <div class="row row-cols-1 row-cols-md-3 g-4">
     <study-space-item
       v-for="studySpace in studySpaceList"
@@ -33,8 +33,8 @@ export default {
   methods: {
     ...mapActions(['bringStudySpace']),
   },
-  created(){
-    this.bringStudySpace()  
+  mounted(){
+    this.bringStudySpace()
   },
 
 }

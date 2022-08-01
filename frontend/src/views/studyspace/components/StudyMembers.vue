@@ -6,7 +6,7 @@
   {{ member.user.ueserImg }}<br>
   {{ member.user.joinTyp }}<br>
   {{ member.user.resumeNo }}
-  <router-link :to="{ name: 'membercoverletter', params: { studentindex } }">
+  <router-link :to="{ name: 'membercoverletter', params: { studentindex : studentindex } }">
     자소서 보기
   </router-link>
 

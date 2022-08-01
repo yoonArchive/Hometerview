@@ -39,11 +39,12 @@ export default {
       })
     },
 
-    getStudyResume({state, commit},studentindex){
+    getStudyResume({getters, commit},studentindex){
       commit('RESET_RESUME_QUESTION_LIST');
-      const detailCount = state.studySpaceDetail.detailCounts[studentindex];
-      const resumeNo = state.studySpaceDetail.studyJoins[studentindex].resumeNo;
-      for(var i = 0, j = 0;i < detailCount; j++){
+      console.log(getters.studySpaceDetail);
+      const detailCount = getters.studySpaceDetail.detailCounts[studentindex];
+      const resumeNo = getters.studySpaceDetail.studyJoins[studentindex].resumeNo;
+      for(var i = 0, j = 0; i < detailCount; j++){
         const data = {
           itemNo : j,
           resumeNo : resumeNo,

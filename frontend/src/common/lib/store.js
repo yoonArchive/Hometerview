@@ -12,10 +12,10 @@ import studyspace from '@/views/main/store/modules/studyspace'
 export default createStore({
   modules: {
     root,
-    accounts, 
-    notice, 
-    resume, 
-    review, 
+    accounts,
+    notice,
+    resume,
+    review,
     membersrecruitment,
     studyspace
   },
