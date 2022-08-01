@@ -2,7 +2,7 @@
   "mystudy" : {
     "name" : "마이스터디",
     "hidden" : false,
-    "path" : "/",
+    "path" : "/home/study",
     "icon" : "el-icon-s-home",
     "children" : []
   },
@@ -16,7 +16,7 @@
   "myinterview":{
     "name":"나의 면접",
     "hidden" :false,
-    "path" : "/home/myinterview",
+    "path" : "/home/study",
     "children" : []
   }
 }

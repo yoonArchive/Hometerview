@@ -1,6 +1,6 @@
 <template>
 
-  <div>  
+  <div>
     <!-- {{ studySpace }} -->
     {{ studySpace.stdName }}<br>
     {{ studySpace.stdDetail }}<br>
@@ -14,9 +14,9 @@
     {{ studySpace.stdNotice }} <br>
     Study Leader : {{ studySpace.studyJoins[0].user.userName }}
     <button @click="moveToStudyDetail"> 스터디 가기 </button>
-    
+
     <hr>
- 
+
 
 
   </div>
@@ -46,7 +46,7 @@ export default {
       })
     }
   },
-  
+
 
 
 }
