@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div v-if="currentResume.length !=0 ">
-      <input type="button" v-for="(item , index) in currentResume.length" :key="index" :value="item" @click="changeSelectedNum(item)"/>
+    <div v-if="resumeQuestionList.length !=0 ">
+      <input type="button" v-for="(item , index) in resumeQuestionList.length" :key="index" :value="item" @click="changeSelectedNum(item)"/>
       <div>
         <div>{{resumeQuestionList[selectedNum].detailNo}}</div>
         <div>{{resumeQuestionList[selectedNum].question}}</div>

@@ -16,7 +16,7 @@
   "myinterview":{
     "name":"나의 면접",
     "hidden" :false,
-    "path" : "/home/study",
+    "path" : "/home/myinterview",
     "children" : []
   }
 }

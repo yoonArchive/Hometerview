@@ -10,8 +10,8 @@
     <div v-if="studySpaceDetail.detailCounts[studentindex]==0">
       아직 공유된 자소서가 없습니다!!
     </div>
-    <cover-letter-detail :studentindex="studentindex"></cover-letter-detail>
-
+    <member-cover-letter-detail :studentindex=studentindex></member-cover-letter-detail>
+    {{isMyInfo}}
 
   </div>
 
@@ -71,7 +71,7 @@ export default {
   computed:{
     ...mapGetters(['resumeQuestionList','currentUser','studySpaceDetail','resumeContents']),
     isMyInfo(){
-      return currentUser.userId == studySpaceDetail.studyJoins[studentindex].user.userId;
+      return this.currentUser.userId == this.studySpaceDetail.studyJoins[this.studentindex].user.userId;
     },
   },
 
