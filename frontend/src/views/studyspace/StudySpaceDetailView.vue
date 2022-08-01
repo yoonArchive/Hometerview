@@ -13,9 +13,10 @@
   <!-- {{ studySpaceDetail.studyJoins }} -->
   <div>
     <study-members
-      v-for="member in studySpaceDetail.studyJoins"
+      v-for="(member, index) in studySpaceDetail.studyJoins"
       :key="member.joinNo"
       :member="member"
+      :studentindex="index"
     ></study-members>
   </div>
 
@@ -25,7 +26,6 @@
 <script>
 import router from '@/common/lib/vue-router'
 import StudyMembers from './components/StudyMembers.vue'
-StudyMembers
 import {mapActions, mapGetters} from 'vuex'
 
 export default {

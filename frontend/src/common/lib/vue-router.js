@@ -25,6 +25,7 @@ import StudyRecruitment from '@/views/home/components/study-recruitment'
 /* 스터디 스페이스 페이지ㅣ*/
 import StudySpaceView from '@/views/studyspace/StudySpaceView'
 import StudySpaceDetailView from '@/views/studyspace/StudySpaceDetailView'
+import MemberCoverLetter from '@/views/studyspace/MemberCoverLetter'
 
 /* 공지사항 */
 import noticeList from '@/views/notice/noticeListView'
@@ -49,6 +50,8 @@ import MyInterviewView from '@/views/myinterview/MyInterviewView'
 import ReviewView from '@/views/myinterview/review/ReviewView'
 import ReviewNew from '@/views/myinterview/review/ReviewNewView'
 import ReviewEdit from '@/views/myinterview/review/ReviewEditView'
+import { component } from 'stylus/lib/functions'
+
 
 /* 마이스터디-공통질문 페이지 */
 // import CommonQuestionDetailView from '@/views/studyspace/components/CommonQuestionDetailView'
@@ -190,7 +193,7 @@ function makeRoutesFromMenu () {
       path: '/notice/:noticeNo/edit',
       name: 'noticeEdit',
       component: noticeEditView
-    }],
+    },{
 
       path: '/study',
       name: 'study',
@@ -199,9 +202,13 @@ function makeRoutesFromMenu () {
       path: '/study/:stdNo',
       name: 'studydetail',
       component : StudySpaceDetailView
-    },
-
- {
+    },{
+      path : 'membercoverletter/:studentindex',
+      name : 'membercoverletter',
+      component : MemberCoverLetter,
+    }
+  ]
+  },{
     path: '/',
     name: 'main',
     component:Main
