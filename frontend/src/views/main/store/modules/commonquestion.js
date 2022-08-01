@@ -10,8 +10,6 @@ export default {
     commonQeustion:{},
     commonQuestions:[],
 
-
-
   },
 
   getters: {
@@ -109,19 +107,22 @@ export default {
         })
     },
     //공통질문 수정하기
-    updatecommonQuestion({ commit, getters }, {  commonQuestionNo, commonQuestionType, commonQuestionTitle, commonQuestion}, stdNo) {
-      console.log(commonQuestionTitle)
-      console.log(commonQuestion)
-      const commonQuestionNo1 = commonQuestionNo
+    updatecommonQuestion({ commit, getters }, info ) {
+      const stdNo = info[0]
+      const payload = info[1]
+      const commonQuestionNo= info[2]
+      console.log('info'+info)
+      console.log('질문번호'+commonQuestionNo)
+      console.log('수정 내용'+payload.contents)
       axios({
-        url: api_url.study.commonquestion(commonQuestionNo, stdNo),
+        url: api_url.study.commonquestion(stdNo,commonQuestionNo),
         method: 'put',
-        data: { commonQuestionTitle, commonQuestion, commonQuestionType },
-        headers: this.getters.authHeader,
+        data: payload,
+        headers: this.getters.authHeader
       })
         .then(res => {
-
-          commit('SET__commonQuestion', res.data)
+          console.log('수정성공')
+          commit('SET_commonQuestion', res.data)
           // router.push({
           //   name: 'commonQuestion',
           //   params: { commonQuestionNo: getters.commonQuestion.commonQuestionNo }
@@ -129,15 +130,20 @@ export default {
         })
     },
     //공통질문 삭제하기
-    deletecommonQuestion({ commit, getters }, commonQuestionNo, stdNo) {
+    deletecommonQuestion({ commit, getters },info) {
+      const stdNo = info[0]
+      const questionNo = info[1]
+      console.log('인포'+info)
       if (confirm('정말 삭제하시겠습니까?')) {
+        console.log(stdNo,questionNo)
         axios({
-          url: api_url.commonQuestion.commonQuestion(commonQuestionNo, stdNo),
+          url: api_url.study.commonquestion(stdNo,questionNo),
           method: 'delete',
+          data:{},
           headers: this.getters.authHeader,
         })
-          .then(() => {
-            commit('SET_commonQuestion', {})
+          .then((res) => {
+            commit('SET_commonQuestion', res.data)
             // router.push({ name: 'myinterview' }) 라우터위치 어디로안정함
           })
           .catch(err => console.error(err.response))

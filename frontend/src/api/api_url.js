@@ -7,7 +7,7 @@ const NOTICE = 'notice/'
 const RECRUITS = 'recruits/'
 const RESUME = 'resume/'
 const REVIEW = 'review/'
-const STUDY = 'study'
+const STUDY = 'study/'
 const APPLY = 'apply/'
 
 

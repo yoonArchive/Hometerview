@@ -8,9 +8,9 @@
 
     <div>
       <input type="radio" name="reviewType" value="JOB" v-model="questionType">
-      <label for="questionType">JOB</label>
-      <input  type="radio" name="reviewType" value="FAKE" v-model="questionType">
-      <label for="questionType">NoJOB</label>
+      <label for="questionType">기업면접</label>
+      <input  type="radio" name="reviewType" value="FREE" v-model="questionType">
+      <label for="questionType">자율면접</label>
     </div>
   </form>
 
@@ -34,8 +34,15 @@ export default {
   methods: {
     ...mapActions(['createcommonQuestion']),
     onSubmit() {
+      if (this.questionType === ''){
+        alert('질문타입을 설정해주세요')
+      }else{
+
+
       this.createcommonQuestion({ stdNo: this.$route.params.stdNo, content: this.content, questionType: this.questionType})
       this.content = ''
+      console.log(this.commonQuestions)
+      }
     }
   }
 }

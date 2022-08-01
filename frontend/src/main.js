@@ -9,9 +9,9 @@ import i18n from "./common/lib/i18n";
 import router from "./common/lib/vue-router";
 // import firebase from 'firebase'
 // import "element-plus/packages/theme-chalk/src/base.scss";
-import 'v-calendar/dist/style.css';
+// import 'v-calendar/dist/style.css';
 
-import VCalendar from 'v-calendar';
+// import VCalendar from 'v-calendar';
 
 
 // var firebaseConfig = {
@@ -36,7 +36,7 @@ app.use(VueAxios, axios);
 app.use(store);
 app.use(i18n);
 app.use(router);
-app.use(VCalendar, {})
+// app.use(VCalendar, {})
 
 // components.forEach(component => {
 //   app.component(component.name, component);
