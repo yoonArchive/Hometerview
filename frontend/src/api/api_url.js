@@ -1,3 +1,5 @@
+// import _Space from "element-plus/lib/el-space"
+
 const HOST = 'http://localhost:8080/api/v1/'
 const USERS = 'users/'
 const AUTH = 'auth/'
@@ -62,6 +64,12 @@ export default {
   },
   study:{
     studyspace : () => HOST +  STUDY,
+
+
+    studys: (stdNo) => HOST + STUDY,
+    commonquestions: (stdNo) => HOST + STUDY + `${stdNo}/`+ 'common',
+    commonquestion: (stdNo,questionNo) => HOST + STUDY + `${stdNo}/`+ 'common/' +`${questionNo}`,
+    commonquestiontype: (stdNo,questionNo) => HOST + STUDY + `${stdNo}/`+ 'common/' +`${questionNo}/`+'type',
     studyspacedetail : (stdNo) => HOST +  STUDY + `/${stdNo}`,
     studyCoverLetter : (stdNo , resumeNo) => HOST + STUDY + RESUME + `/${stdNo}` + `/${resumeNo}`,
   }

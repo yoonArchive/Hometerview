@@ -1,38 +1,52 @@
 <template>
-
-  <form @submit.prevent="onSubmit">
-    <div class="wrap">
-      <div class="review">
-        <div class="review-top">
-          <label class="col-sm-2" for="title">제목: </label>
-            {{ review.reviewType}}
-          <input class="col-sm-10" v-model="newreview.reviewTitle" type="text" id="title" />
-        </div>
-        <div class="review-content">
-          <textarea class="col-sm-12 review-textarea" v-model="newreview.reviewContents" type="text" id="content"></textarea>
-        </div>
+  <div class="container">
 
 
-        <div>
-          <input type="radio" name="reviewType" value="REAL" v-model="newreview.reviewType">
-          <label for="newreview.reviewType">REAL</label>
-          <input  type="radio" name="reviewType" value="FAKE" v-model="newreview.reviewType">
-          <label for="newreview.reviewType">FAKE</label>
-        </div>
-
-
-        <div class="form-button">
-           <button>{{ action }}</button>
-        </div>
-      </div>
+    <div class="inner-container">
+    <form @submit.prevent="onSubmit">
+    <div class="mb-3">
+      <label for="title" class="form-label" >제목: </label>
+      <input type="text" class="form-control" v-model="newreview.reviewTitle" id="title" />
     </div>
-  </form>
+    <div class="mb-3">
+      <label for="exampleFormControlTextarea1" class="form-label">내용</label>
+      <textarea class="form-control" v-model="newreview.reviewContents" type="text" id="content" rows="3"></textarea>
+    </div>
+    <!-- <div>
+        <input type="radio" name="reviewType" value="REAL" v-model="newreview.reviewType">
+        <label for="newreview.reviewType">REAL</label>
+        <input  type="radio" name="reviewType" value="FAKE" v-model="newreview.reviewType">
+        <label for="newreview.reviewType">FAKE</label>
+    </div> -->
+
+
+
+
+    <div>
+      <input type="radio" name="reviewType" value="REAL" v-model="newreview.reviewType">
+      <label for="newreview.reviewType">REAL</label>
+      <input  type="radio" name="reviewType" value="FAKE" v-model="newreview.reviewType">
+      <label for="newreview.reviewType">FAKE</label>
+    </div>
+
+
+    <div class="buttonbundle">
+        <button id="button-review" v-if="action==='create'">만들기</button>
+        <button id="button-review" v-else>수정하기</button>
+    </div>
+     </form>
+    </div>
+
+  </div>
+
 </template>
 
 <script>
 import { mapActions } from 'vuex'
 // import review from '../../../main/store/modules/review'
-
+  const day1 = new Date();
+  const today = day1.toLocaleString('ko-kr');
+  //.toLocaleString('ko-kr')
   export default {
     name: 'reviewForm',
     props: {
@@ -44,12 +58,12 @@ import { mapActions } from 'vuex'
         newreview: {
           // title: this.review.reviewTitle,
           // content: this.review.reviewContents,
-          reviewNo : this.$route.params.reviewNo,
+          // reviewNo : this.$route.params.reviewNo,
           reviewContents: this.review.reviewContents,
           reviewTitle: this.review.reviewTitle,
-          reviewType: this.review.reviewType
-
-                  },
+          reviewType: this.review.reviewType,
+          reviewDate: today
+          }
 
 
 
@@ -80,13 +94,22 @@ import { mapActions } from 'vuex'
 </script>
 
 <style scoped>
-.wrap{  width: 70vw; height: 50vh; margin: auto; padding-top : 30px;}
-.review{ display: flex; border: 1px solid; flex-direction: column; width: auto; height:100%; font-family : '엘리스디지털regular';}
-.review-top{ border : 1px solid; background-color: white; padding: 10px; font-weight: bold;}
-.review-content{padding: 20px; color:white;}
-.review-textarea{resize : none; background-color: white; color: black}
-.form-button{ margin-left : auto; margin-top : auto;}
-#content{
-  height : 250px;
+
+.container{
+  display: flex;
+  width: 100%;
+}
+#button-review{
+   background-color: #653FD3;
+   border-color : #653FD3;
+   border-radius: 10%;
+   margin: 15px;
+   width: 100px;
+   color: white;
+}
+.inner-container{
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
 }
 </style>

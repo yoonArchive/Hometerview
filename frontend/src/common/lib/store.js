@@ -6,6 +6,7 @@ import createPersistedState from 'vuex-persistedstate'
 import membersrecruitment from '@/views/main/store/modules/membersrecruitment'
 import resume from '@/views/main/store/modules/resume'
 import review from '@/views/main/store/modules/review'
+import commonquestion from '@/views/main/store/modules/commonquestion'
 import studyspace from '@/views/main/store/modules/studyspace'
 
 
@@ -17,7 +18,8 @@ export default createStore({
     resume,
     review,
     membersrecruitment,
-    studyspace
+    studyspace,
+    commonquestion
   },
   Plugins:[
     createPersistedState()

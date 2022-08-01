@@ -1,5 +1,6 @@
 package com.ssafy.api.service;
 
+import com.querydsl.core.JoinType;
 import com.ssafy.db.entity.*;
 import com.ssafy.db.repository.*;
 import lombok.RequiredArgsConstructor;
@@ -138,6 +139,29 @@ public class StudyServiceImpl implements StudyService {
             detailCounts[idx++] = studyJoin.getResumeNo() == null ? 0 : resumeDetailRepositorySupport.CountByResumeNo(studyJoin.getResumeNo());
         }
         return detailCounts;
+    }
+
+    @Override
+    public ApplyType getJoinType(Long userNo, Long stdNo){
+        return studyJoinRepositorySupport.findStudyJoinByUserNoAndStdNo(userNo, stdNo).get().getJoinType();
+    }
+
+    @Override
+    @Transactional
+    public int deleteStudy(Long stdNo){
+        try {
+            Study study = studyRepository.findByStdNo(stdNo).get();
+        } catch (Exception e) {
+            return 0;
+        }
+        // 남아있는 스터디원 삭제 처리
+        List<StudyJoin> studyJoins = studyJoinRepositorySupport.findByStdNo(stdNo);
+        for (StudyJoin studyJoin : studyJoins) {
+            studyJoinRepository.deleteByJoinNo(studyJoin.getJoinNo());
+        }
+        // 스터디 스페이스 삭제
+        studyRepository.deleteByStdNo(stdNo);
+        return 1;
     }
 
 }

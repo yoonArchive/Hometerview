@@ -15,9 +15,9 @@ export default {
   getters: {
     notices: state => state.notices,
     notice: state => state.notice,
-    isAuthor: (state, getters) => {
-      return state.notice.user?.username === getters.currentUser.username
-    },
+    // isAuthor: (state, getters) => {
+    //   return state.notice.user?.username === getters.currentUser.username
+    // },
     isnotice: state => !_.isEmpty(state.notice),
   },
 
@@ -40,7 +40,7 @@ export default {
         .catch(err => console.error(err.response))
     },
     //공지사항 상세 가져오기
-    fetchNotice({ commit, getters }, noticeNo) {
+    fetchNotice({ commit}, noticeNo) {
       axios({
         url: api_url.notice.notice(noticeNo),
         method: 'get',

@@ -2,10 +2,7 @@ package com.ssafy.api.response;
 
 import com.ssafy.common.model.response.BaseResponseBody;
 import com.ssafy.common.util.ValidEnum;
-import com.ssafy.db.entity.Notice;
-import com.ssafy.db.entity.StdType;
-import com.ssafy.db.entity.Study;
-import com.ssafy.db.entity.StudyJoin;
+import com.ssafy.db.entity.*;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -56,7 +53,10 @@ public class StudyRes extends BaseResponseBody {
     @ApiModelProperty(name = "항목갯수")
     long[] detailCounts;
 
-    public static StudyRes of(Study study, long[] detailCounts, Integer statusCode, String message) {
+    @ApiModelProperty(name = "가입 타입")
+    ApplyType joinType;
+
+    public static StudyRes of(Study study, long[] detailCounts, ApplyType joinType, Integer statusCode, String message) {
         StudyRes res = new StudyRes();
         res.setStdName(study.getStdName());
         res.setStdDetail(study.getStdDetail());
@@ -70,6 +70,7 @@ public class StudyRes extends BaseResponseBody {
         res.setStdNotice(study.getStdNotice());
         res.setStudyJoins(study.getStudyJoins());
         res.setDetailCounts(detailCounts);
+        res.setJoinType(joinType);
         res.setStatusCode(statusCode);
         res.setMessage(message);
         return res;

@@ -1,5 +1,8 @@
 <template>
     <!-- table -->
+
+    <h1 id="title">저희의 신규 <p id="aa">업데이트</p> 소식을 알려드릴께요!</h1>
+
     <div class="table-cocover">
       <div class="table-cover">
         <table class="table table-hover">
@@ -33,9 +36,11 @@
           </tbody>
         </table>
         <div class="buttonbundle">
-          <router-link class="routerlink" :to="{ name: 'noticeNew' }">
-            <b-button class="makenewbutton" squared>새로 만들기</b-button>
+          <button id="button-review">
+          <router-link class="routerlink" :to="{ name: 'noticeNew' }" >
+            <p id="a">작성하기</p>
           </router-link>
+        </button>
         </div>
       </div>
     </div>
@@ -125,4 +130,31 @@
 .makenewbutton{
   margin-top:15px;
 } */
+
+#a{
+  text-decoration-line: none;
+  color: white;
+  font-size: 15px;
+  font-family: "티머니 둥근바람";
+  margin: 2px;
+}
+#button-review{
+   background-color: #653FD3;
+   border-color : #653FD3;
+   border-radius: 10%;
+   margin: 15px;
+   width: 100px;
+   text-align: center;
+
+}
+#aa{
+  display: inline;
+  font-family: "티머니 둥근바람";
+  color: #653FD3;
+}
+#title{
+  font-family: "티머니 둥근바람";
+  text-align: center;
+  margin-top: 10px;
+}
 </style>

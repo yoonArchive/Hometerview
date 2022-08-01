@@ -53,6 +53,12 @@ import ReviewEdit from '@/views/myinterview/review/ReviewEditView'
 import { component } from 'stylus/lib/functions'
 
 
+/* 마이스터디-공통질문 페이지 */
+// import CommonQuestionDetailView from '@/views/studyspace/components/CommonQuestionDetailView'
+// import CommonQuestionNewView from '@/views/studyspace/components/CommonQuestionNewView'
+// import CommonQuestionEditView from '@/views/studyspace/components/CommonQuestionEditView'
+import StudyQuestionListView from '@/views/studyspace/StudyQuestionListView'
+
 
 const fullMenu = require('@/views/main/menu.json')
 function makeRoutesFromMenu () {
@@ -171,11 +177,29 @@ function makeRoutesFromMenu () {
       name: 'reviewEdit',
       component : ReviewEdit
     },{
+      path: '/notice',
+      name: 'notices',
+      component: noticeList
+    },{
+      path: '/notice/new',
+      name: 'noticeNew',
+      component: noticeNewView
+    },{
+      path: '/notice/:noticeNo',
+      name: 'notice',
+      component: noticeDetailView
+    },
+    {
+      path: '/notice/:noticeNo/edit',
+      name: 'noticeEdit',
+      component: noticeEditView
+    },{
+
       path: 'study',
       name: 'study',
       component : StudySpaceView
     },{
-      path: 'study/:stdNo',
+      path: '/study/:stdNo',
       name: 'studydetail',
       component : StudySpaceDetailView
     },{
@@ -188,24 +212,38 @@ function makeRoutesFromMenu () {
     path: '/',
     name: 'main',
     component:Main
-  },{
-    path: '/notice',
-    name: 'notices',
-    component: noticeList
-  },{
-    path: '/notice/new',
-    name: 'noticeNew',
-    component: noticeNewView
-  },{
-    path: '/notice/:noticeNo',
-    name: 'notice',
-    component: noticeDetailView
   },
   {
-    path: '/notice/:noticeNo/edit',
-    name: 'noticeEdit',
-    component: noticeEditView
+    path: '/study/:stdNo/questionList',
+    name: 'questionList',
+    component: StudyQuestionListView
   },
+
+
+
+
+
+  // {
+  //   path: '/study/:studyNo/common/new',
+  //   name: 'commonNew',
+  //   component: CommonQuestionNewView
+  // },
+  // {
+  //   path: '/study/:studyNo/common/edit',
+  //   name: 'commonEdit',
+  //   component: CommonQuestionEditView
+  // },
+  // {
+  //   path: '/study/:studyNo/common/:qustionNo',
+  //   name: 'commonDetail',
+  //   component: CommonQuestionDetailView
+  // },
+
+
+
+
+
+
 
   )
   return routes
