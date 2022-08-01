@@ -9,7 +9,6 @@
   진행 일자 : {{ studySpaceDetail.stdDay }}<br>
   모집 인원 : {{ studySpaceDetail.stdLimit }}<br>
 
-
   <div>
     <study-members
       v-for="member in studySpaceDetail.studyJoins"
@@ -38,10 +37,10 @@ export default {
     ...mapGetters(['studySpaceDetail'])
   },
   methods:{
-    ...mapActions(['bringStudySpaceDetial','leaveStudy'])
+    ...mapActions(['bringStudySpaceDetail','leaveStudy'])
   },
-  mounted(){
-    this.bringStudySpaceDetial(this.stdNo)
+  created(){
+    this.bringStudySpaceDetail(this.stdNo)
   }
 }
 </script>

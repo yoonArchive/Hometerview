@@ -26,9 +26,9 @@ export default {
   },
   methods:{
   },
-  mounted(){
-    this.bringStudySpaceDetial(this.stdNo)
-  }
+  // mounted(){
+  //   this.bringStudySpaceDetail(this.stdNo)
+  // }
 
 
 }

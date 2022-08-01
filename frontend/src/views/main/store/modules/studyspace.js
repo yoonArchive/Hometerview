@@ -96,7 +96,7 @@ export default {
         console.log(err.response)
       })
     },
-    bringStudySpaceDetial({commit},stdNo){
+    bringStudySpaceDetail({commit},stdNo){
 
       axios({
         url:api_url.study.studyspacedetail(stdNo),
