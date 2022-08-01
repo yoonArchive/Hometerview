@@ -68,7 +68,7 @@ public class ApplyServiceImpl implements ApplyService {
 
     @Override
     public long getApplyCount(Recruit recruit) {
-        return applyRepositorySupport.CountByRecruitNo(recruit.getRecruitNo()) + 1;
+        return applyRepositorySupport.CountByRecruitNo(recruit.getRecruitNo());
     }
 
     @Override

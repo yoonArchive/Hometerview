@@ -7,7 +7,7 @@
       </h2>
       <div class="d-flex justify-content-around">
         <div>
-          대표 이미지 : 
+          대표 이미지 :
           <img src="{{ recruitDetail.stdImg }}" alt="">
         </div>
         <div>

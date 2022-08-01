@@ -26,6 +26,11 @@ export default {
   },
   methods:{
   },
+  mounted(){
+    this.bringStudySpaceDetial(this.stdNo)
+  }
+
+
 }
 </script>
 
