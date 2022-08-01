@@ -1,10 +1,7 @@
 package com.ssafy.api.service;
 
 import com.ssafy.api.request.StudyPostReq;
-import com.ssafy.db.entity.Recruit;
-import com.ssafy.db.entity.Resume;
-import com.ssafy.db.entity.Study;
-import com.ssafy.db.entity.StudyJoin;
+import com.ssafy.db.entity.*;
 
 import java.util.List;
 
@@ -33,5 +30,9 @@ public interface StudyService {
     void updateRegistedResume(StudyJoin studyJoin, Long resumeNo);
 
     long[] getDetailCounts(Long stdNo);
+
+    ApplyType getJoinType(Long userNo, Long stdNo);
+
+    int deleteStudy(Long stdNo);
 
 }
