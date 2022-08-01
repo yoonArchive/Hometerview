@@ -106,6 +106,23 @@ public class StudyController {
         else return ResponseEntity.status(401).body(BaseResponseBody.of(401, "스터디원 추방에 실패하였습니다."));
     }
 
+    @DeleteMapping("/dele/{stdNo}")
+    @ApiOperation(value = "스터디 삭제", notes = "스터디를 삭제한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "스터디 삭제 성공", response = BaseResponseBody.class),
+            @ApiResponse(code = 401, message = "스터디 삭제 실패", response = BaseResponseBody.class),
+            @ApiResponse(code = 402, message = "스터디 삭제 권한 없음", response = BaseResponseBody.class),
+            @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)})
+    public ResponseEntity<? extends BaseResponseBody> deleteStudy(@ApiIgnore Authentication authentication, @PathVariable @ApiParam(value = "스터디 번호", required = true) Long stdNo) throws Exception {
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        Long userNo = userDetails.getUserNo();
+        ApplyType joinType = studyService.getJoinType(userNo, stdNo);
+        if(joinType!=ApplyType.LEADER)  return ResponseEntity.status(402).body(BaseResponseBody.of(402, "스터디 삭제 권한이 없습니다."));
+        int result = studyService.deleteStudy(stdNo);
+        if (result == 1) return ResponseEntity.status(200).body(BaseResponseBody.of(200, "스터디 삭제가 완료되었습니다."));
+        else return ResponseEntity.status(401).body(BaseResponseBody.of(401, "스터디 삭제에 실패하였습니다."));
+    }
+
     @PutMapping("notice/{stdNo}")
     @ApiOperation(value = "스터디 공지사항 작성", notes = "스터디 공지사항을 작성한다.")
     @ApiResponses({

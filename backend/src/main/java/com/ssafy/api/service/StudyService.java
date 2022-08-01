@@ -33,4 +33,6 @@ public interface StudyService {
 
     ApplyType getJoinType(Long userNo, Long stdNo);
 
+    int deleteStudy(Long stdNo);
+
 }
