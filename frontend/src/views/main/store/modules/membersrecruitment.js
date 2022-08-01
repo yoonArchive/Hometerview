@@ -9,13 +9,15 @@ export default {
     recruitDetail : {},
     token: localStorage.getItem('token') || '' ,
     isApplied : false,
+    applyType : ''
+    
 
   },
   mutations: {
     SET_TOKEN: (state, token) => state.token = token,
     SET_RECRUITMENT_LIST: (state,recruitmentList) => state.recruitmentList = recruitmentList,
     SET_RECRUIT_DETAIL : (state,recruitDetail) => state.recruitDetail = recruitDetail,
-    SET_APPLY_STATE : (state, isApplied) => state.isApplied = isApplied,
+    SET_APPLY_TYPE : (state, applyType) => state.applyType = applyType,
     
   },
   getters:{
@@ -23,10 +25,12 @@ export default {
     isValidedEmail : state => state.isValidedEmail,
     recruitmentList : state => state.recruitmentList,
     recruitDetail : state => state.recruitDetail,
+    applyType : state => state.applyType,
   },
   actions:{
-    createRecruitment({getters},recruitmentInfo,token){
+    createRecruitment({getters},recruitmentInfo){
       console.log(recruitmentInfo)
+      console.log(getters.authHeader)
       axios({
         url : api_url.membersrecruitment.membersrecruitments(),
         method : 'post',
@@ -36,7 +40,7 @@ export default {
       .then(res => {
         console.log(res.data)
         alert('성공하셨습니다.')
-        router.push({name:'MembersRecruitmentView'})
+        router.push({name:'membersrecruitment'})
       })
       .catch(err => {
         console.log(err.response)
@@ -55,14 +59,17 @@ export default {
         console.log(err.response)
       })
     },
-    bringRecruitmentDetail({ commit }, recruitNo){
+    bringRecruitmentDetail({ commit, getters }, recruitNo){
       axios({
         url : api_url.membersrecruitment.membersrecruitment(recruitNo),
         method : 'get',
+        headers : getters.authHeader
       })
       .then(res => {
         console.log(res.data)
+        console.log(res.data.applyType)
         commit('SET_RECRUIT_DETAIL',res.data)
+        commit('SET_APPLY_TYPE',res.data.applyType)
       })
       .catch(err => {
         console.log(err.response)
@@ -90,13 +97,12 @@ export default {
         console.log(err.response)
       })
     },
-    deleteRecruitmentDetail({},recruitNo){
+    deleteRecruitmentDetail({commit},recruitNo){
       axios({
         url : api_url.membersrecruitment.membersrecruitment(recruitNo),
         method : 'delete',
       })
       .then(res => {
-        console.log('성공?')
         console.log(res.data)
         router.push({ 
           name: 'membersrecruitment',
@@ -160,13 +166,13 @@ export default {
       })
       .then(res=>{
         console.log(res.data)
-        commit('SET_APPLY_STATE',true)
+        commit('SET_APPLY_TYPE','NORMAL')
       })
       .catch(err=>{
         console.log(err.response)
       })
     },
-    studyApplyCancel({getters},recruitNo){
+    studyApplyCancel({commit,getters},recruitNo){
       axios({
         url : api_url.membersrecruitment.studyApply(recruitNo),
         method :'delete',
@@ -174,7 +180,7 @@ export default {
       })
       .then(res=>{
         console.log(res.data)
-        commit('SET_APPLY_STATE',false)
+        commit('SET_APPLY_TYPE',null)
       })
       .catch(err=>{
         console.log(err.response)

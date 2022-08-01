@@ -1,5 +1,4 @@
 <template>
-
   <div class="row row-cols-1 row-cols-md-3 g-4">
     <study-space-item
       v-for="studySpace in studySpaceList"
@@ -8,7 +7,6 @@
     ></study-space-item>
 
   </div>
-
 </template>
 
 <script>
@@ -24,6 +22,7 @@ export default {
 
   data(){
     return{
+      isloading : false
       }
     },
   computed: {

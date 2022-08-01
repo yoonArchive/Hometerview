@@ -1,20 +1,25 @@
 <template>
 
   <div>
-    <!-- {{ studySpace }} -->
-    {{ studySpace.stdName }}<br>
-    {{ studySpace.stdDetail }}<br>
-    {{ studySpace.stdImg }}<br>
-    {{ studySpace.stdType }}<br>
-    {{ studySpace.comName }}<br>
-    {{ studySpace.startDate }}<br>
-    {{ studySpace.endDate }}<br>
-    {{ studySpace.stdDay }}<br>
-    {{ studySpace.stdLimit }}<br>
-    {{ studySpace.stdNotice }} <br>
-    Study Leader : {{ studySpace.studyJoins[0].user.userName }}
-    <button @click="moveToStudyDetail"> 스터디 가기 </button>
+    <div>
+      <div>
+        이미지 : {{ studySpace.stdImg }}<br>
+      </div>
 
+    </div>
+
+    스터디 이름 : {{ studySpace.stdName }}<br>
+
+    타입 : {{ studySpace.stdType }}<br>
+    기업 : {{ studySpace.comName }}<br>
+    기간 : {{ studySpace.startDate }} ~ {{ studySpace.endDate }}<br>
+    진행 일자 :{{ studySpace.stdDay }}<br>
+    인원제한 : {{ studySpace.stdLimit }}<br>
+    공지사항 : {{ studySpace.stdNotice }} <br>
+    
+    스터디 소개 : {{ studySpace.stdDetail }}<br>
+    Study Leader : {{ studySpace.studyJoins[0].user.userName }} <br>
+    <button @click="moveToStudyDetail"> 스터디 가기 </button>
     <hr>
 
 
@@ -34,9 +39,15 @@ export default {
 
   data(){
     return{
+        studyJoins : this.studySpace.studyJoins
       }
     },
   computed: {
+    // countStudyJoins(){
+    //     const count = this.studyJoins.length
+    //     return count
+    // }
+
   },
   methods: {
     moveToStudyDetail(){

@@ -35,7 +35,7 @@ export default {
     ...mapActions(['bringRecruitmentList']),
   },
   
-  created(){
+  mounted(){
     this.bringRecruitmentList()
     console.log('되니?')
     

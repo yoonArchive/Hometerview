@@ -326,9 +326,11 @@ export default {
         })
         .then(res => {
           console.log(res.data)
+          alert("인증번호가 보내졌습니다")
         })
         .catch(err=>{
           console.log(err.response)
+          alert("인증번호가 보내기를 실패하였습니다.")
         })
       },
       checkAuthKey({commit},authInfo){
@@ -352,10 +354,12 @@ export default {
           console.log(res.data)
           commit('SET_AUTHORIZED', true)
           commit('SET_COMFIRM_EMAIL', email)
+          alert('인증을 성공하셨습니다.')
         })
         .catch(err=>{
           console.log(err.response)
           commit('SET_AUTHORIZED', false)
+          alert('인증을 실패하셨습니다.')
         })
       },
       changeAuthState({commit, getters},state){
