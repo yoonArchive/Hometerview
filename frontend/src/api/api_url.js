@@ -15,11 +15,11 @@ export default {
     signup: () => HOST + USERS,
     deleteUser: () => HOST + USERS,
     updateUser: () => HOST + USERS,
-    
+
     // 중복검사
     emailDuplicateCheck:() => HOST + USERS + 'checkEmail/',
     idDuplicateCheck:() => HOST + USERS + 'checkId/',
-    
+
     // 찾기
     findUserid: () => HOST + USERS + 'findId/',
     findUserPassword: () => HOST + USERS + 'findPw/',
@@ -45,7 +45,7 @@ export default {
     notices: () => HOST + NOTICE,
     notice: (noticeNo) => HOST + NOTICE + `${noticeNo}`,
   },
-  
+
   membersrecruitment:{
     membersrecruitments: () => HOST + RECRUITS,
     membersrecruitment: (recruitNo) => HOST + RECRUITS +`${recruitNo}`,
@@ -60,6 +60,7 @@ export default {
   },
   study:{
     studyspace : () => HOST +  STUDY,
-    studyspacedetail : (stdNo) => HOST +  STUDY + `/${stdNo}`
+    studyspacedetail : (stdNo) => HOST +  STUDY + `/${stdNo}`,
+    studyCoverLetter : (stdNo , resumeNo) => HOST + STUDY + RESUME + `/${stdNo}` + `/${resumeNo}`,
   }
 }
