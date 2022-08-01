@@ -6,9 +6,10 @@
   {{ member.user.userEmail }}<br>
   {{ member.user.ueserImg }}<br>
   {{ member.user.joinTyp }}<br>
-  {{ member.user.resumeNo }} <br>
-  <!-- {{ member }} -->
-
+  {{ member.user.resumeNo }}
+  <router-link :to="{ name: 'membercoverletter', params: { studentindex : studentindex } }">
+    자소서 보기
+  </router-link>
 
 </template>
 
@@ -20,6 +21,7 @@ export default {
   name : "StudyMembers",
   props:{
     member:Object,
+    studentindex:Number,
   },
 
   data(){

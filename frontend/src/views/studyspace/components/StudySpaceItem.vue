@@ -21,7 +21,7 @@
     Study Leader : {{ studySpace.studyJoins[0].user.userName }} <br>
     <button @click="moveToStudyDetail"> 스터디 가기 </button>
     <hr>
- 
+
 
 
   </div>
@@ -57,7 +57,7 @@ export default {
       })
     }
   },
-  
+
 
 
 }

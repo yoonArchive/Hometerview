@@ -1,5 +1,4 @@
 <template>
-  <div v-if="isloading">
   <div class="row row-cols-1 row-cols-md-3 g-4">
     <study-space-item
       v-for="studySpace in studySpaceList"
@@ -7,7 +6,6 @@
       :studySpace="studySpace"
     ></study-space-item>
 
-  </div>
   </div>
 </template>
 
@@ -34,9 +32,8 @@ export default {
   methods: {
     ...mapActions(['bringStudySpace']),
   },
-  async created(){
-    await this.bringStudySpace()  ;
-    this.isloading = true;
+  mounted(){
+    this.bringStudySpace()
   },
 
 }
