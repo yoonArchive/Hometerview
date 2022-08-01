@@ -28,7 +28,7 @@ export default {
   methods:{
     ...mapActions(['bringRecruitingList'])
   },
-  created(){
+  mounted(){
     this.bringRecruitingList()
   }
 }
