@@ -7,7 +7,7 @@ const NOTICE = 'notice/'
 const RECRUITS = 'recruits/'
 const RESUME = 'resume/'
 const REVIEW = 'review/'
-const STUDY = 'study'
+const STUDY = 'study/'
 const APPLY = 'apply/'
 
 
@@ -70,7 +70,7 @@ export default {
     commonquestions: (stdNo) => HOST + STUDY + `${stdNo}/`+ 'common',
     commonquestion: (stdNo,questionNo) => HOST + STUDY + `${stdNo}/`+ 'common/' +`${questionNo}`,
     commonquestiontype: (stdNo,questionNo) => HOST + STUDY + `${stdNo}/`+ 'common/' +`${questionNo}/`+'type',
-    studyspacedetail : (stdNo) => HOST +  STUDY + `/${stdNo}`,
-    studyCoverLetter : (stdNo , resumeNo) => HOST + STUDY + RESUME + `/${stdNo}` + `/${resumeNo}`,
+    studyspacedetail : (stdNo) => HOST +  STUDY + `${stdNo}/`,
+    studyCoverLetter : (stdNo , resumeNo) => HOST + STUDY + RESUME + `${stdNo}/` + `${resumeNo}`,
   }
 }

@@ -3,7 +3,7 @@
 
 
     {{commonQuestions.commonQuestions}}
-    <div v-for="commonquesions in commonQuestions.commonQuestions">
+    <div v-for="(commonquesions, index) in commonQuestions.commonQuestions" :key="index">
       {{ commonquesions.contents}}
     </div>
       <CommonQuestionList :commonquestions="commonQuestions.commonQuestions"></CommonQuestionList>

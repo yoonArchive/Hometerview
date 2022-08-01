@@ -29,37 +29,46 @@ export default {
   },
 
   actions: {
-    saveStudyCoverLetter({getters}, resumeNo, studentindex){
+    saveStudyCoverLetter({getters}, data){
+      console.log(getters.studySpaceList);
+      const studentindex = data.studentindex;
+      const resumeNo = data.resumeNo;
       const stdNo = getters.studySpaceList[studentindex].stdNo;
       axios.put(api_url.study.studyCoverLetter(stdNo,resumeNo),
-      {},{}).then(()=>{
+      {},{
+        headers : getters.authHeader,
+      }).then(()=>{
         console.log(`자소서 변경을 성공했습니다.`);
       }).catch((err)=>{
         console.log(err);
       })
     },
 
-    getStudyResume({getters, commit},studentindex){
+    async getStudyResume({getters, commit},studentindex){
       commit('RESET_RESUME_QUESTION_LIST');
       console.log(getters.studySpaceDetail);
+
       const detailCount = getters.studySpaceDetail.detailCounts[studentindex];
       const resumeNo = getters.studySpaceDetail.studyJoins[studentindex].resumeNo;
+      console.log(detailCount + " : " + resumeNo);
       for(var i = 0, j = 0; i < detailCount; j++){
         const data = {
           itemNo : j,
           resumeNo : resumeNo,
         }
-        axios.get(api_url.resumes.getResumeDetail(),{
+        await axios.get(api_url.resumes.getResumeDetail(),{
             params: data,
         }).then((data)=>{
+          console.log(data);
           const res = {
-            question : data.item,
-            answer : data.answer,
-            itemNo : data.itemNo,
-            detailNo : data.detailNo,
+            question : data.data.item,
+            answer : data.data.answer,
+            itemNo : data.data.itemNo,
+            detailNo : data.data.detailNo,
           }
-          commit('ADD_RESUME_QUESTION_LIST',res);
+          console.log(res);
           i++;
+          commit('ADD_RESUME_QUESTION_LIST',res);
         }).catch((err)=>{
           console.log(err);
         })
