@@ -66,7 +66,9 @@ public class StudyController {
             @ApiResponse(code = 200, message = "스터디 상세 조회 성공", response = StudyRes.class),
             @ApiResponse(code = 401, message = "스터디 상세 조회 실패", response = BaseResponseBody.class),
             @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)})
-    public ResponseEntity<? extends BaseResponseBody> studyDetail(@PathVariable Long stdNo) throws Exception {
+    public ResponseEntity<? extends BaseResponseBody> studyDetail(@ApiIgnore Authentication authentication, @PathVariable Long stdNo) throws Exception {
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        Long userNo = userDetails.getUserNo();
         Study study;
         try {
             study = studyService.detailStudy(stdNo);
@@ -74,7 +76,8 @@ public class StudyController {
             return ResponseEntity.status(401).body(BaseResponseBody.of(401, "스터디 상세 조회를 실패하였습니다."));
         }
         long[] detailCounts = studyService.getDetailCounts(stdNo);
-        return ResponseEntity.status(200).body(StudyRes.of(study, detailCounts, 200, "스터디 상세 조회를 성공하였습니다."));
+        ApplyType joinType = studyService.getJoinType(userNo, stdNo);
+        return ResponseEntity.status(200).body(StudyRes.of(study, detailCounts, joinType, 200, "스터디 상세 조회를 성공하였습니다."));
     }
 
     @DeleteMapping("/{stdNo}")

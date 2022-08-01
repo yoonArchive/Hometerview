@@ -1,5 +1,6 @@
 package com.ssafy.api.service;
 
+import com.querydsl.core.JoinType;
 import com.ssafy.db.entity.*;
 import com.ssafy.db.repository.*;
 import lombok.RequiredArgsConstructor;
@@ -138,6 +139,11 @@ public class StudyServiceImpl implements StudyService {
             detailCounts[idx++] = studyJoin.getResumeNo() == null ? 0 : resumeDetailRepositorySupport.CountByResumeNo(studyJoin.getResumeNo());
         }
         return detailCounts;
+    }
+
+    @Override
+    public ApplyType getJoinType(Long userNo, Long stdNo){
+        return studyJoinRepositorySupport.findStudyJoinByUserNoAndStdNo(userNo, stdNo).get().getJoinType();
     }
 
 }
