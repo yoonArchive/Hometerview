@@ -62,11 +62,18 @@
   margin-left: 100px;
 }
 
+.contents{
+  height: 150px;
+    width: 100%;
+    color: black;
+    background-color: #653FD3;
+}
+
 @media (max-width: 700px) {
   .main-footer {
     height: 190px;
     width: 100%;
-    color: white;
+    color: black;
     background-color: #653FD3;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.08), 0px 4px 24px rgba(0, 0, 0, 0.08);
 
@@ -83,7 +90,8 @@
     height: 110px;
     /* width: 102%; */
     background-color: #653FD3;
-    color: white;
+    /* color: white; */
+    color: black;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.08), 0px 4px 24px rgba(0, 0, 0, 0.08);
 
 

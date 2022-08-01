@@ -195,7 +195,7 @@ function makeRoutesFromMenu () {
       component: noticeEditView
     },{
 
-      path: '/study',
+      path: 'study',
       name: 'study',
       component : StudySpaceView
     },{
