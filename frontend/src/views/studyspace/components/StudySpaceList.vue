@@ -1,5 +1,5 @@
 <template>
-  
+  <div v-if="isloading">
   <div class="row row-cols-1 row-cols-md-3 g-4">
     <study-space-item
       v-for="studySpace in studySpaceList"
@@ -8,7 +8,7 @@
     ></study-space-item>
 
   </div>
-
+  </div>
 </template>
 
 <script>
@@ -24,6 +24,7 @@ export default {
 
   data(){
     return{
+      isloading : false
       }
     },
   computed: {
@@ -33,8 +34,9 @@ export default {
   methods: {
     ...mapActions(['bringStudySpace']),
   },
-  created(){
-    this.bringStudySpace()  
+  async created(){
+    await this.bringStudySpace()  ;
+    this.isloading = true;
   },
 
 }

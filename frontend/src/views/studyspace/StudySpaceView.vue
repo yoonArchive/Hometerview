@@ -1,6 +1,7 @@
 <template>
-
-  <study-space-list></study-space-list>
+  <div class="container">
+    <study-space-list></study-space-list>
+  </div>
 
 </template>
 

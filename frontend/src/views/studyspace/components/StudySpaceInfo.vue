@@ -40,7 +40,7 @@ export default {
   methods:{
     ...mapActions(['bringStudySpaceDetial','leaveStudy'])
   },
-  created(){
+  mounted(){
     this.bringStudySpaceDetial(this.stdNo)
   }
 }
