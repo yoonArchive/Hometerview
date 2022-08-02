@@ -1,18 +1,16 @@
 package com.ssafy.api.service;
 
 import com.ssafy.api.request.UpdateUserPutReq;
+import com.ssafy.api.request.UserRegisterPostReq;
+import com.ssafy.db.entity.User;
 import com.ssafy.db.entity.UserType;
+import com.ssafy.db.repository.UserRepository;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import com.ssafy.api.request.UserRegisterPostReq;
-import com.ssafy.db.entity.User;
-import com.ssafy.db.repository.UserRepository;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.io.File;
 import java.util.UUID;
@@ -90,7 +88,6 @@ public class UserServiceImpl implements UserService {
     public int updateUser(User user, UpdateUserPutReq updateUserPutReq) {
         String userName = updateUserPutReq.getUpdateUserProfileReq().getUserName();
         String userEmail = updateUserPutReq.getUpdateUserProfileReq().getUserEmail();
-        // String userImg = updateUserPutReq.getUserImg();
         try {
             user.updateUser(userName, userEmail);
         } catch (Exception e) {
@@ -110,12 +107,12 @@ public class UserServiceImpl implements UserService {
             String preFileUrl = user.getUserImg();
             File file;
             if (preFileUrl != null) {
-                file = new File(uploadPath + File.pathSeparator, preFileUrl);
+                file = new File(preFileUrl);
                 if (file.exists()) {
                     file.delete();
                 }
             }
-            if (multipartFile == null) {
+            if (multipartFile.isEmpty()) {
                 String fileUrl = "";
                 user.updateUserImg(fileUrl);
                 return 1;
@@ -129,7 +126,6 @@ public class UserServiceImpl implements UserService {
                 multipartFile.transferTo(destFile);
                 // String fileUrl = "https://i7b105.p.ssafy.io:8080/static/" + uploadFolder + "/" + destFileName;
                 String fileUrl = uploadPath + "/" + uploadFolder + "/" + destFileName;
-                System.out.println("fileUrl : " + fileUrl);
                 user.updateUserImg(fileUrl);
                 return 1;
             }
