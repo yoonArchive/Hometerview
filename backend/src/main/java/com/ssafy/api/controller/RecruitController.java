@@ -1,14 +1,17 @@
 package com.ssafy.api.controller;
 
+import com.ssafy.api.request.RecruitInfoReq;
 import com.ssafy.api.request.RecruitReq;
 import com.ssafy.api.response.RecruitListRes;
 import com.ssafy.api.response.RecruitRes;
+import com.ssafy.api.response.UserRes;
 import com.ssafy.api.service.ApplyService;
 import com.ssafy.api.service.RecruitService;
 import com.ssafy.common.auth.UserDetails;
 import com.ssafy.common.model.response.BaseResponseBody;
 import com.ssafy.db.entity.ApplyType;
 import com.ssafy.db.entity.Recruit;
+import com.ssafy.db.entity.User;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +39,8 @@ public class RecruitController {
             @ApiResponse(code = 401, message = "모집글 작성 실패", response = BaseResponseBody.class),
             @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
     })
-    public ResponseEntity<? extends BaseResponseBody> register(@ApiIgnore Authentication authentication, @RequestBody @ApiParam(value = "모집글 정보", required = true) @Valid RecruitReq recruitReq) throws Exception {
+    public ResponseEntity<? extends BaseResponseBody> register(@ApiIgnore Authentication authentication,
+                                                               @ModelAttribute @Valid RecruitReq recruitReq) throws Exception {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         Long userNo = userDetails.getUserNo();
         Recruit recruit;
@@ -124,22 +128,22 @@ public class RecruitController {
     @ApiResponses({
             @ApiResponse(code = 200, message = "모집글 수정 성공", response = RecruitRes.class),
             @ApiResponse(code = 401, message = "모집글 수정 실패", response = BaseResponseBody.class),
-            @ApiResponse(code = 402, message = "해당 모집글 없음", response = BaseResponseBody.class),
+            @ApiResponse(code = 402, message = "썸네일 이미지 수정 실패", response = BaseResponseBody.class),
+            @ApiResponse(code = 403, message = "해당 모집글 없음", response = BaseResponseBody.class),
             @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
     })
-    public ResponseEntity<? extends BaseResponseBody> updateRecruit(@ApiIgnore Authentication authentication, @PathVariable @ApiParam(value = "모집글 번호", required = true) Long recruitNo, @RequestBody @ApiParam(value = "모집글 변경 내용", required = true) RecruitReq recruitReq) {
+    public ResponseEntity<? extends BaseResponseBody> updateRecruit(@ApiIgnore Authentication authentication,
+                                                                    @PathVariable @ApiParam(value = "모집글 번호", required = true) Long recruitNo,
+                                                                    @ModelAttribute @Valid RecruitReq recruitReq) {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         Long userNo = userDetails.getUserNo();
         Recruit recruit = recruitService.getByRecruitNo(recruitNo);
         if (recruit == null)
-            return ResponseEntity.status(402).body(BaseResponseBody.of(402, "해당하는 스터디 모집글이 없습니다."));
-        Recruit updatedRecruit;
-        try {
-            recruitService.updateRecruit(recruit, recruitReq);
-            updatedRecruit = recruitService.getByRecruitNo(recruitNo);
-        } catch (Exception e) {
-            return ResponseEntity.status(401).body(BaseResponseBody.of(401, "스터디 모집글 수정에 실패하였습니다."));
-        }
+            return ResponseEntity.status(403).body(BaseResponseBody.of(403, "해당하는 스터디 모집글이 없습니다."));
+        int result = recruitService.updateRecruit(recruit, recruitReq);
+        if (result == 0) return ResponseEntity.status(401).body(BaseResponseBody.of(401, "스터디 모집글 수정에 실패하였습니다."));
+        else if (result == 1) return ResponseEntity.status(402).body(BaseResponseBody.of(402, "썸네일 이미지 수정에 실패하였습니다."));
+        Recruit updatedRecruit = recruitService.getByRecruitNo(recruitNo);
         long count = applyService.getApplyCount(recruit);
         ApplyType applyType = applyService.getApplyType(recruitNo, userNo);
         return ResponseEntity.status(200).body(RecruitRes.of(updatedRecruit, count, applyType, 200, "스터디 모집글이 수정되었습니다."));

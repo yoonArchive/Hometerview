@@ -60,11 +60,10 @@ public class Recruit {
     @OneToMany(mappedBy = "recruit")
     private List<Apply> applies = new ArrayList<>();
 
-    public void initRecruit(String recruitTitle, String stdName, String stdDetail, String stdImg, StdType stdType, String comName, String startDate, String endDate, String stdDay, int stdLimit) {
+    public void initRecruit(String recruitTitle, String stdName, String stdDetail, StdType stdType, String comName, String startDate, String endDate, String stdDay, int stdLimit) {
         this.recruitTitle = recruitTitle;
         this.stdName = stdName;
         this.stdDetail = stdDetail;
-        this.stdImg = stdImg;
         this.stdType = stdType;
         this.comName = comName;
         this.startDate = startDate;
@@ -77,4 +76,7 @@ public class Recruit {
         this.recruitStatus = RecruitStatus.COMPLETED;
     }
 
+    public void updateStdImg(String fileUrl) {
+        this.stdImg = fileUrl;
+    }
 }

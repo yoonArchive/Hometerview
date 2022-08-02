@@ -211,7 +211,7 @@ public class UserController {
     public ResponseEntity<? extends BaseResponseBody> checkAuthKey(@RequestParam @ApiParam(value = "회원 이메일", required = true) String userEmail, @RequestParam @ApiParam(value = "인증번호", required = true) String authKey) throws Exception {
         String email = mailService.checkAuthKey(authKey);
         if (email == null || !email.equals(userEmail))
-            return ResponseEntity.status(401).body(BaseResponseBody.of(401, "인증번호가 옳바르지 않습니다."));
+            return ResponseEntity.status(401).body(BaseResponseBody.of(401, "인증번호가 올바르지 않습니다."));
         else {
             mailService.deleteAuthKey(authKey);
             return ResponseEntity.status(200).body(BaseResponseBody.of(200, "인증 성공"));
@@ -223,13 +223,16 @@ public class UserController {
     @ApiResponses({
             @ApiResponse(code = 200, message = "회원 정보 수정 성공", response = UserRes.class),
             @ApiResponse(code = 401, message = "회원 정보 수정 실패", response = BaseResponseBody.class),
+            @ApiResponse(code = 402, message = "유저 프로필 사진 수정 실패", response = BaseResponseBody.class),
             @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
     })
-    public ResponseEntity<UserRes> updateUser(@ApiIgnore Authentication authentication, @RequestBody @ApiParam(value = "변경된 회원 정보", required = true) @Valid UpdateUserPutReq updateUserPutReq) throws Exception {
+    public ResponseEntity<? extends BaseResponseBody> updateUser(@ApiIgnore Authentication authentication, @ModelAttribute @Valid UpdateUserPutReq updateUserPutReq) throws Exception {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         String userId = userDetails.getUsername();
         User user = userService.getByUserId(userId);
-        userService.updateUser(user, updateUserPutReq);
+        int result = userService.updateUser(user, updateUserPutReq);
+        if (result == 0) return ResponseEntity.status(401).body(BaseResponseBody.of(401, "회원정보 수정에 실패하였습니다."));
+        else if (result == 1) return ResponseEntity.status(402).body(BaseResponseBody.of(402, "프로필 사진 수정에 실패하였습니다."));
         User updatedUser = userService.getByUserId(userId);
         return ResponseEntity.status(200).body(UserRes.of(updatedUser, 200, "회원정보가 수정되었습니다."));
     }

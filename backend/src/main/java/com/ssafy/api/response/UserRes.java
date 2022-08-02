@@ -38,5 +38,6 @@ public class UserRes extends BaseResponseBody {
         res.setMessage(message);
         return res;
     }
+
 }
 
