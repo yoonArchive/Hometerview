@@ -2,10 +2,10 @@
   <div>
 
 
-    {{commonQuestions.commonQuestions}}
-    <div v-for="(commonquesions, index) in commonQuestions.commonQuestions" :key="index">
+    <!-- {{commonQuestions.commonQuestions}} -->
+    <!-- <div v-for="commonquesions in commonQuestions.commonQuestions">
       {{ commonquesions.contents}}
-    </div>
+    </div> -->
       <CommonQuestionList :commonquestions="commonQuestions.commonQuestions"></CommonQuestionList>
   </div>
 
@@ -35,11 +35,22 @@ export default {
   async mounted(){
     await this.commonQuestions1(this.stdNo)
   },
-  created(){
-    // this.getStd(this.stdNo);
-    this.commonQuestions1(this.stdNo);
-    console.log(this.stdNo)
-  }
+   watch: {
+    docRef () {
+      this.commonQuestions1(this.stdNo)
+    }
+  },
+  created () {
+    this.commonQuestions1(this.stdNo)
+  },
+  destroyed () {
+    if (this.commonQuestions1) this.commonQuestions1(this.stdNo)
+  },
+  // created(){
+  //   this.getStd(this.stdNo);
+  //   this.commonQuestions1(this.stdNo);
+  //   console.log(this.stdNo)
+  // }
 }
 </script>
 

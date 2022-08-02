@@ -15,23 +15,32 @@
           수정: {{timeForToday(commonquestion.updated_at)}}
         </div> -->
       </div>
+
       {{commonquestion.contents}}
     </div>
     <div class="commonquestion-mid">
       <!-- <div v-if="!isEditing">{{ payload.content }}</div> -->
+      {{commonquestion.questionType}}
     </div>
     <div class="commonquestion-bottom">
       <div class="commonquestion-button">
-        <!-- <span v-if="isEditing">
-          <input type="text" v-model="payload.content">
-          <button @click="onUpdate">Update</button> |
-          <button @click="switchIsEditing">Cancel</button>
-        </span> -->
-<!--
-        <span v-if="currentUser.username === commonquestion.user.username && !isEditing">
+        <span v-if="isEditing">
+          <input type="text" v-model="payload.contents">
+            <button @click="onUpdate">Update</button> |
+            <button @click="switchIsEditing">Cancel</button>
+            <div>
+              <input type="radio" name="reviewType" value="JOB" v-model="payload.questionType">
+              <label for="questionType">공통질문</label>
+              <input  type="radio" name="reviewType" value="FREE" v-model="payload.questionType">
+              <label for="questionType">자율질문</label>
+            </div>
+
+        </span>
+
+        <span v-if="commonquestion.writerNo === commonquestion.writerNo && !isEditing">
           <button @click="switchIsEditing">Edit</button> |
-          <button @click="deletecommonquestion(payload)">Delete</button>
-        </span> -->
+          <button @click="deletecommonQuestion([stdNo, commonquestion.questionNo])">Delete</button>
+        </span>
       </div>
     </div>
   </li>
@@ -42,52 +51,40 @@ import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'commonquestionListItem',
-  props: { commonquestion: Object },
+  props: {
+    commonquestion: Object,
+    stdNo: Number,
+    questionNo: Number
+
+  },
   data() {
     return {
       isEditing: false,
+      // stdNo: this.$route.params.stdNo,
       payload: {
-        stdNo: this.$route.params.stdNo,
-        questionNo: this.commonquestion.questionNo,
-        contents: this.commonquestion.contents
+        // questionNo: this.commonquestion.questionNo,
+        contents: this.commonquestion.contents,
+        questionType:this.commonquestion.questionType
       },
+      // questionNo: this.commonquestion.questionNo,
+
     }
   },
   computed: {
-    ...mapGetters(['currentUser']),
+    ...mapGetters(['authHeader']),
+
   },
   methods: {
-    ...mapActions(['updatecommonquestion', 'deletecommonquestion']),
+    ...mapActions(['updatecommonQuestion','deletecommonQuestion']),
     switchIsEditing() {
       this.isEditing = !this.isEditing
     },
     onUpdate() {
-      this.updatecommonquestion(this.payload)
+      this.updatecommonQuestion([this.stdNo, this.payload, this.commonquestion.questionNo])
       this.isEditing = false
     },
 
-    timeForToday(value) {
-        const today = new Date();
-        const timeValue = new Date(value);
 
-        const betweenTime = Math.floor((today.getTime() - timeValue.getTime()) / 1000 / 60);
-        if (betweenTime < 1) return '방금 전';
-        if (betweenTime < 60) {
-            return `${betweenTime}분 전`;
-        }
-
-        const betweenTimeHour = Math.floor(betweenTime / 60);
-        if (betweenTimeHour < 24) {
-            return `${betweenTimeHour}시간 전`;
-        }
-
-        const betweenTimeDay = Math.floor(betweenTime / 60 / 24);
-        if (betweenTimeDay < 365) {
-            return `${betweenTimeDay}일 전`;
-        }
-
-        return `${Math.floor(betweenTimeDay / 365)}년 전`;
- }
   },
 
 }
