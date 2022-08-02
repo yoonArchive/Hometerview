@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div>
     <study-space-list></study-space-list>
   </div>
 

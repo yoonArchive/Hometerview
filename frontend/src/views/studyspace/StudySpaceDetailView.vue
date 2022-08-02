@@ -1,7 +1,9 @@
 <template>
   <h1>Detail Page</h1>
   
-  <study-space-info></study-space-info>
+  <div class="container">
+    <study-space-info></study-space-info>
+  </div>
 
 
 </template>
