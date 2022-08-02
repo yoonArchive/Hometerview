@@ -1,10 +1,11 @@
 package com.ssafy.api.service;
 
+import com.ssafy.api.request.RecruitInfoReq;
 import com.ssafy.api.request.RecruitReq;
 import com.ssafy.db.entity.Recruit;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface RecruitService {
 
@@ -20,8 +21,10 @@ public interface RecruitService {
 
     Recruit getByRecruitNo(Long recruitNo);
 
-    void updateRecruit(Recruit recruit, RecruitReq recruitReq);
+    int updateRecruit(Recruit recruit, RecruitReq recruitReq);
 
     int deleteRecruit(Long recruitNo);
+
+    int updateStdImg(Recruit recruit, MultipartFile multipartFile);
 
 }

@@ -65,10 +65,13 @@ public class User {
         this.userPw = newPw;
     }
 
-    public void updateUser(String userName, String userEmail, String userImg) {
+    public void updateUser(String userName, String userEmail) {
         this.userName = userName;
         this.userEmail = userEmail;
-        this.userImg = userImg;
+    }
+
+    public void updateUserImg(String fileUrl) {
+        this.userImg = fileUrl;
     }
 
 }
