@@ -26,6 +26,7 @@ export default {
     recruitmentList : state => state.recruitmentList,
     recruitDetail : state => state.recruitDetail,
     applyType : state => state.applyType,
+    recruitCount : state => state.recruitDetail.count
   },
   actions:{
     createRecruitment({getters},recruitmentInfo){
@@ -98,6 +99,7 @@ export default {
       })
     },
     deleteRecruitmentDetail({commit},recruitNo){
+      
       axios({
         url : api_url.membersrecruitment.membersrecruitment(recruitNo),
         method : 'delete',
@@ -109,7 +111,6 @@ export default {
         })
       })
       .catch(err => {
-        console.log('에러?'+ recruitNo)
         console.log(err)
       })
     },

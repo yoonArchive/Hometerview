@@ -14,6 +14,7 @@
         기간 : {{ studySpaceDetail.startDate }} ~ {{ studySpaceDetail.endDate }}<br>
         진행 일자 : {{ studySpaceDetail.stdDay }}<br>
         모집 인원 : {{ studySpaceDetail.stdLimit }}<br>
+        
       </div>
     </div>
   </div>
@@ -44,7 +45,8 @@ export default {
   },
   data(){
     return{
-      stdNo:this.$route.params.stdNo,
+      stdNo: this.$route.params.stdNo,
+
     }
   },
   computed:{
@@ -55,6 +57,7 @@ export default {
   },
   created(){
     this.bringStudySpaceDetail(this.stdNo)
+    // await this.deleteStudySpace([this.stdNo])
   }
 }
 </script>

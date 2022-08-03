@@ -2,6 +2,8 @@
   <div class="col">
     <div class="card">
       <img src="{{ recruitment.stdImg }}" class="card-img-top" alt="...">
+
+      <!-- {{ recruitment.recruitNo }} -->
       <div class="card-body">
         <h5 class="card-title">{{ recruitment.stdName }}</h5>
         <p class="card-text">
@@ -20,6 +22,7 @@
 
 <script>
 import router from '@/common/lib/vue-router'
+import {mapActions} from 'vuex'
 export default {
   name : "MembersRecruitmentItem",
   props:{
@@ -31,8 +34,12 @@ export default {
       }
     },
   computed: {
+
   },
   methods: {
+    methods:{
+    },
+
     moveToDetail(){
       router.push({
         name:'membersrecruitmentdetail',
@@ -40,7 +47,12 @@ export default {
         })
     }
   },
-  
+  // async created(){
+  //   if(this.recruitCount===0){
+  //     await this.deleteRecruitmentDetail(this.recruitNo)
+  //     await this.bringRecruitmentDetail(this.recruitNo)
+  //     }
+  // }
 
 
 }

@@ -17,7 +17,7 @@
     </div>
     <div>
       스터디 소개 : {{ studySpace.stdDetail }}<br>
-      Study Leader : {{ studySpace.studyJoins[0].user.userName }} <br>
+      <!-- Study Leader : {{ studySpace.studyJoins[0].user.userName }} <br> -->
     </div>
     <div>
       공지사항 : {{ studySpace.stdNotice }} <br>

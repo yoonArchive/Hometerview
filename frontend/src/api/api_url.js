@@ -64,7 +64,7 @@ export default {
   },
   study:{
     studyspace : () => HOST +  STUDY,
-
+    deleteStudySpace : (stdNo) => HOST + STUDY + '/dele' + `/${stdNo}`,
 
     studys: (stdNo) => HOST + STUDY,
     commonquestions: (stdNo) => HOST + STUDY + `${stdNo}/`+ 'common',

@@ -18,6 +18,7 @@ export default {
     studySpaceList : state => state.studySpaceList,
     studySpaceDetail : state => state.studySpaceDetail,
     resumeQuestionList : state => state.resumeQuestionList,
+    
   },
 
   mutations: {
@@ -89,7 +90,6 @@ export default {
       })
       .then(res => {
         console.log(res.data)
-
         commit('SET_RECRUITMENT_LIST',res.data.studies )
       })
       .catch(err => {
@@ -140,6 +140,23 @@ export default {
         console.log(err.response)
       })
     },
+    deleteStudySpace({dispatch},deleteInfo){
+      const stdNo = deleteInfo[0]
+      const memberNo = deleteInfo[1]
+      if(memberNo<1){
+        axios({
+          url:api_url.study.deleteStudySpace(stdNo),
+          method:'delete'
+        })
+        .then(res=>{
+          console.log(res.data)
+          dispatch('bringStudySpace')
+        })
+        .catch(err=>{
+          console.log(err.response)
+        })
+      }
+    }
 
 
   },
