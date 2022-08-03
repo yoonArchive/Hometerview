@@ -29,14 +29,19 @@ export default {
     recruitCount : state => state.recruitDetail.count
   },
   actions:{
+
     createRecruitment({getters},recruitmentInfo){
-      console.log(recruitmentInfo)
-      console.log(getters.authHeader)
+      recruitmentInfomation = recruitmentInfo[0]
+      stdImg = recruitmentInfo[1]
       axios({
         url : api_url.membersrecruitment.membersrecruitments(),
         method : 'post',
-        data : recruitmentInfo,
-        headers : getters.authHeader
+        data : stdImg,
+        headers : {
+          'token' : getters.authHeader,
+          'Context-Type' : 'multipart/form-data'
+
+        }
       })
       .then(res => {
         console.log(res.data)

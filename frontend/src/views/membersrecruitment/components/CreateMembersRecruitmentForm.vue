@@ -1,6 +1,6 @@
 <template>
     <h4 class="py-2" style="color: #653FD3;">스터디 그룹을 만들어 보세요!</h4>
-    <form @submit.prevent="submitType(action)">
+    <form @submit.prevent="submitType(action)" enctype="">
       <div class="py-2">
         <label class="font-color" for="recruitTitle">모집글 제목 : </label>
         <input class="box1" v-model="newrecruitmentInfo.recruitTitle" type="text" id="recruitTitle" />
@@ -43,9 +43,10 @@
         </div>
       </div>
       <div>
-        <label for="stdImg">이미지 : </label>
-        <input multiple @change="onInputimage" ref="studyImage" type="file">
-        <input v-model="newrecruitmentInfo.stdImg" type="image" id="stdImg">
+        <label for="stdImg" class="file">이미지 : </label>
+        <input type="file" id="stdImg" ref="">
+        <input v-model="newrecruitmentInfo.stdImg" type="image">
+        <!-- <input multiple @change="onInputimage" ref="studyImage" type="file" id="file"> -->
       </div>
       <button>{{ action }}</button>
     </form>
@@ -69,7 +70,7 @@
       return{
 
         company : false,
-
+        stdImg :'',
         newrecruitmentInfo:{
           comName: this.recruitDetail.comName,
           endDate: this.recruitDetail.endDate,
@@ -77,7 +78,7 @@
           startDate: this.recruitDetail.startDate,
           stdDay: this.recruitDetail.stdDay,
           stdDetail: this.recruitDetail.stdDetail,
-          stdImg: this.recruitDetail.stdImg,
+          // stdImg: this.recruitDetail.stdImg,
           stdLimit: this.recruitDetail.stdLimit,
           stdName: this.recruitDetail.stdName,
           stdType: this.recruitDetail.stdType || "COM"
@@ -92,6 +93,10 @@
       onInputimage(){
         this.newrecruitmentInfo.stdImg = this.$refs.studyImage.files[0]['name']
       },
+      upload(){
+        imgData = new FormData
+        imgData.append('stdImg',this.stdImg)
+      },
       isCompany(type){
         if(type==="COM"){
           this.company = false
@@ -99,10 +104,11 @@
           this.company = true
         }
       },
-      submitType(action){
+      async submitType(action){
         if(action==='create'){
           console.log(action)
-          this.createRecruitment(this.newrecruitmentInfo)
+          await this.upload()
+          this.createRecruitment([this.newrecruitmentInfo, this.stdImg])
         }
         else if (action==='update'){
           this.updateRecruitmentDetail([this.recruitNo,this.newrecruitmentInfo])
