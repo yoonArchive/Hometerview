@@ -19,10 +19,11 @@
 
 .word {
   float: left;
+  vertical-align:middle
 }
 #logo {
   width: 150px;
-  height: 110px;
+  height: 100px;
   float: right;
 
 
@@ -54,8 +55,8 @@
   /* display: flex;
   margin-left: 50px;
   flex-direction: row; */
-  /* display: flex; */
-  /* flex-direction: row; */
+  display: flex;
+  flex-direction: row;
   /* align-items: center; */
   padding: 0px;
   gap: 40px;
@@ -63,11 +64,12 @@
 }
 
 .contents{
-  height: 150px;
-    width: 100%;
-    color: black;
-    background-color: #653FD3;
+  height: 100px;
+  width: 100%;
+  color: black;
+  background-color: #653FD3;
 }
+
 
 @media (max-width: 700px) {
   .main-footer {
