@@ -1,6 +1,5 @@
 /* 공통으로 적용되어야할 css */
 @media (max-width: 700px) {
-
 }
 
 #app,
@@ -24,12 +23,8 @@
 }
 
 .main-container {
-<<<<<<< HEAD
-
-=======
   /* height: calc(100% - 195px); */
   height: 1800px;
->>>>>>> afe583018a3f91b4a33aca0a9838e883fe92d243
 }
 
 .el-row.main-footer {
@@ -53,12 +48,9 @@
   top: 100%;
 }
 
-#mainBackground {
-  /* background-color: #653fd3; */
-
-}
-
-
+/* #mainBackground {
+   background-color: #653fd3;
+} */
 
 #mainDivLogo {
   text-align: center;
@@ -92,7 +84,6 @@
   flex: none;
   order: 0;
   flex-grow: 0;
-
 }
 
 #headerMenu {
