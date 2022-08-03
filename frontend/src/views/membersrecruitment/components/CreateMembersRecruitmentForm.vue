@@ -47,7 +47,7 @@
           <input class="box2" v-model="newrecruitmentInfo.stdDetail" type="text" id="stdDetail">
       </div>
 
-      <div>
+      <!-- <div>
         이미지 :
         <label for="stdImg">
            <button id="file-button">파일</button>
@@ -55,17 +55,24 @@
           <input v-model="newrecruitmentInfo.stdImg" type="image" id="stdImg" >
         </label>
 
-      </div>
+      </div> -->
       <div>
-        <label for="stdImg" class="file">이미지 : </label>
-        <input type="file" id="stdImg" ref="">
-        <input v-model="newrecruitmentInfo.stdImg" type="image">
-        <!-- <input multiple @change="onInputimage" ref="studyImage" type="file" id="file"> -->
+
+        <div>
+          <label for="inputImage">InputImage</label>
+          <!-- <input type="text" id="dump" disabled>
+          <button type="button" @click="findImage">Add</button> -->
+          <input type="file" id="inputImage" ref="inputImage" @change="imageSelect" multiple>
+        </div>
+
+
       <button id="b-button">{{ action }}</button>
       </div>
     </form>
     <!-- <button @click="deleteRecruitmentDetail(recruitNo)">삭제 </button> -->
   </div>
+
+
 </template>
 
 <script>
@@ -82,17 +89,16 @@
 
     data(){
       return{
-
+        
         company : false,
-        stdImg :'',
-        newrecruitmentInfo:{
+        newrecruitmentInfo:{          
+          stdImg : File,
           comName: this.recruitDetail.comName,
           endDate: this.recruitDetail.endDate,
           recruitTitle: this.recruitDetail.recruitTitle,
           startDate: this.recruitDetail.startDate,
           stdDay: this.recruitDetail.stdDay,
           stdDetail: this.recruitDetail.stdDetail,
-          // stdImg: this.recruitDetail.stdImg,
           stdLimit: this.recruitDetail.stdLimit,
           stdName: this.recruitDetail.stdName,
           stdType: this.recruitDetail.stdType || "COM"
@@ -100,16 +106,33 @@
       }
     },
     computed:{
+      findImage(){
+        document.getElementById("inputImage").click()
+      },
+      imageSelect(){
+        this.newrecruitmentInfo.stdImg = this.$refs.inputImage.files[0]
+        console.log(this.newrecruitmentInfo.stdImg)
+      }
 
     },
     methods:{
       ...mapActions(['createRecruitment','updateRecruitmentDetail','deleteRecruitmentDetail' ]),
-      onInputimage(){
-        this.newrecruitmentInfo.stdImg = this.$refs.studyImage.files[0]['name']
-      },
+
+
+
       upload(){
-        imgData = new FormData
-        imgData.append('stdImg',this.stdImg)
+        const formData = new FormData()
+        formData.append('multipartFile',this.newrecruitmentInfo.stdImg)
+        formData.append('recruitInfoReq.recruitTitle',this.newrecruitmentInfo.comName)
+        formData.append('recruitInfoReq.endDate',this.newrecruitmentInfo.endDate)
+        formData.append('recruitInfoReq.recruitTitle',this.newrecruitmentInfo.recruitTitle)
+        formData.append('recruitInfoReq.startDate',this.newrecruitmentInfo.startDate)
+        formData.append('recruitInfoReq.stdDay',this.newrecruitmentInfo.stdDay)
+        formData.append('recruitInfoReq.stdDetail',this.newrecruitmentInfo.stdDetail)
+        formData.append('recruitInfoReq.stdLimit',this.newrecruitmentInfo.stdLimit)
+        formData.append('recruitInfoReq.stdName',this.newrecruitmentInfo.stdName)
+        formData.append('recruitInfoReq.stdType',this.newrecruitmentInfo.stdType)
+        return formData
       },
       isCompany(type){
         if(type==="COM"){
@@ -121,9 +144,8 @@
 
       async submitType(action){
         if(action==='만들기'){
-          console.log(action)
-          await this.upload()
-          this.createRecruitment([this.newrecruitmentInfo, this.stdImg])
+          const formData = await this.upload()
+          await this.createRecruitment(formData)
         }
         else if (action==='수정하기'){
           this.updateRecruitmentDetail([this.recruitNo,this.newrecruitmentInfo])
