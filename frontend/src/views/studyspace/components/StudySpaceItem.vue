@@ -16,9 +16,9 @@
     진행 일자 :{{ studySpace.stdDay }}<br>
     인원제한 : {{ studySpace.stdLimit }}<br>
     공지사항 : {{ studySpace.stdNotice }} <br>
-    
+
     스터디 소개 : {{ studySpace.stdDetail }}<br>
-    Study Leader : {{ studySpace.studyJoins[0].user.userName }} <br>
+    <!-- Study Leader : {{ studySpace.studyJoins[0].user.userName }} <br> -->
     <button @click="moveToStudyDetail"> 스터디 가기 </button>
     <hr>
 

@@ -35,7 +35,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-          <button type="button" class="btn btn-primary" @click="saveStudyCoverLetter(selresume,studentindex)">저장</button>
+          <button type="button" class="btn btn-primary" @click="saveStudyCoverLetterV(selresume)">저장</button>
         </div>
       </div>
     </div>
@@ -56,13 +56,27 @@ export default {
   },
 
   async mounted(){
+    console.log(this.studentindex);
     await this.getResumeInfo();
-    await this.getStudyResume(this.studentindex);
+    const realindex = parseInt(this.studentindex);
+    console.log(this.studySpaceDetail);
+    if(this.studySpaceDetail.detailCounts[realindex] !== 0){
+      await this.getStudyResume(realindex);
+    }
+    await this.fetchCurrentUser();
     this.isloading = false;
+    console.log(this.currentUser)
+    console.log(this.currentUser.userId + " : " + this.studySpaceDetail.studyJoins[this.studentindex].user.userId)
   },
   methods:{
-    ...mapActions(['getStudyResume','getResumeInfo','saveStudyCoverLetter']),
-
+    ...mapActions(['getStudyResume','getResumeInfo','saveStudyCoverLetter','fetchCurrentUser']),
+    saveStudyCoverLetterV(selresume){
+      const data = {
+        resumeNo : selresume,
+        studentindex : this.studentindex,
+      }
+      this.saveStudyCoverLetter(data);
+    }
   },
   components:{
     MemberCoverLetterDetail,

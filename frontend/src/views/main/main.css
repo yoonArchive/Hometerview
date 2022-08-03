@@ -24,8 +24,12 @@
 }
 
 .main-container {
+<<<<<<< HEAD
+
+=======
   /* height: calc(100% - 195px); */
   height: 1800px;
+>>>>>>> afe583018a3f91b4a33aca0a9838e883fe92d243
 }
 
 .el-row.main-footer {

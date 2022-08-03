@@ -9,12 +9,12 @@
   진행 일자 : {{ studySpaceDetail.stdDay }}<br>
   모집 인원 : {{ studySpaceDetail.stdLimit }}<br>
 
-
   <div>
     <study-members
-      v-for="member in studySpaceDetail.studyJoins"
+      v-for="(member,index) in studySpaceDetail.studyJoins"
       :key="member.joinNo"
       :member="member"
+      :studentindex="index"
     ></study-members>
   </div>
 
