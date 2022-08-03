@@ -1,5 +1,5 @@
 <template>
-
+    <div class="container">
     <h1 class="signup-title">Signup</h1>
 
     {{ comfirmEmail }}
@@ -46,6 +46,8 @@
         <button class="signup-button">Signup</button>
       </div>
     </form>
+
+    </div>
 </template>
 
 <script>
@@ -103,7 +105,7 @@
         ){
           alert("모든 내용을 입력해주세요")
           return
-        } 
+        }
         else if(!this.validationPattern.idCheckPattern.test(this.credentials.userId)){
           console.log()
           console.log(!this.validationPattern.idCheckPattern.test(this.credentials.userId))
@@ -125,7 +127,7 @@
         else if (this.isDuplicatedEmail){
           alert('이메일 중복검사를 해주세요')
           return
-        } 
+        }
         else if (this.isDuplicatedId){
           alert('아이디 중복검사를 해주세요')
           return
@@ -145,7 +147,7 @@
       // 이메일창이랑 confirm함수가 다르면 changeAuthState=> false로 변환
 
 
-      
+
       // checkSameEmail(){
       //   console.log(this.comfirmEmail)
       //   console.log(this.credentials.userEmail)
@@ -230,7 +232,7 @@
 
  .round-box{
   box-sizing: border-box;
-  
+
   width: 350px;
   height: 40px;
 

@@ -24,7 +24,8 @@
 }
 
 .main-container {
-  height: calc(100% - 195px);
+  /* height: calc(100% - 195px); */
+  height: 1800px;
 }
 
 .el-row.main-footer {

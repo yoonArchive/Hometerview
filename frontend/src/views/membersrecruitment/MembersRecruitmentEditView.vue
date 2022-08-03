@@ -1,8 +1,8 @@
 <template>
-  
+
 
   <h1>Edit Page</h1>
-  <create-members-recruitment-form :recruitNo="recruitNo" :recruitDetail="recruitDetail" action="update"></create-members-recruitment-form>
+  <create-members-recruitment-form :recruitNo="recruitNo" :recruitDetail="recruitDetail" action="수정하기"></create-members-recruitment-form>
 
 </template>
 <script>
@@ -11,7 +11,7 @@ import { mapGetters } from 'vuex'
 
 export default {
   name : 'MembersRecruitmentView',
-  
+
   data(){
     return{
       recruitNo:this.$route.params.recruitNo,

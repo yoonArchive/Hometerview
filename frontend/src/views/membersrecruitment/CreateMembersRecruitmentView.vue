@@ -1,11 +1,13 @@
 <template>
 
-  <h1> 모집글 작성 </h1>
 
   <div class="container">
+    <div class="title">
+       모집글 작성
+    </div>
     <div class="d-flex justify-content-between">
       <div class="create-form">
-        <create-members-recruitment-form :recruitDetail="recruitDetail" action='create'></create-members-recruitment-form>
+        <create-members-recruitment-form :recruitDetail="recruitDetail" action='만들기'></create-members-recruitment-form>
       </div>
       <div class="generate-info">
         <h3>General Information</h3>
@@ -31,7 +33,7 @@
       </div>
     </div>
   </div>
-  
+
 
 </template>
 
@@ -51,11 +53,20 @@
   }
 </script>
 
-<style>
+<style scoped>
+.title{
+  background-color: #F3F4FF;
+  margin-bottom: 100px;
+  font-size: 80px;
+  width: 100%;
+  padding: 20px;
+  font-weight: bold;
+
+}
   .create-form{
     width: 550px;
     height: 1000px;
-
+    margin: 20px;
     background: #F3F4FF;
   }
   .generate-info{
