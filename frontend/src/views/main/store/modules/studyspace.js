@@ -105,11 +105,12 @@ export default {
         console.log(err.response)
       })
     },
-    bringStudySpaceDetial({commit},stdNo){
+    bringStudySpaceDetial({commit, getters},stdNo){
 
       axios({
         url:api_url.study.studyspacedetail(stdNo),
-        method : 'get'
+        method : 'get',
+        headers:getters.authHeader
       })
       .then(res=>{
         console.log(res.data)

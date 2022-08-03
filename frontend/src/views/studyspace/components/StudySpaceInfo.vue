@@ -9,7 +9,6 @@
   진행 일자 : {{ studySpaceDetail.stdDay }}<br>
   모집 인원 : {{ studySpaceDetail.stdLimit }}<br>
 
-
   <div>
     <study-members
       v-for="(member,index) in studySpaceDetail.studyJoins"

@@ -58,8 +58,10 @@ export default {
   async mounted(){
     console.log(this.studentindex);
     await this.getResumeInfo();
-    if(this.studySpaceDetail.detailCounts[this.studentindex]!=0){
-      await this.getStudyResume(this.studentindex);
+    const realindex = parseInt(this.studentindex);
+    console.log(this.studySpaceDetail);
+    if(this.studySpaceDetail.detailCounts[realindex] !== 0){
+      await this.getStudyResume(realindex);
     }
     await this.fetchCurrentUser();
     this.isloading = false;
