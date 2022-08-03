@@ -1,10 +1,9 @@
 <template>
   <div class="container">
     <common-question-item v-for="commonquestion in commonquestions"
-     :commonquestion="commonquestion" :key="commonquestion.questionNo">
+     :commonquestion="commonquestion" :questionNo="commonquestion.questionNo" :stdNo="stdNo" :key="commonquestion.questionNo">
     </common-question-item>
     <common-question-form></common-question-form>
-
 
 
   </div>
@@ -13,6 +12,7 @@
 
 import CommonQuestionForm from './CommonQuestionForm.vue'
 import CommonQuestionItem from './CommonQuestionItem.vue'
+import { mapActions} from 'vuex'
 
 
 export default {
@@ -28,10 +28,13 @@ export default {
   },
   setup() {
   },
-  created() {},
-  mounted() {},
-  unmounted() {},
-  methods: {}
+
+  beforeUpdate(){
+    this.commonQuestions1(this.stdNo)
+  },
+  methods: {
+    ...mapActions(['getStd','commonQuestions1']),
+  }
 }
 
 </script>

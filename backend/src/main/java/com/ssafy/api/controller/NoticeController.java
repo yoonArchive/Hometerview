@@ -26,17 +26,18 @@ public class NoticeController {
     @PostMapping()
     @ApiOperation(value = "공지사항 작성", notes = "공지사항 제목과 내용을 작성한다.")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "공지사항 작성 성공", response = BaseResponseBody.class),
+            @ApiResponse(code = 200, message = "공지사항 작성 성공", response = NoticeRes.class),
             @ApiResponse(code = 401, message = "공지사항 작성 실패", response = BaseResponseBody.class),
             @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
     })
     public ResponseEntity<? extends BaseResponseBody> writeNotice(@RequestBody @ApiParam(value = "공지사항 내용", required = true) NoticeWritePostReq noticeWritePostReq) throws Exception {
+        Notice notice;
         try {
-            noticeService.writeNotice(noticeWritePostReq);
+            notice = noticeService.writeNotice(noticeWritePostReq);
         } catch (Exception e) {
             return ResponseEntity.status(401).body(BaseResponseBody.of(401, "공지사항 작성에 실패하셨습니다."));
         }
-        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "공지사항이 등록되었습니다."));
+        return ResponseEntity.status(200).body(NoticeRes.of(notice, 200, "공지사항이 등록되었습니다."));
     }
 
     @GetMapping()

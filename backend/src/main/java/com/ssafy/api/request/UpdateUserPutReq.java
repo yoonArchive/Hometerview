@@ -4,24 +4,17 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
-
-import javax.validation.constraints.NotEmpty;
+import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @Setter
 @ApiModel("UpdateUserPutRequest")
 public class UpdateUserPutReq {
 
-    @NotEmpty
-    @ApiModelProperty(name = "User Name")
-    String userName;
+    @ApiModelProperty(name = "유저 이름 이메일 데이터 객체")
+    UpdateUserProfileReq updateUserProfileReq;
 
-    @NotEmpty
-    @ApiModelProperty(name = "User Email")
-    String userEmail;
-
-    @NotEmpty
     @ApiModelProperty(name = "User Img")
-    String userImg;
+    MultipartFile multipartFile;
 
 }

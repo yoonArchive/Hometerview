@@ -6,10 +6,14 @@ import com.ssafy.db.entity.RecruitStatus;
 import com.ssafy.db.entity.StdType;
 import com.ssafy.db.repository.RecruitRepository;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -17,21 +21,35 @@ public class RecruitServiceImpl implements RecruitService {
 
     private final RecruitRepository recruitRepository;
 
+    String uploadPath = "C:\\intervenience";
+
+    String uploadFolder = "stdImg";
+
+    /*String uploadFolder = "upload";
+
+    String uploadPath = "/home" + File.separator + "ubuntu" + File.separator + "S05P13A204"
+            + File.separator + "backend"
+            + File.separator + "src"
+            + File.separator + "main"
+            + File.separator + "resources"
+            + File.separator + "static";*/
+
     @Override
     public Recruit writeRecruit(RecruitReq recruitReq) {
         Recruit recruit = Recruit.builder()
-                .recruitTitle(recruitReq.getRecruitTitle())
-                .stdName(recruitReq.getStdName())
-                .stdDetail(recruitReq.getStdDetail())
-                .stdImg(recruitReq.getStdImg())
-                .stdType(recruitReq.getStdType())
-                .comName(recruitReq.getComName())
-                .startDate(recruitReq.getStartDate())
-                .endDate(recruitReq.getEndDate())
-                .stdDay(recruitReq.getStdDay())
-                .stdLimit(recruitReq.getStdLimit())
+                .recruitTitle(recruitReq.getRecruitInfoReq().getRecruitTitle())
+                .stdName(recruitReq.getRecruitInfoReq().getStdName())
+                .stdDetail(recruitReq.getRecruitInfoReq().getStdDetail())
+                .stdType(recruitReq.getRecruitInfoReq().getStdType())
+                .comName(recruitReq.getRecruitInfoReq().getComName())
+                .startDate(recruitReq.getRecruitInfoReq().getStartDate())
+                .endDate(recruitReq.getRecruitInfoReq().getEndDate())
+                .stdDay(recruitReq.getRecruitInfoReq().getStdDay())
+                .stdLimit(recruitReq.getRecruitInfoReq().getStdLimit())
                 .recruitStatus(RecruitStatus.RECRUITING)
                 .build();
+        int result = updateStdImg(recruit, recruitReq.getMultipartFile());
+        if (result == 0) return null;
         return recruitRepository.save(recruit);
     }
 
@@ -68,18 +86,24 @@ public class RecruitServiceImpl implements RecruitService {
 
     @Override
     @Transactional
-    public void updateRecruit(Recruit recruit, RecruitReq recruitReq) {
-        String recruitTitle = recruitReq.getRecruitTitle();
-        String stdName = recruitReq.getStdName();
-        String stdDetail = recruitReq.getStdDetail();
-        String stdImg = recruitReq.getStdImg();
-        StdType stdType = recruitReq.getStdType();
-        String comName = recruitReq.getComName();
-        String startDate = recruitReq.getStartDate();
-        String endDate = recruitReq.getEndDate();
-        String stdDay = recruitReq.getStdDay();
-        int stdLimit = recruitReq.getStdLimit();
-        recruit.initRecruit(recruitTitle, stdName, stdDetail, stdImg, stdType, comName, startDate, endDate, stdDay, stdLimit);
+    public int updateRecruit(Recruit recruit, RecruitReq recruitReq) {
+        String recruitTitle = recruitReq.getRecruitInfoReq().getRecruitTitle();
+        String stdName = recruitReq.getRecruitInfoReq().getStdName();
+        String stdDetail = recruitReq.getRecruitInfoReq().getStdDetail();
+        StdType stdType = recruitReq.getRecruitInfoReq().getStdType();
+        String comName = recruitReq.getRecruitInfoReq().getComName();
+        String startDate = recruitReq.getRecruitInfoReq().getStartDate();
+        String endDate = recruitReq.getRecruitInfoReq().getEndDate();
+        String stdDay = recruitReq.getRecruitInfoReq().getStdDay();
+        int stdLimit = recruitReq.getRecruitInfoReq().getStdLimit();
+        try {
+            recruit.initRecruit(recruitTitle, stdName, stdDetail, stdType, comName, startDate, endDate, stdDay, stdLimit);
+        } catch (Exception e) {
+            return 0;
+        }
+        int result = updateStdImg(recruit, recruitReq.getMultipartFile());
+        if (result == 0) return 1;
+        return 2;
     }
 
     @Override
@@ -92,6 +116,41 @@ public class RecruitServiceImpl implements RecruitService {
         }
         recruitRepository.deleteByRecruitNo(recruitNo);
         return 1;
+    }
+
+    @Override
+    public int updateStdImg(Recruit recruit, MultipartFile multipartFile) {
+        try {
+            File uploadDir = new File(uploadPath + File.separator + uploadFolder);
+            if (!uploadDir.exists()) uploadDir.mkdir();
+            String preFileUrl = recruit.getStdImg();
+            File file;
+            if (preFileUrl != null) {
+                file = new File(preFileUrl);
+                if (file.exists()) {
+                    file.delete();
+                }
+            }
+            if (multipartFile.isEmpty()) { // 기본 이미지
+                String fileUrl = "";
+                recruit.updateStdImg(fileUrl);
+                return 1;
+            } else { // 업로드한 이미지
+                String fileName = multipartFile.getOriginalFilename();
+                String extension = FilenameUtils.getExtension(fileName).toLowerCase();
+                UUID uuid = UUID.randomUUID();
+                String destFileName = uuid + "." + extension;
+                File destFile = new File(uploadPath + File.separator + uploadFolder + File.separator + destFileName);
+                destFile.getParentFile().mkdirs();
+                multipartFile.transferTo(destFile);
+                // String fileUrl = "https://i7b105.p.ssafy.io:8080/static/" + uploadFolder + "/" + destFileName;
+                String fileUrl = uploadPath + "/" + uploadFolder + "/" + destFileName;
+                recruit.updateStdImg(fileUrl);
+                return 1;
+            }
+        } catch (Exception e) {
+            return 0;
+        }
     }
 
 }
