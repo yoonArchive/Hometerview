@@ -14,7 +14,7 @@ public class UpdateUserPutReq {
     @ApiModelProperty(name = "유저 이름 이메일 데이터 객체")
     UpdateUserProfileReq updateUserProfileReq;
 
-    @ApiModelProperty(name = "User Img")
+    @ApiModelProperty(name = "multipartFile")
     MultipartFile multipartFile;
 
 }

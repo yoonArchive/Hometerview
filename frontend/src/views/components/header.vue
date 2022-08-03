@@ -17,26 +17,26 @@
 
     <div id="headerBtnGroup" v-if="!isLoggedIn">
       <router-link to="/home/login" class="header-routerlink-decoration">
-        <div class="header-btn">
-          <div class="header-btn-text">
-            login
-          </div>
+        <div class="header-btn" >
+          <!-- <div class="header-btn-text"> -->
+            로그인
+          <!-- </div> -->
         </div>
       </router-link>
       <router-link to="/home/signup" class="header-routerlink-decoration">
-        <div class="header-btn" v-if="!isLoggedIn" style="background-color:#653FD3;">
-          <div class="header-btn-text" style="color:white">
-            sign up
-          </div>
+        <div class="header-btn" v-if="!isLoggedIn" id="signup">
+          <!-- <div class="header-btn-text" style="color:white"> -->
+            회원가입
+          <!-- </div> -->
         </div>
       </router-link>
     </div>
     <div class="header-btngroup" v-else>
       <router-link to="/home/logout" class="header-routerlink-decoration" >
-        <div class="header-btn" v-if="isLoggedIn">
-          <div class="header-btn-text">
-            logout
-          </div>
+        <div class="header-btn" v-if="isLoggedIn" id="signup">
+          <!-- <div class="header-btn-text"> -->
+            로그아웃
+          <!-- </div> -->
         </div>
       </router-link>
       <div>
@@ -89,6 +89,32 @@ export default {
 </script>
 
 <style>
+#signup{
+  color: white;
+  background-color: #653FD3;
+}
+#signup:hover{
+  background-color: #9779f0;
+}
+#signup:active{
+  background-color:#7455d1;
+}
+.header-btn{
+  color: black;
+  width: 100px;
+  /* height: 50px; */
+  font-weight: bold;
+
+}
+.header-btn:hover{
+  background-color: #653FD3;
+  color: white;
+}
+.header-btn:active{
+  background-color:#7455d1;
+  color: white;
+}
+
 .header-btngroup{
   display: flex;
   flex-direction: row;
@@ -97,5 +123,8 @@ export default {
   padding: 0px;
   gap: 16px;
   order: 2;
+  color: black;
+
 }
+
 </style>

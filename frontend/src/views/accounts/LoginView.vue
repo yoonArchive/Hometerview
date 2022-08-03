@@ -1,19 +1,19 @@
 <template>
-
+  <section class="login">
   <h1 class="loginTitile">Login</h1>
   <!-- <account-error-list v-if="authError"></account-error-list> -->
 
   <form @submit.prevent="login(credentials)">
     <div class="idInput">
-      <label for="id">ID: </label>
+      <label for="id">아이디: </label>
       <input class="round-box" v-model="credentials.userId" type="text" id="id" required />
     </div>
     <div class="pwdInput">
-      <label for="password">password: </label>
+      <label for="password">비밀번호: </label>
       <input class="round-box" v-model="credentials.userPw" type="password" id="password" required />
     </div>
 
-    <button class="loginButton">Login</button>
+    <button class="loginButton">로그인</button>
   </form>
 
   <router-link to="/home/findid">
@@ -26,6 +26,8 @@
       비밀번호 찾기
     </div>
   </router-link>
+  </section>
+
 
   <section class="test">
     <div v-on:click="kakaoLoginBtn" id="kakao">카카오 연동</div>
@@ -79,16 +81,27 @@ import { mapActions, mapGetters, mapState } from 'vuex'
 
 
 <style scoped>
- .round-box{
+.login{
+
+  display:flex; justify-content: center; align-items: center;
+  flex-direction: column;
+}
+input[type=text]:focus {
+  border: 3px solid #555;
+}
+.round-box{
   box-sizing: border-box;
-  
+
   width: 350px;
   height: 40px;
 
   border: 1px solid #C7C8D2;
   border-radius: 8px;
  }
-
+.round-box:focus{
+  border: 3px solid #9779f0;
+  outline: 3px #9779f0;
+}
 
 .find_id{
   display: flex;
@@ -97,7 +110,7 @@ import { mapActions, mapGetters, mapState } from 'vuex'
   padding: 12px 16px;
   gap: 8px;
 
-  position: absolute;
+  /* position: absolute; */
   width: 350px;
   height: 44px;
   left: 593px;
@@ -110,7 +123,7 @@ import { mapActions, mapGetters, mapState } from 'vuex'
   padding: 12px 16px;
   gap: 8px;
 
-  position: absolute;
+  /* position: absolute; */
   width: 350px;
   height: 44px;
   left: 700px;
@@ -118,7 +131,10 @@ import { mapActions, mapGetters, mapState } from 'vuex'
 }
 
 .loginTitile{
-  position: absolute;
+  /* position: absolute; */
+  margin-top: 100px;
+  display: flex;
+  justify-content: center;
   width: 262px;
   height: 52px;
   left: 589px;
@@ -139,14 +155,14 @@ import { mapActions, mapGetters, mapState } from 'vuex'
 }
 
 .idInput {
-  position: absolute;
+  /* position: absolute; */
   width: 350px;
   height: 84px;
   left: 593px;
   top: 368px;
 }
 .pwdInput{
-  position: absolute;
+  /* position: absolute; */
   width: 350px;
   height: 84px;
   left: 593px;
@@ -159,15 +175,23 @@ import { mapActions, mapGetters, mapState } from 'vuex'
   padding: 12px 16px;
   gap: 8px;
 
-  position: absolute;
+  /* position: absolute; */
   width: 350px;
   height: 44px;
   left: 593px;
   top: 579px;
 
   background: #653FD3;
-  box-shadow: 0px 8px 20px rgba(78, 96, 255, 0.16);
+  /* box-shadow: 0px 8px 20px rgba(78, 96, 255, 0.16); */
   border-radius: 8px;
+  color: white;
+  text-align: center;
+}
+.loginButton:hover{
+  background-color: #9779f0;
+}
+.loginButton:active{
+  background-color: #7455d1;
 }
 
 .test{  display:flex; justify-content: center; align-items: center; height:100vh; }

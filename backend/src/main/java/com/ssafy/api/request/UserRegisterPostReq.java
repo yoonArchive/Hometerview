@@ -20,19 +20,19 @@ import javax.validation.constraints.NotEmpty;
 public class UserRegisterPostReq {
 
     @NotEmpty
-    @ApiModelProperty(name = "유저 ID", example = "your_id")
+    @ApiModelProperty(name = "userId", example = "your_id")
     String userId;
 
     @NotEmpty
-    @ApiModelProperty(name = "유저 Password", example = "your_password")
+    @ApiModelProperty(name = "userPw", example = "your_password")
     String userPw;
 
     @NotEmpty
-    @ApiModelProperty(name = "유저 Name", example = "김싸피")
+    @ApiModelProperty(name = "userName", example = "김싸피")
     String userName;
 
     @NotEmpty
-    @ApiModelProperty(name = "유저 Email", example = "ssafy@ssafy.com")
+    @ApiModelProperty(name = "userEmail", example = "ssafy@ssafy.com")
     String userEmail;
 
 }

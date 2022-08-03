@@ -14,7 +14,7 @@ public class RecruitReq {
     @ApiModelProperty(name = "모집글 정보 객체")
     RecruitInfoReq recruitInfoReq;
 
-    @ApiModelProperty(name = "Recruit thumbnail")
+    @ApiModelProperty(name = "multipartFile")
     MultipartFile multipartFile;
 
 }
