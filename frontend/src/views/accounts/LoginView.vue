@@ -1,50 +1,4 @@
 <template>
-  <!-- <section class="login">
-     <h1 class="loginTitile">Login</h1>
-     <account-error-list v-if="authError"></account-error-list>
-
-    <form @submit.prevent="login(credentials)">
-      <div class="idInput">
-        <label for="id">아이디: </label>
-        <input
-          class="round-box"
-          v-model="credentials.userId"
-          type="text"
-          id="id"
-          required
-        />
-      </div>
-      <div class="pwdInput">
-        <label for="password">비밀번호: </label>
-        <input
-          class="round-box"
-          v-model="credentials.userPw"
-          type="password"
-          id="password"
-          required
-        />
-      </div>
-
-      <button class="loginButton">로그인</button>
-    </form>
-
-    <router-link to="/home/findid">
-      <div class="find_id">
-        아이디 찾기
-      </div>
-    </router-link>
-    <router-link to="/home/finduserpassword">
-      <div class="find_pwd">
-        비밀번호 찾기
-      </div>
-    </router-link>
-  </section> -->
-
-  <!-- <section class="test">
-    <div v-on:click="kakaoLoginBtn" id="kakao">카카오 연동</div>
-  </section>
-  <img src="profile" alt="" /> -->
-
   <div class="section">
     <div class="container">
       <div class="row full-height justify-content-center">
@@ -64,7 +18,6 @@
                   <div class="center-wrap">
                     <div class="section text-center">
                       <h4 class="mb-4 pb-3">로그인</h4>
-                      <!-- 아이디 input -->
                       <form @submit.prevent="login(credentials)">
                         <div class="form-group">
                           <input
@@ -73,11 +26,11 @@
                             placeholder="아이디"
                             id="id"
                             v-model="credentials.userId"
+                            autocomplete="off"
                             required
                           />
-                          <i class="input-icon uil uil-at"></i>
+                          <i class="input-icon uil uil-user"></i>
                         </div>
-                        <!-- 비밀번호 input -->
                         <div class="form-group mt-2">
                           <input
                             type="password"
@@ -85,12 +38,12 @@
                             placeholder="비밀번호"
                             id="password"
                             v-model="credentials.userPw"
+                            autocomplete="off"
                             required
                           />
                           <i class="input-icon uil uil-lock-alt"></i>
                         </div>
                         <button class="btn mt-4">로그인</button>
-                        <!-- <a href="#" class="btn mt-4">submit</a> -->
                       </form>
                       <router-link to="/home/findid">
                         <div class="find_id mb-0 mt-4 text-center">
@@ -115,40 +68,113 @@
                   <div class="center-wrap">
                     <div class="section text-center">
                       <h4 class="mb-4 pb-3">회원가입</h4>
-                      <div class="form-group">
-                        <input
-                          type="text"
-                          name="logname"
-                          class="form-style"
-                          placeholder="Your Full Name"
-                          id="logname"
-                          autocomplete="off"
-                        />
-                        <i class="input-icon uil uil-user"></i>
-                      </div>
-                      <div class="form-group mt-2">
-                        <input
-                          type="email"
-                          name="logemail"
-                          class="form-style"
-                          placeholder="Your Email"
-                          id="logemail"
-                          autocomplete="off"
-                        />
-                        <i class="input-icon uil uil-at"></i>
-                      </div>
-                      <div class="form-group mt-2">
-                        <input
-                          type="password"
-                          name="logpass"
-                          class="form-style"
-                          placeholder="Your Password"
-                          id="logpass"
-                          autocomplete="off"
-                        />
-                        <i class="input-icon uil uil-lock-alt"></i>
-                      </div>
-                      <a href="#" class="btn mt-4">submit</a>
+                      <form @submit.prevent="signupComfirmation(credentials)">
+                        <div class="form-group">
+                          <input
+                            type="text"
+                            class="form-style-sign-up"
+                            placeholder="아이디"
+                            id="userId"
+                            v-model="credentials.userId"
+                            autocomplete="off"
+                            required
+                          />
+                          <i class="input-icon uil uil-user"></i>
+                          <form
+                            @submit.prevent="
+                              idDuplicateCheck(credentials.userId)
+                            "
+                          >
+                            <button class="btncheck">중복확인</button>
+                          </form>
+                        </div>
+                        <div class="form-group mt-2">
+                          <input
+                            type="password"
+                            class="form-style"
+                            placeholder="비밀번호"
+                            id="userPw"
+                            v-model="credentials.userPw"
+                            autocomplete="off"
+                            required
+                          />
+                          <i class="input-icon uil uil-lock-alt"></i>
+                        </div>
+                        <div class="pw-msg">
+                          비밀번호는 9~16자 영문+숫자+특수문자 조합이어야
+                          합니다.
+                        </div>
+                        <div class="form-group mt-2">
+                          <input
+                            type="password"
+                            class="form-style"
+                            placeholder="비밀번호 확인"
+                            id="userPw2"
+                            v-model="credentials.userPw2"
+                            autocomplete="off"
+                            required
+                          />
+                          <i class="input-icon uil uil-lock-alt"></i>
+                        </div>
+                        <div class="form-group mt-2">
+                          <input
+                            type="text"
+                            class="form-style"
+                            placeholder="이름"
+                            id="userName"
+                            v-model="credentials.userName"
+                            autocomplete="off"
+                            required
+                          />
+                          <i class="input-icon uil uil-user-circle"></i>
+                        </div>
+                        <div class="form-group mt-2">
+                          <input
+                            type="email"
+                            class="form-style-check-auth"
+                            placeholder="Email"
+                            id="userEmail"
+                            v-model="credentials.userEmail"
+                            autocomplete="off"
+                            required
+                          />
+                          <i class="input-icon uil uil-at"></i>
+                          <!-- <form
+                            @submit.prevent="
+                              emailDuplicateCheck(credentials.userEmail)
+                            "
+                          >
+                            <button class="btncheck">중복확인</button>
+                          </form> -->
+                          <form
+                            @submit.prevent="
+                              sendAuthKeyToEmail(credentials.userEmail)
+                            "
+                          >
+                            <button class="btncheck">인증번호 받기</button>
+                          </form>
+                        </div>
+                        <form
+                          @submit.prevent="
+                            checkAuthKey([authKey, credentials.userEmail])
+                          "
+                        >
+                          <div class="form-group mt-2">
+                            <input
+                              type="text"
+                              class="form-style-check-auth"
+                              placeholder="인증번호 확인"
+                              id="checkAuthKey"
+                              v-model="authKey"
+                              autocomplete="off"
+                              required
+                            />
+                            <i class="input-icon uil uil-shield"></i>
+                          </div>
+                          <button class="btncheck">인증번호 확인</button>
+                        </form>
+                        <button class="btn mt-4">회원가입</button>
+                      </form>
                     </div>
                   </div>
                 </div>
@@ -178,152 +204,114 @@ export default {
         userId: "",
         userPw: ""
       },
-      profile: ""
+      profile: "",
+      validationPattern: {
+        pwdCheckPattern: /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+-])(?=.*[0-9]).{9,16}$/,
+        idCheckPattern: /^[a-zA-z0-9].{1,16}$/,
+        eamilCheckPattern: /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/
+      },
+      credentials: {
+        userEmail: "",
+        userName: "",
+        userId: "",
+        userPw: "",
+        userPw2: ""
+      }
     };
   },
   computed: {
-    ...mapGetters(["authError"]),
+    ...mapGetters([
+      "authError",
+      "isDuplicatedEmail",
+      "isDuplicatedId",
+      "isAuthorized",
+      "comfirmEmail"
+    ]),
     ...mapState(["token", "kakaoToken"])
   },
   methods: {
-    ...mapActions(["login", "kakaoLoginBtn"])
+    ...mapActions([
+      "login",
+      "kakaoLoginBtn",
+      "signup",
+      // "emailDuplicateCheck",
+      "idDuplicateCheck",
+      "sendAuthKeyToEmail",
+      "checkAuthKey",
+      "changeFalseAuthState",
+      "changeAuthState"
+    ]),
+    async signupComfirmation() {
+      if (
+        this.credentials.userEmail === "" ||
+        this.credentials.userName === "" ||
+        this.credentials.userId === "" ||
+        this.credentials.userPw === "" ||
+        this.credentials.userPw2 === ""
+      ) {
+        alert("모든 내용을 입력해주세요");
+        return;
+      } else if (
+        !this.validationPattern.idCheckPattern.test(this.credentials.userId)
+      ) {
+        console.log();
+        console.log(
+          !this.validationPattern.idCheckPattern.test(this.credentials.userId)
+        );
+        alert("아이디는 영문자 또는 숫자만 가능합니다.");
+        return;
+      } else if (
+        !this.validationPattern.pwdCheckPattern.test(this.credentials.userPw)
+      ) {
+        alert(
+          "비밀번호는 영문자+숫자+특수문자 조합으로 9~16자리를 사용해야합니다."
+        );
+        return;
+      } else if (
+        !this.validationPattern.eamilCheckPattern.test(
+          this.credentials.userEmail
+        )
+      ) {
+        alert("이메일 형태가 아닙니다. 다시 확인해주세요");
+        return;
+      } else if (this.credentials.userPw !== this.credentials.userPw2) {
+        alert("비밀번호가 일치하지 않습니다.");
+        return;
+      } else if (this.isDuplicatedEmail) {
+        alert("이메일 중복검사를 해주세요");
+        return;
+      } else if (this.isDuplicatedId) {
+        alert("아이디 중복검사를 해주세요");
+        return;
+      } else if (this.isAuthorized === false) {
+        alert("인증번호 확인을 해주세요");
+        return;
+      } else {
+        await this.signup(this.credentials);
+        await this.changeFalseAuthState();
+      }
+    }
   },
   setup() {
     return {};
   },
-  mounted() {}
+  mounted() {},
+  watch: {
+    // 이메일창이랑 confirm함수가 다르면 changeAuthState=> false로 변환
+    // checkSameEmail(){
+    //   console.log(this.comfirmEmail)
+    //   console.log(this.credentials.userEmail)
+    //   if (this.credentials.userEmail===this.comfirmEmail){
+    //     this.changeAuthState(true)
+    //   }else{
+    //     this.changeAuthState(false)
+    //   }
+    // }
+  }
 };
 </script>
 
 <style scoped>
-.login {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-input[type="text"]:focus {
-  border: 3px solid #555;
-}
-.round-box {
-  box-sizing: border-box;
-
-  width: 350px;
-  height: 40px;
-
-  border: 1px solid #c7c8d2;
-  border-radius: 8px;
-}
-.round-box:focus {
-  border: 3px solid #9779f0;
-  outline: 3px #9779f0;
-}
-
-.find_id {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 12px 16px;
-  gap: 8px;
-
-  /* position: absolute; */
-  width: 350px;
-  height: 44px;
-  left: 593px;
-  top: 672px;
-}
-.find_pwd {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 12px 16px;
-  gap: 8px;
-
-  /* position: absolute; */
-  width: 350px;
-  height: 44px;
-  left: 700px;
-  top: 672px;
-}
-
-.loginTitile {
-  /* position: absolute; */
-  margin-top: 100px;
-  display: flex;
-  justify-content: center;
-  width: 262px;
-  height: 52px;
-  left: 589px;
-  top: 248px;
-
-  font-family: "BM JUA_TTF";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 60px;
-  line-height: 20px;
-  /* or 33% */
-
-  letter-spacing: 0.1px;
-
-  /* neutral/gray dark */
-
-  color: #545563;
-}
-
-.idInput {
-  /* position: absolute; */
-  width: 350px;
-  height: 84px;
-  left: 593px;
-  top: 368px;
-}
-.pwdInput {
-  /* position: absolute; */
-  width: 350px;
-  height: 84px;
-  left: 593px;
-  top: 460px;
-}
-.loginButton {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 12px 16px;
-  gap: 8px;
-
-  /* position: absolute; */
-  width: 350px;
-  height: 44px;
-  left: 593px;
-  top: 579px;
-
-  background: #653fd3;
-  /* box-shadow: 0px 8px 20px rgba(78, 96, 255, 0.16); */
-  border-radius: 8px;
-  color: white;
-  text-align: center;
-}
-.loginButton:hover {
-  background-color: #9779f0;
-}
-.loginButton:active {
-  background-color: #7455d1;
-}
-
-.test {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-/* div{ width: 200px; height:40px; background-color:#fdd101; color:white; display:flex; align-items: center; justify-content: center; cursor:pointer; } */
-#kakao {
-  border-radius: 30px;
-  background-color: #fdd101;
-  color: white;
-  font-size: 15px;
-}
-
 @import url("https://fonts.googleapis.com/css?family=Poppins:400,500,600,700,800,900");
 
 body {
@@ -385,7 +373,7 @@ h6 span {
   padding: 0;
   margin: 10px auto;
   cursor: pointer;
-  background-color: #ffeba7;
+  background-color: #3b2677;
 }
 .checkbox:checked + label:before,
 .checkbox:not(:checked) + label:before {
@@ -394,8 +382,8 @@ h6 span {
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  color: #ffeba7;
-  background-color: #102770;
+  color: #ffffff;
+  background-color: #3b2677;
   font-family: "unicons";
   content: "\eb4f";
   z-index: 20;
@@ -412,13 +400,13 @@ h6 span {
 
 .card-3d-wrap {
   position: relative;
-  width: 440px;
+  width: 470px;
   max-width: 100%;
-  height: 400px;
+  height: 600px;
   -webkit-transform-style: preserve-3d;
   transform-style: preserve-3d;
   perspective: 800px;
-  margin-top: 60px;
+  margin-top: 50px;
 }
 .card-3d-wrapper {
   width: 100%;
@@ -434,13 +422,13 @@ h6 span {
 .card-back {
   width: 100%;
   height: 100%;
-  background-color: #ffffff;
-  /*background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/1462889/pat.svg");*/
+  background-color: #ececec;
+  /* background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/1462889/pat.svg"); */
   background-position: bottom center;
   background-repeat: no-repeat;
   background-size: 300%;
   position: absolute;
-  border-radius: 6px;
+  border-radius: 40px;
   left: 0;
   top: 0;
   -webkit-transform-style: preserve-3d;
@@ -480,11 +468,11 @@ h6 span {
   width: 100%;
   font-weight: 500;
   border-radius: 4px;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 22px;
   letter-spacing: 0.5px;
   outline: none;
-  color: #c4c3ca;
+  color: #ffffff;
   background-color: #1f2029;
   border: none;
   -webkit-transition: all 200ms linear;
@@ -497,6 +485,56 @@ h6 span {
   outline: none;
   box-shadow: 0 4px 8px 0 rgba(21, 21, 21, 0.2);
 }
+.form-style-sign-up {
+  float: left;
+  padding: 13px 20px;
+  padding-left: 55px;
+  height: 48px;
+  width: 80%;
+  font-weight: 500;
+  border-radius: 4px;
+  font-size: 16px;
+  line-height: 22px;
+  letter-spacing: 0.5px;
+  outline: none;
+  color: #ffffff;
+  background-color: #1f2029;
+  border: none;
+  -webkit-transition: all 200ms linear;
+  transition: all 200ms linear;
+  box-shadow: 0 4px 8px 0 rgba(21, 21, 21, 0.2);
+}
+.form-style-sign-up:focus,
+.form-style-sign-up:active {
+  border: none;
+  outline: none;
+  box-shadow: 0 4px 8px 0 rgba(21, 21, 21, 0.2);
+}
+.form-style-check-auth {
+  float: left;
+  padding: 13px 20px;
+  padding-left: 55px;
+  height: 48px;
+  width: 72%;
+  font-weight: 500;
+  border-radius: 4px;
+  font-size: 16px;
+  line-height: 22px;
+  letter-spacing: 0.5px;
+  outline: none;
+  color: #ffffff;
+  background-color: #1f2029;
+  border: none;
+  -webkit-transition: all 200ms linear;
+  transition: all 200ms linear;
+  box-shadow: 0 4px 8px 0 rgba(21, 21, 21, 0.2);
+}
+.form-style-check-auth:focus,
+.form-style-check-auth:active {
+  border: none;
+  outline: none;
+  box-shadow: 0 4px 8px 0 rgba(21, 21, 21, 0.2);
+}
 .input-icon {
   position: absolute;
   top: 0;
@@ -505,31 +543,31 @@ h6 span {
   font-size: 24px;
   line-height: 48px;
   text-align: left;
-  color: #ffeba7;
+  color: #d76d77;
   -webkit-transition: all 200ms linear;
   transition: all 200ms linear;
 }
 
 .form-group input:-ms-input-placeholder {
-  color: #c4c3ca;
+  color: #ffffff;
   opacity: 0.7;
   -webkit-transition: all 200ms linear;
   transition: all 200ms linear;
 }
 .form-group input::-moz-placeholder {
-  color: #c4c3ca;
+  color: #ffffff;
   opacity: 0.7;
   -webkit-transition: all 200ms linear;
   transition: all 200ms linear;
 }
 .form-group input:-moz-placeholder {
-  color: #c4c3ca;
+  color: #ffffff;
   opacity: 0.7;
   -webkit-transition: all 200ms linear;
   transition: all 200ms linear;
 }
 .form-group input::-webkit-input-placeholder {
-  color: #c4c3ca;
+  color: #ffffff;
   opacity: 0.7;
   -webkit-transition: all 200ms linear;
   transition: all 200ms linear;
@@ -558,7 +596,7 @@ h6 span {
 .btn {
   border-radius: 4px;
   height: 44px;
-  font-size: 13px;
+  font-size: 18px;
   font-weight: 600;
   text-transform: uppercase;
   -webkit-transition: all 200ms linear;
@@ -579,20 +617,68 @@ h6 span {
   -ms-flex-pack: center;
   text-align: center;
   border: none;
-  background-color: #ffeba7;
-  color: #102770;
+  background-color: #653fd3;
+  color: #ffffff;
   box-shadow: 0 8px 24px 0 rgba(255, 235, 167, 0.2);
 }
 .btn:active,
 .btn:focus {
-  background-color: #102770;
-  color: #ffeba7;
+  background-color: #3b2677;
+  color: #faeaff;
   box-shadow: 0 8px 24px 0 rgba(16, 39, 112, 0.2);
 }
 .btn:hover {
-  background-color: #102770;
-  color: #ffeba7;
+  background-color: #3b2677;
+  color: #faeaff;
   box-shadow: 0 8px 24px 0 rgba(16, 39, 112, 0.2);
+}
+
+.btncheck {
+  border-radius: 4px;
+  height: 48px;
+  font-size: 12px;
+  font-weight: 400;
+  text-transform: uppercase;
+  -webkit-transition: all 200ms linear;
+  transition: all 200ms linear;
+  padding: 0 10px;
+  letter-spacing: 1px;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  -webkit-justify-content: center;
+  -moz-justify-content: center;
+  -ms-justify-content: center;
+  justify-content: center;
+  -ms-flex-pack: center;
+  text-align: center;
+  border: none;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #afa8ba;
+  background-color: #f8f8f8;
+  color: #000000;
+  box-shadow: 0 8px 24px 0 rgba(255, 235, 167, 0.2);
+}
+.btncheck:active,
+.btncheck:focus {
+  background-color: #3b2677;
+  color: #ffffff;
+  box-shadow: 0 8px 24px 0 rgba(16, 39, 112, 0.2);
+}
+.btncheck:hover {
+  background-color: #3b2677;
+  color: #ffffff;
+  box-shadow: 0 8px 24px 0 rgba(16, 39, 112, 0.2);
+}
+
+.pw-msg {
+  color: #757575;
+  font-size: small;
 }
 
 .logo {
