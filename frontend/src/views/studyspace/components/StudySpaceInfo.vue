@@ -24,9 +24,10 @@
 
   <div>
     <study-members
-      v-for="member in studySpaceDetail.studyJoins"
+      v-for="(member,index) in studySpaceDetail.studyJoins"
       :key="member.joinNo"
       :member="member"
+      :studentindex="index"
     ></study-members>
 
     

@@ -1,6 +1,5 @@
 /* 공통으로 적용되어야할 css */
 @media (max-width: 700px) {
-
 }
 
 #app,
@@ -49,12 +48,9 @@
   top: 100%;
 }
 
-#mainBackground {
-  /* background-color: #653fd3; */
-
-}
-
-
+/* #mainBackground {
+   background-color: #653fd3;
+} */
 
 #mainDivLogo {
   text-align: center;
@@ -88,7 +84,6 @@
   flex: none;
   order: 0;
   flex-grow: 0;
-
 }
 
 #headerMenu {

@@ -9,30 +9,30 @@
 </template>
 
 <script>
-import router from '@/common/lib/vue-router'
+import { mapActions } from 'vuex'
 import StudySpaceInfo from './components/StudySpaceInfo.vue'
 
 export default {
   name:"StudySpaceDetailView",
-  components:{
-    StudySpaceInfo,
-
-  },
-
   data(){
     return{
       stdNo:this.$route.params.stdNo,
     }
   },
-  computed:{
-  },
   methods:{
+    ...mapActions(['bringStudySpaceDetial']),
   },
   // mounted(){
   //   this.bringStudySpaceDetail(this.stdNo)
   // }
 
+  mounted(){
+    this.bringStudySpaceDetial(this.stdNo)
+  },
+  components:{
+    StudySpaceInfo,
 
+  },
 }
 </script>
 
