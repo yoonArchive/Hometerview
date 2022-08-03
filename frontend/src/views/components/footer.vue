@@ -11,21 +11,33 @@
           <a href="" id="b">이용약관</a>
           <a href="" id="c">고객센터</a>
         </div>
-        <img :src="imgsource" alt="" id="logo">
-      </div>
-
+        <div class="logo-image">
+          <img :src='imgsource' alt='' id='logo'  />
+        </div>
     </div>
+        </div>
   </el-row>
 </template>
-<style scoped>
 
+
+<style scoped>
+.logo-image{
+  display: flex;
+  /* margin-left: 500px; */
+  margin-left: auto;
+}
+#arrow{
+  margin-left: 30px;
+  height: auto;
+  width: 50px;
+}
 .word {
-  float: left;
+  /* float: left; */
 }
 #logo {
   width: 150px;
-  height: 110px;
-  float: right
+  height: 100px;
+  /* float: right */
 
 }
 #a {
@@ -53,15 +65,15 @@
 }
 
 .box {
-  /* display: flex;
-  margin-left: 50px;
-  flex-direction: row; */
+  display: flex;
+  /* margin-left: 50px; */
+  flex-direction: row;
   /* display: flex; */
   /* flex-direction: row; */
   /* align-items: center; */
   padding: 0px;
   gap: 40px;
-  margin-left: 100px;
+  margin-left: auto;
 }
 
 @media (max-width: 700px) {
@@ -78,12 +90,20 @@
     text-align: center;
     margin: 0 auto;
   }
-}
 
+  .word{
+    display: none;
+  }
+}
+@media (max-width: 1218px){
+  .word{
+    display: none;
+  }
+}
 @media (min-width: 701px) {
   .main-footer {
     height: 110px;
-    /* width: 102%; */
+    width: 102%;
     background-color: #653FD3;
     color: white;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.08), 0px 4px 24px rgba(0, 0, 0, 0.08);
@@ -141,7 +161,11 @@ import { useStore } from 'vuex'
 export default {
   name: 'footer',
   data() {
-    return { imgsource: require('../../assets/images/logo.png')}
+    return {
+        imgsource: require("../../assets/images/logo.png"),
+        imagesrc: require("../../assets/images/Arrow circle up.png")
+    }
+
   },
   props: {
     height: {

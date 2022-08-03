@@ -1,19 +1,20 @@
 <template>
-  <div>자소서 추가 삭제 버튼</div>
-  <div>{{resumeContents.length}}</div>
-  <button @click="addResume">+</button>
-  <button>-</button>
-  <div v-for="(item, index) in resumeContents.length" :key="index">
-    <router-link :to="{name : 'coverletter', params : {'resumeindex' : item - 1}}">
-      <div>{{resumeContents[item-1].resumeTitle}}</div>
-    </router-link>
+<div class="container">
+  <div class="review-1">
+    <div>자소서 개수 {{resumeContents.length}}</div>
+    <button @click="addResume" id="cover-Pbutton">+</button>
+    <button id="cover-Mbutton">-</button>
+    <div v-for="(item, index) in resumeContents.length" :key="index">
+      <router-link :to="{name : 'coverletter', params : {'resumeindex' : item - 1}}" id="cover-router">
+        <div>{{resumeContents[item-1].resumeTitle}}</div>
+      </router-link>
+    </div>
   </div>
-
   <!-- <div>{{ reviewContents }}</div> -->
   <!-- <h1>{{numberOfReview}}</h1> -->
-  <div class="review">
+  <div class="review-2">
     <h1>회고록</h1>
-  </div>
+
       <table class="table">
           <thead class="table-head">
             <tr>
@@ -53,6 +54,8 @@
         </router-link>
       </button>
   </div>
+  </div>
+  </div>
 </template>
 
 <script>
@@ -91,6 +94,20 @@ export default {
 </script>
 
 <style scoped>
+#cover-router{
+  text-decoration-line: none;
+}
+.review-1{
+  margin-top: 100px;
+}
+.review-2{
+  margin-top: 100px;
+}
+.conatiner{
+
+  display: flex;
+  flex-direction: column;
+}
 #button-review{
    width: 100px;
    height: 50px;
@@ -98,6 +115,9 @@ export default {
    border-color : #653FD3;
    border-radius: 10%;
    margin: 5px;
+
+}
+#button-review:hover{
 
 }
 #a {

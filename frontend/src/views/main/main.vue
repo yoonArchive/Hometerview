@@ -5,31 +5,47 @@
       <img :src="logo" id="mainImageLogo"/>
     </div>
 
+    <div id="middle-img">
 
-    <div>
-    <img :src="images[0]" alt="" class="main-image" />
+    <img :src="images[0]" alt=""  />
     </div>
+
+
       <router-link to="/home">
         <button id="mainBtn">홈페이지 바로가기
         </button>
       </router-link>
-    <div>
-    <img :src="images[1]" alt="" class="main-image" />
+
+
+
+    <div class="middle-2">
+      <img :src="images[1]" alt=""  />
     </div>
-    <div>
-    <img :src="images[2]" alt="" class="main-image" />
+
+    <div class="middle-1">
+      <img :src="images[2]" alt=""  />
     </div>
-    <div>
-    <img :src="images[3]" alt="" class="main-image" />
+
+    <div class="middle-1">
+      <img :src="images[3]" alt=""/>
     </div>
-    <div>
-    <img :src="images[4]" alt="" class="main-image" />
+
+
+    <div class="middle-1">
+      <img :src="images[4]" alt="" />
     </div>
+
+
+
+
 
   <login-dialog
     :open="loginDialogOpen"
     @closeLoginDialog="onCloseLoginDialog"/>
   </div>
+
+
+
 </template>
 <style>
   @import "https://unpkg.com/element-plus/lib/theme-chalk/index.css";
@@ -48,16 +64,16 @@ import MainFooter from './components/main-footer'
 
 
 
-window.addEventListener('scroll', () => {
+// window.addEventListener('scroll', () => {
 
-  const [red, green, blue] = [101, 63, 211]
-  const section1 = document.querySelector(".mainBackground");
-  let y = 1 + (window.scrollY || window.pageYOffset) / 5000
-  y = y < 1 ? 1 : y // ensure y is always >= 1 (due to Safari's elastic scroll)
-  const [r, g, b] = [red*y, green/y, blue*y]
-  section1.style.background = `rgb(${r}, ${g}, ${b})`
+//   const [red, green, blue] = [101, 63, 211]
+//   const section1 = document.querySelector(".mainBackground");
+//   let y = 1 + (window.scrollY || window.pageYOffset) / 5000
+//   y = y < 1 ? 1 : y // ensure y is always >= 1 (due to Safari's elastic scroll)
+//   const [r, g, b] = [red*y, green/y, blue*y]
+//   section1.style.background = `rgb(${r}, ${g}, ${b})`
 
-})
+// })
 export default {
   name: 'Main',
   components: {
@@ -102,16 +118,44 @@ export default {
 
 </script>
 <style scoped>
+
+.middle-1{
+  /* padding: 10px; */
+  justify-content: right;
+  /* object-fit: cover; */
+  margin-top: 100px;
+
+  /* overflow: hidden; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+
+}
+.middle-2{
+  /* padding: 10px; */
+  /* justify-content: left; */
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 100px;
+
+}
 #mainBackground{
   background-color: #653fd3;
+  width: 100%;
+
 
 }
 .container{
   display: flex;
-  flex-direction: column
+  flex-direction: column;
+
 }
 .main-image{
   justify-content: center;
+  width: 100%;
 }
 section {
   height: 100vh;
@@ -123,5 +167,11 @@ section {
    color: white;
    margin: 15px;
    width: 150px;
+}
+
+#middle-img{
+  display: flex;
+  flex-direction: column;
+
 }
 </style>
