@@ -4,6 +4,9 @@
     <div>
       대표 이미지 : {{ studySpaceDetail.stdImg }}<br>
     </div>
+
+    <button> 스터디 입장하기 </button>
+
     <div class="information-box">
       <div class="box1">
         스터디 명 : {{ studySpaceDetail.stdName }} <br>

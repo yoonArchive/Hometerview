@@ -52,6 +52,9 @@ import ReviewNew from '@/views/myinterview/review/ReviewNewView'
 import ReviewEdit from '@/views/myinterview/review/ReviewEditView'
 import { component } from 'stylus/lib/functions'
 
+/* 세션 페이지 */
+import SessionPage from '@/views/session/SessionView'
+
 
 /* 마이스터디-공통질문 페이지 */
 // import CommonQuestionDetailView from '@/views/studyspace/components/CommonQuestionDetailView'
@@ -201,8 +204,17 @@ function makeRoutesFromMenu () {
     },{
       path: '/study/:stdNo',
       name: 'studydetail',
-      component : StudySpaceDetailView
-    },{
+      component : StudySpaceDetailView,
+      children : [
+        {
+          path: 'session',
+          name: 'session',
+          component :SessionView,
+        }
+      ]
+    },
+
+    {
       path : 'membercoverletter/:studentindex',
       name : 'membercoverletter',
       component : MemberCoverLetter,

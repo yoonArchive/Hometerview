@@ -8,7 +8,8 @@
       <div class="d-flex justify-content-around">
         <div>
           대표 이미지 :
-          <img src="{{ recruitDetail.stdImg }}" alt="">
+          <!-- {{ recruitDetail }} -->
+          <!-- <img src="{{ recruitDetail.stdImg }}" alt=""> -->
         </div>
         <div>
           스터디 이름 :{{ recruitDetail.stdName }} <br>
@@ -16,7 +17,7 @@
           진행 일자 : {{ recruitDetail.stdDay }} <br>
           모집인원 :   {{ recruitDetail.count }}/{{ recruitDetail.stdLimit }}<br>
           스터디 타입 : {{ recruitDetail.stdType }} <br>
-          {{ recruitCount }}
+
         </div>
       </div><hr>
       <div class="card border-secondary mb-3" style="max-width: 80rem; height: 20rem;">

@@ -11,7 +11,7 @@
         </p>
         <p class="card-text">
           <small class="text-muted">{{ recruitment.stdDay }}</small><br>
-          <small class="text-muted">{{ recruitment.recruitStatus.status }} </small>
+          <!-- <small class="text-muted">{{ recruitment.recruitStatus.status }} </small> -->
           <button class="d-flex align-items-end" @click="moveToDetail()"> 상세보기 </button>
         </p>
       </div>
