@@ -186,7 +186,8 @@ export default {
         alert("로그인을 진행해 주세요");
       }
     },
-    signup({ commit }, credentials) {
+    signup({ commit }, payload) {
+      const credentials = payload.credential;
       delete credentials.userPw2;
       axios({
         url: api_url.accounts.signup(),
@@ -202,10 +203,10 @@ export default {
           // 중복검사 초기화 : 뒤로가기 하면 false가 그대로이기 떄문
           commit("SET_CHECK_EMAIL", true);
           commit("SET_CHECK_ID", true);
-          router.go({ name: "login" });
+          if (payload.isLoginPage) router.go({ name: "login" });
+          else router.push({ name: "login" });
         })
         .catch(err => {
-          console.error(err.response.data);
           commit("SET_AUTH_ERROR", err.response.data);
           alert("회원가입 실패");
         });

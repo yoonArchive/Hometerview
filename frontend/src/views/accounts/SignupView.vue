@@ -192,6 +192,7 @@ export default {
         userId: "",
         userPw: ""
       },
+      isLoginPage: false,
       profile: "",
       validationPattern: {
         pwdCheckPattern: /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+-])(?=.*[0-9]).{9,16}$/,
@@ -275,7 +276,11 @@ export default {
         alert("인증번호 확인을 해주세요");
         return;
       } else {
-        await this.signup(this.credentials);
+        const payload = {
+          credential: this.credentials,
+          isLoginPage: false
+        };
+        await this.signup(payload);
         await this.changeFalseAuthState();
       }
     }
