@@ -21,7 +21,7 @@ export default createStore({
     studyspace,
     commonquestion
   },
-  Plugins:[
+  plugins:[
     createPersistedState()
   ]
 });

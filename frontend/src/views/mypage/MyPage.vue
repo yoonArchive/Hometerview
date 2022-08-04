@@ -31,7 +31,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<!-- <style lang="scss">
 .el-row {
   margin-bottom: 20px;
 }
@@ -45,5 +45,5 @@ export default {
 .grid-content {
   border-radius: 4px;
   min-height: 36px;
-}
-</style>
+} -->
+<!-- </style> -->
