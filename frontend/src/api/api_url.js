@@ -1,7 +1,6 @@
 // import _Space from "element-plus/lib/el-space"
 
 const HOST = 'http://localhost:8080/api/v1/'
-const OPENVIDU_SERVER_URL = "https://" + location.hostname + ":8443";
 const USERS = 'users/'
 const AUTH = 'auth/'
 const NOTICE = 'notice/'
@@ -12,6 +11,8 @@ const STUDY = 'study/'
 const APPLY = 'apply/'
 const OPENVIDU = 'openvidu/api/'
 const SESSIONS = 'sessions/'
+const s = 'i7b105.p.ssafy.io'
+const OPENVIDU_SERVER_URL = "https://" + s + ":8443";
 
 // https:// YOUR_OPENVIDUSERVER_IP/openvidu/api/sessions
 
@@ -79,5 +80,6 @@ export default {
   },
   session:{
     createSession : () => OPENVIDU_SERVER_URL + OPENVIDU + SESSIONS
+    
   }
 }
