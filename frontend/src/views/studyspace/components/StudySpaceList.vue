@@ -32,9 +32,13 @@ export default {
   methods: {
     ...mapActions(['bringStudySpace']),
   },
-  mounted(){
+ created(){
     this.bringStudySpace()
+    
   },
+  beforeUpdate(){
+    console.log(this.studySpaceList.length)
+  }
 
 }
 </script>
