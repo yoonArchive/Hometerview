@@ -30,8 +30,6 @@ export default {
 	methods: {
 		getConnectionData () {
 			const { connection } = this.streamManager.stream;
-			// console.log('확인')
-			// console.log(connection.data)
 			return JSON.parse(connection.data);
 		},
 	},

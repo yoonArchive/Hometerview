@@ -20,15 +20,15 @@ export default {
     }
   },
   methods:{
-    ...mapActions(['bringStudySpaceDetial']),
+    ...mapActions(['bringStudySpaceDetail']),
   },
   // mounted(){
   //   this.bringStudySpaceDetail(this.stdNo)
   // }
 
-  mounted(){
-    this.bringStudySpaceDetial(this.stdNo)
-  },
+  // mounted(){
+  //   this.bringStudySpaceDetial(this.stdNo)
+  // },
   components:{
     StudySpaceInfo,
 

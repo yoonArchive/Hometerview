@@ -1,7 +1,6 @@
 import axios from 'axios'
 import api_url from '@/api/api_url'
 import router from '@/common/lib/vue-router'
-import accounts from '@/views/main/store/modules/accounts'
 // import accounts from './accounts'
 
 export default {
@@ -105,7 +104,7 @@ export default {
         console.log(err.response)
       })
     },
-    bringStudySpaceDetial({commit, getters},stdNo){
+    bringStudySpaceDetail({commit, getters},stdNo){
 
       axios({
         url:api_url.study.studyspacedetail(stdNo),

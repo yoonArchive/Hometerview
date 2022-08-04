@@ -1,7 +1,7 @@
 <template>
 	<div id="main-container" class="container">
 		<div id="join" v-if="!session">
-			<div id="img-div"><img src="resources/images/openvidu_grey_bg_transp_cropped.png" /></div>
+			<!-- <div id="img-div"><img src="resources/images/openvidu_grey_bg_transp_cropped.png" /></div> -->
 			<div id="join-dialog" class="jumbotron vertical-center">
 				<h1>Join a video session</h1>
 				<div class="form-group">
@@ -48,13 +48,17 @@
 import axios from 'axios';
 import { OpenVidu } from 'openvidu-browser'; // 필수 객체
 import UserVideo from './components/UserVideo';
+import {mapActions, mapGetters} from 'vuex'
+
 
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 // 글로벌 axios 기본(defaults) 설정 => application/json => 
-
-const OPENVIDU_SERVER_URL = "https://" + location.hostname + ":8443";
+const s = 'i7b105.p.ssafy.io'
+const OPENVIDU_SERVER_URL = "https://" + s + ":8443";
 const OPENVIDU_SERVER_SECRET = "admin";
 
+
+// location.hostname
 // 8443
 // admin
 
@@ -80,8 +84,13 @@ export default {
 			myUserName: 'Participant' + Math.floor(Math.random() * 100),
 		}
 	},
+	computed:{
+		...mapGetters(['currentUser']),
+	},
 
 	methods: {
+		
+
 		joinSession () {
 			// --- OpenVidu Object 생성 ---
 			this.OV = new OpenVidu();
@@ -94,6 +103,7 @@ export default {
 			// session.on은 언제 사용되는 것인지 확인 => 함수 실행 할때 쓰는 듯??
 			// On every new Stream received ==> 새로운거 시작할 때 실행 됨(누군가가 새로 들어 올 경우)
 			this.session.on('streamCreated', ({ stream }) => {
+				
 				//streamCreated 값 => user video에서 사용자의 닉네임을 자신의 비디오에 추가하는데 사용
 				const subscriber = this.session.subscribe(stream);
 				this.subscribers.push(subscriber);
@@ -121,6 +131,7 @@ export default {
 
 			// 'getToken' method is simulating what your server-side should do.
 			// 'token' parameter should be retrieved and returned by your own backend
+
 			this.getToken(this.mySessionId).then(token => {
 				// 여기는 client에 대한 정보 보내기
 				this.session.connect(token, { clientData: this.myUserName })
@@ -128,7 +139,6 @@ export default {
 
 						// 여기부터는 장치 정보
 						// --- Get your own camera stream with the desired properties ---
-
 						let publisher = this.OV.initPublisher(undefined, {
 							audioSource: undefined, // The source of audio. If undefined default microphone
 							videoSource: undefined, // The source of video. If undefined default webcam
@@ -194,12 +204,15 @@ export default {
 		},
 
 		// See https://docs.openvidu.io/en/stable/reference-docs/REST-API/#post-session
+		
 		createSession (sessionId) {
 			return new Promise((resolve, reject) => {
 				axios
-					.post(`${OPENVIDU_SERVER_URL}/openvidu/api/sessions`, JSON.stringify({
+					.post(
+						`${OPENVIDU_SERVER_URL}/openvidu/api/sessions`, 
+						JSON.stringify({
 						customSessionId: sessionId,
-					}), {
+						}), {
 						auth: {
 							username: 'OPENVIDUAPP',
 							password: OPENVIDU_SERVER_SECRET,
@@ -207,16 +220,18 @@ export default {
 					})
 					.then(response => response.data)
 					.then(data => resolve(data.id))
-					.catch(error => {
-						if (error.response.status === 409) {
+					.catch(err => {
+						if (err.response.status === 409) {
 							resolve(sessionId);
 						} else {
 							console.warn(`No connection to OpenVidu Server. This may be a certificate error at ${OPENVIDU_SERVER_URL}`);
 							if (window.confirm(`No connection to OpenVidu Server. This may be a certificate error at ${OPENVIDU_SERVER_URL}\n\nClick OK to navigate and accept it. If no certificate warning is shown, then check that your OpenVidu Server is up and running at "${OPENVIDU_SERVER_URL}"`)) {
 								location.assign(`${OPENVIDU_SERVER_URL}/accept-certificate`);
 							}
-							reject(error.response);
+							reject(err.response);
 						}
+						
+						console.log(err.response)
 					});
 			});
 		},

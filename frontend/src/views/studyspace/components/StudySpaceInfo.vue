@@ -3,9 +3,10 @@
   <div class="d-flex justify-content-around">
     <div>
       대표 이미지 : {{ studySpaceDetail.stdImg }}<br>
+    </div><br>
+    <div>
+      <button @click="moveToSession()"> 스터디 입장하기 </button>
     </div>
-
-    <button> 스터디 입장하기 </button>
 
     <div class="information-box">
       <div class="box1">
@@ -22,7 +23,7 @@
     </div>
   </div>
   <div>
-    스터디 소개 : {{ studySpaceDetail.stdDetail }}<br>
+    스터디 소개 : {{ studySpaceDetail.stdDetai }}<br>
   </div>
 
   <div>
@@ -39,6 +40,7 @@
 </template>
 
 <script>
+import router from '@/common/lib/vue-router'
 import {mapActions, mapGetters} from 'vuex'
 import StudyMembers from './StudyMembers.vue'
 export default {
@@ -54,10 +56,13 @@ export default {
     }
   },
   computed:{
-    ...mapGetters(['studySpaceDetail'])
+    ...mapGetters(['studySpaceDetail']),
   },
   methods:{
-    ...mapActions(['bringStudySpaceDetail','leaveStudy'])
+    ...mapActions(['bringStudySpaceDetail','leaveStudy']),
+      moveToSession(){
+        router.push({ name: 'session' })
+      }
   },
   created(){
     this.bringStudySpaceDetail(this.stdNo)
