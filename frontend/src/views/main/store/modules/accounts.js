@@ -250,10 +250,34 @@ export default {
           const userId = res.data.userId;
           console.log(userId);
           alert(`당신의 ID는 ${userId} 입니다`);
+          router.push({ name: "login" });
         })
         .catch(err => {
           console.error(err.response.data);
           alert(err.response.data.message);
+          commit("SET_AUTH_ERROR", err.response.data);
+        });
+    },
+    findPassword({ commit }, credentials) {
+      console.log(credentials);
+      const splitedEmail = credentials.userEmail.split("@");
+      const emailId = splitedEmail[0];
+      const emailaddress = splitedEmail[1];
+      const emailAndUserNameAndUserIdForSubmit = `?userEmail=${emailId}%40${emailaddress}&userName=${credentials.userName}&userId=${credentials.userId}`;
+      axios({
+        url:
+          api_url.accounts.findUserPassword() +
+          emailAndUserNameAndUserIdForSubmit,
+        method: "post"
+      })
+        .then(res => {
+          alert("임시 비밀번호가 전송되었습니다.");
+          console.log(res);
+          router.push({ name: "login" });
+        })
+        .catch(err => {
+          console.log(err);
+          alert("입력 정보에 해당하는 회원이 없습니다.");
           commit("SET_AUTH_ERROR", err.response.data);
         });
     },
@@ -329,25 +353,6 @@ export default {
           commit("SET_CHECK_EMAIL", true);
           alert("사용중인 이메일 입니다");
         });
-
-      // console.log(email)
-      // const splitedEmail = email.split('@')
-      // const emailId = splitedEmail[0]
-      // const emailaddress = splitedEmail[1]
-      // const emailForSubmit = `?userEmail=${emailId}%40${emailaddress}`
-      // console.log(emailForSubmit);
-      // axios({
-      //   url: api_url.accounts.authEmail() + emailForSubmit,
-      //   method: "post"
-      // })
-      //   .then(res => {
-      //     console.log(res.data);
-      //     alert("인증번호가 보내졌습니다");
-      //   })
-      //   .catch(err => {
-      //     console.log(err.response);
-      //     alert("인증번호가 보내기를 실패하였습니다.");
-      //   });
     },
     checkAuthKey({ commit }, authInfo) {
       console.log(authInfo[0]);
