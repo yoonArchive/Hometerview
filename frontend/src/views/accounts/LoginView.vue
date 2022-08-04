@@ -283,7 +283,9 @@ export default {
   setup() {
     return {};
   },
-  mounted() {},
+  mounted() {
+    window.scrollTo(0, 0);
+  },
   watch: {
     // 이메일창이랑 confirm함수가 다르면 changeAuthState=> false로 변환
     // checkSameEmail(){
