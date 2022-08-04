@@ -18,7 +18,7 @@
                   <div class="center-wrap">
                     <div class="section text-center">
                       <h4 class="mb-4 pb-3">로그인</h4>
-                      <form @submit.prevent="login(credentials)">
+                      <form @submit.prevent="login(credentials, isLoginPage)">
                         <div class="form-group">
                           <input
                             type="text"
@@ -55,12 +55,6 @@
                           비밀번호 찾기
                         </div>
                       </router-link>
-                      <!-- <p class="mb-0 mt-4 text-center">
-                        <a href="#0" class="link">아이디 찾기</a>
-                      </p>
-                      <p class="mb-0 mt-4 text-center">
-                        <a href="#0" class="link">비밀번호 찾기</a>
-                      </p> -->
                     </div>
                   </div>
                 </div>
@@ -139,13 +133,6 @@
                             required
                           />
                           <i class="input-icon uil uil-at"></i>
-                          <!-- <form
-                            @submit.prevent="
-                              emailDuplicateCheck(credentials.userEmail)
-                            "
-                          >
-                            <button class="btncheck">중복확인</button>
-                          </form> -->
                           <form
                             @submit.prevent="
                               sendAuthKeyToEmail(credentials.userEmail)
@@ -173,7 +160,9 @@
                           </div>
                           <button class="btncheck">인증번호 확인</button>
                         </form>
-                        <button class="btn mt-4">회원가입</button>
+                        <button class="btn mt-4">
+                          회원가입
+                        </button>
                       </form>
                     </div>
                   </div>
@@ -204,6 +193,7 @@ export default {
         userId: "",
         userPw: ""
       },
+      //isLoginPage: true,
       profile: "",
       validationPattern: {
         pwdCheckPattern: /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+-])(?=.*[0-9]).{9,16}$/,
@@ -234,7 +224,6 @@ export default {
       "login",
       "kakaoLoginBtn",
       "signup",
-      // "emailDuplicateCheck",
       "idDuplicateCheck",
       "sendAuthKeyToEmail",
       "checkAuthKey",
@@ -287,7 +276,11 @@ export default {
         alert("인증번호 확인을 해주세요");
         return;
       } else {
-        await this.signup(this.credentials);
+        const payload = {
+          credential: this.credentials,
+          isLoginPage: true
+        };
+        await this.signup(payload);
         await this.changeFalseAuthState();
       }
     }
@@ -295,7 +288,9 @@ export default {
   setup() {
     return {};
   },
-  mounted() {},
+  mounted() {
+    window.scrollTo(0, 0);
+  },
   watch: {
     // 이메일창이랑 confirm함수가 다르면 changeAuthState=> false로 변환
     // checkSameEmail(){

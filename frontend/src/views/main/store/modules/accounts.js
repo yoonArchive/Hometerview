@@ -186,7 +186,8 @@ export default {
         alert("로그인을 진행해 주세요");
       }
     },
-    signup({ commit }, credentials) {
+    signup({ commit }, payload) {
+      const credentials = payload.credential;
       delete credentials.userPw2;
       axios({
         url: api_url.accounts.signup(),
@@ -199,14 +200,13 @@ export default {
           // dispatch('saveToken', token)
           // dispatch('fetchCurrentUser')
           alert("회원가입 성공");
-
           // 중복검사 초기화 : 뒤로가기 하면 false가 그대로이기 떄문
           commit("SET_CHECK_EMAIL", true);
           commit("SET_CHECK_ID", true);
-          router.push({ name: "login" });
+          if (payload.isLoginPage) router.go({ name: "login" });
+          else router.push({ name: "login" });
         })
         .catch(err => {
-          console.error(err.response.data);
           commit("SET_AUTH_ERROR", err.response.data);
           alert("회원가입 실패");
         });
@@ -251,10 +251,34 @@ export default {
           const userId = res.data.userId;
           console.log(userId);
           alert(`당신의 ID는 ${userId} 입니다`);
+          router.push({ name: "login" });
         })
         .catch(err => {
           console.error(err.response.data);
           alert(err.response.data.message);
+          commit("SET_AUTH_ERROR", err.response.data);
+        });
+    },
+    findPassword({ commit }, credentials) {
+      console.log(credentials);
+      const splitedEmail = credentials.userEmail.split("@");
+      const emailId = splitedEmail[0];
+      const emailaddress = splitedEmail[1];
+      const emailAndUserNameAndUserIdForSubmit = `?userEmail=${emailId}%40${emailaddress}&userName=${credentials.userName}&userId=${credentials.userId}`;
+      axios({
+        url:
+          api_url.accounts.findUserPassword() +
+          emailAndUserNameAndUserIdForSubmit,
+        method: "post"
+      })
+        .then(res => {
+          alert("임시 비밀번호가 전송되었습니다.");
+          console.log(res);
+          router.push({ name: "login" });
+        })
+        .catch(err => {
+          console.log(err);
+          alert("입력 정보에 해당하는 회원이 없습니다.");
           commit("SET_AUTH_ERROR", err.response.data);
         });
     },
@@ -330,25 +354,6 @@ export default {
           commit("SET_CHECK_EMAIL", true);
           alert("사용중인 이메일 입니다");
         });
-
-      // console.log(email)
-      // const splitedEmail = email.split('@')
-      // const emailId = splitedEmail[0]
-      // const emailaddress = splitedEmail[1]
-      // const emailForSubmit = `?userEmail=${emailId}%40${emailaddress}`
-      // console.log(emailForSubmit);
-      // axios({
-      //   url: api_url.accounts.authEmail() + emailForSubmit,
-      //   method: "post"
-      // })
-      //   .then(res => {
-      //     console.log(res.data);
-      //     alert("인증번호가 보내졌습니다");
-      //   })
-      //   .catch(err => {
-      //     console.log(err.response);
-      //     alert("인증번호가 보내기를 실패하였습니다.");
-      //   });
     },
     checkAuthKey({ commit }, authInfo) {
       console.log(authInfo[0]);

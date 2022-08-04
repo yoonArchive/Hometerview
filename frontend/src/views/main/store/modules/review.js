@@ -62,16 +62,16 @@ export default {
       })
     },
     //회고 작성하기
-    //데이터 도출할 수 있도록 기윤님께 부탁
+
     createReview({ commit, getters }, newreview) {
 
 
-
+      console.log('김')
       axios({
         url: api_url.review.reviews(),
         method: 'post',
         data: newreview,
-        headers: this.getters.authHeader,
+        headers: getters.authHeader,
       })
         .then(res => {
           commit('SET_CURRENT_REVIEW', res.data)

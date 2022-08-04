@@ -1,7 +1,6 @@
 /* 공통으로 적용되어야할 css */
 @media (max-width: 700px) {
 }
-
 #app,
 .main-wrapper {
   height: 100%;
@@ -24,7 +23,10 @@
 
 .main-container {
   /* height: calc(100% - 195px); */
-  height: 1800px;
+  height: 2000px;
+  max-height: 100%;
+
+  /* height: 1800px; */
 }
 
 .el-row.main-footer {
@@ -156,3 +158,5 @@
 .header-routerlink-decoration {
   text-decoration: none;
 }
+
+

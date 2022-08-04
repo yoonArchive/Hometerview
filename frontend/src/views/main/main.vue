@@ -28,6 +28,9 @@
       @closeLoginDialog="onCloseLoginDialog"
     />
   </div>
+
+
+
 </template>
 <style>
 @import "https://unpkg.com/element-plus/lib/theme-chalk/index.css";
@@ -52,6 +55,7 @@ import MainFooter from "./components/main-footer";
 
 
 
+<<<<<<< HEAD
 // window.addEventListener('scroll', () => {
 
 //   const [red, green, blue] = [101, 63, 211]
@@ -62,6 +66,8 @@ import MainFooter from "./components/main-footer";
 //   section1.style.background = `rgb(${r}, ${g}, ${b})`
 
 // })
+=======
+>>>>>>> ac4a3f1d2aa462cd2427ad818e8e0247746bcdf3
 export default {
   name: "Main",
   components: {
@@ -98,8 +104,35 @@ export default {
 };
 </script>
 <style scoped>
-#mainBackground {
+
+.middle-1{
+  /* padding: 10px; */
+  justify-content: right;
+  /* object-fit: cover; */
+  margin-top: 100px;
+
+  /* overflow: hidden; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+
+}
+.middle-2{
+  /* padding: 10px; */
+  /* justify-content: left; */
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 100px;
+
+}
+#mainBackground{
   background-color: #653fd3;
+  width: 100%;
+
+
 }
 .container {
   display: flex;
@@ -107,6 +140,7 @@ export default {
 }
 .main-image {
   justify-content: center;
+  width: 100%;
 }
 section {
   height: 100vh;
@@ -118,5 +152,11 @@ section {
   color: white;
   margin: 15px;
   width: 150px;
+}
+
+#middle-img{
+  display: flex;
+  flex-direction: column;
+
 }
 </style>

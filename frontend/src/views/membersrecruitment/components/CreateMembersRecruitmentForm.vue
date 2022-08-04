@@ -161,6 +161,9 @@
 #kim{
   background-color: #653FD3;
 }
+input[type=text]:focus {
+  border: 3px solid #555;
+}
 #file-button{
   background-color: #5cb85c;
   border:0;

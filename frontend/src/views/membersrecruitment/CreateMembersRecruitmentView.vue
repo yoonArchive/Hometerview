@@ -5,11 +5,11 @@
     <div class="title">
        모집글 작성
     </div>
-    <div class="d-flex justify-content-between">
-      <div class="create-form">
+    <div class="row">
+      <div class="create-form col">
         <create-members-recruitment-form :recruitDetail="recruitDetail" action='만들기'></create-members-recruitment-form>
       </div>
-      <div class="generate-info">
+      <div class="generate-info col">
         <h3>General Information</h3>
         <div class="sub-title py-3">
           자율 면접과 기업 면접의 차이가 무엇인가요?
@@ -54,6 +54,14 @@
 </script>
 
 <style scoped>
+.inner-con{
+  display: flex;
+  flex-direction: row;
+}
+.container{
+  display: flex;
+  flex-direction: column;
+}
 .title{
   background-color: #F3F4FF;
   margin-bottom: 100px;

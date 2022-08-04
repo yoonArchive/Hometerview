@@ -8,8 +8,8 @@
       <label for="title" class="form-label" >제목: </label>
       <input type="text" class="form-control" v-model="newreview.reviewTitle" id="title" />
     </div>
-    <div class="mb-3">
-      <label for="exampleFormControlTextarea1" class="form-label">내용</label>
+    <div class="mb">
+      <label for="exampleFormControlTextarea1" class="form-label">내용: </label>
       <textarea class="form-control" v-model="newreview.reviewContents" type="text" id="content" rows="3"></textarea>
     </div>
     <!-- <div>
@@ -95,6 +95,10 @@ import { mapActions } from 'vuex'
 
 <style scoped>
 
+.form-control:focus{
+  border: solid 3px #856ccf;
+  outline: solid 1px #9376e9;
+}
 .container{
   display: flex;
   width: 100%;
