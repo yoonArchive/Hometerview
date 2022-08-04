@@ -105,20 +105,12 @@ export default {
         console.log(err.response)
       })
     },
-<<<<<<< HEAD
-    bringStudySpaceDetail({commit, getters},stdNo){
-=======
     bringStudySpaceDetial({commit, getters},stdNo){
->>>>>>> 962b8b4603acd6fdf25f4436e6332b0c25470298
 
       axios({
         url:api_url.study.studyspacedetail(stdNo),
         method : 'get',
-<<<<<<< HEAD
         headers: getters.authHeader,
-=======
-        headers:getters.authHeader
->>>>>>> 962b8b4603acd6fdf25f4436e6332b0c25470298
       })
       .then(res=>{
         console.log(res.data)
