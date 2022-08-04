@@ -8,14 +8,16 @@
       <div class="d-flex justify-content-around">
         <div>
           대표 이미지 :
-          <img src="{{ recruitDetail.stdImg }}" alt="">
+          <!-- {{ recruitDetail }} -->
+          <!-- <img src="{{ recruitDetail.stdImg }}" alt=""> -->
         </div>
         <div>
           스터디 이름 :{{ recruitDetail.stdName }} <br>
           활동기간 : {{ recruitDetail.startDate }} ~  {{ recruitDetail.endDate }}<br>
           진행 일자 : {{ recruitDetail.stdDay }} <br>
-          모집인원 :   {{ recruitDetail.count-1 }}/{{ recruitDetail.stdLimit }}<br>
+          모집인원 :   {{ recruitDetail.count }}/{{ recruitDetail.stdLimit }}<br>
           스터디 타입 : {{ recruitDetail.stdType }} <br>
+
         </div>
       </div><hr>
       <div class="card border-secondary mb-3" style="max-width: 80rem; height: 20rem;">
@@ -45,8 +47,6 @@
       타입 : {{ applyType }} <br>
 
       {{ recruitDetail.recruitStatus }} <br>
-      {{ recruitDetail.count }}
-
     </div>
 
 
@@ -66,7 +66,13 @@
       }
     },
     computed:{
-      ...mapGetters(['recruitDetail','currentUser','isApplied','applyType'])
+      ...mapGetters([
+        'recruitDetail',
+        'currentUser',
+        'isApplied',
+        'applyType',
+        'recruitCount'
+        ])
       
     },
     methods:{
@@ -97,8 +103,9 @@
         await router.push({ name:'study'})
       }
     },
-    created(){
+    async created(){
       this.bringRecruitmentDetail(this.recruitNo)
+
     }
 
   }

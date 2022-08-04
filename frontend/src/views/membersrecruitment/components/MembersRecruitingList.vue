@@ -23,13 +23,14 @@ export default {
   },
 
   computed:{
-    ...mapGetters(['recruitmentList'])
+    ...mapGetters(['recruitmentList','recruitCount'])
   },
   methods:{
-    ...mapActions(['bringRecruitingList'])
+    ...mapActions(['bringRecruitingList','deleteRecruitmentDetail','bringRecruitmentDetail'])
   },
   mounted(){
     this.bringRecruitingList()
+
   }
 }
 </script>

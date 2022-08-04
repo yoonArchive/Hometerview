@@ -1,5 +1,6 @@
 <template>
-  <div class="container">
+  <div>
+    <h3>스터디 리스트</h3>
     <study-space-list></study-space-list>
   </div>
 

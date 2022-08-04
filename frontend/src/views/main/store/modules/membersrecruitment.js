@@ -21,21 +21,36 @@ export default {
     
   },
   getters:{
-    authHeader: state => ({ Authorization: `Bearer ${state.token}`}),
+    memberHeader: state => `Bearer ${state.token}`,
     isValidedEmail : state => state.isValidedEmail,
     recruitmentList : state => state.recruitmentList,
     recruitDetail : state => state.recruitDetail,
     applyType : state => state.applyType,
+    recruitCount : state => state.recruitDetail.count
   },
   actions:{
-    createRecruitment({getters},recruitmentInfo){
-      console.log(recruitmentInfo)
+
+    createRecruitment({getters},formData){
       console.log(getters.authHeader)
+      // console.log(formData)
+      console.log('키 값 확인')
+      for (let key of formData.keys()) {
+        console.log(key);
+      }
+
+      console.log('벨류 값 확인')
+      for (let value of formData.values()) {
+        console.log(value);
+      }
       axios({
         url : api_url.membersrecruitment.membersrecruitments(),
         method : 'post',
-        data : recruitmentInfo,
-        headers : getters.authHeader
+        data : formData,
+        headers :{
+          'Authorization' : getters.memberHeader,
+          'Context-Type' : 'multipart/form-data'
+        } ,
+          
       })
       .then(res => {
         console.log(res.data)
@@ -98,6 +113,7 @@ export default {
       })
     },
     deleteRecruitmentDetail({commit},recruitNo){
+      
       axios({
         url : api_url.membersrecruitment.membersrecruitment(recruitNo),
         method : 'delete',
@@ -109,7 +125,6 @@ export default {
         })
       })
       .catch(err => {
-        console.log('에러?'+ recruitNo)
         console.log(err)
       })
     },

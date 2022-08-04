@@ -1,7 +1,6 @@
 import axios from 'axios'
 import api_url from '@/api/api_url'
 import router from '@/common/lib/vue-router'
-import accounts from '@/views/main/store/modules/accounts'
 // import accounts from './accounts'
 
 export default {
@@ -18,6 +17,7 @@ export default {
     studySpaceList : state => state.studySpaceList,
     studySpaceDetail : state => state.studySpaceDetail,
     resumeQuestionList : state => state.resumeQuestionList,
+    
   },
 
   mutations: {
@@ -98,19 +98,18 @@ export default {
       })
       .then(res => {
         console.log(res.data)
-
         commit('SET_RECRUITMENT_LIST',res.data.studies )
       })
       .catch(err => {
         console.log(err.response)
       })
     },
-    bringStudySpaceDetial({commit, getters},stdNo){
+    bringStudySpaceDetail({commit, getters},stdNo){
 
       axios({
         url:api_url.study.studyspacedetail(stdNo),
         method : 'get',
-        headers:getters.authHeader
+        headers: getters.authHeader,
       })
       .then(res=>{
         console.log(res.data)
@@ -149,6 +148,23 @@ export default {
         console.log(err.response)
       })
     },
+    deleteStudySpace({dispatch},deleteInfo){
+      const stdNo = deleteInfo[0]
+      const memberNo = deleteInfo[1]
+      if(memberNo<1){
+        axios({
+          url:api_url.study.deleteStudySpace(stdNo),
+          method:'delete'
+        })
+        .then(res=>{
+          console.log(res.data)
+          dispatch('bringStudySpace')
+        })
+        .catch(err=>{
+          console.log(err.response)
+        })
+      }
+    }
 
 
   },
