@@ -199,11 +199,10 @@ export default {
           // dispatch('saveToken', token)
           // dispatch('fetchCurrentUser')
           alert("회원가입 성공");
-
           // 중복검사 초기화 : 뒤로가기 하면 false가 그대로이기 떄문
           commit("SET_CHECK_EMAIL", true);
           commit("SET_CHECK_ID", true);
-          router.push({ name: "login" });
+          router.go({ name: "login" });
         })
         .catch(err => {
           console.error(err.response.data);
