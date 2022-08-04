@@ -163,7 +163,7 @@ export default {
   data() {
     return {
         imgsource: require("../../assets/images/logo.png"),
-        imagesrc: require("../../assets/images/Arrow circle up.png")
+
     }
 
   },

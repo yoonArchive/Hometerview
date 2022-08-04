@@ -161,7 +161,7 @@
   }
 </script>
 
-<style>
+<style scoped>
  .signup-title{
   position: absolute;
   width: 350px;
