@@ -14,45 +14,47 @@
                         회원가입 시 입력하신 이메일로<br />
                         임시 비밀번호가 전송됩니다.
                       </div>
-                      <div class="form-group">
-                        <input
-                          type="text"
-                          class="form-style"
-                          placeholder="아이디"
-                          id="userId"
-                          v-model="userData.userId"
-                          autocomplete="off"
-                          required
-                        />
-                        <i class="input-icon uil uil-user"></i>
-                      </div>
-                      <div class="form-group mt-2">
-                        <input
-                          type="text"
-                          class="form-style"
-                          placeholder="이름"
-                          id="userName"
-                          v-model="userData.userName"
-                          autocomplete="off"
-                          required
-                        />
-                        <i class="input-icon uil uil-user-circle"></i>
-                      </div>
-                      <div class="form-group mt-2">
-                        <input
-                          type="email"
-                          class="form-style"
-                          placeholder="Email"
-                          id="userEmail"
-                          v-model="userData.userEmail"
-                          autocomplete="off"
-                          required
-                        />
-                        <i class="input-icon uil uil-at"></i>
-                      </div>
-                      <button class="btn mt-4" @click="findPassword">
-                        비밀번호 찾기
-                      </button>
+                      <form @submit.prevent="findPassword(credentials)">
+                        <div class="form-group">
+                          <input
+                            type="text"
+                            class="form-style"
+                            placeholder="아이디"
+                            id="userId"
+                            v-model="credentials.userId"
+                            autocomplete="off"
+                            required
+                          />
+                          <i class="input-icon uil uil-user"></i>
+                        </div>
+                        <div class="form-group mt-2">
+                          <input
+                            type="text"
+                            class="form-style"
+                            placeholder="이름"
+                            id="userName"
+                            v-model="credentials.userName"
+                            autocomplete="off"
+                            required
+                          />
+                          <i class="input-icon uil uil-user-circle"></i>
+                        </div>
+                        <div class="form-group mt-2">
+                          <input
+                            type="email"
+                            class="form-style"
+                            placeholder="Email"
+                            id="userEmail"
+                            v-model="credentials.userEmail"
+                            autocomplete="off"
+                            required
+                          />
+                          <i class="input-icon uil uil-at"></i>
+                        </div>
+                        <button class="btn mt-4">
+                          비밀번호 찾기
+                        </button>
+                      </form>
                     </div>
                   </div>
                 </div>
@@ -66,31 +68,26 @@
 </template>
 
 <script>
-import api_url from "@/api/api_url";
-import axios from "axios";
+import { mapActions, mapGetters } from "vuex";
 export default {
-  setup() {
-    const userData = {
-      userEmail: "",
-      userId: "",
-      userName: ""
+  name: "FindUserPassword",
+  data() {
+    return {
+      credentials: {
+        userName: "",
+        userEmail: "",
+        userId: ""
+      }
     };
-    function findPassword() {
-      console.log(this.userData);
-      axios({
-        url: api_url.accounts.findUserPassword(),
-        method: "post",
-        params: this.userData
-      })
-        .then(data => {
-          alert("임시 비밀번호가 전송되었습니다.");
-          console.log(data);
-        })
-        .catch(error => {
-          alert("입력 정보에 해당하는 회원이 없습니다.");
-        });
-    }
-    return { userData, findPassword };
+  },
+  computed: {
+    ...mapGetters(["authError"])
+  },
+  methods: {
+    ...mapActions(["findPassword"])
+  },
+  mounted() {
+    window.scrollTo(0, 0);
   }
 };
 </script>
