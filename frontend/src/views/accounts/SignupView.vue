@@ -307,16 +307,7 @@ export default {
 </script>
 
 <style scoped>
-<<<<<<< HEAD
- .signup-title{
-  position: absolute;
-  width: 350px;
-  height: 82px;
-  left: 545px;
-  top: 120px;
-=======
 @import url("https://fonts.googleapis.com/css?family=Poppins:400,500,600,700,800,900");
->>>>>>> a9897b1adeb6055fe3a12ddb4042d8d82ba47ae4
 
 body {
   font-family: "Poppins", sans-serif;

@@ -1,9 +1,5 @@
 /* 공통으로 적용되어야할 css */
-<<<<<<< HEAD
-@media (min-height: 1000px) {
-=======
 @media (max-width: 700px) {
->>>>>>> a9897b1adeb6055fe3a12ddb4042d8d82ba47ae4
 }
 #app,
 .main-wrapper {
