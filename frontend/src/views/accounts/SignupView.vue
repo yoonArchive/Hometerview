@@ -56,12 +56,6 @@
                           비밀번호 찾기
                         </div>
                       </router-link>
-                      <!-- <p class="mb-0 mt-4 text-center">
-                        <a href="#0" class="link">아이디 찾기</a>
-                      </p>
-                      <p class="mb-0 mt-4 text-center">
-                        <a href="#0" class="link">비밀번호 찾기</a>
-                      </p> -->
                     </div>
                   </div>
                 </div>
@@ -140,13 +134,6 @@
                             required
                           />
                           <i class="input-icon uil uil-at"></i>
-                          <!-- <form
-                            @submit.prevent="
-                              emailDuplicateCheck(credentials.userEmail)
-                            "
-                          >
-                            <button class="btncheck">중복확인</button>
-                          </form> -->
                           <form
                             @submit.prevent="
                               sendAuthKeyToEmail(credentials.userEmail)
