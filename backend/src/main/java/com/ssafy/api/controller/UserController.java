@@ -111,8 +111,8 @@ public class UserController {
             @ApiResponse(code = 401, message = "이메일 중복", response = BaseResponseBody.class),
             @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
     })
-    public ResponseEntity<? extends BaseResponseBody> checkEmail(@RequestParam @ApiParam(value = "회원 이메일", required = true) String email) throws Exception {
-        User user = userService.getByUserEmail(email);
+    public ResponseEntity<? extends BaseResponseBody> checkEmail(@RequestParam @ApiParam(value = "회원 이메일", required = true) String userEmail) throws Exception {
+        User user = userService.getByUserEmail(userEmail);
         if (user == null) return ResponseEntity.status(200).body(BaseResponseBody.of(200, "사용 가능한 이메일입니다."));
         else return ResponseEntity.status(401).body(BaseResponseBody.of(401, "사용 중인 이메일입니다."));
     }
