@@ -18,7 +18,7 @@
                   <div class="center-wrap">
                     <div class="section text-center">
                       <h4 class="mb-4 pb-3">로그인</h4>
-                      <form @submit.prevent="login(credentials)">
+                      <form @submit.prevent="login(credentials, isLoginPage)">
                         <div class="form-group">
                           <input
                             type="text"
@@ -193,6 +193,7 @@ export default {
         userId: "",
         userPw: ""
       },
+      //isLoginPage: true,
       profile: "",
       validationPattern: {
         pwdCheckPattern: /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+-])(?=.*[0-9]).{9,16}$/,
@@ -275,7 +276,11 @@ export default {
         alert("인증번호 확인을 해주세요");
         return;
       } else {
-        await this.signup(this.credentials);
+        const payload = {
+          credential: this.credentials,
+          isLoginPage: true
+        };
+        await this.signup(payload);
         await this.changeFalseAuthState();
       }
     }
