@@ -61,8 +61,11 @@ export default {
   methods:{
     ...mapActions(['bringStudySpaceDetail','leaveStudy']),
       moveToSession(){
-        router.push({ name: 'session' })
-      }
+        router.push({ 
+          name: 'session',
+          params : {sessionNo:this.stdNo} 
+        })
+      },
   },
   created(){
     this.bringStudySpaceDetail(this.stdNo)

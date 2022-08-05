@@ -43,7 +43,18 @@ export default {
 
   data(){
     return{
-        studyJoins : this.studySpace.studyJoins
+        studyJoins : this.studySpace.studyJoins,
+        OV: undefined,
+        session: undefined,
+        mainStreamManager: undefined,
+        publisher: undefined, //local
+        subscribers: [], // remotes
+
+			//join form
+			mySessionId: 'SessionA',
+
+			//user name
+			myUserName: 'Participant' + Math.floor(Math.random() * 100),
       }
     },
   computed: {
@@ -59,7 +70,8 @@ export default {
         name:"studydetail",
         params: {stdNo:this.studySpace.stdNo}
       })
-    }
+    },
+
   },
 
 

@@ -1,26 +1,8 @@
 <template>
 	<div id="main-container" class="container">
-		<div id="join" v-if="!session">
-			<div id="join-dialog" class="jumbotron vertical-center">
-				<h1>Join a video session</h1>
-				<div class="form-group">
-					<p>
-						<label>Participant</label>
-						<input v-model="myUserName" class="form-control" type="text" required>
-					</p>
-					<p>
-						<label>Session</label>
-						<input v-model="mySessionId" class="form-control" type="text" required>
-					</p>
-					<p class="text-center">
-						<button class="btn btn-lg btn-success" @click="joinSession()">Join!</button>
-					</p>
-				</div>
-			</div>
-		</div>
-
+		{{ currentUser.userName }}
 		<!-- 세션을 들어 갔을 경우 -->
-		<div id="session" v-if="session">
+		<div id="session">
 			<div id="session-header">
 				<h1 id="session-title">{{ mySessionId }}</h1>
 				<input class="btn btn-large btn-danger" type="button" id="buttonLeaveSession" @click="leaveSession" value="Leave session">
@@ -39,6 +21,32 @@
         <!-- vue3에서 native가 사라지고 그냥 click을 누르면 된다. -->
 				<user-video v-for="sub in subscribers" :key="sub.stream.connection.connectionId" :stream-manager="sub" @click="updateMainVideoStreamManager(sub)"/>
 			</div>
+			<div>
+				<message-list
+					:msgs="msgs"
+					:myId="publisher.stream.connection.connectionId"
+					:fromId="fromId"
+				></message-list>
+				<message-form
+					@sendMsg="sendMsg"
+					:user-name="myUserName"
+				></message-form>
+
+
+				<!-- <MessageList
+					:msgs="msgs"
+					:myId="publisher.stream.connection.connectionId"
+					:fromId="fromId"
+					/>
+				<MessageForm
+					style="width:100%"
+					@sendMsg="sendMsg"
+					:user-name="myUserName"
+					/> -->
+			</div>
+
+
+
 		</div>
 	</div>
 </template>
@@ -47,8 +55,10 @@
 import axios from 'axios';
 import { OpenVidu } from 'openvidu-browser'; // 필수 객체
 import UserVideo from './components/UserVideo';
+import router from '@/common/lib/vue-router'
+import MessageForm from "./components/messageForm";
+import MessageList from "./components/messageList";
 import {mapActions, mapGetters} from 'vuex'
-
 
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 // 글로벌 axios 기본(defaults) 설정 => application/json => 
@@ -66,10 +76,13 @@ export default {
 
 	components: {
 		UserVideo,
+		MessageForm,
+    MessageList,
 	},
 
 	data () {
 		return {
+			sessionNo : this.$route.params.sessionNo,
 			OV: undefined,
 			session: undefined,
 			mainStreamManager: undefined,
@@ -77,19 +90,49 @@ export default {
 			subscribers: [], // remotes
 
 			//join form
-			mySessionId: 'SessionA',
+			mySessionId: ``,
 
 			//user name
-			myUserName: 'Participant' + Math.floor(Math.random() * 100),
+			myUserName: '',
+
+			// massege
+			msgs: [],
+			fromId :''
+
 		}
 	},
 	computed:{
+		...mapGetters(['currentUser']),
+
 	},
 
 	methods: {
-		
-
+		sendMsg(msg) {
+      // Sender of the message (after 'session.connect')
+      this.session
+        .signal({
+          data: msg, // Any string (optional)
+          to: [], // Array of Connection objects (optional. Broadcast to everyone if empty)
+          type: "my-chat" // The type of message (optional)
+        })
+        .then(() => {
+          console.log("Message successfully sent");
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    },
+		changeSessionId(sessionNo){
+			return `Session${sessionNo}`
+		},
+		moveToStudy(){
+			router.push({
+				name:'studydetail',
+				params : {stdNo:this.sessionNo}
+			})
+		},
 		joinSession () {
+
 			// --- OpenVidu Object 생성 ---
 			this.OV = new OpenVidu();
 
@@ -125,6 +168,13 @@ export default {
 				console.warn(exception);
 			});
 
+      this.session.on("signal:my-chat", event => {
+        this.fromId = event.from.connectionId;
+        const tmp = this.msgs.slice();
+        tmp.push(event.data);
+        this.msgs = tmp;
+      });
+
 			// --- Connect to the session with a valid user token ---
 
 			// 'getToken' method is simulating what your server-side should do.
@@ -148,7 +198,6 @@ export default {
 							mirror: false       	// Whether to mirror your local video or not
 						});
 
-						// ??????
 						this.mainStreamManager = publisher;
 						this.publisher = publisher;
 
@@ -177,6 +226,8 @@ export default {
 			this.OV = undefined;
 
 			window.removeEventListener('beforeunload', this.leaveSession);
+
+			this.moveToStudy()
 		},
 
 		updateMainVideoStreamManager (stream) {
@@ -249,6 +300,14 @@ export default {
 					.catch(error => reject(error.response));
 			});
 		},
+
+	},
+	created(){
+		},
+	async beforeMount(){
+		this.myUserName = await this.currentUser.userName
+		this.mySessionId = await this.changeSessionId(this.sessionNo)
+		this.joinSession()
 	}
 }
 </script>

@@ -79,6 +79,7 @@ export default {
       HOST + STUDY + RESUME + `${stdNo}/` + `${resumeNo}`
   },
   session:{
-    createSession : () => OPENVIDU_SERVER_URL + OPENVIDU + SESSIONS
+    createSession : () => OPENVIDU_SERVER_URL + OPENVIDU + SESSIONS,
+    createToken : () => OPENVIDU_SERVER_URL + OPENVIDU + SESSIONS + `${sessionId}/` + 'connection'
   }
 }

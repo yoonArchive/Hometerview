@@ -55,7 +55,6 @@ import MainFooter from "./components/main-footer";
 
 
 
-<<<<<<< HEAD
 // window.addEventListener('scroll', () => {
 
 //   const [red, green, blue] = [101, 63, 211]
@@ -66,8 +65,6 @@ import MainFooter from "./components/main-footer";
 //   section1.style.background = `rgb(${r}, ${g}, ${b})`
 
 // })
-=======
->>>>>>> ac4a3f1d2aa462cd2427ad818e8e0247746bcdf3
 export default {
   name: "Main",
   components: {

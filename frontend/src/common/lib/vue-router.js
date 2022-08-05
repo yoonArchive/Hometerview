@@ -212,7 +212,7 @@ function makeRoutesFromMenu () {
       component : MemberCoverLetter,
     },
     {
-      path: 'session',
+      path: 'session/:sessionNo',
       name: 'session',
       component :SessionView,
     }
