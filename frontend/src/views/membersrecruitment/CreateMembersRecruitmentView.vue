@@ -39,15 +39,32 @@
 
 <script>
   import CreateMembersRecruitmentForm from './components/CreateMembersRecruitmentForm.vue'
-  import { mapGetters } from 'vuex'
+  import {mapActions} from 'vuex'
 
   export default {
     name : 'CreateMembersRecruitmentView',
     components :{
       CreateMembersRecruitmentForm,
     },
-    computed:{
-      ...mapGetters(['recruitDetail'])
+    data(){
+      return{
+        
+        recruitDetail:{
+          comName: '',
+          endDate: '',
+          recruitTitle: '',
+          startDate: '',
+          stdDay: '',
+          stdDetail: '',
+          stdLimit: '',
+          stdName: '',
+          stdType: 'COM',
+          stdImg : File,
+        }
+      }
+    },
+    created(){
+      // this.$store.commit('SET_RECRUIT_DETAIL',recruitDetail)
     }
 
   }

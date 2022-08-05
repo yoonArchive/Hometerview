@@ -91,7 +91,7 @@
       return{
         
         company : false,
-        newrecruitmentInfo:{          
+        newrecruitmentInfo:{
           stdImg : File,
           comName: this.recruitDetail.comName,
           endDate: this.recruitDetail.endDate,
@@ -117,9 +117,6 @@
     },
     methods:{
       ...mapActions(['createRecruitment','updateRecruitmentDetail','deleteRecruitmentDetail' ]),
-
-
-
       upload(){
         const formData = new FormData()
         formData.append('multipartFile',this.newrecruitmentInfo.stdImg)
@@ -152,7 +149,8 @@
         }
       }
 
-    }
+    },
+
 
   }
 </script>
