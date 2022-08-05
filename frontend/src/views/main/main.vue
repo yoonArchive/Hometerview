@@ -28,9 +28,6 @@
       @closeLoginDialog="onCloseLoginDialog"
     />
   </div>
-
-
-
 </template>
 <style>
 @import "https://unpkg.com/element-plus/lib/theme-chalk/index.css";
@@ -44,16 +41,6 @@ import MainHeader from "./components/main-header";
 import MainSidebar from "./components/main-sidebar";
 import MainFooter from "./components/main-footer";
 
-// window.addEventListener('scroll', () => {
-
-//   const [red, green, blue] = [101, 63, 211]
-//   const section1 = document.querySelector(".mainBackground");
-//   let y = 1 + (window.scrollY || window.pageYOffset) / 5000
-//   y = y < 1 ? 1 : y // ensure y is always >= 1 (due to Safari's elastic scroll)
-//   const [r, g, b] = [red*y, green/y, blue*y]
-//   section1.style.background = `rgb(${r}, ${g}, ${b})`
-
-
 
 // window.addEventListener('scroll', () => {
 
@@ -65,6 +52,7 @@ import MainFooter from "./components/main-footer";
 //   section1.style.background = `rgb(${r}, ${g}, ${b})`
 
 // })
+
 export default {
   name: "Main",
   components: {
@@ -101,8 +89,7 @@ export default {
 };
 </script>
 <style scoped>
-
-.middle-1{
+.middle-1 {
   /* padding: 10px; */
   justify-content: right;
   /* object-fit: cover; */
@@ -112,10 +99,8 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-
-
 }
-.middle-2{
+.middle-2 {
   /* padding: 10px; */
   /* justify-content: left; */
   overflow: hidden;
@@ -123,13 +108,10 @@ export default {
   align-items: center;
   justify-content: center;
   margin-top: 100px;
-
 }
-#mainBackground{
+#mainBackground {
   background-color: #653fd3;
   width: 100%;
-
-
 }
 .container {
   display: flex;
@@ -151,9 +133,8 @@ section {
   width: 150px;
 }
 
-#middle-img{
+#middle-img {
   display: flex;
   flex-direction: column;
-
 }
 </style>
