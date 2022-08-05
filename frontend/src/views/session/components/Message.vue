@@ -55,7 +55,7 @@ export default {
   padding-right: 5px;
 }
 #chat {
-  background-color: rgb(255, 255, 255);
+  background-color: #C4C1C9;
   margin: 5px;
   padding: 5px;
   border-radius: 15px;
@@ -64,7 +64,7 @@ export default {
   display: inline-block;
 }
 #mychat {
-  background-color: rgb(243, 227, 3);
+  background-color: #B3A2E3;
   margin: 5px;
   padding: 5px;
   border-radius: 15px;

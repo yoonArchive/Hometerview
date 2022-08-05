@@ -22,7 +22,7 @@
 				<user-video v-for="sub in subscribers" :key="sub.stream.connection.connectionId" :stream-manager="sub" @click="updateMainVideoStreamManager(sub)"/>
 			</div>
 			<div>
-				<message-list
+				<!-- <message-list
 					:msgs="msgs"
 					:myId="publisher.stream.connection.connectionId"
 					:fromId="fromId"
@@ -30,10 +30,10 @@
 				<message-form
 					@sendMsg="sendMsg"
 					:user-name="myUserName"
-				></message-form>
+				></message-form> -->
 
 
-				<!-- <MessageList
+				<MessageList
 					:msgs="msgs"
 					:myId="publisher.stream.connection.connectionId"
 					:fromId="fromId"
@@ -42,7 +42,7 @@
 					style="width:100%"
 					@sendMsg="sendMsg"
 					:user-name="myUserName"
-					/> -->
+					/>
 			</div>
 
 
@@ -56,8 +56,8 @@ import axios from 'axios';
 import { OpenVidu } from 'openvidu-browser'; // 필수 객체
 import UserVideo from './components/UserVideo';
 import router from '@/common/lib/vue-router'
-import MessageForm from "./components/messageForm";
-import MessageList from "./components/messageList";
+import MessageForm from "./components/MessageForm";
+import MessageList from "./components/MessageList";
 import {mapActions, mapGetters} from 'vuex'
 
 axios.defaults.headers.post['Content-Type'] = 'application/json';

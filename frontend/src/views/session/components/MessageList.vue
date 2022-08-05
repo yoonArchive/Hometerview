@@ -9,16 +9,11 @@
         :fromId="fromId"
       />
     </div>
-    <div v-if="recentmsg > 0" @click="scrolldown" id="rctmsg">
-      <span id="notice">
-        읽지않은 {{ recentmsg }}개의 메세지가 있습니다.
-      </span>
-    </div>
   </div>
 </template>
 
 <script>
-import Message from "./message";
+import Message from "./Message";
 export default {
   name: "MessageList",
   components: {
@@ -38,15 +33,7 @@ export default {
   data() {
     return {
       isScrolled: false,
-      recentmsg: 0
     };
-  },
-  watch: {
-    msgs: (window.onload = function() {
-      if (this.isScrolled) {
-        this.recentmsg += 1;
-      }
-    })
   },
   updated() {
     if (!this.isScrolled) {
@@ -77,7 +64,7 @@ export default {
 <style scoped>
 .container {
   height: 500px;
-  background: #b4b4b4;
+  background: #FFFF;
   overflow: scroll;
   border-radius: 10px 10px 0px 0px;
 }
@@ -87,9 +74,5 @@ export default {
   position: relative;
   top: -30px;
 }
-#notice {
-  background: #ffffffbe;
-  border-radius: 10px;
-  padding: 3px 10px 0px 10px;
-}
+
 </style>
