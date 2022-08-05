@@ -10,6 +10,7 @@ export default {
     studySpaceDetail : {},
     token: localStorage.getItem('token') || '' ,
     resumeQuestionList : [],
+    selStdNo: Number,
   },
 
   getters: {
@@ -17,7 +18,7 @@ export default {
     studySpaceList : state => state.studySpaceList,
     studySpaceDetail : state => state.studySpaceDetail,
     resumeQuestionList : state => state.resumeQuestionList,
-    
+    selStdNo : state => state.selStdNo,
   },
 
   mutations: {
@@ -26,6 +27,7 @@ export default {
     SET_RECRUIT_DETAIL : (state,studySpaceDetail) => state.studySpaceDetail = studySpaceDetail,
     RESET_RESUME_QUESTION_LIST: (state) =>state.resumeQuestionList = [],
     ADD_RESUME_QUESTION_LIST : (state, data) => state.resumeQuestionList.push(data),
+    SET_STD_NO: (state, data) => state.selStdNo = data,
   },
 
   actions: {
@@ -34,6 +36,7 @@ export default {
       const studentindex = data.studentindex;
       const resumeNo = data.resumeNo;
       const stdNo = getters.studySpaceList[studentindex].stdNo;
+      console.log(stdNo + " : " + resumeNo);
       axios.put(api_url.study.studyCoverLetter(stdNo,resumeNo),
       {},{
         headers : getters.authHeader,
@@ -104,10 +107,10 @@ export default {
         console.log(err.response)
       })
     },
-    bringStudySpaceDetail({commit, getters},stdNo){
+    bringStudySpaceDetail({commit, getters}){
 
       axios({
-        url:api_url.study.studyspacedetail(stdNo),
+        url:api_url.study.studyspacedetail(getters.selStdNo),
         method : 'get',
         headers: getters.authHeader,
       })

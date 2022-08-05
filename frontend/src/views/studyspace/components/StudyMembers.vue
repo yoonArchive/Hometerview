@@ -5,29 +5,18 @@
         <div class="col-8">
           {{ member.user.userId }}  {{ member.user.userName }}  {{ member.user.userEmail }}
         </div>
-        <div class="col-2">
-          <button @click="kickMember(stdMemberInfo)" v-if="studySpaceDetail.joinType==='LEADER' && member.joinType!=='LEADER'"> 추방하기 </button>
+        <div class="col-4">
+          <div class="d-flex flex-row-reverse">
+            <button @click="kickMember(stdMemberInfo)" v-if="studySpaceDetail.joinType==='LEADER' && member.joinType!=='LEADER'"> 추방하기 </button>
+            <router-link :to="{ name: 'membercoverletter', params: { studentindex : studentindex } }">
+              <i class="far fa-file-alt fa-lg" style="color:#653FD3"></i>
+            </router-link>
+          </div>
         </div>
-        <div class="col-2">
-          <router-link :to="{ name: 'membercoverletter', params: { studentindex : studentindex } }">
-            자소서 보기
-          </router-link>
-        </div>
+
       </div>
     </div>
   </div>
-  <div class="member">
-     &nbsp;&nbsp;&nbsp;
-     {{ member.joinType }}
-    <br>
-    &nbsp;&nbsp; {{ member.user.userId }} &nbsp; {{ member.user.userName }} &nbsp; {{ member.user.userEmail }} <br>
-    {{ member.user.ueserImg }}   {{ member.user.joinTyp }}   {{ member.user.resumeNo }}
-    <router-link :to="{ name: 'membercoverletter', params: { studentindex : studentindex } }">
-      자소서 보기
-    </router-link>
-
-  </div>
-
 </template>
 <script>
 import router from '@/common/lib/vue-router'

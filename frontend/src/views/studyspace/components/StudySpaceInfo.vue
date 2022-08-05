@@ -54,7 +54,7 @@
 
 <script>
 import router from '@/common/lib/vue-router'
-import {mapActions, mapGetters} from 'vuex'
+import {mapActions, mapGetters, mapMutations} from 'vuex'
 import StudyMembers from './StudyMembers.vue'
 export default {
   name:'StudySpaceInfo',
@@ -74,6 +74,7 @@ export default {
   },
   methods:{
     ...mapActions(['bringStudySpaceDetail','leaveStudy']),
+    ...mapMutations(['SET_STD_NO']),
       moveToSession(){
         router.push({ name: 'session' })
       },
@@ -88,9 +89,10 @@ export default {
     },
   },
   created(){
-    this.bringStudySpaceDetail(this.stdNo)
+    this.SET_STD_NO(this.stdNo);
+    this.bringStudySpaceDetail()
     // await this.deleteStudySpace([this.stdNo])
-  }
+  },
 }
 </script>
 
