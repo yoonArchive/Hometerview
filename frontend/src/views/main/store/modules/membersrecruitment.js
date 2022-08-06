@@ -1,205 +1,213 @@
-import axios from 'axios'
-import api_url from '@/api/api_url'
+import axios from "axios";
+import api_url from "@/api/api_url";
 import router from "@/common/lib/vue-router.js";
 
 export default {
-
   state: {
-    recruitmentList : [],
-    recruitDetail : {},
-    token: localStorage.getItem('token') || '' ,
-    isApplied : false,
-    applyType : ''
-    
-
+    recruitmentList: [],
+    recruitDetail: {},
+    token: localStorage.getItem("token") || "",
+    isApplied: false,
+    applyType: "",
+    applyCounts: []
   },
   mutations: {
-    SET_TOKEN: (state, token) => state.token = token,
-    SET_RECRUITMENT_LIST: (state,recruitmentList) => state.recruitmentList = recruitmentList,
-    SET_RECRUIT_DETAIL : (state,recruitDetail) => state.recruitDetail = recruitDetail,
-    SET_APPLY_TYPE : (state, applyType) => state.applyType = applyType,
-    
+    SET_TOKEN: (state, token) => (state.token = token),
+    SET_RECRUITMENT_LIST: (state, recruitmentList) =>
+      (state.recruitmentList = recruitmentList),
+    SET_RECRUIT_DETAIL: (state, recruitDetail) =>
+      (state.recruitDetail = recruitDetail),
+    SET_APPLY_TYPE: (state, applyType) => (state.applyType = applyType),
+    SET_APPLY_COUNT: (state, applyCounts) => (state.applyCounts = applyCounts)
   },
-  getters:{
+  getters: {
     memberHeader: state => `Bearer ${state.token}`,
-    isValidedEmail : state => state.isValidedEmail,
-    recruitmentList : state => state.recruitmentList,
-    recruitDetail : state => state.recruitDetail,
-    applyType : state => state.applyType,
-    recruitCount : state => state.recruitDetail.count
+    isValidedEmail: state => state.isValidedEmail,
+    recruitmentList: state => state.recruitmentList,
+    recruitDetail: state => state.recruitDetail,
+    applyType: state => state.applyType,
+    recruitCount: state => state.recruitDetail.count,
+    applyCounts: state => state.applyCounts
   },
-  actions:{
-
-    createRecruitment({getters},formData){
-      console.log(getters.authHeader)
+  actions: {
+    createRecruitment({ getters }, formData) {
+      console.log(getters.authHeader);
       // console.log(formData)
-      console.log('키 값 확인')
+      console.log("키 값 확인");
       for (let key of formData.keys()) {
         console.log(key);
       }
 
-      console.log('벨류 값 확인')
+      console.log("벨류 값 확인");
       for (let value of formData.values()) {
         console.log(value);
       }
       axios({
-        url : api_url.membersrecruitment.membersrecruitments(),
-        method : 'post',
-        data : formData,
-        headers :{
-          'Authorization' : getters.memberHeader,
-          'Context-Type' : 'multipart/form-data'
-        } ,
-          
+        url: api_url.membersrecruitment.membersrecruitments(),
+        method: "post",
+        data: formData,
+        headers: {
+          Authorization: getters.memberHeader,
+          "Context-Type": "multipart/form-data"
+        }
       })
-      .then(res => {
-        console.log(res.data)
-        alert('성공하셨습니다.')
-        router.push({name:'membersrecruitment'})
-      })
-      .catch(err => {
-        console.log(err.response)
-      })
-    },
-    bringRecruitmentList({ commit }){
-      axios({
-        url : api_url.membersrecruitment.membersrecruitments(),
-        method : 'get',
-      })
-      .then(res => {
-        console.log(res.data)
-        commit('SET_RECRUITMENT_LIST',res.data.recruits)
-      })
-      .catch(err => {
-        console.log(err.response)
-      })
-    },
-    bringRecruitmentDetail({ commit, getters }, recruitNo){
-      axios({
-        url : api_url.membersrecruitment.membersrecruitment(recruitNo),
-        method : 'get',
-        headers : getters.authHeader
-      })
-      .then(res => {
-        console.log(res.data)
-        console.log(res.data.applyType)
-        commit('SET_RECRUIT_DETAIL',res.data)
-        commit('SET_APPLY_TYPE',res.data.applyType)
-      })
-      .catch(err => {
-        console.log(err.response)
-      })
-    },
-    updateRecruitmentDetail({ commit }, recruitInfo){
-      const recruitNo = recruitInfo[0]
-      const recruitmentInfo = recruitInfo[1]
-      axios({
-        url : api_url.membersrecruitment.membersrecruitment(recruitNo),
-        method : 'put',
-        data : recruitmentInfo
-
-      })
-      .then(res => {
-        console.log(res.data)
-        commit('SET_RECRUIT_DETAIL',res.data)
-        
-        router.push({ 
-          name: 'membersrecruitmentdetail',
-          params : {recruitNo:recruitNo}
+        .then(res => {
+          console.log(res.data);
+          alert("성공하셨습니다.");
+          router.push({ name: "membersrecruitment" });
         })
-      })
-      .catch(err => {
-        console.log(err.response)
-      })
+        .catch(err => {
+          console.log(err.response);
+        });
     },
-    deleteRecruitmentDetail({commit},recruitNo){
-      
+    bringRecruitmentList({ commit }) {
       axios({
-        url : api_url.membersrecruitment.membersrecruitment(recruitNo),
-        method : 'delete',
+        url: api_url.membersrecruitment.membersrecruitments(),
+        method: "get"
       })
-      .then(res => {
-        console.log(res.data)
-        router.push({ 
-          name: 'membersrecruitment',
+        .then(res => {
+          console.log(res.data);
+          commit("SET_RECRUITMENT_LIST", res.data.recruits);
+          console.log(res.data.applyCounts);
+          commit("SET_APPLY_COUNT", res.data.applyCounts);
         })
-      })
-      .catch(err => {
-        console.log(err)
-      })
+        .catch(err => {
+          console.log(err.response);
+        });
     },
-    bringRecruitingList({ commit }){
+    bringRecruitmentDetail({ commit, getters }, recruitNo) {
       axios({
-        url : api_url.membersrecruitment.membersrecruiting(),
-        method : 'get'
-      })
-      .then(res => {
-        console.log(res.data)
-        commit('SET_RECRUITMENT_LIST',res.data.recruits)
-      })
-      .catch(err => {
-        console.log(err.response)
-      })
-    },
-    bringRecruitSearchList({ commit },recruitSearchKeyword){
-      console.log(recruitSearchKeyword)
-      const encodeSearchKeyword = `?keyword=${encodeURIComponent(recruitSearchKeyword)}`
-
-      axios({
-        url : api_url.membersrecruitment.membersrecruitsearch()+encodeSearchKeyword,
-        method : 'get'
-      })
-      .then(res => {
-        console.log(res.data)
-        commit('SET_RECRUITMENT_LIST',res.data.recruits)
-      })
-      .catch(err => {
-        console.log(err.response)
-      })
-    },
-    bringRecruitTypeList({ commit },recruitType){
-      console.log(recruitType)
-
-      axios({
-        url : api_url.membersrecruitment.membersrecruittype() + `?type=${recruitType}`,
-        method : 'get'
-      })
-      .then(res => {
-        console.log(res.data)
-        commit('SET_RECRUITMENT_LIST',res.data.recruits)
-      })
-      .catch(err => {
-        console.log(err.response)
-      })
-    },
-    studyApply({commit,getters},recruitNo){
-      console.log(api_url.membersrecruitment.studyApply(recruitNo),)
-      axios({
-        url : api_url.membersrecruitment.studyApply(recruitNo),
-        method :'post',
+        url: api_url.membersrecruitment.membersrecruitment(recruitNo),
+        method: "get",
         headers: getters.authHeader
       })
-      .then(res=>{
-        console.log(res.data)
-        commit('SET_APPLY_TYPE','NORMAL')
-      })
-      .catch(err=>{
-        console.log(err.response)
-      })
+        .then(res => {
+          console.log(res.data);
+          console.log(res.data.applyType);
+          commit("SET_RECRUIT_DETAIL", res.data);
+          commit("SET_APPLY_TYPE", res.data.applyType);
+        })
+        .catch(err => {
+          console.log(err.response);
+        });
     },
-    studyApplyCancel({commit,getters},recruitNo){
+    updateRecruitmentDetail({ commit }, recruitInfo) {
+      const recruitNo = recruitInfo[0];
+      const recruitmentInfo = recruitInfo[1];
       axios({
-        url : api_url.membersrecruitment.studyApply(recruitNo),
-        method :'delete',
+        url: api_url.membersrecruitment.membersrecruitment(recruitNo),
+        method: "put",
+        data: recruitmentInfo
+      })
+        .then(res => {
+          console.log(res.data);
+          commit("SET_RECRUIT_DETAIL", res.data);
+
+          router.push({
+            name: "membersrecruitmentdetail",
+            params: { recruitNo: recruitNo }
+          });
+        })
+        .catch(err => {
+          console.log(err.response);
+        });
+    },
+    deleteRecruitmentDetail({ commit }, recruitNo) {
+      axios({
+        url: api_url.membersrecruitment.membersrecruitment(recruitNo),
+        method: "delete"
+      })
+        .then(res => {
+          console.log(res.data);
+          router.push({
+            name: "membersrecruitment"
+          });
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    bringRecruitingList({ commit }) {
+      axios({
+        url: api_url.membersrecruitment.membersrecruiting(),
+        method: "get"
+      })
+        .then(res => {
+          console.log(res.data);
+          commit("SET_RECRUITMENT_LIST", res.data.recruits);
+          commit("SET_APPLY_COUNT", res.data.applyCounts);
+        })
+        .catch(err => {
+          console.log(err.response);
+        });
+    },
+    bringRecruitSearchList({ commit }, recruitSearchKeyword) {
+      console.log(recruitSearchKeyword);
+      const encodeSearchKeyword = `?keyword=${encodeURIComponent(
+        recruitSearchKeyword
+      )}`;
+
+      axios({
+        url:
+          api_url.membersrecruitment.membersrecruitsearch() +
+          encodeSearchKeyword,
+        method: "get"
+      })
+        .then(res => {
+          console.log(res.data);
+          commit("SET_RECRUITMENT_LIST", res.data.recruits);
+          commit("SET_APPLY_COUNT", res.data.applyCounts);
+        })
+        .catch(err => {
+          console.log(err.response);
+        });
+    },
+    bringRecruitTypeList({ commit }, recruitType) {
+      console.log(recruitType);
+
+      axios({
+        url:
+          api_url.membersrecruitment.membersrecruittype() +
+          `?type=${recruitType}`,
+        method: "get"
+      })
+        .then(res => {
+          console.log(res.data);
+          commit("SET_RECRUITMENT_LIST", res.data.recruits);
+          commit("SET_APPLY_COUNT", res.data.applyCounts);
+        })
+        .catch(err => {
+          console.log(err.response);
+        });
+    },
+    studyApply({ commit, getters }, recruitNo) {
+      console.log(api_url.membersrecruitment.studyApply(recruitNo));
+      axios({
+        url: api_url.membersrecruitment.studyApply(recruitNo),
+        method: "post",
         headers: getters.authHeader
       })
-      .then(res=>{
-        console.log(res.data)
-        commit('SET_APPLY_TYPE',null)
-      })
-      .catch(err=>{
-        console.log(err.response)
-      })
+        .then(res => {
+          console.log(res.data);
+          commit("SET_APPLY_TYPE", "NORMAL");
+        })
+        .catch(err => {
+          console.log(err.response);
+        });
     },
+    studyApplyCancel({ commit, getters }, recruitNo) {
+      axios({
+        url: api_url.membersrecruitment.studyApply(recruitNo),
+        method: "delete",
+        headers: getters.authHeader
+      })
+        .then(res => {
+          console.log(res.data);
+          commit("SET_APPLY_TYPE", null);
+        })
+        .catch(err => {
+          console.log(err.response);
+        });
+    }
   }
-}
+};
