@@ -19,6 +19,8 @@ public interface RecruitRepository extends JpaRepository<Recruit, Long> {
 
     List<Recruit> findAllByRecruitStatusOrderByRecruitNoDesc(RecruitStatus recruitStatus);
 
+    List<Recruit> findAllByRecruitStatusAndStdTypeOrderByRecruitNoDesc(RecruitStatus recruitStatus, StdType stdType);
+
     List<Recruit> findAllByStdTypeOrderByRecruitNoDesc(StdType stdType);
 
     List<Recruit> findByRecruitTitleContainingIgnoreCaseOrComNameContainingIgnoreCase(String titleKeyword, String comNameKeyword);
