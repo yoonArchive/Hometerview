@@ -80,7 +80,7 @@ export default {
       recruitState: true,
       recruitingState: false,
       recruitSearchKeyword: "",
-      recruitType: "",
+      recruitType: "1",
       image: require("../../assets/images/samsung.jpg")
     };
   },
