@@ -19,7 +19,7 @@
           <select
             name="recruitSearch"
             v-model="recruitType"
-            @change="bringRecruitTypeList(recruitType)"
+            @change="getRecruitTypeList()"
           >
             <option value="1" selected>전체 스터디</option>
             <option value="2">기업 면접 스터디</option>
@@ -33,7 +33,7 @@
             name="recruiting"
             id="recruiting"
             v-model="recruiting"
-            @change="isRecruiting(recruitState)"
+            @change="isRecruiting()"
           />
           <label class="form-check-label" for="recruiting">모집 중</label>
         </div>
@@ -107,11 +107,19 @@ export default {
       if (this.recruitState === true) {
         this.recruitState = false;
         this.recruitingState = true;
-        this.bringRecruitingList();
+        this.bringRecruitingList(this.recruitType);
       } else {
         this.recruitState = true;
         this.recruitingState = false;
-        this.bringRecruitmentList();
+        if (this.recruitType != "1") this.getRecruitTypeList();
+        else this.bringRecruitmentList(this.recruitType);
+      }
+    },
+    getRecruitTypeList() {
+      if (this.recruitingState === true) {
+        this.bringRecruitingList(this.recruitType);
+      } else {
+        this.bringRecruitTypeList(this.recruitType);
       }
     }
   }

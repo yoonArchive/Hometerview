@@ -127,9 +127,11 @@ export default {
           console.log(err);
         });
     },
-    bringRecruitingList({ commit }) {
+    bringRecruitingList({ commit }, recruitType) {
       axios({
-        url: api_url.membersrecruitment.membersrecruiting(),
+        url:
+          api_url.membersrecruitment.membersrecruiting() +
+          `?type=${recruitType}`,
         method: "get"
       })
         .then(res => {
