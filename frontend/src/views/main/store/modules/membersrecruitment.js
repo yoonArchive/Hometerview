@@ -166,7 +166,6 @@ export default {
     },
     bringRecruitTypeList({ commit }, recruitType) {
       console.log(recruitType);
-
       axios({
         url:
           api_url.membersrecruitment.membersrecruittype() +
