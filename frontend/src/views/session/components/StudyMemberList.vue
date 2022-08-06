@@ -1,5 +1,8 @@
 <template>
+  <!-- 여기에 v-if 를 써서 자소서가 보이게 만들면 된다.-->
   
+
+
   <study-members
       v-for="(member,index) in studySpaceDetail.studyJoins"
       :key="member.joinNo"

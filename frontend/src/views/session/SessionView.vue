@@ -25,21 +25,25 @@
 
 		<!-- 사이드  -->
 		<div class="side-panel">
+			<button @click="changeContent('chatting')">메시지</button>
+			<button @click="changeContent('participant')">참가자</button>
 			<!-- 메시지 -->
 			<div>
 				<message-list
+					v-if="chatting"
 					:msgs="msgs"
 					:myId="publisher.stream.connection.connectionId"
 					:fromId="fromId"
 				></message-list>
 				<message-form
+					v-if="chatting"
 					@sendMsg="sendMsg"
 					:user-name="myUserName"
 				></message-form>
 			</div>
 			<!-- 멤버 리스트 -->
 			<div>
-				<study-member-list></study-member-list>
+				<study-member-list v-if="participant"></study-member-list>
 			</div>
 		</div>
 	</div>
@@ -94,7 +98,12 @@ export default {
 
 			// massege
 			msgs: [],
-			fromId :''
+			fromId :'',
+
+			//show
+			chatting: true,
+			participant: false,
+
 
 		}
 	},
@@ -104,6 +113,16 @@ export default {
 	},
 
 	methods: {
+		changeContent(content){
+			if(content==="chatting"){
+				this.chatting = true
+				this.participant = false
+			}
+			else if(content==="participant"){
+				this.chatting = false
+				this.participant = true
+			}
+		},
 		sendMsg(msg) {
       // Sender of the message (after 'session.connect')
       this.session
@@ -301,8 +320,6 @@ export default {
 		},
 
 	},
-	created(){
-		},
 	async beforeMount(){
 		this.myUserName = await this.currentUser.userName
 		this.mySessionId = await this.changeSessionId(this.sessionNo)
