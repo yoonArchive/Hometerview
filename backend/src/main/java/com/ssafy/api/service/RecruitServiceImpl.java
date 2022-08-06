@@ -65,7 +65,7 @@ public class RecruitServiceImpl implements RecruitService {
         } else if (type == 2) {
             return recruitRepository.findAllByRecruitStatusAndStdTypeOrderByRecruitNoDesc(RecruitStatus.RECRUITING, StdType.COM);
         } else {
-            return recruitRepository.findAllByRecruitStatusAndStdTypeOrderByRecruitNoDesc(RecruitStatus.RECRUITING, StdType.COM);
+            return recruitRepository.findAllByRecruitStatusAndStdTypeOrderByRecruitNoDesc(RecruitStatus.RECRUITING, StdType.FREE);
         }
     }
 
