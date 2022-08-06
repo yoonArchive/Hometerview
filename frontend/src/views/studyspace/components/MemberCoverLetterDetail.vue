@@ -1,49 +1,65 @@
 <template>
   <div class="member-cover-letter-detail-wrapper">
-    <div v-if="resumeQuestionList.length !=0 ">
+    <div v-if="resumeQuestionList.length != 0">
       <div class="d-flex flex-row-reverse">
         <input class="cover-letter-button" type="button" v-for="(item , index) in resumeQuestionList.length" :key="index" :value="item" @click="changeSelectedNum(item, $event)"/>
       </div>
       <div class="member-cover-letter-contents">
-
-        <div class="cover-letter-question">{{resumeQuestionList[selectedNum].question}}</div>
+        <div class="cover-letter-question">{{resumeQuestionList[selectedQuestionNum].question}}</div>
         <hr style="border-top: 3px dashed #663399;">
-        <div class="cover-letter-answer">{{resumeQuestionList[selectedNum].answer}}</div>
+        <div class="cover-letter-answer">{{resumeQuestionList[selectedQuestionNum].answer}}</div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-
-import { mapGetters } from 'vuex'
+import { mapGetters ,mapMutations} from 'vuex'
 export default {
-  data(){
-    return{
-      selectedNum: 0,
-    }
-  },
   props:{
     studentindex : Number,
   },
   computed:{
-    ...mapGetters(['resumeQuestionList']),
+    ...mapGetters(['resumeQuestionList','selectedQuestionNum']),
 
   },
 
   methods:{
+    ...mapMutations(['SET_SELECTED_QUESTION_NUM']),
     changeSelectedNum(item, event){
-      this.selectedNum = item - 1;
-      console.log(this.selectedNum);
+
       console.log(event.target.classList);
       var buttons = document.getElementsByClassName('cover-letter-button');
       for(var i = 0; i < buttons.length; i++){
         buttons[i].classList.remove('clicked');
       }
       event.target.classList.add('clicked');
+      this.SET_SELECTED_QUESTION_NUM(item-1);
+    },
+    settingvalue(){
+      var buttons = document.getElementsByClassName('cover-letter-button');
+      if(buttons.length != 0){
+        buttons[0].classList.add('clicked');
+      }
     }
   },
-
+  watch:{
+    selectedQuestionNum(){
+      console.log("선택된 질문 : " + this.selectedQuestionNum)
+      var buttons = document.getElementsByClassName('cover-letter-button');
+      buttons[this.selectedQuestionNum].classList.add('clicked');
+    },
+    resumeQuestionList(){
+      var buttons = document.getElementsByClassName('cover-letter-button');
+      for(var i = 0; i < buttons.length; i++){
+        buttons[i].classList.remove('clicked');
+      }
+      buttons[this.selectedQuestionNum].classList.add('clicked');
+    }
+  },
+  mounted(){
+    this.settingvalue();
+  }
 
 
 }

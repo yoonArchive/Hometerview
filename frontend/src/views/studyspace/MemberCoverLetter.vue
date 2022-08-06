@@ -1,6 +1,5 @@
 <template>
   <div v-if="!isloading" style="background-color: #F3F4FF;">
-  {{studySpaceDetail}}
     <div v-if="isMyInfo">
       <div v-if="studySpaceDetail.detailCounts[studentindex] == 0">
         <div class="no-cover-letter-me">
@@ -96,22 +95,27 @@ export default {
       await this.getStudyResume(realindex);
     }
     await this.fetchCurrentUser();
-    await this.bringStudySpaceDetail();
     this.isloading = false;
     console.log(this.currentUser)
     console.log(this.currentUser.userId + " : " + this.studySpaceDetail.studyJoins[this.studentindex].user.userId)
   },
   methods:{
     ...mapActions(['getStudyResume','getResumeInfo','saveStudyCoverLetter','fetchCurrentUser','bringStudySpaceDetail']),
-    ...mapMutations(['SET_MAIN_CONTAINER','SET_FULL_CONTAINER']),
-    saveStudyCoverLetterV(selresume){
+    ...mapMutations(['SET_MAIN_CONTAINER','SET_FULL_CONTAINER','SET_SELECTED_QUESTION_NUM']),
+    async saveStudyCoverLetterV(selresume){
+      this.SET_SELECTED_QUESTION_NUM(0);
+      const realindex = parseInt(this.studentindex);
       if(selresume!=0){
         const data = {
-        resumeNo : selresume,
-        studentindex : this.studentindex,
+          resumeNo : selresume,
+          studentindex : this.studentindex,
         }
-        this.saveStudyCoverLetter(data);
-        this.bringStudySpaceDetail()
+        await this.saveStudyCoverLetter(data);
+        await this.bringStudySpaceDetail();
+        if(this.studySpaceDetail.detailCounts[realindex] !== 0){
+          await this.getStudyResume(realindex);
+        }
+
       }
 
     }

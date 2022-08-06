@@ -5,7 +5,7 @@
     </div>
     <div class="col-7">
       <div class="study-information-wrapper information-box">
-        <div class="study-title-wrapper"><span v-if="studySpaceDetail.comName!=null">[{{ studySpaceDetail.comName }}</span>{{ studySpaceDetail.stdName }}</div>
+        <div class="study-title-wrapper"><span v-if="studySpaceDetail.comName!=null">[{{ studySpaceDetail.comName }}]</span>{{ studySpaceDetail.stdName }}</div>
         <div class="study-space-content-wrapper">
           <div>타입 : <span v-if="studySpaceDetail.stdType =='COM'">기업면접</span><span v-else>자율면접</span></div>
           <div>기간 : {{ studySpaceDetail.startDate }} ~ {{ studySpaceDetail.endDate }}</div>
@@ -13,7 +13,12 @@
           <div>모집 인원 : {{ studySpaceDetail.stdLimit }}</div>
           <div class="d-flex flex-row-reverse">
             <button @click="moveToSession()" class="study-space-btn" style="background-color:#653FD3;"> 스터디 입장하기 </button>
-            <button @click="leaveStudy(stdNo)" class="study-space-btn bg-danger" > 스터디 탈퇴 </button>
+            <div v-if="studySpaceDetail.joinType=='LEADER'">
+              <button @click="changeStudyInfomation()" class="study-space-btn" style="background-color:#A6A6A6">수정하기</button>
+            </div>
+            <div v-else>
+              <button @click="leaveStudy(stdNo)" class="study-space-btn bg-danger" > 스터디 탈퇴 </button>
+            </div>
           </div>
         </div>
       </div>
@@ -35,8 +40,10 @@
         class="form-control autoTextarea"
         placeholder="Leave a comment here"
         id="floatingTextarea"
+        v-model="studySpaceDetail.stdNotice"
         @keyup="autoResizeTextarea"
-        @keydown="autoResizeTextarea">
+        @keydown="autoResizeTextarea"
+        @focusout="updateStudyNotice">
       </textarea>
     </div>
   </div>
@@ -73,7 +80,7 @@ export default {
     ...mapGetters(['studySpaceDetail']),
   },
   methods:{
-    ...mapActions(['bringStudySpaceDetail','leaveStudy']),
+    ...mapActions(['bringStudySpaceDetail','leaveStudy','updateStudyNoticeAction']),
     ...mapMutations(['SET_STD_NO']),
       moveToSession(){
         router.push({ name: 'session' })
@@ -86,7 +93,11 @@ export default {
         let height = textarea.scrollHeight; // 높이
         textarea.style.height = `${height + 8}px`;
       }
+
     },
+    updateStudyNotice(){
+      this.updateStudyNoticeAction();
+    }
   },
   created(){
     this.SET_STD_NO(this.stdNo);

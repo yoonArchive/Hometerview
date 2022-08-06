@@ -33,7 +33,7 @@ export default {
   methods: {
     ...mapActions(['bringStudySpace']),
   },
- created(){
+ mounted(){
     this.bringStudySpace()
 
   },
