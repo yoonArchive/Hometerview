@@ -9,7 +9,6 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
 import StudySpaceInfo from './components/StudySpaceInfo.vue'
 
 export default {
@@ -19,16 +18,6 @@ export default {
       stdNo:this.$route.params.stdNo,
     }
   },
-  methods:{
-    ...mapActions(['bringStudySpaceDetail']),
-  },
-  // mounted(){
-  //   this.bringStudySpaceDetail(this.stdNo)
-  // }
-
-  // mounted(){
-  //   this.bringStudySpaceDetial(this.stdNo)
-  // },
   components:{
     StudySpaceInfo,
 

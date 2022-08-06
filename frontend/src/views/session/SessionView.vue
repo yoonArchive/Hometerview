@@ -1,12 +1,12 @@
 <template>
-	<div id="main-container" class="container">
+	<div id="session-header">
+		<h1 id="session-title">{{ mySessionId }}</h1>
+		<input class="btn btn-large btn-danger" type="button" id="buttonLeaveSession" @click="leaveSession" value="Leave session">
+	</div>
+	<div class="container d-flex justify-content-between">
 		{{ currentUser.userName }}
-		<!-- 세션을 들어 갔을 경우 -->
+		<!-- session -->
 		<div id="session">
-			<div id="session-header">
-				<h1 id="session-title">{{ mySessionId }}</h1>
-				<input class="btn btn-large btn-danger" type="button" id="buttonLeaveSession" @click="leaveSession" value="Leave session">
-			</div>
 			<!-- 자기 화면(큰) => mainStreamManager-->
 			<div id="main-video" class="col-md-6">
 				<user-video :stream-manager="mainStreamManager"/>
@@ -21,8 +21,13 @@
         <!-- vue3에서 native가 사라지고 그냥 click을 누르면 된다. -->
 				<user-video v-for="sub in subscribers" :key="sub.stream.connection.connectionId" :stream-manager="sub" @click="updateMainVideoStreamManager(sub)"/>
 			</div>
+		</div>
+
+		<!-- 사이드  -->
+		<div class="side-panel">
+			<!-- 메시지 -->
 			<div>
-				<!-- <message-list
+				<message-list
 					:msgs="msgs"
 					:myId="publisher.stream.connection.connectionId"
 					:fromId="fromId"
@@ -30,34 +35,24 @@
 				<message-form
 					@sendMsg="sendMsg"
 					:user-name="myUserName"
-				></message-form> -->
-
-
-				<MessageList
-					:msgs="msgs"
-					:myId="publisher.stream.connection.connectionId"
-					:fromId="fromId"
-					/>
-				<MessageForm
-					style="width:100%"
-					@sendMsg="sendMsg"
-					:user-name="myUserName"
-					/>
+				></message-form>
 			</div>
-
-
-
+			<!-- 멤버 리스트 -->
+			<div>
+				<study-member-list></study-member-list>
+			</div>
 		</div>
 	</div>
 </template>
 
 <script>
-import axios from 'axios';
-import { OpenVidu } from 'openvidu-browser'; // 필수 객체
-import UserVideo from './components/UserVideo';
+import axios from 'axios'
+import { OpenVidu } from 'openvidu-browser' // 필수 객체
+import UserVideo from './components/UserVideo'
 import router from '@/common/lib/vue-router'
-import MessageForm from "./components/MessageForm";
-import MessageList from "./components/MessageList";
+import MessageForm from "./components/MessageForm.vue"
+import MessageList from "./components/MessageList.vue"
+import StudyMemberList from "./components/StudyMemberList.vue"
 import {mapActions, mapGetters} from 'vuex'
 
 axios.defaults.headers.post['Content-Type'] = 'application/json';
@@ -78,6 +73,8 @@ export default {
 		UserVideo,
 		MessageForm,
     MessageList,
+		StudyMemberList,
+
 	},
 
 	data () {
@@ -168,6 +165,8 @@ export default {
 				console.warn(exception);
 			});
 
+
+			// 이부분 어떻게 되는 건지?
       this.session.on("signal:my-chat", event => {
         this.fromId = event.from.connectionId;
         const tmp = this.msgs.slice();
@@ -311,3 +310,10 @@ export default {
 	}
 }
 </script>
+<style scoped>
+ .side-panel{
+
+	width: 400px;
+ }
+	
+</style>

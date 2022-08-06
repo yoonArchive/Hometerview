@@ -63,10 +63,10 @@ export default {
 
 <style scoped>
 .container {
-  height: 500px;
   background: #FFFF;
   overflow: scroll;
   border-radius: 10px 10px 0px 0px;
+  height: 700px;
 }
 #rctmsg {
   height: 0px;
