@@ -10,7 +10,7 @@
     <div v-if="studySpaceDetail.detailCounts[studentindex]==0">
       아직 공유된 자소서가 없습니다!!
     </div>
-    <member-cover-letter-detail :studentindex=studentindex></member-cover-letter-detail>
+    <member-cover-letter-detail :studentindex="studentindex"></member-cover-letter-detail>
     {{isMyInfo}}
 
   </div>

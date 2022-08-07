@@ -1,7 +1,4 @@
 <template>
-  <!-- 여기에 v-if 를 써서 자소서가 보이게 만들면 된다.-->
-  
-
 
   <study-members
       v-for="(member,index) in studySpaceDetail.studyJoins"
@@ -20,7 +17,7 @@ import StudyMembers from './StudyMembers.vue'
 export default {
   name:"StudyMemberList",
   components:{
-    StudyMembers
+    StudyMembers,
   },
   data(){
     return{
