@@ -7,7 +7,10 @@ import resume from '@/views/main/store/modules/resume'
 import review from '@/views/main/store/modules/review'
 import commonquestion from '@/views/main/store/modules/commonquestion'
 import studyspace from '@/views/main/store/modules/studyspace'
+import cssstore from '@/views/main/store/modules/css'
 import createPersistedState from 'vuex-persistedstate'
+
+
 
 export default createStore({
   modules: {
@@ -18,7 +21,8 @@ export default createStore({
     review,
     membersrecruitment,
     studyspace,
-    commonquestion
+    commonquestion,
+    cssstore
   },
   plugins:[
     createPersistedState()

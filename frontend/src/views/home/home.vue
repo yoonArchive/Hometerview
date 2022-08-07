@@ -1,19 +1,19 @@
 <template>
   <header-vue></header-vue>
-  <div class="full-container">
+  <div :class="fullcontainer">
     <!-- <div class="section">
 	</div>
 	  <div class="section">
 	</div> -->
-  <div class="main-container">
-    <router-view></router-view>
+    <div :class="maincontainer">
+      <router-view></router-view>
 
-  </div>
-  <div class="progress-wrap">
-		<svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
-      <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"/>
-		</svg>
-	</div>
+    </div>
+    <div class="progress-wrap">
+      <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+        <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"/>
+      </svg>
+    </div>
   </div>
   <footer-vue></footer-vue>
 
@@ -94,6 +94,7 @@ import { reactive } from "vue";
 import { useRouter } from "vue-router";
 import headerVue from "../components/header.vue";
 import footerVue from "../components/footer.vue"
+import { mapGetters, mapMutations } from "vuex";
 export default {
   name: "Home",
 
@@ -102,7 +103,12 @@ export default {
     Conference,
     footerVue
   },
-
+  computed:{
+    ...mapGetters(['fullcontainer','maincontainer'])
+  },
+  methods:{
+    ...mapMutations(['SET_MAIN_CONTAINER','SET_FULL_CONTAINER'])
+  },
   setup() {
     const router = useRouter();
 
@@ -262,22 +268,35 @@ body.light .progress-wrap::after {
 body.light .progress-wrap svg.progress-circle path {
 	stroke: var(--black-blue);
 }
-
+.full-container-coverletter{
+  min-height: 100%;
+  background-color: #F3F4FF;
+}
+.main-container-coverletter{
+  height: 100%;
+  margin-right: 15%;
+  margin-left: 15%;
+  padding: 5%;
+  padding-top: 10%;
+  border: 1px;
+  background-color: #F3F4FF;
+}
 
 .infinite-list {
   padding-left: 0;
   max-height: calc(100% - 35px);
 }
 .full-container{
-  /* background-color: blue; */
+  min-height: 100%;
+  background-color: white;
 }
 /* 컨테이너 */
 .main-container {
-  height: 100%;
+  min-height: 100%;
   margin-right: 15%;
   margin-left: 15%;
   padding: 5%;
-  padding-top: 7%;
+  padding-top: 10%;
   border: 1px;
   background-color: white;
 }

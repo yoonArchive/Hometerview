@@ -10,6 +10,8 @@ export default {
     studySpaceDetail : {},
     token: localStorage.getItem('token') || '' ,
     resumeQuestionList : [],
+    selectedQuestionNum: 0,
+    selStdNo: Number,
   },
 
   getters: {
@@ -17,7 +19,8 @@ export default {
     studySpaceList : state => state.studySpaceList,
     studySpaceDetail : state => state.studySpaceDetail,
     resumeQuestionList : state => state.resumeQuestionList,
-    
+    selStdNo : state => state.selStdNo,
+    selectedQuestionNum: state=> state.selectedQuestionNum,
   },
 
   mutations: {
@@ -26,15 +29,32 @@ export default {
     SET_RECRUIT_DETAIL : (state,studySpaceDetail) => state.studySpaceDetail = studySpaceDetail,
     RESET_RESUME_QUESTION_LIST: (state) =>state.resumeQuestionList = [],
     ADD_RESUME_QUESTION_LIST : (state, data) => state.resumeQuestionList.push(data),
+    SET_STD_NO: (state, data) => state.selStdNo = data,
+    SET_SELECTED_QUESTION_NUM:(state,data) => state.selectedQuestionNum = data,
   },
 
   actions: {
-    saveStudyCoverLetter({getters}, data){
+    async updateStudyNoticeAction({getters}){
+      console.log(getters.studySpaceDetail);
+      const data = {
+        newStdNotice : getters.studySpaceDetail.stdNotice
+      }
+      axios.put(api_url.study.studyNotice(getters.selStdNo),
+        data,
+      ).then(()=>{
+        console.log("공지사항 변경에 성공했습니다.");
+      }).catch(()=>{
+        console.log("공지사항 변경에 실패했습니다.");
+      })
+    },
+
+    async saveStudyCoverLetter({getters}, data){
       console.log(getters.studySpaceList);
       const studentindex = data.studentindex;
       const resumeNo = data.resumeNo;
       const stdNo = getters.studySpaceList[studentindex].stdNo;
-      axios.put(api_url.study.studyCoverLetter(stdNo,resumeNo),
+      console.log(stdNo + " : " + resumeNo);
+      await axios.put(api_url.study.studyCoverLetter(stdNo,resumeNo),
       {},{
         headers : getters.authHeader,
       }).then(()=>{
@@ -44,7 +64,7 @@ export default {
       })
     },
 
-    async getStudyResume({getters, commit},studentindex){
+    async getStudyResume({getters, commit}, studentindex){
       commit('RESET_RESUME_QUESTION_LIST');
       console.log(getters.studySpaceDetail);
 
@@ -58,6 +78,7 @@ export default {
         }
         await axios.get(api_url.resumes.getResumeDetail(),{
             params: data,
+            headers : getters.authHeader,
         }).then((data)=>{
           console.log(data);
           const res = {
@@ -73,6 +94,7 @@ export default {
           console.log(err);
         })
       }
+      console.log(getters.resumeQuestionList)
     },
     createStudySpace({commit, state},recruitNo){
 
@@ -104,10 +126,10 @@ export default {
         console.log(err.response)
       })
     },
-    bringStudySpaceDetail({commit, getters},stdNo){
-
-      axios({
-        url:api_url.study.studyspacedetail(stdNo),
+    async bringStudySpaceDetail({commit, getters}){
+      console.log(getters.selStdNo)
+      await axios({
+        url:api_url.study.studyspacedetail(getters.selStdNo),
         method : 'get',
         headers: getters.authHeader,
       })
