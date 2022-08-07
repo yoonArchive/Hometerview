@@ -3,7 +3,9 @@ package com.ssafy.api.controller;
 import com.ssafy.api.request.PersonalQuestionReq;
 import com.ssafy.api.request.ResumeWritePostReq;
 import com.ssafy.api.request.UpdateResumePutReq;
-import com.ssafy.api.response.*;
+import com.ssafy.api.response.PersonalQuestionListRes;
+import com.ssafy.api.response.ResumeListRes;
+import com.ssafy.api.response.ResumeRes;
 import com.ssafy.api.service.PersonalQuestionService;
 import com.ssafy.api.service.ResumeService;
 import com.ssafy.common.auth.UserDetails;
@@ -22,6 +24,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Api(value = "자기소개서 API", tags = {"Resume"})
+@CrossOrigin("*")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/resume")

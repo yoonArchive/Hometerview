@@ -1,6 +1,5 @@
 package com.ssafy.api.controller;
 
-import com.ssafy.api.response.UserLoginPostRes;
 import com.ssafy.api.service.ApplyService;
 import com.ssafy.common.auth.UserDetails;
 import com.ssafy.common.model.response.BaseResponseBody;
@@ -14,6 +13,7 @@ import springfox.documentation.annotations.ApiIgnore;
 
 
 @Api(value = "스터디 모집 API", tags = {"Apply"})
+@CrossOrigin("*")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/apply")

@@ -1,32 +1,35 @@
 <template>
   <div class="container">
-    <div style="height:70px;">
+    <div class="row" style="margin-bottom:20px;">
+      <div class="title col-md-9">
+        <h5 id="title-name">스터디 모집글 목록</h5>
+      </div>
       <button
         type="button"
         class="button small"
         @click="moveToCreate"
-        style="float:right;"
+        style="margin-left:70px"
       >
         스터디 만들기
       </button>
     </div>
+    <hr />
     <div>
       <div class="row">
-        <div class="title col-md-6">
-          <h5 id="title-name">스터디 모집글 목록</h5>
-        </div>
+        <div class="col-md-6"></div>
         <div class="col-md-4">
           <select
             name="recruitSearch"
+            class="selectBar"
             v-model="recruitType"
             @change="getRecruitTypeList()"
           >
-            <option value="1" selected>전체 스터디</option>
-            <option value="2">기업 면접 스터디</option>
-            <option value="3">자율 면접 스터디</option>
+            <option value="1" class="option" selected>전체 스터디</option>
+            <option value="2" class="option">기업 면접 스터디</option>
+            <option value="3" class="option">자율 면접 스터디</option>
           </select>
         </div>
-        <div class="form-check col-md-2 float-right">
+        <div class="form-check col-md-2">
           <input
             class="form-check-input"
             type="checkbox"
@@ -57,7 +60,7 @@
           type="text"
           id="recruitSearch"
           v-model="recruitSearchKeyword"
-          placeholder="모집글 제목 검색"
+          placeholder="스터디 모집글 제목 검색"
           @keyup.enter="bringRecruitSearchList(recruitSearchKeyword)"
         />
       </div>
@@ -80,7 +83,7 @@ export default {
       recruitState: true,
       recruitingState: false,
       recruitSearchKeyword: "",
-      recruitType: "",
+      recruitType: "1",
       image: require("../../assets/images/samsung.jpg")
     };
   },
@@ -122,6 +125,9 @@ export default {
         this.bringRecruitTypeList(this.recruitType);
       }
     }
+  },
+  mounted() {
+    window.scrollTo(0, 0);
   }
 };
 </script>
@@ -152,6 +158,11 @@ export default {
   border-radius: 40%;
   font-family: "티머니 둥근바람";
 } */
+.selectBar {
+  border-radius: 10px;
+  font-size: 17px;
+  float: right;
+}
 .btn::before {
   content: "전체 스터디";
   display: flex;
@@ -161,9 +172,13 @@ export default {
   background: white;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.062);
-  border: 2px solid #ff5f6d;
+  border: 2px solid rgba(184, 184, 184, 0.25);
   padding-left: 1em;
-  background: linear-gradient(to right, white 80%, #ff5f6d 20%);
+  background: linear-gradient(
+    to right,
+    white 80%,
+    rgba(184, 184, 184, 0.25) 20%
+  );
 }
 .btn::after {
   content: "f062";
@@ -209,7 +224,7 @@ input:checked ~ .list {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.062);
   transition: background 0.4s;
 }
-.list div:hover {
+.option:hover {
   background: #ff5f6d;
   color: white;
 }

@@ -1,17 +1,14 @@
 package com.ssafy.api.controller;
 
-import com.ssafy.api.request.RecruitInfoReq;
 import com.ssafy.api.request.RecruitReq;
 import com.ssafy.api.response.RecruitListRes;
 import com.ssafy.api.response.RecruitRes;
-import com.ssafy.api.response.UserRes;
 import com.ssafy.api.service.ApplyService;
 import com.ssafy.api.service.RecruitService;
 import com.ssafy.common.auth.UserDetails;
 import com.ssafy.common.model.response.BaseResponseBody;
 import com.ssafy.db.entity.ApplyType;
 import com.ssafy.db.entity.Recruit;
-import com.ssafy.db.entity.User;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +20,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Api(value = "모집글 API", tags = {"Recruits"})
+@CrossOrigin("*")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/recruits")
