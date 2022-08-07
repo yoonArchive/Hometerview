@@ -59,6 +59,7 @@
         <input
           type="text"
           id="recruitSearch"
+          class="recruitSearch"
           v-model="recruitSearchKeyword"
           placeholder="스터디 모집글 제목 검색"
           @keyup.enter="bringRecruitSearchList(recruitSearchKeyword)"
@@ -290,5 +291,8 @@ textarea {
   text-decoration: none;
   width: 100%;
   height: 2em;
+}
+.recruitSearch {
+  font-size: 19px;
 }
 </style>

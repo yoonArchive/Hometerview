@@ -2106,9 +2106,8 @@ button.alt:active,
 #footer {
   position: relative;
   overflow: hidden;
-  border-top: solid 2px #e5e5e5;
   background: #ffffff;
-  padding: 6em 0 8em 0;
+  padding: 2.6em 0 2em 0;
 }
 
 #footer form input[type="text"],
