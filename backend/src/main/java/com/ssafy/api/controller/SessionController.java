@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.*;
 
 import springfox.documentation.annotations.ApiIgnore;
 
-@Slf4j
 @Api(value = "화상회의 API", tags = {"Session"})
+@CrossOrigin("*")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/session")
@@ -33,12 +33,8 @@ public class SessionController {
     })
     public ResponseEntity<?> enterConference(@ApiIgnore Authentication authentication,
                                              @RequestBody @ApiParam(value = "화상회의 정보", required = true) ConferencePostReq conferencePostReq) throws Exception {
-        log.info(conferencePostReq.getStdName());
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         Long userNo = userDetails.getUserNo();
-        log.info("stdNo : {}", conferencePostReq.getStdNo());
-        log.info("stdName : {}", conferencePostReq.getStdName());
-        log.info("userNo : {}", userNo);
         int result = sessionService.enterSession(conferencePostReq, userNo);
         if (result == 1) return ResponseEntity.status(200).body(BaseResponseBody.of(200, "화상회의 방에 입장하셨습니다."));
         else return ResponseEntity.status(401).body(BaseResponseBody.of(401, "화상회의 방 입장 중 문제가 발생하였습니다."));

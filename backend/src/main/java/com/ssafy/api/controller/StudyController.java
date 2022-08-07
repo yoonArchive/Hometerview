@@ -1,17 +1,17 @@
 package com.ssafy.api.controller;
 
 import com.ssafy.api.request.*;
-import com.ssafy.api.response.*;
+import com.ssafy.api.response.CommonQuestionListRes;
+import com.ssafy.api.response.StudyListRes;
+import com.ssafy.api.response.StudyRes;
 import com.ssafy.api.service.CommonQuestionService;
 import com.ssafy.api.service.ResumeService;
 import com.ssafy.api.service.StudyService;
 import com.ssafy.common.auth.UserDetails;
 import com.ssafy.common.model.response.BaseResponseBody;
 import com.ssafy.db.entity.*;
-import com.ssafy.db.repository.CommonQuestionRepository;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +21,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Api(value = "스터디 API", tags = {"Study"})
+@CrossOrigin("*")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/study")
@@ -117,7 +118,8 @@ public class StudyController {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         Long userNo = userDetails.getUserNo();
         ApplyType joinType = studyService.getJoinType(userNo, stdNo);
-        if(joinType!=ApplyType.LEADER)  return ResponseEntity.status(402).body(BaseResponseBody.of(402, "스터디 삭제 권한이 없습니다."));
+        if (joinType != ApplyType.LEADER)
+            return ResponseEntity.status(402).body(BaseResponseBody.of(402, "스터디 삭제 권한이 없습니다."));
         int result = studyService.deleteStudy(stdNo);
         if (result == 1) return ResponseEntity.status(200).body(BaseResponseBody.of(200, "스터디 삭제가 완료되었습니다."));
         else return ResponseEntity.status(401).body(BaseResponseBody.of(401, "스터디 삭제에 실패하였습니다."));
