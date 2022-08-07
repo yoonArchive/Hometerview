@@ -10,6 +10,9 @@ export default {
     studySpaceDetail : {},
     token: localStorage.getItem('token') || '' ,
     resumeQuestionList : [],
+    studentIndex : null,
+    coverLetter : true,
+    memberlist : false,
   },
 
   getters: {
@@ -17,6 +20,9 @@ export default {
     studySpaceList : state => state.studySpaceList,
     studySpaceDetail : state => state.studySpaceDetail,
     resumeQuestionList : state => state.resumeQuestionList,
+    studentIndex : state => state.studentIndex,
+    coverLetter : state => state.coverLetter,
+    memberlist : state => state.memberlist,
     
   },
 
@@ -26,9 +32,28 @@ export default {
     SET_RECRUIT_DETAIL : (state,studySpaceDetail) => state.studySpaceDetail = studySpaceDetail,
     RESET_RESUME_QUESTION_LIST: (state) =>state.resumeQuestionList = [],
     ADD_RESUME_QUESTION_LIST : (state, data) => state.resumeQuestionList.push(data),
+    SET_STUDENT_INDEX : (state,studentIndex) => state.studentIndex = studentIndex,
+    SET_LETTER_STATE : (state,coverLetter) => state.coverLetter = coverLetter,
+    SET_MEMBER_LSIT_STATE : (state,memberlist) => state.memberlist = memberlist,
   },
 
   actions: {
+
+    async changeToCoverLetter({commit,dispatch},changeInfo){
+      const content =changeInfo[0]
+      const studentindex = changeInfo[1]
+
+      if(content==="coverletter"){
+        await dispatch('getStudyResume',studentindex)
+        commit('SET_LETTER_STATE',true)
+        commit('SET_MEMBER_LSIT_STATE',false)
+      }
+      else if(content==="memberlist"){
+        commit('SET_LETTER_STATE',false)
+        commit('SET_MEMBER_LSIT_STATE',true)
+      }
+    },
+
     saveStudyCoverLetter({getters}, data){
       console.log(getters.studySpaceList);
       const studentindex = data.studentindex;
@@ -46,8 +71,9 @@ export default {
 
     async getStudyResume({getters, commit},studentindex){
       commit('RESET_RESUME_QUESTION_LIST');
-      console.log(getters.studySpaceDetail);
+      commit('SET_STUDENT_INDEX', studentindex)
 
+      console.log(getters.studySpaceDetail);
       const detailCount = getters.studySpaceDetail.detailCounts[studentindex];
       const resumeNo = getters.studySpaceDetail.studyJoins[studentindex].resumeNo;
       console.log(detailCount + " : " + resumeNo);

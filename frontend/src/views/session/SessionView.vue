@@ -28,22 +28,20 @@
 			<button @click="changeContent('chatting')">메시지</button>
 			<button @click="changeContent('participant')">참가자</button>
 			<!-- 메시지 -->
-			<div>
+			<div v-if="chatting">
 				<message-list
-					v-if="chatting"
 					:msgs="msgs"
 					:myId="publisher.stream.connection.connectionId"
 					:fromId="fromId"
 				></message-list>
 				<message-form
-					v-if="chatting"
 					@sendMsg="sendMsg"
 					:user-name="myUserName"
 				></message-form>
 			</div>
 			<!-- 멤버 리스트 -->
-			<div>
-				<study-member-list v-if="participant"></study-member-list>
+			<div v-if="participant">
+				<study-member-list></study-member-list>
 			</div>
 		</div>
 	</div>

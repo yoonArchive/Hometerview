@@ -1,11 +1,23 @@
 <template>
 
-  <study-members
-      v-for="(member,index) in studySpaceDetail.studyJoins"
-      :key="member.joinNo"
-      :member="member"
-      :studentindex="index"
-  ></study-members>
+  <!-- 자소서 보기 -->
+  <div v-if="coverletter">
+    <button @click="changeToCoverLetter(['memberlist',null])">닫기</button>
+    <member-cover-letter :studentindex="studentIndex"></member-cover-letter>
+  </div>
+
+  <!-- 리스트 보기 -->
+  <div v-if="memberlist">
+    <study-members
+        v-for="(member,index) in studySpaceDetail.studyJoins"
+        :key="member.joinNo"
+        :member="member"
+        :studentindex="index"
+    >{{ studySpaceDetail.studyJoins }}</study-members>
+    {{ studySpaceDetail.studyJoins }}
+  </div>
+
+
 
 
 </template>
@@ -13,11 +25,13 @@
 <script>
 import {mapActions, mapGetters} from 'vuex'
 import StudyMembers from './StudyMembers.vue'
+import MemberCoverLetter from './MemberCoverLetter.vue'
 
 export default {
   name:"StudyMemberList",
   components:{
     StudyMembers,
+    MemberCoverLetter
   },
   data(){
     return{
@@ -25,10 +39,10 @@ export default {
     }
   },
   computed:{
-    ...mapGetters(['studySpaceDetail']),
+    ...mapGetters(['studySpaceDetail','studentIndex','coverLetter','memberlist']),
   },
   methods:{
-  ...mapActions(['bringStudySpaceDetail']),
+  ...mapActions(['bringStudySpaceDetail','changeToCoverLetter']),
   },
 
   created(){
