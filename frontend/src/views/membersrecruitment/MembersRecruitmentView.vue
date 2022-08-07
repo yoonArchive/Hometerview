@@ -125,6 +125,9 @@ export default {
         this.bringRecruitTypeList(this.recruitType);
       }
     }
+  },
+  mounted() {
+    window.scrollTo(0, 0);
   }
 };
 </script>

@@ -4,7 +4,7 @@
       <!-- <img src="{{ recruitment.stdImg }}" class="card-img-top" alt="..." /> -->
       <img class="card-img-top" :src="image" alt="beach" />
       <div class="card-body">
-        <div style="height:3.3rem;">
+        <div style="height:3.2em;">
           <h6 class="card-text">
             {{ recruitment.recruitTitle }}
           </h6>
@@ -25,10 +25,12 @@
             class="completed"
             v-if="recruitment.recruitStatus.status == `모집 완료`"
           >
-            {{ recruitment.recruitStatus.status }}
+            <i class="input-icon uil uil-moon"></i
+            >{{ recruitment.recruitStatus.status }}
           </div>
           <div class="ing" v-else>
-            <b>{{ applyCounts[index] }}/{{ recruitment.stdLimit }}</b
+            <i class="input-icon uil uil-users-alt"></i
+            ><b>{{ applyCounts[index] }}/{{ recruitment.stdLimit }}</b
             >&nbsp;
             {{ recruitment.recruitStatus.status }}
           </div>
@@ -92,7 +94,7 @@ export default {
   background: #4b4b4b;
   color: white;
   border-radius: 15px;
-  width: 4.7em;
+  width: 6.5em;
   margin-top: 8px;
   padding: 6px;
   font-size: 16px;
@@ -101,7 +103,7 @@ export default {
   background: #5fc971;
   color: black;
   border-radius: 15px;
-  width: 5.8em;
+  width: 7.3em;
   margin-top: 8px;
   padding: 6px;
   font-size: 16px;
