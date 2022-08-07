@@ -11,8 +11,8 @@ export default {
     token: localStorage.getItem('token') || '' ,
     resumeQuestionList : [],
     studentIndex : null,
-    coverLetter : true,
-    memberlist : false,
+    coverLetter : false,
+    memberList : true,
   },
 
   getters: {
@@ -22,7 +22,7 @@ export default {
     resumeQuestionList : state => state.resumeQuestionList,
     studentIndex : state => state.studentIndex,
     coverLetter : state => state.coverLetter,
-    memberlist : state => state.memberlist,
+    memberList : state => state.memberList,
     
   },
 
@@ -34,7 +34,7 @@ export default {
     ADD_RESUME_QUESTION_LIST : (state, data) => state.resumeQuestionList.push(data),
     SET_STUDENT_INDEX : (state,studentIndex) => state.studentIndex = studentIndex,
     SET_LETTER_STATE : (state,coverLetter) => state.coverLetter = coverLetter,
-    SET_MEMBER_LSIT_STATE : (state,memberlist) => state.memberlist = memberlist,
+    SET_MEMBER_LSIT_STATE : (state,memberList) => state.memberList = memberList,
   },
 
   actions: {

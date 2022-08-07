@@ -1,11 +1,10 @@
 <template>
-  {{ member }}
   <div>
      &nbsp;&nbsp;&nbsp;
      {{ member.joinType }}
     &nbsp;&nbsp; {{ member.user.userId }} &nbsp; {{ member.user.userName }} &nbsp; {{ member.user.userEmail }} <br>
     {{ member.user.ueserImg }}   {{ member.user.joinTyp }}   {{ member.user.resumeNo }}
-    <button @click="changeToCoverLetter(['coverletter',studentIndex])">자소서 보기</button>
+    <button @click="changeToCoverLetter(['coverletter',studentindex])">자소서 보기</button>
   </div>
 </template>
 
@@ -32,7 +31,7 @@ export default {
     }
   },
   computed:{
-    ...mapGetters(['resumeQuestionList','studentIndex']),
+    ...mapGetters(['resumeQuestionList']),
   },
   methods:{
     ...mapActions(['getStudyResume','changeToCoverLetter']),
