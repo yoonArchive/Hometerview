@@ -13,7 +13,7 @@ public interface RecruitService {
 
     List<Recruit> getList();
 
-    List<Recruit> getRecruitingList();
+    List<Recruit> getRecruitingList(int type);
 
     List<Recruit> getFilteredList(int type);
 

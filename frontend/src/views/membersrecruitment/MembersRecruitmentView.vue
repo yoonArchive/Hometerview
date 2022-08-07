@@ -1,176 +1,100 @@
 <template>
   <div class="container">
-    <div class="img-class"></div>
-
-    <div class="container-middle">
-      <div class="bunddle-option">
-        <div class="title">
-          <p id="title-name">스터디 리스트</p>
+    <div style="height:70px;">
+      <button
+        type="button"
+        class="button small"
+        @click="moveToCreate"
+        style="float:right;"
+      >
+        스터디 만들기
+      </button>
+    </div>
+    <div>
+      <div class="row">
+        <div class="title col-md-6">
+          <h5 id="title-name">스터디 모집글 목록</h5>
         </div>
-
-        <div class="inner-container1">
-          <div>
-            <label for="recruitSearch">전체 : </label>
-            <input
-              type="radio"
-              id="recruitSearch"
-              name="recruitSearch"
-              value="1"
-              v-model="recruitType"
-              @change="bringRecruitTypeList(recruitType)"
-            />
-            <label for="recruitSearch"> | 기업 면접 : </label>
-            <input
-              type="radio"
-              id="recruitSearch"
-              name="recruitSearch"
-              value="2"
-              v-model="recruitType"
-              @change="bringRecruitTypeList(recruitType)"
-            />
-            <label for="recruitSearch"> | 자율 면접 : </label>
-            <input
-              type="radio"
-              id="recruitSearch"
-              name="recruitSearch"
-              value="3"
-              v-model="recruitType"
-              @change="bringRecruitTypeList(recruitType)"
-            />
-          </div>
-
-          <div class="form-check">
-            <input
-              class="form-check-input"
-              type="checkbox"
-              name="recruiting"
-              id="recruiting"
-              v-model="recruiting"
-              @change="isRecruiting(recruitState)"
-            />
-            <label class="form-check-label" for="recruiting">| 모집 중</label>
-          </div>
+        <div class="col-md-4">
+          <select
+            name="recruitSearch"
+            v-model="recruitType"
+            @change="getRecruitTypeList()"
+          >
+            <option value="1" selected>전체 스터디</option>
+            <option value="2">기업 면접 스터디</option>
+            <option value="3">자율 면접 스터디</option>
+          </select>
         </div>
-
-        <div class="inner-container2">
-          <button class="new-create-button" @click="moveToCreate">
-            스터디 만들기
-          </button>
-          <div>
-            <label for="recruitSearch"></label>
-            <input
-              type="text"
-              id="recruitSearch"
-              v-model="recruitSearchKeyword"
-              @keyup.enter="bringRecruitSearchList(recruitSearchKeyword)"
-            />
-          </div>
-          <members-recruitment-list
-            v-if="recruitState"
-          ></members-recruitment-list>
-          <members-recruiting-list
-            v-if="recruitingState"
-          ></members-recruiting-list>
+        <div class="form-check col-md-2 float-right">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            name="recruiting"
+            id="recruiting"
+            v-model="recruiting"
+            @change="isRecruiting()"
+          />
+          <label class="form-check-label" for="recruiting">모집 중</label>
+        </div>
+      </div>
+      <div class="inner-container2">
+        <div class="row row-cols-1 row-cols-md-3 g-5">
+          <members-recruitment-item
+            v-for="(recruitment, index) in recruitmentList"
+            :key="recruitment.recruitNo"
+            :recruitment="recruitment"
+            :index="index"
+            :recruitState="recruitState"
+          >
+          </members-recruitment-item>
         </div>
       </div>
     </div>
-  </div>
-  <div class="section">
-    <div class="container">
-      <div class="row justify-content-center">
+    <div id="searchBar" class="row aln-center">
+      <div class="col-6 col-12-xsmall">
         <input
-          class="checkbox-all"
-          type="radio"
-          id="color"
-          name="color"
-          checked
+          type="text"
+          id="recruitSearch"
+          v-model="recruitSearchKeyword"
+          placeholder="모집글 제목 검색"
+          @keyup.enter="bringRecruitSearchList(recruitSearchKeyword)"
         />
-        <label for="color">all</label>
-        <input
-          class="checkbox-alizarin"
-          type="radio"
-          name="color"
-          id="color-1"
-        />
-        <label for="color-1">alizarin</label>
-        <input
-          class="checkbox-wisteria"
-          type="radio"
-          name="color"
-          id="color-2"
-        />
-        <label for="color-2">wisteria</label>
-        <input
-          class="checkbox-emerland"
-          type="radio"
-          name="color"
-          id="color-3"
-        />
-        <label for="color-3">emerland</label>
-        <input
-          class="checkbox-belizehole"
-          type="radio"
-          name="color"
-          id="color-4"
-        />
-        <label for="color-4">belizehole</label>
-        <input
-          class="checkbox-sunflower"
-          type="radio"
-          name="color"
-          id="color-5"
-        />
-        <label for="color-5">sunflower</label>
-        <div class="w-100 p-0 pt-2"></div>
-        <div class="col-auto box alizarin"></div>
-        <div class="col-auto box wisteria"></div>
-        <div class="col-auto box emerland"></div>
-        <div class="col-auto box belizehole"></div>
-        <div class="col-auto box sunflower"></div>
-        <div class="col-auto box alizarin"></div>
-        <div class="col-auto box wisteria"></div>
-        <div class="col-auto box emerland"></div>
-        <div class="col-auto box belizehole"></div>
-        <div class="col-auto box sunflower"></div>
-        <div class="col-auto box alizarin"></div>
-        <div class="col-auto box wisteria"></div>
-        <div class="col-auto box emerland"></div>
-        <div class="col-auto box belizehole"></div>
-        <div class="col-auto box sunflower"></div>
-        <div class="col-auto box alizarin"></div>
-        <div class="col-auto box wisteria"></div>
-        <div class="col-auto box emerland"></div>
-        <div class="col-auto box belizehole"></div>
-        <div class="col-auto box sunflower"></div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import MembersRecruitmentList from "./components/MembersRecruitmentList.vue";
-import MembersRecruitingList from "./components/MembersRecruitingList.vue";
+import MembersRecruitmentItem from "./components/MembersRecruitmentItem.vue";
 import router from "@/common/lib/vue-router.js";
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "MembersRecruitmentView",
   components: {
-    MembersRecruitmentList,
-    MembersRecruitingList
+    MembersRecruitmentItem
   },
-
   data() {
     return {
       recruitState: true,
       recruitingState: false,
       recruitSearchKeyword: "",
-      recruitType: ""
+      recruitType: "",
+      image: require("../../assets/images/samsung.jpg")
     };
   },
-  computed: {},
+  created() {
+    this.bringRecruitmentList();
+  },
+  computed: { ...mapGetters(["recruitmentList"]) },
   methods: {
-    ...mapActions(["bringRecruitSearchList", "bringRecruitTypeList"]),
+    ...mapActions([
+      "bringRecruitSearchList",
+      "bringRecruitTypeList",
+      "bringRecruitingList",
+      "bringRecruitmentList"
+    ]),
 
     moveToCreate() {
       router.push({ name: "createmembersrecruitment" });
@@ -183,9 +107,19 @@ export default {
       if (this.recruitState === true) {
         this.recruitState = false;
         this.recruitingState = true;
+        this.bringRecruitingList(this.recruitType);
       } else {
         this.recruitState = true;
         this.recruitingState = false;
+        if (this.recruitType != "1") this.getRecruitTypeList();
+        else this.bringRecruitmentList(this.recruitType);
+      }
+    },
+    getRecruitTypeList() {
+      if (this.recruitingState === true) {
+        this.bringRecruitingList(this.recruitType);
+      } else {
+        this.bringRecruitTypeList(this.recruitType);
       }
     }
   }
@@ -193,17 +127,13 @@ export default {
 </script>
 
 <style scoped>
-.bunddle-option {
-  /* display: grid; */
-  /* flex-direction: row; */
-  /* justify-content: space-evenly; */
-  grid-column: 5;
-}
-.container-middle {
-  /* display: grid; */
-  /* justify-content: right; */
-  /* justify-content: space-evenly; */
-}
+/* .bunddle-option { */
+/* display: grid; */
+/* flex-direction: row; */
+/* justify-content: space-evenly; */
+/* grid-column: 5; */
+/* } */
+/*
 .new-create-button {
   height: 40px;
   background: #f3f0fb;
@@ -218,8 +148,132 @@ export default {
 }
 .inner-container1 {
   /* justify-content: center; */
-  flex-direction: row;
+/* flex-direction: row;
   border-radius: 40%;
   font-family: "티머니 둥근바람";
+} */
+.btn::before {
+  content: "전체 스터디";
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background: white;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.062);
+  border: 2px solid #ff5f6d;
+  padding-left: 1em;
+  background: linear-gradient(to right, white 80%, #ff5f6d 20%);
+}
+.btn::after {
+  content: "f062";
+  position: absolute;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Font Awesome 5 Free";
+  font-weight: 700;
+  width: 20%;
+  height: 110%;
+  color: white;
+  transform: rotate(180deg);
+  transition: all 0.4s;
+}
+.btn:checked::after {
+  transform: rotate(0deg);
+}
+.list {
+  position: absolute;
+  margin-top: 0.5em;
+  width: 14%;
+  height: 140px;
+  clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+  display: flex;
+  flex-direction: column;
+  transition: all 0.4s;
+}
+input:checked ~ .list {
+  clip-path: none;
+}
+.list div {
+  height: 25%;
+  display: flex;
+  align-items: center;
+  padding: 0.3em 0 0.3em 1em;
+  text-decoration: none;
+  margin: 0.3em 0;
+  background: white;
+  color: rgb(36, 36, 36);
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.062);
+  transition: background 0.4s;
+}
+.list div:hover {
+  background: #ff5f6d;
+  color: white;
+}
+.card__image-holder {
+  background: rgba(0, 0, 0, 0.1);
+  height: 0;
+  padding-bottom: 50%;
+}
+input[type="button"].small,
+button.small,
+.button.small {
+  font-size: 0.7em;
+}
+input[type="button"],
+button,
+.button {
+  -moz-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+  -webkit-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+  -ms-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+  border-radius: 5px;
+  border: 0;
+  box-shadow: inset 0 0 0 2px #653fd3;
+  background-color: #f3f0fa;
+  color: #653fd3;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 0.8em;
+  font-weight: 600;
+  height: 3em;
+  width: 11em;
+  letter-spacing: 0.15em;
+  text-align: center;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+input[type="button"]:hover,
+button:hover,
+.button:hover {
+  background-color: #653fd3;
+  color: #ffffff;
+}
+.row.aln-center {
+  justify-content: center;
+}
+input[type="text"],
+/* select, */
+textarea {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  background-color: rgba(184, 184, 184, 0.25);
+  border-radius: 3px;
+  border: none;
+  color: inherit;
+  display: block;
+  outline: 0;
+  padding: 0 1em;
+  margin-top: 3em;
+  text-decoration: none;
+  width: 100%;
+  height: 2em;
 }
 </style>
