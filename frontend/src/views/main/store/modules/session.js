@@ -6,14 +6,13 @@ import { OpenVidu } from 'openvidu-browser';
 
 export default {
   state: {
-		
   },
   getters: {
 
   },
   mutations: {
-
   },
   actions: {
+
 	}
 }
