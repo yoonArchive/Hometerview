@@ -15,9 +15,6 @@ export default {
     memberList : true,
     selectedQuestionNum: 0,
     selStdNo: Number,
-    studentIndex: null,
-    coverLetter: false,
-    memberList: true
   },
 
   getters: {
