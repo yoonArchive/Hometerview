@@ -3,8 +3,10 @@
 </template>
 
 <script>
+import { mapActions,mapGetters } from 'vuex'
 export default {
-  name:'SelectInterveiwee',
+  name:'SelectInterveiweeDetail',
+
   data(){
     return{
 
@@ -17,8 +19,11 @@ export default {
   ...mapActions([]),
   },
 
+
 }
 </script>
+
+
 
 <style>
 
