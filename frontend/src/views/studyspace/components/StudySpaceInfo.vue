@@ -83,7 +83,10 @@ export default {
     ...mapActions(['bringStudySpaceDetail','leaveStudy','updateStudyNoticeAction']),
     ...mapMutations(['SET_STD_NO']),
       moveToSession(){
-        router.push({ name: 'session' })
+        router.push({
+          name: 'session',
+          params : {sessionNo:this.stdNo}
+        })
       },
     autoResizeTextarea(e){
       let textarea = document.querySelector('.autoTextarea');

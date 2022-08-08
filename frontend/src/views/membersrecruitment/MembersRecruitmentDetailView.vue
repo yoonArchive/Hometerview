@@ -107,9 +107,34 @@ export default {
         params: { recruitNo: this.recruitNo }
       });
     },
-    async studyStart() {
-      await this.createStudySpace(this.recruitNo);
-      await router.push({ name: "study" });
+    methods: {
+      ...mapActions([
+        "bringRecruitmentDetail",
+        "updateRecruitmentDetail",
+        "deleteRecruitmentDetail",
+        "createStudySpace",
+        "studyApply",
+        "studyApplyCancel",
+        "bringStudySpace"
+      ]),
+      interviewType() {
+        if (this.recruitDetail.stdType === "COM") {
+          this.studyType = "기업 면접";
+        } else {
+          this.studyType = "자율 면접";
+        }
+      },
+      moveToUpdate() {
+        router.push({
+          name: "membersrecruitmentedit",
+          params: { recruitNo: this.recruitNo }
+        });
+      },
+      async studyStart() {
+        await this.createStudySpace(this.recruitNo);
+        // await this.bringStudySpace()
+        await router.push({ name: "study" });
+      }
     }
   },
   async created() {

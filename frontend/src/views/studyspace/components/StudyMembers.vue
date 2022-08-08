@@ -36,8 +36,8 @@ export default {
         stdNo:this.$route.params.stdNo,
         userNo: this.member.user.userNo
       },
-      }
-    },
+    }
+  },
   computed:{
     ...mapGetters(['studySpaceDetail'])
   },
@@ -48,7 +48,8 @@ export default {
 }
 </script>
 
-<style>
+
+<style scoped>
 .study-member-wrapper{
   padding: 5%;
 }

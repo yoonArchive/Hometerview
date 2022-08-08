@@ -33,7 +33,6 @@ export default {
   components: {
     StudySpaceItem
   },
-
   data() {
     return {
       isloading: false
@@ -47,9 +46,6 @@ export default {
   },
   mounted() {
     this.bringStudySpace();
-  },
-  beforeUpdate() {
-    console.log(this.studySpaceList.length);
   }
 };
 </script>

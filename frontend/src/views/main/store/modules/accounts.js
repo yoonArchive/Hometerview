@@ -133,7 +133,7 @@ export default {
           success: function(response) {
             console.log("토큰성공" + JSON.stringify(response));
             // saveToken(response)
-            const token = response.id;
+            const token = response.kakao_account.email;
             dispatch("saveToken", token);
             // dispatch('fetchCurrentUser')
             router.push({ name: "home" });
@@ -155,12 +155,58 @@ export default {
             success: async function(response) {
               console.log("로그인성공" + JSON.stringify(response));
               const kakaoacount = response.kakao_account;
-              const name = kakaoacount.nickname;
+              const name = kakaoacount.profile.nickname;
               const email = kakaoacount.email;
               const profile1 = kakaoacount.thumbnail_image_url;
-              this.profile = profile1;
+
+
+              // {
+              //   "userEmail": "ssafy@ssafy.com",
+              //   "userId": "your_id",
+              //   "userName": "김싸피",
+              //   "userPw": "your_password"
+              // }
+
+              const payload = {
+                userEmail: email,
+                userId : name,
+                userName: name,
+              }
+
+              // const splitedEmail = email.split("@");
+              // const emailId = splitedEmail[0];
+              // const emailaddress = splitedEmail[1];
+              // const emailForSubmit = `?userEmail=${emailId}%40${emailaddress}`;
+              // axios({
+              //   url: api_url.accounts.emailDuplicateCheck() + emailForSubmit,
+              //   method: "get"
+              // })
+              // .then(res => {
+              //   // 응답에 성공을 하면
+              //   console.log(res.data);
+              //   // commit("SET_CHECK_EMAIL", false);
+              //   console.log(emailForSubmit);
+              //   axios({
+              //     url: api_url.accounts.authEmail() + emailForSubmit,
+              //     method: "post"
+              //   })
+              //     .then(res => {
+              //       console.log(res.data);
+              //       alert("인증번호가 보내졌습니다");
+              //     })
+              //     .catch(err => {
+              //       console.log(err.response);
+              //       alert("인증번호가 보내기를 실패하였습니다.");
+              //     });
+              // })
+              // .catch(err => {
+              //   console.log(err.response);
+              //   // commit("SET_CHECK_EMAIL", true);
+              //   alert("사용중인 이메일 입니다");
+              // });
+              console.log(payload)
               // saveToken(response)
-              const token = response.id;
+              const token = response.kakao_account.email;
               dispatch("saveToken", token);
               // dispatch('fetchCurrentUser')
               router.push({ name: "home" });

@@ -13,14 +13,19 @@
     data() {
       return {
         review: {
-          reviewNo: null,
+          // reviewNo: null,
           reviewContents: '',
           reviewTitle: '',
           reviewType: 'REAL'
         }
       }
     },
+    updated() {
+      event
+    },
   }
 </script>
 
-<style></style>
+<style>
+
+</style>

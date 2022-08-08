@@ -1,34 +1,43 @@
 <template>
-	<div id="main-container" class="container">
-		<div id="join" v-if="!session">
-			<div id="join-dialog" class="jumbotron vertical-center">
-				<h1>Join a video session</h1>
-				<div class="form-group">
-					<p>
-						<label>Participant</label>
-						<input v-model="myUserName" class="form-control" type="text" required>
-					</p>
-					<p>
-						<label>Session</label>
-						<input v-model="mySessionId" class="form-control" type="text" required>
-					</p>
-					<p class="text-center">
-						<button class="btn btn-lg btn-success" @click="joinSession()">Join!</button>
-					</p>
-				</div>
-			</div>
-		</div>
-
-		<!-- 세션을 들어 갔을 경우 -->
-		<div id="session" v-if="session">
-			<div id="session-header">
-				<h1 id="session-title">{{ mySessionId }}</h1>
-				<input class="btn btn-large btn-danger" type="button" id="buttonLeaveSession" @click="leaveSession" value="Leave session">
-			</div>
+	<div id="session-header">
+		<h1 id="session-title">{{ mySessionId }}</h1>
+		<input class="btn btn-large btn-danger" type="button" id="buttonLeaveSession" @click="leaveSession" value="Leave session">
+	</div>
+	<div class="container d-flex justify-content-between">
+		<!-- session -->
+		<div id="session">
 			<!-- 자기 화면(큰) => mainStreamManager-->
 			<div id="main-video" class="col-md-6">
 				<user-video :stream-manager="mainStreamManager"/>
 			</div>
+
+			<!-- 장치 옵션 -->
+			<div>
+
+				<!-- 마이크 ONOFF-->
+				<div>
+					<button v-if="audioOnoff" @click="audioONOFF()">오디오ON</button>
+					<button v-else @click="audioONOFF()">오디오OFF</button>
+				</div>
+				<!-- 비디오 ONOFF -->
+				<div>
+					<button v-if="videoOnoff" @click="videoONOFF()">비디오ON {{ videoOnoff }}</button>
+					<button v-else @click="videoONOFF()">비디오OFF {{ videoOnoff }}</button>
+				</div>
+
+
+				<!-- 화면 공유 -->
+				<div>
+					<button @click="ShareScreen()">화면 공유</button>
+				</div>
+
+				<!-- 더보기 -->
+				<div>
+					<button></button>
+				</div>
+			</div>
+
+
 
 			<!-- 비디오 그룹 -->
 			<!-- 비디오를 클릭할 경우 메인 비디오로 이동 : updateMainVideoStreamManager -->
@@ -40,56 +49,137 @@
 				<user-video v-for="sub in subscribers" :key="sub.stream.connection.connectionId" :stream-manager="sub" @click="updateMainVideoStreamManager(sub)"/>
 			</div>
 		</div>
+
+		<!-- 사이드  -->
+		<div class="side-panel">
+			<button @click="changeContent('chatting')">메시지</button>
+			<button @click="changeContent('participant')">참가자</button>
+			<button @click="changeContent('selectinterviewee')">면접자 지정</button>
+			<!-- 메시지 -->
+			<div v-if="chatting">
+				<message-list
+					:msgs="msgs"
+					:myId="publisher.stream.connection.connectionId"
+					:fromId="fromId"
+				></message-list>
+				<message-form
+					@sendMsg="sendMsg"
+					:user-name="myUserName"
+				></message-form>
+			</div>
+			<!-- 멤버 리스트 -->
+			<div v-if="participant">
+				<study-member-list></study-member-list>
+			</div>
+			<div v-if="usertype==='LEADERS' && selectinterviewee ">
+				<select-interveiwee></select-interveiwee>
+			</div>
+		</div>
 	</div>
 </template>
 
 <script>
-import axios from 'axios';
-import { OpenVidu } from 'openvidu-browser'; // 필수 객체
-import UserVideo from './components/UserVideo';
+import axios from 'axios'
+import { OpenVidu } from 'openvidu-browser'
+import router from '@/common/lib/vue-router'
 import {mapActions, mapGetters} from 'vuex'
 
+import UserVideo from './components/UserVideo'
+import MessageForm from "./components/MessageForm.vue"
+import MessageList from "./components/MessageList.vue"
+import StudyMemberList from "./components/StudyMemberList.vue"
+import SelectInterviewee from "./components/SelectInterviewee.vue"
 
-axios.defaults.headers.post['Content-Type'] = 'application/json';
-// 글로벌 axios 기본(defaults) 설정 => application/json => 
+
+
+
+axios.defaults.headers.post['Content-Type'] = 'application/json'; // 글로벌 axios 기본(defaults) 설정 => application/json
 const s = 'i7b105.p.ssafy.io'
 const OPENVIDU_SERVER_URL = "https://" + s + ":8443";
 const OPENVIDU_SERVER_SECRET = "admin";
 
-
-// location.hostname
-// 8443
-// admin
 
 export default {
 	name: 'SessionView',
 
 	components: {
 		UserVideo,
+		MessageForm,
+    MessageList,
+		StudyMemberList,
+		SelectInterviewee,
+
 	},
 
 	data () {
 		return {
+			// 방,유저 정보
+			sessionNo : this.$route.params.sessionNo,
+			userType: '',
+			mySessionId: ``,
+			myUserName: '',
+
+
 			OV: undefined,
 			session: undefined,
 			mainStreamManager: undefined,
 			publisher: undefined, //local
 			subscribers: [], // remotes
 
-			//join form
-			mySessionId: 'SessionA',
 
-			//user name
-			myUserName: 'Participant' + Math.floor(Math.random() * 100),
+			// massege
+			msgs: [],
+			fromId :'',
+
+			//show
+			chatting: true,
+			participant: false,
+			selectinterviewee : false,
+
+			// function
+			videoOnOff: true,
+			audioOnOff: true,
+			mirrorOnOff: true,
+
+			//scree share
+			screenOV: undefined,
+			screenSession: undefined,
+			screenMainStreamManager: undefined,
+			screenPublisher: undefined,
+			screenSubscribers: [],
+			screenOvToken: null,
+			isSharingMode: false,
+
+
+
 		}
 	},
 	computed:{
+		// studySpaceDetail.joinType
+		...mapGetters(['currentUser','studySpaceDetail']),
 	},
 
 	methods: {
-		
+		...mapActions(['bringStudySpaceDetail']),
+		videoONOFF(){	
+			console.log(this.videoOnOff)
+			this.publisher.publishVideo(!this.videoOnOff)
+			this.videoOnOff = !this.videoOnOff
+		},
+		audioONOFF(){
+			console.log(this.audioOnOff)
+			this.publisher.publishAudio(!this.audioOnOff)
+			this.audioOnOff = !this.audioOnOff
+		},
+			// mirrorONOFF(){
+			// 	this.publisher.publishVideo(!this.mirrorOnOff);
+			// 	this.mirrorOnOff = !this.mirrorOnOff;
+			// },
 
+
+		// 기본 기능 (입장하기 퇴장하기)
 		joinSession () {
+
 			// --- OpenVidu Object 생성 ---
 			this.OV = new OpenVidu();
 
@@ -125,6 +215,14 @@ export default {
 				console.warn(exception);
 			});
 
+
+      this.session.on("signal:my-chat", event => {
+        this.fromId = event.from.connectionId;
+        const tmp = this.msgs.slice();
+        tmp.push(event.data);
+        this.msgs = tmp;
+      });
+
 			// --- Connect to the session with a valid user token ---
 
 			// 'getToken' method is simulating what your server-side should do.
@@ -145,10 +243,9 @@ export default {
 							resolution: '640x480',  // The resolution of your video
 							frameRate: 30,			// The frame rate of your video
 							insertMode: 'APPEND',	// How the video is inserted in the target element 'video-container'
-							mirror: false       	// Whether to mirror your local video or not
+							mirror: true       	// Whether to mirror your local video or not
 						});
 
-						// ??????
 						this.mainStreamManager = publisher;
 						this.publisher = publisher;
 
@@ -163,7 +260,6 @@ export default {
 			// beforeunload 페이지를 떠날때 발생한다.새로고침 /뒤로 가기 /브라우저 닫기 /form submit
 			window.addEventListener('beforeunload', this.leaveSession)
 		},
-
 		leaveSession () {
 			// --- Leave the session by calling 'disconnect' method over the Session object ---
 
@@ -177,6 +273,8 @@ export default {
 			this.OV = undefined;
 
 			window.removeEventListener('beforeunload', this.leaveSession);
+
+			this.moveToStudy()
 		},
 
 		updateMainVideoStreamManager (stream) {
@@ -184,24 +282,13 @@ export default {
 			this.mainStreamManager = stream;
 		},
 
-		/**
-		 * --------------------------
-		 * SERVER-SIDE RESPONSIBILITY
-		 * --------------------------
-		 * These methods retrieve the mandatory user token from OpenVidu Server.
-		 * This behavior MUST BE IN YOUR SERVER-SIDE IN PRODUCTION (by using
-		 * the API REST, openvidu-java-client or openvidu-node-client):
-		 *   1) Initialize a Session in OpenVidu Server	(POST /openvidu/api/sessions)
-		 *   2) Create a Connection in OpenVidu Server (POST /openvidu/api/sessions/<SESSION_ID>/connection)
-		 *   3) The Connection.token must be consumed in Session.connect() method
-		 */
 
+
+		// 토큰
 		getToken (mySessionId) {
 			// 세션 만듦 ==> 성공? => craeteToken함수 실행
 			return this.createSession(mySessionId).then(sessionId => this.createToken(sessionId));
 		},
-
-		// See https://docs.openvidu.io/en/stable/reference-docs/REST-API/#post-session
 		
 		createSession (sessionId) {
 			return new Promise((resolve, reject) => {
@@ -233,8 +320,6 @@ export default {
 					});
 			});
 		},
-
-		// See https://docs.openvidu.io/en/stable/reference-docs/REST-API/#post-connection
 		createToken (sessionId) {
 			return new Promise((resolve, reject) => {
 				axios
@@ -249,6 +334,159 @@ export default {
 					.catch(error => reject(error.response));
 			});
 		},
+
+
+
+		// 화면 공유
+		async ShareScreen(){
+			if(this.screenPublisher){
+				await alert('화면공유가 중지됩니다')
+				this.stopShareScreen()
+			}else{
+				await alert('화면공유를 시작합니다')
+				this.startShareScree()
+			}
+		},
+		startShareScree(){
+			if (this.isSharingMode) {return}
+			const screenOV = new OpenVidu();
+			const screenSession = screenOV.initSession();
+      const screenSubscribers = [];
+
+			screenSession.on('streamCreated', ({ stream }) => {
+        const screenSubscriber = screenSession.subscribe(stream);
+				screenSubscribers.push(screenSubscriber);
+			});
+
+			screenSession.on('streamDestroyed', ({ stream }) => {
+				const index2 = screenSubscribers.indexOf(stream.streamManager, 0);
+				if (index2 >= 0) {
+					screenSubscribers.splice(index2, 1);
+				}
+			});
+
+			this.getToken(this.mySessionId).then(token => {
+        let screenPublisher = screenOV.initPublisher(undefined, {
+          audioSource: false, // The source of audio. If undefined default microphone
+          videoSource: 'screen', // The source of video. If undefined default webcam
+          publishAudio: true,  	// Whether you want to start publishing with your audio unmuted or not
+          publishVideo: true,  	// Whether you want to start publishing with your video enabled or not
+          resolution: '640x480',  // The resolution of your video
+          frameRate: 30,			// The frame rate of your video
+          insertMode: 'APPEND',	// How the video is inserted in the target element 'video-container'
+          mirror: true,       	// Whether to mirror your local video or not
+				})
+				screenSession.connect(token, { clientData: this.myUserName + '화면' })
+				.then(()=>{
+					 screenPublisher.once('accessAllowed',(event)=>{
+						screenPublisher.stream.getMediaStream().getVideoTracks()[0].addEventListener('ended',()=>{
+							this.stopShareScreen()
+						})
+						screenSession.publish(screenPublisher)
+						this.screenOV = screenOV
+						this.screenSession = screenSession
+						this.screenMainStreamManager = screenMainStreamManager
+						this.screenPublisher = screenPublisher
+						this.screenOvToken = token
+						this.session.signal({
+              data: 'T',
+              to: [],
+              type: 'share' 
+            })
+					})
+				})
+				screenPublisher.once('accessDenied', (event) => {
+					console.warn('ScreenShare: Access Denied');
+				});
+			})
+			.catch(err=>{
+				console.log('There was an error connecting to the session:', err.code, err.message);
+			})
+		},
+		stopShareScreen(){
+			if(this.screeSession){
+				state.screeSession.disconnect()
+			}
+			this.screenOV = undefined,
+			this.screenSession = undefined,
+			this.screenMainStreamManager = undefined,
+			this.screenPublisher = undefined,
+			this.screenSubscribers = [],
+			this.screenOvToken = null
+
+			this.session.signal({
+				data: 'F',
+				to: [],
+				type: 'share' 
+      })
+		},
+
+
+
+		// 사이드 패널
+		changeContent(content){
+			if(content==="chatting"){
+				this.chatting = true
+				this.participant = false
+				this.selectinterviewee = false
+			}
+			else if(content==="participant"){
+				this.chatting = false
+				this.participant = true
+				this.selectinterviewee = false
+			}
+			else if(content==="selectinterviewee"){
+				this.chatting = false
+				this.participant = false
+				this.selectinterviewee = true
+			}
+		},
+
+
+		//메시지
+		sendMsg(msg) {
+      // Sender of the message (after 'session.connect')
+      this.session
+        .signal({
+          data: msg, // Any string (optional)
+          to: [], // Array of Connection objects (optional. Broadcast to everyone if empty)
+          type: "my-chat" // The type of message (optional)
+        })
+        .then(() => {
+          console.log("Message successfully sent");
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    },
+		changeSessionId(sessionNo){
+			return `Session${sessionNo}`
+		},
+		moveToStudy(){
+			router.push({
+				name:'studydetail',
+				params : {stdNo:this.sessionNo}
+			})
+		},
+
+	},
+	async created(){
+		await this.bringStudySpaceDetail(this.sessionNo)
+	},
+	async beforeMount(){
+		this.myUserName = await this.currentUser.userName
+		this.mySessionId = await this.changeSessionId(this.sessionNo)
+		this.joinSession()
+	},
+	mounted(){
+		this.userType = this.studySpaceDetail.joinType
 	}
 }
 </script>
+<style scoped>
+ .side-panel{
+
+	width: 400px;
+ }
+	
+</style>

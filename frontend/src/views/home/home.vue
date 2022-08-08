@@ -292,10 +292,13 @@ body.light .progress-wrap svg.progress-circle path {
 }
 /* 컨테이너 */
 .main-container {
+
+  /* height: 100%; */
+  /* padding: 5%; */
+  /* padding-top: 7%; */
   min-height: 100%;
-  margin-right: 15%;
-  margin-left: 15%;
-  padding: 5%;
+  margin-right: 10%;
+  margin-left: 10%;
   padding-top: 10%;
   border: 1px;
   background-color: white;

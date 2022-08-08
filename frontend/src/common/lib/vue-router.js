@@ -62,6 +62,7 @@ import SessionView from '@/views/session/SessionView'
 // import CommonQuestionEditView from '@/views/studyspace/components/CommonQuestionEditView'
 import StudyQuestionListView from '@/views/studyspace/StudyQuestionListView'
 
+import cc from '@/views/myinterview/DemoApp.vue'
 
 const fullMenu = require('@/views/main/menu.json')
 function makeRoutesFromMenu () {
@@ -212,7 +213,7 @@ function makeRoutesFromMenu () {
       component : MemberCoverLetter,
     },
     {
-      path: 'session',
+      path: 'session/:sessionNo',
       name: 'session',
       component :SessionView,
     }
@@ -226,6 +227,10 @@ function makeRoutesFromMenu () {
     path: '/study/:stdNo/questionList',
     name: 'questionList',
     component: StudyQuestionListView
+  },{
+    path: '/c',
+    name: 'c',
+    component: cc
   },
 
 

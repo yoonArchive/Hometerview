@@ -112,18 +112,12 @@ import MembersRecruitmentItem from "./components/MembersRecruitmentItem.vue";
 import StudySpaceItem from "../studyspace/components/StudySpaceItem.vue";
 import router from "@/common/lib/vue-router.js";
 import { mapActions, mapGetters } from "vuex";
-import "vue3-carousel/dist/carousel.css";
-import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
 
 export default {
   name: "MembersRecruitmentView",
   components: {
     MembersRecruitmentItem,
-    StudySpaceItem,
-    Carousel,
-    Slide,
-    Pagination,
-    Navigation
+    StudySpaceItem
   },
   data() {
     return {

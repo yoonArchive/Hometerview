@@ -39,12 +39,19 @@ export default {
     checkAuthKey: () => HOST + USERS + "checkAuthKey",
 
     // Token 으로 현재 user 판단
-    currentUserInfo: () => HOST + USERS + "me/" // 맞는지 확인
+    currentUserInfo: () => HOST + USERS + "me/", // 맞는지 확인
+
+     //dday
+     dday: () => HOST + USERS + "dday/",
+     ddayDetail: (ddayNo) => HOST + USERS + "dday/" + `${ddayNo}/`
+
   },
   resumes: {
     //자소서
     getResumeInfo: () => HOST + RESUME,
     getResumeDetail: () => HOST + RESUME + "detail/"
+
+
   },
   notice: {
     //공지사항
@@ -63,7 +70,7 @@ export default {
   review: {
     //회고
     reviews: () => HOST + USERS + REVIEW,
-    review: reviewNo => HOST + USERS + REVIEW + `${reviewNo}`
+    review: (reviewNo) => HOST + USERS + REVIEW + `${reviewNo}`
   },
   study: {
     studyspace: () => HOST + STUDY,
@@ -77,8 +84,12 @@ export default {
     studyspacedetail: stdNo => HOST + STUDY + `${stdNo}/`,
     studyCoverLetter: (stdNo, resumeNo) =>
       HOST + STUDY + RESUME + `${stdNo}/` + `${resumeNo}`
+
+
+
   },
   session:{
-    createSession : () => OPENVIDU_SERVER_URL + OPENVIDU + SESSIONS
+    createSession : () => OPENVIDU_SERVER_URL + OPENVIDU + SESSIONS,
+    createToken : () => OPENVIDU_SERVER_URL + OPENVIDU + SESSIONS + `${sessionId}/` + 'connection'
   }
 }
