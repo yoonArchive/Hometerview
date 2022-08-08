@@ -7,15 +7,14 @@ import VueAxios from "./common/lib/axios";
 import axios from "./common/lib/axios";
 import i18n from "./common/lib/i18n";
 import router from "./common/lib/vue-router";
-// import '@fontawesome/fontawesome-free/js/all.js';
-import '@fortawesome/fontawesome-free/css/all.css'
+// import "@fortawesome/fontawesome-free/js/all.js";
+import "@fortawesome/fontawesome-free/css/all.css";
 // import MyInterviewView from './views/myinterview/MyInterviewView;
 // import firebase from 'firebase'
 // import "element-plus/packages/theme-chalk/src/base.scss";
 // import 'v-calendar/dist/style.css';
 
 // import VCalendar from 'v-calendar';
-
 
 // var firebaseConfig = {
 //   apiKey: "AIzaSyDbDJvN2_PbQfiuVP18qVQWYeNmxyAkx1s",
@@ -27,11 +26,7 @@ import '@fortawesome/fontawesome-free/css/all.css'
 //   measurementId: "G-396EMPTV8G"
 // };
 
-
-
 // Element UI Components [끝]
-
-
 
 const app = createApp({
   render: () => h(App)
