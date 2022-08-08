@@ -907,6 +907,11 @@
   "resolved" "https://registry.npmjs.org/@discoveryjs/json-ext/-/json-ext-0.5.2.tgz"
   "version" "0.5.2"
 
+"@fortawesome/fontawesome-free@^6.1.2":
+  "integrity" "sha512-XwWADtfdSN73/udaFm+1mnGIj/ShDZNFMe/PRoqv3FhQ4GNI2PUN70yFTPsjq65Lw2C9i4TG5/hTbxXIXVCiqQ=="
+  "resolved" "https://registry.npmjs.org/@fortawesome/fontawesome-free/-/fontawesome-free-6.1.2.tgz"
+  "version" "6.1.2"
+
 "@fullcalendar/common@~5.11.2":
   "integrity" "sha512-2YBRs4IFrZlo7UL7hEHK+QgnuQnVIfwSspCOy0Qe+DtU2hu3myPrxsW0Tt/8RaoWsRndRDw5jeJzpjcVHDSSGQ=="
   "resolved" "https://registry.npmjs.org/@fullcalendar/common/-/common-5.11.2.tgz"

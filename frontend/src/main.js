@@ -7,7 +7,7 @@ import VueAxios from "./common/lib/axios";
 import axios from "./common/lib/axios";
 import i18n from "./common/lib/i18n";
 import router from "./common/lib/vue-router";
-import '@fontawesome/fontawesome-free/js/all.js';
+// import '@fontawesome/fontawesome-free/js/all.js';
 // import MyInterviewView from './views/myinterview/MyInterviewView;
 // import firebase from 'firebase'
 // import "element-plus/packages/theme-chalk/src/base.scss";
