@@ -6,24 +6,18 @@ import com.ssafy.api.response.*;
 import com.ssafy.api.service.DdayService;
 import com.ssafy.api.service.MailService;
 import com.ssafy.api.service.ReviewService;
+import com.ssafy.api.service.UserService;
+import com.ssafy.common.auth.UserDetails;
+import com.ssafy.common.model.response.BaseResponseBody;
 import com.ssafy.db.entity.Dday;
 import com.ssafy.db.entity.Review;
+import com.ssafy.db.entity.User;
+import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-
-import com.ssafy.api.service.UserService;
-import com.ssafy.common.auth.UserDetails;
-import com.ssafy.common.model.response.BaseResponseBody;
-import com.ssafy.db.entity.User;
-
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
@@ -33,6 +27,7 @@ import java.util.List;
  * 유저 관련 API 요청 처리를 위한 컨트롤러 정의.
  */
 @Api(value = "유저 API", tags = {"User"})
+@CrossOrigin("*")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/users")

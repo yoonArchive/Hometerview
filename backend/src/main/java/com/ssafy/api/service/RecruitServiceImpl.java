@@ -59,14 +59,20 @@ public class RecruitServiceImpl implements RecruitService {
     }
 
     @Override
-    public List<Recruit> getRecruitingList() {
-        return recruitRepository.findAllByRecruitStatusOrderByRecruitNoDesc(RecruitStatus.RECRUITING);
+    public List<Recruit> getRecruitingList(int type) {
+        if (type == 1) {
+            return recruitRepository.findAllByRecruitStatusOrderByRecruitNoDesc(RecruitStatus.RECRUITING);
+        } else if (type == 2) {
+            return recruitRepository.findAllByRecruitStatusAndStdTypeOrderByRecruitNoDesc(RecruitStatus.RECRUITING, StdType.COM);
+        } else {
+            return recruitRepository.findAllByRecruitStatusAndStdTypeOrderByRecruitNoDesc(RecruitStatus.RECRUITING, StdType.FREE);
+        }
     }
 
     @Override
     public List<Recruit> getFilteredList(int type) {
         if (type == 1) {
-            return recruitRepository.findAll();
+            return recruitRepository.findAllByOrderByRecruitNoDesc();
         } else if (type == 2) {
             return recruitRepository.findAllByStdTypeOrderByRecruitNoDesc(StdType.COM);
         } else {

@@ -4,7 +4,6 @@ import com.ssafy.api.request.NoticeWritePostReq;
 import com.ssafy.api.request.UpdateNoticePutReq;
 import com.ssafy.api.response.NoticeListRes;
 import com.ssafy.api.response.NoticeRes;
-import com.ssafy.api.response.UserLoginPostRes;
 import com.ssafy.api.service.NoticeService;
 import com.ssafy.common.model.response.BaseResponseBody;
 import com.ssafy.db.entity.Notice;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Api(value = "공지사항 API", tags = {"Notice"})
+@CrossOrigin("*")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/notice")

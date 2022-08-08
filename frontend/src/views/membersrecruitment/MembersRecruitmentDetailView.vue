@@ -83,6 +83,7 @@
         'createStudySpace',
         'studyApply',
         'studyApplyCancel',
+        'bringStudySpace',
 
         ]),
       interviewType(){
@@ -100,6 +101,7 @@
       },
       async studyStart(){
         await this.createStudySpace(this.recruitNo)
+        // await this.bringStudySpace()
         await router.push({ name:'study'})
       }
     },

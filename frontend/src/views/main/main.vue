@@ -41,14 +41,6 @@ import MainHeader from "./components/main-header";
 import MainSidebar from "./components/main-sidebar";
 import MainFooter from "./components/main-footer";
 
-// window.addEventListener('scroll', () => {
-
-//   const [red, green, blue] = [101, 63, 211]
-//   const section1 = document.querySelector(".mainBackground");
-//   let y = 1 + (window.scrollY || window.pageYOffset) / 5000
-//   y = y < 1 ? 1 : y // ensure y is always >= 1 (due to Safari's elastic scroll)
-//   const [r, g, b] = [red*y, green/y, blue*y]
-//   section1.style.background = `rgb(${r}, ${g}, ${b})`
 
 // window.addEventListener('scroll', () => {
 

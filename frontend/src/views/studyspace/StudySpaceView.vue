@@ -1,6 +1,7 @@
 <template>
   <div>
-    <h3>스터디 리스트</h3>
+    <h3>내 스터디 보기</h3>
+    <hr>
     <study-space-list></study-space-list>
   </div>
 

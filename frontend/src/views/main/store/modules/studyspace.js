@@ -10,6 +10,14 @@ export default {
     studySpaceDetail : {},
     token: localStorage.getItem('token') || '' ,
     resumeQuestionList : [],
+<<<<<<< HEAD
+    studentIndex : null,
+    coverLetter : false,
+    memberList : true,
+=======
+    selectedQuestionNum: 0,
+    selStdNo: Number,
+>>>>>>> ec6dfff68a975f91ae0959f45aad8e60acbba26b
   },
 
   getters: {
@@ -17,7 +25,15 @@ export default {
     studySpaceList : state => state.studySpaceList,
     studySpaceDetail : state => state.studySpaceDetail,
     resumeQuestionList : state => state.resumeQuestionList,
+<<<<<<< HEAD
+    studentIndex : state => state.studentIndex,
+    coverLetter : state => state.coverLetter,
+    memberList : state => state.memberList,
     
+=======
+    selStdNo : state => state.selStdNo,
+    selectedQuestionNum: state=> state.selectedQuestionNum,
+>>>>>>> ec6dfff68a975f91ae0959f45aad8e60acbba26b
   },
 
   mutations: {
@@ -26,15 +42,58 @@ export default {
     SET_RECRUIT_DETAIL : (state,studySpaceDetail) => state.studySpaceDetail = studySpaceDetail,
     RESET_RESUME_QUESTION_LIST: (state) =>state.resumeQuestionList = [],
     ADD_RESUME_QUESTION_LIST : (state, data) => state.resumeQuestionList.push(data),
+<<<<<<< HEAD
+    SET_STUDENT_INDEX : (state,studentIndex) => state.studentIndex = studentIndex,
+    SET_LETTER_STATE : (state,coverLetter) => state.coverLetter = coverLetter,
+    SET_MEMBER_LSIT_STATE : (state,memberList) => state.memberList = memberList,
   },
 
   actions: {
+
+    async changeToCoverLetter({commit,dispatch},changeInfo){
+      const content =changeInfo[0]
+      const studentindex = changeInfo[1]
+
+      if(content==="coverletter"){
+        await dispatch('getStudyResume',studentindex)
+        commit('SET_LETTER_STATE',true)
+        commit('SET_MEMBER_LSIT_STATE',false)
+      }
+      else if(content==="memberlist"){
+        commit('SET_LETTER_STATE',false)
+        commit('SET_MEMBER_LSIT_STATE',true)
+      }
+    },
+
     saveStudyCoverLetter({getters}, data){
+=======
+    SET_STD_NO: (state, data) => state.selStdNo = data,
+    SET_SELECTED_QUESTION_NUM:(state,data) => state.selectedQuestionNum = data,
+  },
+
+  actions: {
+    async updateStudyNoticeAction({getters}){
+      console.log(getters.studySpaceDetail);
+      const data = {
+        newStdNotice : getters.studySpaceDetail.stdNotice
+      }
+      axios.put(api_url.study.studyNotice(getters.selStdNo),
+        data,
+      ).then(()=>{
+        console.log("공지사항 변경에 성공했습니다.");
+      }).catch(()=>{
+        console.log("공지사항 변경에 실패했습니다.");
+      })
+    },
+
+    async saveStudyCoverLetter({getters}, data){
+>>>>>>> ec6dfff68a975f91ae0959f45aad8e60acbba26b
       console.log(getters.studySpaceList);
       const studentindex = data.studentindex;
       const resumeNo = data.resumeNo;
       const stdNo = getters.studySpaceList[studentindex].stdNo;
-      axios.put(api_url.study.studyCoverLetter(stdNo,resumeNo),
+      console.log(stdNo + " : " + resumeNo);
+      await axios.put(api_url.study.studyCoverLetter(stdNo,resumeNo),
       {},{
         headers : getters.authHeader,
       }).then(()=>{
@@ -44,10 +103,11 @@ export default {
       })
     },
 
-    async getStudyResume({getters, commit},studentindex){
+    async getStudyResume({getters, commit}, studentindex){
       commit('RESET_RESUME_QUESTION_LIST');
-      console.log(getters.studySpaceDetail);
+      commit('SET_STUDENT_INDEX', studentindex)
 
+      console.log(getters.studySpaceDetail);
       const detailCount = getters.studySpaceDetail.detailCounts[studentindex];
       const resumeNo = getters.studySpaceDetail.studyJoins[studentindex].resumeNo;
       console.log(detailCount + " : " + resumeNo);
@@ -58,6 +118,7 @@ export default {
         }
         await axios.get(api_url.resumes.getResumeDetail(),{
             params: data,
+            headers : getters.authHeader,
         }).then((data)=>{
           console.log(data);
           const res = {
@@ -73,8 +134,9 @@ export default {
           console.log(err);
         })
       }
+      console.log(getters.resumeQuestionList)
     },
-    createStudySpace({commit, state},recruitNo){
+    createStudySpace({commit, state, dispatch},recruitNo){
 
       const recruitNoForURL = `?recruitNo=${recruitNo}`
       console.log(api_url.study.studyspace() + recruitNoForURL,)
@@ -84,6 +146,7 @@ export default {
       })
       .then(res => {
         console.log(res.data)
+        dispatch('bringStudySpace')
       })
       .catch(err => {
         console.log(err.response)
@@ -98,16 +161,16 @@ export default {
       })
       .then(res => {
         console.log(res.data)
-        commit('SET_RECRUITMENT_LIST',res.data.studies )
+        commit('SET_RECRUITMENT_LIST',res.data.studies)
       })
       .catch(err => {
         console.log(err.response)
       })
     },
-    bringStudySpaceDetail({commit, getters},stdNo){
-
-      axios({
-        url:api_url.study.studyspacedetail(stdNo),
+    async bringStudySpaceDetail({commit, getters}){
+      console.log(getters.selStdNo)
+      await axios({
+        url:api_url.study.studyspacedetail(getters.selStdNo),
         method : 'get',
         headers: getters.authHeader,
       })
