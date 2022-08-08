@@ -1,5 +1,5 @@
 <template>
-    <div class="card" :class="classArray[itemIndex]" @click="moveToStudyDetail">
+  <!-- <div class="card" :class="classArray[itemIndex]" @click="moveToStudyDetail">
       <img :src="imgsrc" class="card-img-top" alt="..." >
       <div class="card-body">
         <div>
@@ -15,135 +15,90 @@
 
         </div>
       </div>
+    </div> -->
+
+  <!-- <img :src="image" class="d-block w-100" alt="..." /> -->
+  <div class="carousel-caption d-none d-md-block">
+    <div class="row">
+      <h5>
+        <span class="comName" v-if="studySpace.comName != null"
+          >[{{ studySpace.comName }}] </span
+        ><span class="stdName">{{ studySpace.stdName }}</span>
+      </h5>
+      <p class="stdDetail">스터디 설명 : {{ studySpace.stdDetail }}</p>
+      <div class="slider-btn">
+        <span class="moveBtn" @click="moveToStudyDetail"
+          >🏠 스터디 스페이스로 이동</span
+        >
+      </div>
     </div>
-
-
-
-
-
-
-
+  </div>
 </template>
 
 <script>
-import router from '@/common/lib/vue-router'
+import router from "@/common/lib/vue-router";
 
 export default {
-  name : "StudySpaceItem",
-  props:{
-    studySpace : Object,
-    itemIndex : Number
+  name: "StudySpaceItem",
+  props: {
+    studySpace: Object
   },
 
-  data(){
-    return{
-        studyJoins : this.studySpace.studyJoins,
-        classArray : [
-          "col-auto box alizarin",
-          "col-auto box wisteria",
-          "col-auto box emerland",
-          "col-auto box belizehole",
-          "col-auto box sunflower"
-        ],
-        imgsrc: require("@/assets/images/ssafy-logo.png")
-      }
-    },
+  data() {
+    return {
+      studyJoins: this.studySpace.studyJoins,
+      imgsrc: require("@/assets/images/ssafy-logo.png"),
+      image: require("../../../assets/images/background.jpg")
+    };
+  },
   computed: {
     // countStudyJoins(){
     //     const count = this.studyJoins.length
     //     return count
     // }
-
   },
   methods: {
-    moveToStudyDetail(){
+    moveToStudyDetail() {
       router.push({
-        name:"studydetail",
-        params: {stdNo:this.studySpace.stdNo}
-      })
+        name: "studydetail",
+        params: { stdNo: this.studySpace.stdNo }
+      });
     }
-  },
-
-
-
-}
-
+  }
+};
 </script>
 
 <style scoped>
 @import url("https://fonts.googleapis.com/css?family=Poppins:400,500,600,700,800,900");
-.study-item-text{
+.comName {
+  color: #d76d77;
+  font-weight: 1000;
+}
+
+.stdName {
+  font-weight: 100;
+}
+
+.stdDetail {
+  font-size: 18px;
+}
+
+.study-item-text {
   color: rgb(138, 138, 138);
   font-size: 15px;
 }
 
-.card-body{
+.card-body {
   width: auto;
 }
-.study-image{
+
+.study-image {
   width: 100%;
   height: auto;
 }
 
-
-/* #Colors
-================================================== */
-
-.checkbox-all:checked + label:after,
-.checkbox-all:not(:checked) + label:after {
-  background-color: #000;
-}
-
-.checkbox-alizarin:checked + label:after,
-.checkbox-alizarin:not(:checked) + label:after {
-  background-color: #e74c3c;
-}
-
-.checkbox-wisteria:checked + label:after,
-.checkbox-wisteria:not(:checked) + label:after {
-  background-color: #8e44ad;
-}
-
-.checkbox-emerland:checked + label:after,
-.checkbox-emerland:not(:checked) + label:after {
-  background-color: #2ecc71;
-}
-
-.checkbox-belizehole:checked + label:after,
-.checkbox-belizehole:not(:checked) + label:after {
-  background-color: #2980b9;
-}
-
-.checkbox-sunflower:checked + label:after,
-.checkbox-sunflower:not(:checked) + label:after {
-  background-color: #f1c40f;
-}
-
-.box {
-  border-radius: 4px;
-  box-shadow: 6px 7px 28px 0 rgba(16, 16, 16, 0.7);
-  -webkit-transition: all 0.2s linear;
-  transition: all 0.3s linear;
-}
-.box.alizarin {
-  border: 3px solid #e74c3c;
-}
-.box.wisteria {
-  border: 3px solid #8e44ad;
-}
-.box.emerland {
-  border: 3px solid #2ecc71;
-}
-.box.belizehole {
-  border: 3px solid #2980b9;
-}
-.box.sunflower {
-  border: 3px solid #f1c40f;
-}
-
-
-.study-space-item-wrapper{
-  background: #F3F4FF;
-  border-radius: 30px;
+.moveBtn:hover {
+  font-weight: 700;
+  color: #76bef8;
 }
 </style>
