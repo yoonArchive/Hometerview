@@ -12,6 +12,8 @@ export default {
     currentReview: {
     },
 
+    ddays:[],
+    restday:[]
 
   },
 
@@ -19,8 +21,10 @@ export default {
     currentReview: state => state.currentReview,
     reviewContents: state => state.reviewContents,
     numberOfReview : state => state.numberOfReview,
-    authHeader: state => ({ Authorization: `Bearer ${state.token}`}),
-
+    authHeader: stata => ({ Authorization: `Bearer ${state.token}`}),
+    // resumeHeader: state => ({ Authorization: `Bearer ${state.token}`})
+    restday: state => state.restday,
+    currentDdays: state => state.ddays
   },
 
   mutations: {
@@ -32,28 +36,35 @@ export default {
     },
     SET_NUMBER_REVIEW(state, data){
       state.numberOfReview = data;
+    },
+    SET_DDAYS(state, data){
+      state.ddays = data;
+    },
+    SET_RESTDAYS(state, data){
+      state.restday = data;
     }
   },
 
   actions: {
     //회고 리스트
-    getReviewInfo({commit, rootGetters, state}){
+    getReviewInfo({commit, getters, state}){
       axios.get(api_url.review.reviews(), {
-        headers : this.getters.authHeader,
+        headers : getters.authHeader,
       }).then((data)=>{
         console.log(data.data.reviews);
         console.log(data.data.reviews.length)
         // commit('SET_CURRENT_REVIEW', data.data)
         commit('SET_REVIEW_CONTENTS', data.data.reviews);
         commit('SET_NUMBER_REVIEW', data.data.reviews.length);
+        console.log('회고리스트 가져오기')
       }).catch((err)=>{
         console.log(err);
       })
     },
     //회고 상세가져오기
-    getReviewDetail({commit, rootGetters,state}, reviewNo){
+    getReviewDetail({commit, getters,state}, reviewNo){
       axios.get(api_url.review.review(reviewNo), {
-        headers : this.getters.authHeader,
+        headers : getters.authHeader,
       }).then((data)=>{
         console.log(data.data.reviews);
         commit('SET_CURRENT_REVIEW', data.data)
@@ -63,7 +74,7 @@ export default {
     },
     //회고 작성하기
 
-    createReview({ commit, getters }, newreview) {
+    createReview({ commit, getters, dispatch}, newreview) {
 
 
       console.log('김')
@@ -76,25 +87,44 @@ export default {
         .then(res => {
           commit('SET_CURRENT_REVIEW', res.data)
           console.log('공지사항 작성 성공' + res)
-          router.push({
-            name: 'review',
-            params: { reviewNo: getters.currentReview.reviewNo  }
-          })
+          dispatch('getReviewInfo');
+          // router.push({
+          //   name: 'review',
+          //   params: { reviewNo: getters.currentReview.reviewNo  }
+          // })
+        })
+    },
+    //달력에서 리뷰 생성하기
+    createReview1({ commit, getters, dispatch }, newreview) {
+
+
+      console.log('김')
+      axios({
+        url: api_url.review.reviews(),
+        method: 'post',
+        data: newreview,
+        headers: getters.authHeader,
+      })
+        .then(res => {
+          commit('SET_CURRENT_REVIEW', res.data)
+          console.log('공지사항 작성 성공' + res)
+          dispatch('getReviewInfo');
         })
     },
     //회고 수정하기
-    updateReview({ commit, getters }, { reviewNo, reviewType, reviewTitle, reviewContents}) {
+    updateReview({ commit, getters, dispatch }, { reviewNo, reviewType, reviewTitle, reviewContents}) {
       console.log(reviewTitle)
       console.log(reviewContents)
       axios({
         url: api_url.review.review(reviewNo),
         method: 'put',
         data: { reviewTitle, reviewContents, reviewType },
-        headers: this.getters.authHeader,
+        headers: getters.authHeader,
       })
         .then(res => {
 
           commit('SET_CURRENT_REVIEW', res.data)
+          dispatch('getReviewInfo')
           router.push({
             name: 'review',
             params: { reviewNo: getters.currentReview.reviewNo }
@@ -102,20 +132,118 @@ export default {
         })
     },
     //회고 삭제하기
-    deleteReview({ commit, getters }, reviewNo) {
+    deleteReview({ commit, getters, dispatch }, reviewNo) {
       if (confirm('정말 삭제하시겠습니까?')) {
         axios({
           url: api_url.review.review(reviewNo),
           method: 'delete',
-          headers: this.getters.authHeader,
+          headers: getters.authHeader,
         })
           .then(() => {
             commit('SET_CURRENT_REVIEW', {})
+            dispatch('getReviewInfo')
             router.push({ name: 'myinterview' })
           })
           .catch(err => console.error(err.response))
       }
     },
 
+    //달력에서 지우기
+    deleteReview1({ commit, getters }, reviewNo) {
+      if (confirm('정말 삭제하시겠습니까?')) {
+        axios({
+          url: api_url.review.review(reviewNo),
+          method: 'delete',
+          headers: getters.authHeader,
+        })
+          .then(() => {
+            commit('SET_CURRENT_REVIEW', {})
+            // router.push({ name: 'myinterview' })
+          })
+          .catch(err => console.error(err.response))
+      }
+    },
+
+
+    //dday 리스트 가져오기
+    getDdayInfo({commit, getters, state}){
+      axios.get(api_url.accounts.dday(), {
+        headers : getters.authHeader,
+      }).then((res)=>{
+        console.log(res.data);
+        // commit('SET_CURRENT_REVIEW', data.data)
+        commit('SET_DDAYS', res.data.ddays);
+        commit('SET_RESTDAYS', res.data.results)
+        console.log('디데이 리스트 가져오기 성공')
+      }).catch((err)=>{
+        console.log('dday 리스트 가져오기 에러'+err);
+
+      })
+    },
+
+    //디데이 작성하기
+
+    createDday({ commit, getters, dispatch }, dday) {
+
+
+      console.log('김')
+      axios({
+        url: api_url.accounts.dday(),
+        method: 'post',
+        data: dday,
+        headers: getters.authHeader,
+      })
+        .then(res => {
+          commit('SET_DDAYS', res.data.ddays)
+          dispatch('getDdayInfo')
+          console.log('디데이 작성 성공' + res.data)
+          // router.push({
+          //   name: 'myinterview',
+          // })
+        })
+    },
+     //디데이 수정하기
+     updateDday({ commit, getters, dispatch }, ddays) {
+      const ddayNo = ddays[0];
+      const ddayData = ddays[1];
+
+      axios({
+        url: api_url.accounts.ddayDetail(ddayNo),
+        method: 'put',
+        data: ddayData,
+        headers: getters.authHeader,
+      })
+        .then(res => {
+          commit('SET_DDAYS', res.data.ddays)
+          dispatch('getDdayInfo')
+          console.log('디데이 수정 성공' + res.data)
+          // router.push({
+          //   name: 'myinterview',
+          // })
+        })
+    },
+    //디데이 삭제하기
+    deleteDDAY({ commit, getters,dispatch }, ddayNo) {
+      if (confirm('정말 삭제하시겠습니까?')) {
+        axios({
+          url: api_url.accounts.ddayDetail(ddayNo),
+          method: 'delete',
+          headers: getters.authHeader,
+        })
+          .then(() => {
+            commit('SET_DDAYS', {})
+            dispatch('getDdayInfo')
+            console.log('디데이 삭제 성공' + res.data)
+            // router.push({
+            //   name: 'myinterview',
+            // })
+          })
+          .catch(err => console.error(err.response))
+      }
+    },
+
+
   },
+
+
 }

@@ -13,7 +13,7 @@
     data() {
       return {
         review: {
-          reviewNo: null,
+          // reviewNo: null,
           reviewContents: '',
           reviewTitle: '',
           reviewType: 'REAL'

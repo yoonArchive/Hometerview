@@ -55,19 +55,6 @@ import MainFooter from "./components/main-footer";
 
 
 
-<<<<<<< HEAD
-// window.addEventListener('scroll', () => {
-
-//   const [red, green, blue] = [101, 63, 211]
-//   const section1 = document.querySelector(".mainBackground");
-//   let y = 1 + (window.scrollY || window.pageYOffset) / 5000
-//   y = y < 1 ? 1 : y // ensure y is always >= 1 (due to Safari's elastic scroll)
-//   const [r, g, b] = [red*y, green/y, blue*y]
-//   section1.style.background = `rgb(${r}, ${g}, ${b})`
-
-// })
-=======
->>>>>>> ac4a3f1d2aa462cd2427ad818e8e0247746bcdf3
 export default {
   name: "Main",
   components: {

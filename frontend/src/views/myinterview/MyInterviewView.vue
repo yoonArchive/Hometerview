@@ -44,130 +44,89 @@
             </tr>
           </tbody>
         </table>
+        <div class="buttonbundle">
+      <button id="button-review" @click="showReviewForm = true">작성하기</button>
+        <!-- <router-link class="routerlink" :to="{ name: 'reviewNew' }">
+          <p id="a">회고록 작성하기</p>
+        </router-link> -->
+       <ReviewForm v-if="showReviewForm" @close="showReviewForm = false" :review="reviewContents" action="create">
+        <h3 slot="header">모달 창 제목</h3>
+        </ReviewForm>
 
 
-
-    <div class="buttonbundle">
-      <button id="button-review">
-        <router-link class="routerlink" :to="{ name: 'reviewNew' }">
-          <p id="a">새로 만들기</p>
-        </router-link>
-      </button>
   </div>
-  </div>
+  <hr>
+      <h1>DDAY 목록</h1>
+    <div class="review-3">
+        <div class="card" style="width: 15rem;" v-for="(ddays, index) in currentDdays" :key="index">
+          <div class="card-body">
+            <h5 class="card-title">{{ddays.ddayTitle}}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">날짜 {{ddays.ddayDate}}</h6>
+            <p  v-if="(restday[index] < 0)" class="card-text-1">D-DAY {{restday[index]}} </p>
+            <p  v-else class="card-text-2">D-DAY {{restday[index]}} </p>
+            <button  @click="showModalE = true">수정</button>
+                <ModalEdit v-if="showModalE" @close="showModalE = false" :dday="ddays" >
+                  <h3 slot="header">모달 창 제목</h3>
+                </ModalEdit>
+            <button @click="deleteDDAY(ddays.ddayNo)">삭제</button>
+          </div>
+        </div>
+    </div>
 
-  <Fullcalendar v-bind:options="options"/>
-  </div>
+  	<button id="button-review" @click="showModal = true"><p id="a">DDAY 작성하기</p></button>
 
+     <Modaldday v-if="showModal" @close="showModal = false" :dday="currentDdays">
+
+       <h3 slot="header">모달 창 제목</h3>
+     </Modaldday>
+  </div>
+  <hr>
+    <DemoCalander :reviews="reviewContents" :dday="currentDdays"></DemoCalander>
+
+
+</div>
 </template>
-<script setup>
-import {ref, reactive, watch} from 'vue'
-import '@fullcalendar/core/vdom'
-import Fullcalendar from '@fullcalendar/vue3'
-import dayGridPlugin from '@fullcalendar/daygrid'
-import timeGridPlugin from '@fullcalendar/timegrid'
-import listPlugin from '@fullcalendar/list'
-import interactionPlugin from '@fullcalendar/interaction'
-import useEvents from './useEvent'
-// import '@fullcalendar/core/main.css';
-// import '@fullcalendar/daygrid/main.css';
-
-
-
-const { getEvents, createEvent, updateEvent, deleteEvent } = useEvents()
-mapActions(['getReviewInfo', 'getReviewDetail','createReview','updateReview','deleteReview'])
-
-const id= ref(10)
-const options = reactive({
-  plugins: [dayGridPlugin,timeGridPlugin,listPlugin,interactionPlugin],
-  initialView: 'dayGridMonth',
-  headersToolbar: {
-    left: 'prev, next, today',
-    center: 'title',
-    right: 'dayGridMonth, dayGridWeek, listDay'
-
-  },
-  editable: true,
-  selectable: true,
-  weekends: true,
-  select: (arg) => {
-
-    console.log('arg')
-    id.value = id.value +1
-
-    const cal = arg.view.calendar
-    cal.unselect()
-    cal.addEvent({
-      id: `${id.value}`,
-      title: `New event ${id.value}`,
-      start: arg.start,
-      end: arg.end,
-      allDay:true
-    })
-  },
-  eventClick: (arg) =>{
-    console.log(arg.event.title)
-  },
-  events: [],
-  eventAdd: (arg) => {
-    createEvent({
-      // id: arg.event.id,
-      reviewTitle: arg.event.title,
-      // start: arg.event.start,
-      // end: arg.event.end,
-      reviewDate: arg.event.allDay
-    })
-  },
-  eventChange: (arg) => {
-    updateEvent({
-      id: arg.event.id,
-      title: arg.event.title,
-      start: arg.event.start,
-      end: arg.event.end,
-      allDay: arg.event.allDay
-    }, arg.event.id)
-  },
-  eventRemove: (arg) => {
-    deleteEvent(arg.event.id)
-  },
-
-})
-options.events = getEvents.value
-watch(getEvents, () => {
-  options.events = getEvents.value
-})
-</script>
-
-
 
 <script>
-
+const today = new Date()
 import { mapActions, mapGetters } from 'vuex'
-// import { assertTSMethodSignature } from '@babel/types'
-
+import Modaldday from './components/modal-dday'
+import ModalEdit from './components/modal-ddayEdit.vue'
+import ReviewForm from './review/components/ReviewForm.vue'
+import DemoCalander from './DemoApp'
 export default {
   components:{
+    DemoCalander,
+    Modaldday,
+    ModalEdit,
+    ReviewForm
     },
   data(){
     return {
-      calendarOptions: {
-        plugins: [ dayGridPlugin, interactionPlugin ],
-        initialView: 'dayGridMonth',
-        dateClick: this.handleDateClick,
-        events: [
-          { title: 'event 1', date: '2019-04-01' },
-          { title: 'event 2', date: '2019-04-02' }
-        ]
+      ddays:{
+        ddayTitle:'',
+        ddayDate:''
       },
-
-
-
+      showModal: false ,
+      showModalE : false,
+      showReviewForm: false,
       roomName : '',
-      headers: ['번호','제목', '작성시간', '유형']
+      headers: ['번호','제목', '날짜', '유형'],
+      // reviewContents:{},
+      // review:{}
     }
   },
   computed:{
-    ...mapGetters(['resumeContents','numberOfResume', 'reviewContents','numberOfReview']),
+    ...mapGetters(['resumeContents',
+    'numberOfResume',
+    'reviewContents',
+    'numberOfReview',
+    'currentDdays',
+    'restday',
+
+
+    ]),
+
   },
   methods:{
     handleDateClick: function(arg) {
@@ -176,9 +135,10 @@ export default {
     ...mapActions([
       "getResumeInfo",
       "getReviewInfo",
-      "addNewResume"
-
-
+      "addNewResume",
+      "getDdayInfo",
+      "deleteReview",
+      "deleteDDAY"
 
       ]),
     findresumes(){
@@ -188,58 +148,30 @@ export default {
       this.addNewResume();
     },
 
-    findreveiw(){
-      this.getReviewInfo();
-    },
-    onDateClick (payload) {
-      const title = prompt('Please enter a new title for your event')
-
-      if (!title) {
-        return
-      }
-
-      const id = (this.events.length + 1) * 10
-      const { start, end, date, allDay } = payload
-
-      return this.createEvent({
-        id,
-        title,
-        date,
-        start,
-        end,
-        allDay
-      })
+    getReview(){
+      this.getReviewInfo()
     },
 
-    onDateSelect (payload) {
-      return this.onDateClick(payload)
-    },
-
-    onEventClick ({ event }) {
-      const confirmed = confirm(`Are you sure you want to delete the event '${event.title}'?`)
-
-      if (!confirmed) {
-        return
-      }
-
-      return this.deleteEvent(event.id)
-    },
-
-    onEventDrop ({ event }) {
-      return this.updateEvent(event)
+    getDday(){
+      this.getDdayInfo()
     }
 
   },
   mounted(){
     this.findresumes();
-    this.findreveiw();
-  }
+    this.getReview();
+    this.getDday();
+
+  },
+
+
+
 }
 </script>
 
 <style scoped>
 
-  @import './fullcalander/main.css';
+  @import './main.css';
   /* @import './fullcalander/main.js'; */
 
 #cover-router{
@@ -339,5 +271,28 @@ b { /* used for event dates/times */
 .fc { /* the calendar root */
   max-width: 1100px;
   margin: 0 auto;
+}
+
+.review-3{
+  display: flex;
+  flex-direction: row;
+  margin: 30px;
+}
+.card{
+  margin: 20px;
+}
+.card-text-2{
+  background-color: rgb(114, 209, 114);
+  border-radius: 10%;
+  color: white;
+  padding: 5px;
+
+}
+
+.card-text-1{
+  background-color: rgb(236, 145, 145);
+  border-radius: 10%;
+  color: white;
+  padding: 5px;
 }
 </style>
