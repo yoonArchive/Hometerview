@@ -1,11 +1,12 @@
 <template>
   <div class="row row-cols-1 row-cols-md-3 g-4">
-    <study-space-item
-      v-for="studySpace in studySpaceList"
-      :key="studySpace.std_no"
-      :studySpace="studySpace"
-    ></study-space-item>
+    <div class="col" v-for="(studySpace,index) in studySpaceList" :key="studySpace.std_no">
+      <study-space-item
+        :studySpace="studySpace"
+        :itemIndex="index"
+      ></study-space-item>
 
+    </div>
   </div>
 </template>
 
@@ -32,8 +33,14 @@ export default {
   methods: {
     ...mapActions(['bringStudySpace']),
   },
+<<<<<<< HEAD
   mounted(){
     this.bringStudySpace()
+=======
+ mounted(){
+    this.bringStudySpace()
+
+>>>>>>> ec6dfff68a975f91ae0959f45aad8e60acbba26b
   },
 
 }

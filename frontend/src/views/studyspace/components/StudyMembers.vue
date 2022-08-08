@@ -1,5 +1,20 @@
 <template>
+  <div class="member">
+    <div class="study-member-wrapper">
+      <div class="row justify-content-between">
+        <div class="col-8">
+          {{ member.user.userId }}  {{ member.user.userName }}  {{ member.user.userEmail }}
+        </div>
+        <div class="col-4">
+          <div class="d-flex flex-row-reverse">
+            <button @click="kickMember(stdMemberInfo)" v-if="studySpaceDetail.joinType==='LEADER' && member.joinType!=='LEADER'"> 추방하기 </button>
+            <router-link :to="{ name: 'membercoverletter', params: { studentindex : studentindex } }">
+              <i class="far fa-file-alt fa-lg" style="color:#653FD3"></i>
+            </router-link>
+          </div>
+        </div>
 
+<<<<<<< HEAD
   <div class="member"> 
      &nbsp;&nbsp;&nbsp;
      {{ member.joinType }}
@@ -9,8 +24,11 @@
     <router-link :to="{ name: 'membercoverletter', params: { studentindex : studentindex } }">
       자소서 보기
     </router-link>
+=======
+      </div>
+    </div>
+>>>>>>> ec6dfff68a975f91ae0959f45aad8e60acbba26b
   </div>
-
 </template>
 <script>
 import router from '@/common/lib/vue-router'
@@ -22,7 +40,7 @@ export default {
     member:Object,
     studentindex:Number,
   },
-  
+
 
   data(){
     return{
@@ -42,17 +60,23 @@ export default {
 }
 </script>
 
+<<<<<<< HEAD
 <style scoped>
 
+=======
+<style>
+.study-member-wrapper{
+  padding: 5%;
+}
+>>>>>>> ec6dfff68a975f91ae0959f45aad8e60acbba26b
 .member{
   box-sizing: border-box;
-  width: 840px;
-  height: 150px;
+  width: 100%;
   /* left: 300px;
   top: 391px; */
-  
+
   background: #FCFCFC;
-  border: 1px solid #000000;
+  border: 1px solid #653FD3;
   border-radius: 30px;
 
 }
