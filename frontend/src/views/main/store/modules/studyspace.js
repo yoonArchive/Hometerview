@@ -13,10 +13,6 @@ export default {
     studentIndex : null,
     coverLetter : false,
     memberList : true,
-<<<<<<< HEAD
-=======
-
->>>>>>> feature/FE/v-calander
     selectedQuestionNum: 0,
     selStdNo: Number,
 
