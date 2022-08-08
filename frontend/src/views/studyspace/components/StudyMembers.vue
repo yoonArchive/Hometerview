@@ -14,20 +14,8 @@
           </div>
         </div>
 
-<<<<<<< HEAD
-  <div class="member"> 
-     &nbsp;&nbsp;&nbsp;
-     {{ member.joinType }}
-    <button @click="kickMember(stdMemberInfo)" v-if="studySpaceDetail.joinType==='LEADER' && member.joinType!=='LEADER'"> 추방하기 </button><br>
-    &nbsp;&nbsp; {{ member.user.userId }} &nbsp; {{ member.user.userName }} &nbsp; {{ member.user.userEmail }} <br>
-    {{ member.user.ueserImg }}   {{ member.user.joinTyp }}   {{ member.user.resumeNo }}
-    <router-link :to="{ name: 'membercoverletter', params: { studentindex : studentindex } }">
-      자소서 보기
-    </router-link>
-=======
       </div>
     </div>
->>>>>>> ec6dfff68a975f91ae0959f45aad8e60acbba26b
   </div>
 </template>
 <script>
@@ -60,15 +48,11 @@ export default {
 }
 </script>
 
-<<<<<<< HEAD
-<style scoped>
 
-=======
-<style>
+<style scoped>
 .study-member-wrapper{
   padding: 5%;
 }
->>>>>>> ec6dfff68a975f91ae0959f45aad8e60acbba26b
 .member{
   box-sizing: border-box;
   width: 100%;

@@ -33,14 +33,9 @@ export default {
   methods: {
     ...mapActions(['bringStudySpace']),
   },
-<<<<<<< HEAD
+
   mounted(){
     this.bringStudySpace()
-=======
- mounted(){
-    this.bringStudySpace()
-
->>>>>>> ec6dfff68a975f91ae0959f45aad8e60acbba26b
   },
 
 }
