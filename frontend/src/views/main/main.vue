@@ -22,11 +22,6 @@
     <div>
       <img :src="images[4]" alt="" class="main-image" />
     </div>
-
-    <login-dialog
-      :open="loginDialogOpen"
-      @closeLoginDialog="onCloseLoginDialog"
-    />
   </div>
 </template>
 <style>
@@ -36,13 +31,7 @@
 @import "../../common/css/element-plus.css";
 </style>
 <script>
-import LoginDialog from "./components/login-dialog";
-import MainHeader from "./components/main-header";
-import MainSidebar from "./components/main-sidebar";
-import MainFooter from "./components/main-footer";
 
-
-// window.addEventListener('scroll', () => {
 
 //   const [red, green, blue] = [101, 63, 211]
 //   const section1 = document.querySelector(".mainBackground");
@@ -51,20 +40,13 @@ import MainFooter from "./components/main-footer";
 //   const [r, g, b] = [red*y, green/y, blue*y]
 //   section1.style.background = `rgb(${r}, ${g}, ${b})`
 
-// })
-
 export default {
   name: "Main",
   components: {
-    MainHeader,
-    MainSidebar,
-    MainFooter,
-    LoginDialog
   },
 
   data() {
     return {
-      loginDialogOpen: false,
       images: [
         require("../../assets/images/main1.png"),
         require("../../assets/images/main2.png"),
@@ -76,12 +58,6 @@ export default {
     };
   },
   methods: {
-    onOpenLoginDialog() {
-      this.loginDialogOpen = true;
-    },
-    onCloseLoginDialog() {
-      this.loginDialogOpen = false;
-    }
   },
   created() {},
   destroyed() {},

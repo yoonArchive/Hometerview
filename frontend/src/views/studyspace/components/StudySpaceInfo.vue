@@ -83,9 +83,9 @@ export default {
     ...mapActions(['bringStudySpaceDetail','leaveStudy','updateStudyNoticeAction']),
     ...mapMutations(['SET_STD_NO']),
       moveToSession(){
-        router.push({ 
+        router.push({
           name: 'session',
-          params : {sessionNo:this.stdNo} 
+          params : {sessionNo:this.stdNo}
         })
       },
     autoResizeTextarea(e){

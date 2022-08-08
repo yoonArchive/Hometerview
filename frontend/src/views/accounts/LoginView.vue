@@ -45,6 +45,7 @@
                         </div>
                         <button class="btn mt-4">로그인</button>
                       </form>
+                      <!-- <button class="btn mt-4" @click="kakaoLoginBtn()">카카오 로그인</button> -->
                       <router-link to="/home/findid">
                         <div class="find_id mb-0 mt-4 text-center">
                           아이디 찾기

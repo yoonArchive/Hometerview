@@ -61,7 +61,7 @@
     },
     data(){
       return{
-        
+
         recruitDetail:{
           comName: '',
           endDate: '',

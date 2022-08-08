@@ -13,6 +13,10 @@ export default {
     studentIndex : null,
     coverLetter : false,
     memberList : true,
+<<<<<<< HEAD
+=======
+
+>>>>>>> feature/FE/v-calander
     selectedQuestionNum: 0,
     selStdNo: Number,
 
@@ -25,10 +29,10 @@ export default {
     resumeQuestionList : state => state.resumeQuestionList,
     studentIndex : state => state.studentIndex,
     coverLetter : state => state.coverLetter,
-    memberList : state => state.memberList,    
+
+    memberList : state => state.memberList,
     selStdNo : state => state.selStdNo,
     selectedQuestionNum: state=> state.selectedQuestionNum,
-
   },
 
   mutations: {
@@ -43,9 +47,7 @@ export default {
     SET_STD_NO: (state, data) => state.selStdNo = data,
     SET_SELECTED_QUESTION_NUM:(state,data) => state.selectedQuestionNum = data,
   },
-
   actions: {
-
     async changeToCoverLetter({commit,dispatch},changeInfo){
       const content =changeInfo[0]
       const studentindex = changeInfo[1]
@@ -73,7 +75,6 @@ export default {
         console.log("공지사항 변경에 실패했습니다.");
       })
     },
-
     async saveStudyCoverLetter({getters}, data){
       console.log(getters.studySpaceList);
       const studentindex = data.studentindex;
@@ -89,7 +90,6 @@ export default {
         console.log(err);
       })
     },
-
     async getStudyResume({getters, commit}, studentindex){
       commit('RESET_RESUME_QUESTION_LIST');
       commit('SET_STUDENT_INDEX', studentindex)

@@ -34,7 +34,8 @@ export default {
     ...mapActions(['bringStudySpace']),
   },
 
-  mounted(){
+
+mounted(){
     this.bringStudySpace()
   },
 

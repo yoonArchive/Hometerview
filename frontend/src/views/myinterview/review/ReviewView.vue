@@ -64,7 +64,7 @@ export default {
       this.getReviewDetail(this.reviewNo)
     },
   },
-  created(){
+  mounted(){
     this.findreviewDetail();
     console.log(this.reviewNo)
 
