@@ -51,7 +51,6 @@
 </template>
 
 <script>
-<<<<<<< HEAD
   import CreateMembersRecruitmentForm from './components/CreateMembersRecruitmentForm.vue'
   import {mapActions} from 'vuex'
 
