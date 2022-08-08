@@ -5,6 +5,12 @@
     &nbsp;&nbsp; {{ member.user.userId }} &nbsp; {{ member.user.userName }} &nbsp; {{ member.user.userEmail }} <br>
     {{ member.user.ueserImg }}   {{ member.user.joinTyp }}   {{ member.user.resumeNo }}
     <button @click="changeToCoverLetter(['coverletter',studentindex])">자소서 보기</button>
+
+
+    <!-- 여기에 leader일때만 인터뷰어 지정 체크 버튼 생성 -->
+    <!-- 면접관이 지정 되었을 경우 메인 화면으로 그 사람이 메인 화면으로 바뀌게 만들어야 함 -->
+    <!-- 메인 스트림으로 띄울수 있게 만들면 될 것 같음 -->
+
   </div>
 </template>
 

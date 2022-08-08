@@ -100,7 +100,7 @@ export default {
         })
       }
     },
-    createStudySpace({commit, state},recruitNo){
+    createStudySpace({commit, state, dispatch},recruitNo){
 
       const recruitNoForURL = `?recruitNo=${recruitNo}`
       console.log(api_url.study.studyspace() + recruitNoForURL,)
@@ -110,6 +110,7 @@ export default {
       })
       .then(res => {
         console.log(res.data)
+        dispatch('bringStudySpace')
       })
       .catch(err => {
         console.log(err.response)
@@ -124,7 +125,7 @@ export default {
       })
       .then(res => {
         console.log(res.data)
-        commit('SET_RECRUITMENT_LIST',res.data.studies )
+        commit('SET_RECRUITMENT_LIST',res.data.studies)
       })
       .catch(err => {
         console.log(err.response)

@@ -16,14 +16,14 @@
 
 				<!-- 마이크 ONOFF-->
 				<div>
-					<button v-if="audioOnoff" @click="audioONOFF">비디오ON</button>
-					<button v-else @click="audioONOFF">비디오OFF</button>
+					<button v-if="audioOnoff" @click="audioONOFF()">오디오ON</button>
+					<button v-else @click="audioONOFF()">오디오OFF</button>
 				</div>
 
 				<!-- 비디오 ONOFF -->
 				<div>
-					<button v-if="videoOnoff" @click="videoONOFF">오디오ON</button>
-					<button v-else @click="videoONOFF">오디오OFF</button>
+					<button v-if="videoOnoff" @click="videoONOFF()">비디오ON</button>
+					<button v-else @click="videoONOFF()">비디오OFF</button>
 				</div>
 
 				<!-- 화면 공유 -->
@@ -129,8 +129,8 @@ export default {
 			participant: false,
 
 			// function
-			videoOnOff: true,
-			audioOnOff: true,
+			videoOnOff: false,
+			audioOnOff: false,
 			mirrorOnOff: true,
 
 			//scree share
@@ -148,21 +148,21 @@ export default {
 	},
 	computed:{
 		...mapGetters(['currentUser']),
-		audioONOFF(){
-      this.publisher.publishAudio(!this.audioOnOff);
-      this.audioOnOff = !this.audioOnOff;
-		},
-		videoONOFF(){
-      this.publisher.publishVideo(!this.videoOnOff);
-      this.videoOnOff = !this.videoOnOff;
-		},
-		mirrorONOFF(){
-			this.publisher.publishVideo(!this.mirrorOnOff);
-      this.mirrorOnOff = !this.mirrorOnOff;
-		}
 	},
 
 	methods: {
+			audioONOFF(){
+				this.publisher.publishAudio(!this.audioOnOff);
+				this.audioOnOff = !this.audioOnOff;
+			},
+			videoONOFF(){
+				this.publisher.publishVideo(!this.videoOnOff);
+				this.videoOnOff = !this.videoOnOff;
+			},
+			// mirrorONOFF(){
+			// 	this.publisher.publishVideo(!this.mirrorOnOff);
+			// 	this.mirrorOnOff = !this.mirrorOnOff;
+			// },
 
 		// 기본 기능 (입장하기 퇴장하기)
 		joinSession () {

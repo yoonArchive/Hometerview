@@ -101,7 +101,7 @@
       },
       async studyStart(){
         await this.createStudySpace(this.recruitNo)
-        await this.bringStudySpace()
+        // await this.bringStudySpace()
         await router.push({ name:'study'})
       }
     },

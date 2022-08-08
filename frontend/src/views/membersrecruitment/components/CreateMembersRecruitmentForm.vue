@@ -120,7 +120,7 @@
       upload(){
         const formData = new FormData()
         formData.append('multipartFile',this.newrecruitmentInfo.stdImg)
-        formData.append('recruitInfoReq.recruitTitle',this.newrecruitmentInfo.comName)
+        formData.append('recruitInfoReq.comName',this.newrecruitmentInfo.comName)
         formData.append('recruitInfoReq.endDate',this.newrecruitmentInfo.endDate)
         formData.append('recruitInfoReq.recruitTitle',this.newrecruitmentInfo.recruitTitle)
         formData.append('recruitInfoReq.startDate',this.newrecruitmentInfo.startDate)
