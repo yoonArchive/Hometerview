@@ -8,12 +8,13 @@
 </template>
 
 <script>
-import SelectInterveiweeDetail from './SelectInterveiweeDetail.vue'
+import SelectIntervieweeDetail from './SelectIntervieweeDetail.vue'
+import {mapGetters,mapActions} from 'vuex'
 
 export default {
-  name:'SelectInterveiwee',
+  name:'SelectInterviewee',
   components:{
-    SelectInterveiweeDetail
+    SelectIntervieweeDetail
   },
   data(){
     return{

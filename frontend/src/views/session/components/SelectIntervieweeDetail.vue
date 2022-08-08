@@ -13,7 +13,7 @@
 <script>
 import { mapActions,mapGetters } from 'vuex'
 export default {
-  name:'SelectInterveiweeDetail',
+  name:'SelectIntervieweeDetail',
   props:{
     member:Object,
     studentindex:Number,
