@@ -7,7 +7,7 @@
 </template>
 <script>
 import CreateMembersRecruitmentForm from './components/CreateMembersRecruitmentForm.vue'
-import { mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name : 'MembersRecruitmentView',
@@ -25,6 +25,12 @@ export default {
     ...mapGetters(['recruitDetail']),
 
   },
+  methods:{
+    ...mapActions(['bringRecruitmentDetail'])
+  },
+  created(){
+    this.bringRecruitmentDetail(recruitNo)
+  }
 
 
 }

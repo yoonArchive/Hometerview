@@ -74,7 +74,7 @@ export default {
   },
   study: {
     studyspace: () => HOST + STUDY,
-
+    studyNotice : (stdNo) => HOST + STUDY + NOTICE + `${stdNo}`,
     studys: stdNo => HOST + STUDY,
     commonquestions: stdNo => HOST + STUDY + `${stdNo}/` + "common",
     commonquestion: (stdNo, questionNo) =>
@@ -89,6 +89,7 @@ export default {
 
   },
   session:{
-    createSession : () => OPENVIDU_SERVER_URL + OPENVIDU + SESSIONS
+    createSession : () => OPENVIDU_SERVER_URL + OPENVIDU + SESSIONS,
+    createToken : () => OPENVIDU_SERVER_URL + OPENVIDU + SESSIONS + `${sessionId}/` + 'connection'
   }
 }

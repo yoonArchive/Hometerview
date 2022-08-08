@@ -907,14 +907,6 @@
   "resolved" "https://registry.npmjs.org/@discoveryjs/json-ext/-/json-ext-0.5.2.tgz"
   "version" "0.5.2"
 
-"@fullcalendar/bootstrap5@^5.11.2":
-  "integrity" "sha512-7ecGg6murflLmNG+ME8NKip8lw6g5pJNRaPhmprryP5xyZQw42XKz7M5DEe3aIDqA4H5Fbq3Cr4fgtgN7mc4/A=="
-  "resolved" "https://registry.npmjs.org/@fullcalendar/bootstrap5/-/bootstrap5-5.11.2.tgz"
-  "version" "5.11.2"
-  dependencies:
-    "@fullcalendar/common" "~5.11.2"
-    "tslib" "^2.1.0"
-
 "@fullcalendar/common@~5.11.2":
   "integrity" "sha512-2YBRs4IFrZlo7UL7hEHK+QgnuQnVIfwSspCOy0Qe+DtU2hu3myPrxsW0Tt/8RaoWsRndRDw5jeJzpjcVHDSSGQ=="
   "resolved" "https://registry.npmjs.org/@fullcalendar/common/-/common-5.11.2.tgz"
@@ -7755,9 +7747,9 @@
     "source-map-js" "^1.0.2"
 
 "preact@^10.0.5":
-  "integrity" "sha512-fszkg1iJJjq68I4lI8ZsmBiaoQiQHbxf1lNq+72EmC/mZOsFF5zn3k1yv9QGoFgIXzgsdSKtYymLJsrJPoamjQ=="
-  "resolved" "https://registry.npmjs.org/preact/-/preact-10.10.0.tgz"
-  "version" "10.10.0"
+  "integrity" "sha512-cXljG59ylGtSLismoLojXPAGvnh2ipQr3BYz9KZQr+1sdASCT+sR/v8dSMDS96xGCdtln2wHfAHCnLJK+XcBNg=="
+  "resolved" "https://registry.npmjs.org/preact/-/preact-10.10.1.tgz"
+  "version" "10.10.1"
 
 "prepend-http@^1.0.0":
   "integrity" "sha1-1PRWKwzjaW5BrFLQ4ALlemNdxtw="

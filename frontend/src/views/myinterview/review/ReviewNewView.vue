@@ -20,6 +20,9 @@
         }
       }
     },
+    updated() {
+      event
+    },
   }
 </script>
 
