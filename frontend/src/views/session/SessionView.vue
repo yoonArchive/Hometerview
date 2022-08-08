@@ -19,12 +19,12 @@
 					<button v-if="audioOnoff" @click="audioONOFF()">오디오ON</button>
 					<button v-else @click="audioONOFF()">오디오OFF</button>
 				</div>
-
 				<!-- 비디오 ONOFF -->
 				<div>
-					<button v-if="videoOnoff" @click="videoONOFF()">비디오ON</button>
-					<button v-else @click="videoONOFF()">비디오OFF</button>
+					<button v-if="videoOnoff" @click="videoONOFF()">비디오ON {{ videoOnoff }}</button>
+					<button v-else @click="videoONOFF()">비디오OFF {{ videoOnoff }}</button>
 				</div>
+
 
 				<!-- 화면 공유 -->
 				<div>
@@ -129,8 +129,8 @@ export default {
 			participant: false,
 
 			// function
-			videoOnOff: false,
-			audioOnOff: false,
+			videoOnOff: true,
+			audioOnOff: true,
 			mirrorOnOff: true,
 
 			//scree share
@@ -151,13 +151,15 @@ export default {
 	},
 
 	methods: {
-			audioONOFF(){
-				this.publisher.publishAudio(!this.audioOnOff);
-				this.audioOnOff = !this.audioOnOff;
+			videoONOFF(){	
+				console.log(this.videoOnOff)
+				this.publisher.publishVideo(!this.videoOnOff)
+				this.videoOnOff = !this.videoOnOff
 			},
-			videoONOFF(){
-				this.publisher.publishVideo(!this.videoOnOff);
-				this.videoOnOff = !this.videoOnOff;
+			audioONOFF(){
+				console.log(this.audioOnOff)
+				this.publisher.publishAudio(!this.audioOnOff)
+				this.audioOnOff = !this.audioOnOff
 			},
 			// mirrorONOFF(){
 			// 	this.publisher.publishVideo(!this.mirrorOnOff);
