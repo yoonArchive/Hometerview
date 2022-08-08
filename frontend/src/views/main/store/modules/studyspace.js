@@ -13,7 +13,6 @@ export default {
     studentIndex : null,
     coverLetter : false,
     memberList : true,
-    resumeQuestionList: [],
     selectedQuestionNum: 0,
     selStdNo: Number,
   },
