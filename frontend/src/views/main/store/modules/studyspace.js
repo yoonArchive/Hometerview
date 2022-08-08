@@ -6,15 +6,16 @@ import router from "@/common/lib/vue-router";
 export default {
   // namespaced: true,
   state: {
-    studySpaceList: [],
-    studySpaceDetail: {},
-    token: localStorage.getItem("token") || "",
+    studySpaceList : [],
+    studySpaceDetail : {},
+    token: localStorage.getItem('token') || '' ,
+    resumeQuestionList : [],
+    studentIndex : null,
+    coverLetter : false,
+    memberList : true,
     resumeQuestionList: [],
     selectedQuestionNum: 0,
     selStdNo: Number,
-    studentIndex: null,
-    coverLetter: false,
-    memberList: true
   },
 
   getters: {
