@@ -14,15 +14,15 @@
 
       <div class="modal-body">
        <slot name="body">
-          <input type="text" v-model="ddays.ddayTitle">
-          <input type="date" v-model="ddays.ddayDate">
+          <input type="text" v-model="ddays.ddayTitle" required>
+          <input type="date" v-model="ddays.ddayDate" required>
        </slot>
       </div>
 
-
+      {{dday}}
       <div class="modal-footer">
        <slot name="footer">
-        <button class="modal-default-button" @click="updateDday([dday.ddayNo, ddays])">수정하기</button>
+        <button class="modal-default-button" @click="updateDday([dday.ddayNo, ddays]), $emit('close')">수정하기</button>
 
         <button class="modal-default-button" @click="$emit('close')">
 
@@ -44,6 +44,7 @@ import { mapActions, mapGetters } from 'vuex'
 export default {
   props:{
     dday: Object,
+    key: Number
 
   },
   data(){
@@ -55,6 +56,7 @@ export default {
 
 
     }
+
   },
   methods: {
     ...mapActions([
@@ -62,8 +64,18 @@ export default {
       "updateDday"
 
       ]),
-  },
 
+    checkModal(){
+      if (this.dday.ddayNo !== this.key){
+        this.$emit('close')
+      }
+    }
+  },
+  mounted() {
+    console.log('밑에 디데이'+this.dday)
+    console.log('키' + this.key)
+    // this.checkModal()
+  },
 }
 </script>
 

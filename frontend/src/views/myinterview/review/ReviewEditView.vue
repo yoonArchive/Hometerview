@@ -17,15 +17,16 @@ import { mapGetters, mapActions } from 'vuex'
     data() {
       return {
         review: {
-          reviewNo: null,
-          reviewContents: this.currentReview.reviewContents,
-          reviewTitle: this.currentReview.reviewTitle,
-          reviewType: this.currentReview.reviewType
-
           // reviewNo: null,
-          // reviewContents: '',
-          // reviewTitle: '',
-          // reviewType:''
+
+          // reviewContents: this.currentReview.reviewContents,
+          // reviewTitle: this.currentReview.reviewTitle,
+          // reviewType: this.currentReview.reviewType
+
+          reviewNo: null,
+          reviewContents: '',
+          reviewTitle: '',
+          reviewType:''
         }
       }
     },

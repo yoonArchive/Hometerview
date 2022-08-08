@@ -45,6 +45,7 @@
           </tbody>
         </table>
         <div class="buttonbundle">
+
       <button id="button-review" @click="showReviewForm = true">작성하기</button>
         <!-- <router-link class="routerlink" :to="{ name: 'reviewNew' }">
           <p id="a">회고록 작성하기</p>
@@ -52,20 +53,22 @@
        <ReviewForm v-if="showReviewForm" @close="showReviewForm = false" :review="reviewContents" action="create">
         <h3 slot="header">모달 창 제목</h3>
         </ReviewForm>
-
+    <!-- <ReviewNewView ></ReviewNewView> -->
 
   </div>
   <hr>
       <h1>DDAY 목록</h1>
-    <div class="review-3">
-        <div class="card" style="width: 15rem;" v-for="(ddays, index) in currentDdays" :key="index">
+      {{currentDdays}}
+    <div class="review-3 ">
+        <div class="card " style="width: 15rem;" v-for="(ddays, index) in currentDdays" :key="index">
           <div class="card-body">
             <h5 class="card-title">{{ddays.ddayTitle}}</h5>
+            {{ddays}}
             <h6 class="card-subtitle mb-2 text-muted">날짜 {{ddays.ddayDate}}</h6>
             <p  v-if="(restday[index] < 0)" class="card-text-1">D-DAY {{restday[index]}} </p>
             <p  v-else class="card-text-2">D-DAY {{restday[index]}} </p>
-            <button  @click="showModalE = true">수정</button>
-                <ModalEdit v-if="showModalE" @close="showModalE = false" :dday="ddays" >
+            <button @click="showModalE = true">수정</button>
+                <ModalEdit v-if="showModalE" @close="showModalE = false" :dday="ddays" :key="ddays.ddayNo" >
                   <h3 slot="header">모달 창 제목</h3>
                 </ModalEdit>
             <button @click="deleteDDAY(ddays.ddayNo)">삭제</button>
@@ -89,18 +92,23 @@
 
 <script>
 const today = new Date()
+
 import { mapActions, mapGetters } from 'vuex'
 import Modaldday from './components/modal-dday'
-import ModalEdit from './components/modal-ddayEdit.vue'
-import ReviewForm from './review/components/ReviewForm.vue'
+import ModalEdit from './components/modal-ddayEdit'
+import ReviewForm from './review/components/ReviewForm'
+// import ReviewNew from './review/components/ReviewNewView'
 import DemoCalander from './DemoApp'
+import ReviewNewView from './review/ReviewNewView.vue'
 export default {
   components:{
     DemoCalander,
     Modaldday,
     ModalEdit,
-    ReviewForm
-    },
+    ReviewForm,
+    // ReviewNew,
+    ReviewNewView
+},
   data(){
     return {
       ddays:{
@@ -108,10 +116,13 @@ export default {
         ddayDate:''
       },
       showModal: false ,
-      showModalE : false,
+      showModalE: false,
       showReviewForm: false,
       roomName : '',
       headers: ['번호','제목', '날짜', '유형'],
+      Editsum: [false*this.ddaylen],
+
+
       // reviewContents:{},
       // review:{}
     }
@@ -123,15 +134,29 @@ export default {
     'numberOfReview',
     'currentDdays',
     'restday',
+    'ddaylen'
 
 
     ]),
 
   },
   methods:{
-    handleDateClick: function(arg) {
-      alert('date click! ' + arg.dateStr)
-    },
+    getLengthOfObject(obj){
+      let lengthOfObject = Object.keys(obj).length;
+      console.log(lengthOfObject);
+},
+    openModal(ddayNo){
+        var index = this.currentDdays.findIndex(function(ddays){
+          return ddays["ddayNo"] === ddayNo
+        })
+        this.stateid = index
+        this.showModalE = true
+      },
+      closeModal(){
+        // this.stateid = 0
+        this.showModalE = false
+
+      },
     ...mapActions([
       "getResumeInfo",
       "getReviewInfo",
@@ -154,13 +179,17 @@ export default {
 
     getDday(){
       this.getDdayInfo()
-    }
+    },
+
+
+
 
   },
   mounted(){
     this.findresumes();
     this.getReview();
     this.getDday();
+    console.log('김'+this.Editsum)
 
   },
 

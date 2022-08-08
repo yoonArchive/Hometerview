@@ -1,24 +1,20 @@
 <template>
-  <el-row
+  <div
     class="main-footer"
     :gutter="10">
     <div class="contents">
       <div class="box">
-        <div class="word">
+        <!-- <div class="word"> -->
           <router-link class="routerlink" :to="{ name: 'notices' }" id="a">
             공지사항
           </router-link>
           <a href="" id="b">이용약관</a>
           <a href="" id="c">고객센터</a>
-        </div>
-        <div class="logo-image">
-          <img :src='imgsource' alt='' id='logo'  />
-        </div>
+        <!-- </div> -->
+      </div>
     </div>
-        </div>
-  </el-row>
+  </div>
 </template>
-
 
 <style scoped>
 .logo-image{
@@ -32,7 +28,8 @@
   width: 50px;
 }
 .word {
-  /* float: left; */
+
+
 }
 #logo {
   width: 150px;
@@ -92,18 +89,18 @@
   }
 
   .word{
-    display: none;
+    /* display: none; */
   }
 }
 @media (max-width: 1218px){
   .word{
-    display: none;
+    /* display: none; */
   }
 }
 @media (min-width: 701px) {
   .main-footer {
-    height: 110px;
-    width: 102%;
+    height: 80px;
+    width: 100%;
     background-color: #653FD3;
     color: white;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.08), 0px 4px 24px rgba(0, 0, 0, 0.08);

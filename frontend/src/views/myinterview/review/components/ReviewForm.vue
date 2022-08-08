@@ -23,7 +23,7 @@
 
 
     <div>
-      <input v-modle="newreview.reviewDate" type="date" name="reviewDate" >
+      <input v-model="newreview.reviewDate" type="date" name="reviewDate" >
     </div>
     <div>
       <input type="radio" name="reviewType" value="REAL" v-model="newreview.reviewType">
@@ -94,8 +94,8 @@ import { mapActions } from 'vuex'
 
   }
 </script>
--->
-<!-- <style scoped>
+
+<style scoped>
 
 .form-control:focus{
   border: solid 3px #856ccf;
@@ -130,7 +130,7 @@ import { mapActions } from 'vuex'
 
       <div class="modal-header">
        <slot name="header">
-        DDAY 를 설정해보세요
+        회고록을 작성해 보세요
        </slot>
       </div>
 
@@ -138,7 +138,7 @@ import { mapActions } from 'vuex'
       <div class="modal-body">
        <slot name="body">
 
-    <form @submit.prevent="onSubmit">
+    <!-- <form @submit.prevent="onSubmit"> -->
       <div class="mb-3">
         <label for="title" class="form-label" >제목: </label>
         <input type="text" class="form-control" v-model="newreview.reviewTitle" id="title" />
@@ -149,17 +149,18 @@ import { mapActions } from 'vuex'
       </div>
 
       <div>
-        <input v-modle="newreview.reviewDate" type="date" name="reviewDate" >
+        <input v-model="newreview.reviewDate" type="date" name="reviewDate" required>
       </div>
+
       <div>
-        <input type="radio" name="reviewType" value="REAL" v-model="newreview.reviewType">
+        <input type="radio" name="reviewType" value="REAL" v-model="newreview.reviewType" required>
         <label for="newreview.reviewType">REAL</label>
-        <input  type="radio" name="reviewType" value="FAKE" v-model="newreview.reviewType">
+        <input  type="radio" name="reviewType" value="FAKE" v-model="newreview.reviewType" required>
         <label for="newreview.reviewType">FAKE</label>
       </div>
-        <!-- <button id="button-review" v-if="action==='create'">만들기</button>
-        <button id="button-review" v-else>수정하기</button> -->
-        </form>
+       <button id="button-review"   v-if="action==='create'" @click="$emit('close'), createReview(this.newreview)">만들기</button>
+      <button id="button-review" v-else  @click="$emit('close'), updateReview(this.newreview)">수정하기</button>
+        <!-- </form> -->
 
         </slot>
         </div>
@@ -195,7 +196,7 @@ export default {
         newreview: {
           // title: this.review.reviewTitle,
           // content: this.review.reviewContents,
-          // reviewNo : this.$route.params.reviewNo,
+          reviewNo : this.$route.params.reviewNo,
           reviewContents: this.review.reviewContents,
           reviewTitle: this.review.reviewTitle,
           reviewType: this.review.reviewType,
@@ -209,10 +210,13 @@ export default {
     },
 
 
+  compute: {
 
+    ...mapGetters(['currentReview'])
+  },
   methods: {
 
-      ...mapActions(['createReview', 'updateReview']),
+      ...mapActions(['createReview', 'updateReview','getReviewDetail']),
       onSubmit() {
         if (this.action === 'create') {
           // this.action = '작성하기'
@@ -225,6 +229,10 @@ export default {
           this.updateReview(payload)
         }
       },
+
+      created(){
+        getReviewDetail(this.review.reviewNo)
+      }
   },
 
 
@@ -309,3 +317,4 @@ export default {
   transform: scale(1.1);
 }
 </style>
+

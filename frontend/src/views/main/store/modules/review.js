@@ -13,7 +13,8 @@ export default {
     },
 
     ddays:[],
-    restday:[]
+    restday:[],
+    ddaylen:''
 
   },
 
@@ -24,7 +25,8 @@ export default {
     authHeader: stata => ({ Authorization: `Bearer ${state.token}`}),
     // resumeHeader: state => ({ Authorization: `Bearer ${state.token}`})
     restday: state => state.restday,
-    currentDdays: state => state.ddays
+    currentDdays: state => state.ddays,
+    ddaylen: state => state.ddaylen
   },
 
   mutations: {
@@ -42,6 +44,9 @@ export default {
     },
     SET_RESTDAYS(state, data){
       state.restday = data;
+    },
+    SET_DDAYLEN(state, data){
+      state.ddaylen = data;
     }
   },
 
@@ -174,6 +179,7 @@ export default {
         // commit('SET_CURRENT_REVIEW', data.data)
         commit('SET_DDAYS', res.data.ddays);
         commit('SET_RESTDAYS', res.data.results)
+        commit('SET_DDAYLEN', res.data.ddays.length)
         console.log('디데이 리스트 가져오기 성공')
       }).catch((err)=>{
         console.log('dday 리스트 가져오기 에러'+err);

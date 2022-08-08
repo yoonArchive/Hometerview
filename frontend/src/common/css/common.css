@@ -1,35 +1,15 @@
 /* 공통으로 적용되어야할 css */
 html, body {
   height: 100vh;
+  font-family: '티머니 둥근바람';
 }
 
 body {
   margin: 0;
-  font-family: SpoqaHanSansNeo;
+
   font-weight: 400;
 }
 
-@media (max-width: 1269px) {
-  .hide-on-small {
-    display: none !important;
-  }
-  .hide-on-big {
-    display: block;
-  }
-}
-
-@media (min-width: 1270px) {
-  html, body {
-    min-width: 1270px;
-  }
-
-  .hide-on-small {
-    display: block;
-  }
-  .hide-on-big {
-    display: none !important;
-  }
-}
 
 @font-face {
   font-family: 'SpoqaHanSansNeo';
