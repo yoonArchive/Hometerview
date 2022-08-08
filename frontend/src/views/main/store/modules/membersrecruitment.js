@@ -34,15 +34,15 @@ export default {
       console.log(getters.authHeader);
       console.log(formData);
       // console.log(formData)
-      console.log("키 값 확인");
-      for (let key of formData.keys()) {
-        console.log(key);
-      }
+      // console.log("키 값 확인");
+      // for (let key of formData.keys()) {
+      //   console.log(key);
+      // }
 
-      console.log("벨류 값 확인");
-      for (let value of formData.values()) {
-        console.log(value);
-      }
+      // console.log("벨류 값 확인");
+      // for (let value of formData.values()) {
+      //   console.log(value);
+      // }
       axios({
         url: api_url.membersrecruitment.membersrecruitments(),
         method: "post",
