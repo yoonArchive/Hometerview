@@ -153,10 +153,9 @@ export default {
         console.log(err.response)
       })
     },
-    async bringStudySpaceDetail({commit, getters}){
-      console.log(getters.selStdNo)
+    async bringStudySpaceDetail({commit, getters},stdSpaceInfo){
       await axios({
-        url:api_url.study.studyspacedetail(getters.selStdNo),
+        url:api_url.study.studyspacedetail(stdSpaceInfo),
         method : 'get',
         headers: getters.authHeader,
       })

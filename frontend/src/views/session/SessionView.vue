@@ -54,6 +54,7 @@
 		<div class="side-panel">
 			<button @click="changeContent('chatting')">메시지</button>
 			<button @click="changeContent('participant')">참가자</button>
+			<button @click="changeContent('selectinterviewee')">면접자 지정</button>
 			<!-- 메시지 -->
 			<div v-if="chatting">
 				<message-list
@@ -70,6 +71,9 @@
 			<div v-if="participant">
 				<study-member-list></study-member-list>
 			</div>
+			<div v-if="usertype==='LEADERS' && selectinterviewee ">
+				<select-interveiwee></select-interveiwee>
+			</div>
 		</div>
 	</div>
 </template>
@@ -84,6 +88,7 @@ import UserVideo from './components/UserVideo'
 import MessageForm from "./components/MessageForm.vue"
 import MessageList from "./components/MessageList.vue"
 import StudyMemberList from "./components/StudyMemberList.vue"
+import SelectInterviewee from "./components/SelectInterviewee.vue"
 
 
 
@@ -102,23 +107,25 @@ export default {
 		MessageForm,
     MessageList,
 		StudyMemberList,
+		SelectInterviewee,
 
 	},
 
 	data () {
 		return {
+			// 방,유저 정보
 			sessionNo : this.$route.params.sessionNo,
+			userType: '',
+			mySessionId: ``,
+			myUserName: '',
+
+
 			OV: undefined,
 			session: undefined,
 			mainStreamManager: undefined,
 			publisher: undefined, //local
 			subscribers: [], // remotes
 
-			//join form
-			mySessionId: ``,
-
-			//user name
-			myUserName: '',
 
 			// massege
 			msgs: [],
@@ -127,6 +134,7 @@ export default {
 			//show
 			chatting: true,
 			participant: false,
+			selectinterviewee : false,
 
 			// function
 			videoOnOff: true,
@@ -147,24 +155,27 @@ export default {
 		}
 	},
 	computed:{
-		...mapGetters(['currentUser']),
+		// studySpaceDetail.joinType
+		...mapGetters(['currentUser','studySpaceDetail']),
 	},
 
 	methods: {
-			videoONOFF(){	
-				console.log(this.videoOnOff)
-				this.publisher.publishVideo(!this.videoOnOff)
-				this.videoOnOff = !this.videoOnOff
-			},
-			audioONOFF(){
-				console.log(this.audioOnOff)
-				this.publisher.publishAudio(!this.audioOnOff)
-				this.audioOnOff = !this.audioOnOff
-			},
+		...mapActions(['bringStudySpaceDetail']),
+		videoONOFF(){	
+			console.log(this.videoOnOff)
+			this.publisher.publishVideo(!this.videoOnOff)
+			this.videoOnOff = !this.videoOnOff
+		},
+		audioONOFF(){
+			console.log(this.audioOnOff)
+			this.publisher.publishAudio(!this.audioOnOff)
+			this.audioOnOff = !this.audioOnOff
+		},
 			// mirrorONOFF(){
 			// 	this.publisher.publishVideo(!this.mirrorOnOff);
 			// 	this.mirrorOnOff = !this.mirrorOnOff;
 			// },
+
 
 		// 기본 기능 (입장하기 퇴장하기)
 		joinSession () {
@@ -417,13 +428,19 @@ export default {
 			if(content==="chatting"){
 				this.chatting = true
 				this.participant = false
+				this.selectinterviewee = false
 			}
 			else if(content==="participant"){
 				this.chatting = false
 				this.participant = true
+				this.selectinterviewee = false
+			}
+			else if(content==="selectinterviewee"){
+				this.chatting = false
+				this.participant = false
+				this.selectinterviewee = true
 			}
 		},
-
 
 
 		//메시지
@@ -442,11 +459,6 @@ export default {
           console.error(error);
         });
     },
-
-
-
-
-
 		changeSessionId(sessionNo){
 			return `Session${sessionNo}`
 		},
@@ -458,10 +470,16 @@ export default {
 		},
 
 	},
+	async created(){
+		await this.bringStudySpaceDetail(this.sessionNo)
+	},
 	async beforeMount(){
 		this.myUserName = await this.currentUser.userName
 		this.mySessionId = await this.changeSessionId(this.sessionNo)
 		this.joinSession()
+	},
+	mounted(){
+		this.userType = this.studySpaceDetail.joinType
 	}
 }
 </script>
