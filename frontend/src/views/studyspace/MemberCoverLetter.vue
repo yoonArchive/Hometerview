@@ -13,13 +13,10 @@
       </div>
 
     </div>
+
     <div v-if="studySpaceDetail.detailCounts[studentindex] == 0 && !isMyInfo">
       아직 공유된 자소서가 없습니다!!
     </div>
-<<<<<<< HEAD
-    <member-cover-letter-detail :studentindex="studentindex"></member-cover-letter-detail>
-    {{isMyInfo}}
-=======
     <div v-else-if="studySpaceDetail.detailCounts[studentindex] == 0 && isMyInfo"></div>
     <div v-else>
       <div class="member-cover-letter-title">
@@ -37,10 +34,7 @@
 
       </div>
       <member-cover-letter-detail :studentindex=studentindex ></member-cover-letter-detail>
-
     </div>
-
->>>>>>> ec6dfff68a975f91ae0959f45aad8e60acbba26b
 
   </div>
 

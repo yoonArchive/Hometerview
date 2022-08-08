@@ -18,11 +18,6 @@
     </div>
 
 
-
-
-
-
-
 </template>
 
 <script>
@@ -38,19 +33,6 @@ export default {
   data(){
     return{
         studyJoins : this.studySpace.studyJoins,
-<<<<<<< HEAD
-        OV: undefined,
-        session: undefined,
-        mainStreamManager: undefined,
-        publisher: undefined, //local
-        subscribers: [], // remotes
-
-			//join form
-			mySessionId: 'SessionA',
-
-			//user name
-			myUserName: 'Participant' + Math.floor(Math.random() * 100),
-=======
         classArray : [
           "col-auto box alizarin",
           "col-auto box wisteria",
@@ -59,7 +41,6 @@ export default {
           "col-auto box sunflower"
         ],
         imgsrc: require("@/assets/images/ssafy-logo.png")
->>>>>>> ec6dfff68a975f91ae0959f45aad8e60acbba26b
       }
     },
   computed: {
