@@ -132,17 +132,20 @@ export default {
       }
       console.log(getters.resumeQuestionList);
     },
-    createStudySpace({ commit, state, dispatch }, recruitNo) {
+    async createStudySpace({ commit, state, getters }, recruitNo) {
       console.log(recruitNo);
       const recruitNoForURL = `?recruitNo=${recruitNo}`;
       console.log(api_url.study.studyspace() + recruitNoForURL);
-      axios({
+      await axios({
         url: api_url.study.studyspace() + recruitNoForURL,
-        method: "post"
+        method: "post",
+        headers: getters.authHeader
       })
         .then(res => {
           console.log(res.data);
-          dispatch("bringStudySpace");
+          console.log(res.data.stdNo);
+          commit("SET_STD_NO", res.data.stdNo);
+          // dispatch("bringStudySpace");
         })
         .catch(err => {
           console.log(err.response);
@@ -164,9 +167,9 @@ export default {
           console.log(err.response);
         });
     },
-    async bringStudySpaceDetail({ commit, getters }, stdSpaceInfo) {
+    async bringStudySpaceDetail({ commit, getters }, stdNo) {
       await axios({
-        url: api_url.study.studyspacedetail(stdSpaceInfo),
+        url: api_url.study.studyspacedetail(stdNo),
         method: "get",
         headers: getters.authHeader
       })
