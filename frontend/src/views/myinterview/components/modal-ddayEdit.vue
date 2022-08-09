@@ -19,7 +19,7 @@
        </slot>
       </div>
 
-      {{dday}}
+
       <div class="modal-footer">
        <slot name="footer">
         <button class="modal-default-button" @click="updateDday([dday.ddayNo, ddays]), $emit('close')">수정하기</button>

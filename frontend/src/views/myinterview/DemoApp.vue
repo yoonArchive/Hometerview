@@ -16,7 +16,7 @@ export default {
   },
   components: {
     FullCalendar,
-    ReviewForm
+    // ReviewForm
 
   },
 
@@ -58,6 +58,7 @@ export default {
         eventClick: this.handleEventClick,
         eventsSet: this.handleEvents,
         locale: 'ko',
+
         buttonText: {
           today:    '오늘',
           month:    '월',
@@ -70,10 +71,11 @@ export default {
 
       }}},
    computed:{
-    ...mapGetters(['currentReview',
+    ...mapGetters([
+    'currentReview',
     'reviewContents'
 
-    ]),
+    ])},
   methods: {
     ...mapActions([
       "getResumeInfo",
@@ -131,11 +133,11 @@ export default {
         reviewType: 'REAL',
         reviewDate: selectInfo.startStr,
       }
-      if (newreview.reviewTitle.length === 0){
+      if (!newreview.reviewTitle){
         alert('제목을 입력하세요')
 
 
-      }else if (newreview.reviewContents.length === 0){
+      }else if (!newreview.reviewContents){
         alert('내용을 입력하세요')
       }else{
         this.createReview1(newreview)
@@ -200,11 +202,11 @@ export default {
 
 
   beforeMount() {
-    // this.checkReview()
+    this.checkReview()
   },
 
 
-}}
+}
 
 
 </script>
@@ -234,7 +236,7 @@ export default {
         </label>
       </div>
       <div class='demo-app-sidebar-section'>
-        <!-- <h2 v-if="(currentEvents.length) ">모든 이벤트({{ currentEvents.length }})</h2>
+       <!-- <h2 v-if="(currentEvents.length) ">모든 이벤트({{ currentEvents.length }})</h2>
         <h2 v-else>이벤트 없음</h2> -->
         <h2>일정</h2>
         <ul>
@@ -261,7 +263,7 @@ export default {
 
 
 <!--모달-->
- <!-- <button id="button-review" @click="showReviewForm = true">작성하기</button> -->
+ <button id="button-review" @click="showReviewForm = true">작성하기</button>
 
        <ReviewForm v-if="showReviewForm" @close="showReviewForm = false" :review="reviewContents" action="create">
         <h3 slot="header">회고록작성 폼</h3>

@@ -56,12 +56,13 @@
   </div>
   <hr>
       <h1>DDAY 목록</h1>
-      {{currentDdays}}
+
     <div class="review-3 ">
         <div class="card " style="width: 15rem;" v-for="(ddays, index) in currentDdays" :key="index">
           <div class="card-body">
             <h5 class="card-title">{{ddays.ddayTitle}}</h5>
-            {{ddays}}
+            <p>{{index}} </p>
+            <p>{{ddays.ddayNo}}</p>
             <h6 class="card-subtitle mb-2 text-muted">날짜 {{ddays.ddayDate}}</h6>
             <p  v-if="(restday[index] < 0)" class="card-text-1">D-DAY {{restday[index]}} </p>
             <p  v-else class="card-text-2">D-DAY {{restday[index]}} </p>
