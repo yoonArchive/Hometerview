@@ -72,7 +72,7 @@
               <button @click="studyApply(recruitNo)">스터디 신청하기</button>
             </div>
             <div v-else>
-              <button>
+              <button @click="goStudySpace()">
                 스터디 스페이스 이동
               </button>
             </div>
@@ -113,7 +113,8 @@ export default {
       "isApplied",
       "applyType",
       "recruitCount",
-      "selStdNo"
+      "selStdNo",
+      "studySpaceNo"
     ])
   },
   methods: {
@@ -142,9 +143,13 @@ export default {
     },
     async studyStart() {
       await this.createStudySpace(this.recruitNo);
-      console.log(this.applyType);
-      console.log(this.selStdNo + "로 이동");
       router.push({ name: "studydetail", params: { stdNo: this.selStdNo } });
+    },
+    goStudySpace() {
+      router.push({
+        name: "studydetail",
+        params: { stdNo: this.studySpaceNo }
+      });
     }
   },
   async created() {

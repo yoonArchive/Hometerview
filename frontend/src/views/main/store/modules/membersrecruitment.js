@@ -9,7 +9,8 @@ export default {
     token: localStorage.getItem("token") || "",
     isApplied: false,
     applyType: "",
-    applyCounts: []
+    applyCounts: [],
+    studySpaceNo: ""
   },
   mutations: {
     SET_TOKEN: (state, token) => (state.token = token),
@@ -18,7 +19,9 @@ export default {
     SET_RECRUIT_DETAIL: (state, recruitDetail) =>
       (state.recruitDetail = recruitDetail),
     SET_APPLY_TYPE: (state, applyType) => (state.applyType = applyType),
-    SET_APPLY_COUNT: (state, applyCounts) => (state.applyCounts = applyCounts)
+    SET_APPLY_COUNT: (state, applyCounts) => (state.applyCounts = applyCounts),
+    SET_STUDYSPACE_NO: (state, studySpaceNo) =>
+      (state.studySpaceNo = studySpaceNo)
   },
   getters: {
     memberHeader: state => `Bearer ${state.token}`,
@@ -84,6 +87,7 @@ export default {
           console.log(res.data.applyType);
           commit("SET_RECRUIT_DETAIL", res.data);
           commit("SET_APPLY_TYPE", res.data.applyType);
+          commit("SET_STUDYSPACE_NO", res.data.stdNo);
         })
         .catch(err => {
           console.log(err.response);
