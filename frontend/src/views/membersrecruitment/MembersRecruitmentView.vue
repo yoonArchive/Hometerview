@@ -183,9 +183,9 @@ export default {
   mounted() {
     window.scrollTo(0, 0);
   },
-  beforeUpdate() {
-    console.log(this.studySpaceList.length);
-  }
+  // beforeUpdate() {
+  //   console.log(this.studySpaceList.length);
+  // }
 };
 </script>
 

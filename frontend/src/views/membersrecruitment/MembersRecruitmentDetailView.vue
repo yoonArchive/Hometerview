@@ -18,12 +18,10 @@
       </h5>
       <h5 v-else style="text-align: center;">[ 자율 면접 스터디 ]</h5>
     </header>
-    <!-- 여기부터 -->
     <section id="banner">
       <span class="image object">
         <img :src="image" alt="" class="stdImg" style="width:550px" />
       </span>
-
       <div class="content">
         <blockquote>
           <div class="info">
@@ -53,13 +51,11 @@
         </div>
         <div>
           <div v-if="applyType === 'LEADER'">
-            <div v-if="recruitDetail.recruitStatus === '모집 중'">
-              <button @click="studyStart(recruitNo)">스터디 시작</button>
-              <button @click="moveToUpdate">수정</button>
-              <button @click="deleteRecruitmentDetail([recruitNo])">
-                삭제
-              </button>
-            </div>
+            <button @click="studyStart()">스터디 시작</button>
+            <button @click="moveToUpdate">수정</button>
+            <button @click="deleteRecruitmentDetail([recruitNo])">
+              삭제
+            </button>
           </div>
           <div
             v-else-if="
@@ -76,7 +72,7 @@
               <button @click="studyApply(recruitNo)">스터디 신청하기</button>
             </div>
             <div v-else>
-              <button @click="goStudySpace(recruitNo)">
+              <button>
                 스터디 스페이스 이동
               </button>
             </div>
@@ -116,7 +112,8 @@ export default {
       "currentUser",
       "isApplied",
       "applyType",
-      "recruitCount"
+      "recruitCount",
+      "selStdNo"
     ])
   },
   methods: {
@@ -126,7 +123,8 @@ export default {
       "deleteRecruitmentDetail",
       "createStudySpace",
       "studyApply",
-      "studyApplyCancel"
+      "studyApplyCancel",
+      "bringStudySpace"
     ]),
     interviewType() {
       if (this.recruitDetail.stdType === "COM") {
@@ -136,15 +134,17 @@ export default {
       }
     },
     moveToUpdate() {
+      console.log(this.recruitNo);
       router.push({
         name: "membersrecruitmentedit",
         params: { recruitNo: this.recruitNo }
       });
     },
-    goStudySpace() {},
     async studyStart() {
       await this.createStudySpace(this.recruitNo);
-      await router.push({ name: "study" });
+      console.log(this.applyType);
+      console.log(this.selStdNo + "로 이동");
+      router.push({ name: "studydetail", params: { stdNo: this.selStdNo } });
     }
   },
   async created() {

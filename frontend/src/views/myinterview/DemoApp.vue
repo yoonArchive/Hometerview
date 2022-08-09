@@ -4,7 +4,7 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import { INITIAL_EVENTS } from './event-utils'
-import ReviewForm from './review/components/ReviewForm.vue'
+import ReviewForm from './components/modal-review.vue'
 import { mapActions, mapGetters } from 'vuex'
 // import review from '../main/store/modules/review'
 const today = new Date().toLocaleString('ko-kr');
@@ -23,6 +23,7 @@ export default {
   data: function() {
     return {
       getReviewOk: true,
+      currentday: null,
       newreview: {
           // title: this.review.reviewTitle,
           // content: this.review.reviewContents,
@@ -33,7 +34,7 @@ export default {
           reviewDate: today
           },
       modal: false,
-      showReviewForm: false,
+      reviewmodal: false,
       message: '',
       calendarOptions: {
         plugins: [
@@ -58,6 +59,7 @@ export default {
         eventClick: this.handleEventClick,
         eventsSet: this.handleEvents,
         locale: 'ko',
+
         buttonText: {
           today:    '오늘',
           month:    '월',
@@ -70,10 +72,11 @@ export default {
 
       }}},
    computed:{
-    ...mapGetters(['currentReview',
+    ...mapGetters([
+    'currentReview',
     'reviewContents'
 
-    ]),
+    ])},
   methods: {
     ...mapActions([
       "getResumeInfo",
@@ -92,12 +95,15 @@ export default {
     },
 
     handleDateSelect(selectInfo) {
-      let title = prompt('이벤트, 회고를 작성해보세요')
-      let contents = prompt('내용을 입력하세요')
+      // let title = prompt('이벤트, 회고를 작성해보세요')
+      // let contents = prompt('내용을 입력하세요')
       let calendarApi = selectInfo.view.calendar
-      this.showReviewForm = true
+      this.reviewmodal = true
       calendarApi.unselect() // clear date selection
       let mmax = 0
+      this.currentday = selectInfo.startStr
+      getReviewDetail(selectInfo.id)
+      console.log(this.currentday)
       for (const aareview of this.reviews){
         if (aareview.reviewNo > mmax){
           mmax=aareview.reviewNo
@@ -107,39 +113,39 @@ export default {
 
       }
       console.log('mmax는'+mmax)
-      if (title) {
-        calendarApi.addEvent({
-          id: mmax+1,
-          title,
-          contents,
-          start: selectInfo.startStr,
-          end: selectInfo.endStr,
-          allDay: selectInfo.allDay,
-          color: 'purple'
+      // if (title) {
+      //   calendarApi.addEvent({
+      //     id: mmax+1,
+      //     title,
+      //     contents,
+      //     start: selectInfo.startStr,
+      //     end: selectInfo.endStr,
+      //     allDay: selectInfo.allDay,
+      //     color: 'purple'
 
-        })
-       }
+      //   })
+      //  }
 
 
       // const today = new Date().toLocaleString('ko-kr');
-      const newreview= {
+      // const newreview= {
         // title: this.review.reviewTitle,
         // content: this.review.reviewContents,
         // reviewNo : this.$route.params.reviewNo,
-        reviewContents: contents,
-        reviewTitle: title,
-        reviewType: 'REAL',
-        reviewDate: selectInfo.startStr,
-      }
-      if (newreview.reviewTitle.length === 0){
-        alert('제목을 입력하세요')
+      //   reviewContents: contents,
+      //   reviewTitle: title,
+      //   reviewType: 'REAL',
+      //   reviewDate: selectInfo.startStr,
+      // }
+      // if (!newreview.reviewTitle){
+      //   alert('제목을 입력하세요')
 
 
-      }else if (newreview.reviewContents.length === 0){
-        alert('내용을 입력하세요')
-      }else{
-        this.createReview1(newreview)
-      }
+      // }else if (!newreview.reviewContents){
+      //   alert('내용을 입력하세요')
+      // }else{
+      //   this.createReview1(newreview)
+      // }
       // this.openModal()
 
 
@@ -202,9 +208,12 @@ export default {
   beforeMount() {
     // this.checkReview()
   },
+  // created(){
+  //   this.checkReview()
+  // }
 
 
-}}
+}
 
 
 </script>
@@ -216,10 +225,10 @@ export default {
       <div class='demo-app-sidebar-section'>
         <h2>소개</h2>
 
-        <button v-if="getReviewOk" @click="checkReview(), getReviewOk=false">회고 가져오기</button>
+        <!-- <button v-if="getReviewOk" @click="checkReview(), getReviewOk=false">회고 가져오기</button> -->
         <ul>
           <li>날짜를 선택하고 회고를 작성하세요</li>
-          <li>드래그해서 기간을 설정해보세요</li>
+          <li>빨간색은 DDAY, 보라색은 회고입니다.</li>
           <li>클릭해서 회고를 삭제해 보세요</li>
         </ul>
       </div>
@@ -234,7 +243,7 @@ export default {
         </label>
       </div>
       <div class='demo-app-sidebar-section'>
-        <!-- <h2 v-if="(currentEvents.length) ">모든 이벤트({{ currentEvents.length }})</h2>
+       <!-- <h2 v-if="(currentEvents.length) ">모든 이벤트({{ currentEvents.length }})</h2>
         <h2 v-else>이벤트 없음</h2> -->
         <h2>일정</h2>
         <ul>
@@ -261,9 +270,8 @@ export default {
 
 
 <!--모달-->
- <!-- <button id="button-review" @click="showReviewForm = true">작성하기</button> -->
-
-       <ReviewForm v-if="showReviewForm" @close="showReviewForm = false" :review="reviewContents" action="create">
+ <button id="button-review" @click="reviewmodal = true">작성하기</button>
+       <ReviewForm v-show="reviewmodal" @close="reviewmodal = false" :review="reviewContents" action="create" :currentday="this.currentday">
         <h3 slot="header">회고록작성 폼</h3>
         </ReviewForm>
 </template>

@@ -12,6 +12,43 @@
   </div>
   <!-- <div>{{ reviewContents }}</div> -->
   <!-- <h1>{{numberOfReview}}</h1> -->
+
+  <hr>
+      <h1>DDAY 목록</h1>
+
+    <div class="review-3 ">
+        <div class="card " style="width: 15rem;" v-for="(ddays, index) in currentDdays" :key="index">
+          <div class="card-body">
+            <h5 class="card-title">{{ddays.ddayTitle}}</h5>
+            <p>{{index}} </p>
+            <p>{{ddays.ddayNo}}</p>
+            <h6 class="card-subtitle mb-2 text-muted">날짜 {{ddays.ddayDate}}</h6>
+            <p  v-if="(restday[index] < 0)" class="card-text-1">D-DAY {{restday[index]}} </p>
+            <p  v-else class="card-text-2">D-DAY {{restday[index]}} </p>
+            <button @click="showModalE(ddays.ddayNo), getDdayDetail(ddays.ddayNo)">수정</button>
+                <!-- <ModalEdit v-if="showModalE" @close="showModalE = false" :dday="ddays" :key="ddays.ddayNo+1" >
+                  <h3 slot="header">dday 수정</h3>
+                </ModalEdit> -->
+            <button @click="deleteDDAY(ddays.ddayNo)">삭제</button>
+          </div>
+        </div>
+    </div>
+
+
+    <ModalEdit v-if="openedModal !== null" @close="openedModal = null" :dday="this.dday" :key="this.openedModal" >
+      <h3 slot="header">dday 수정</h3>
+    </ModalEdit>
+
+  	<button id="button-review" @click="showModal = true"><p id="a">DDAY 작성하기</p></button>
+
+     <Modaldday v-if="showModal" @close="showModal = false" :dday="currentDdays">
+
+       <h3 slot="header">dday 생성</h3>
+     </Modaldday>
+  </div>
+  <hr>
+    <DemoCalander :reviews="reviewContents" :dday="currentDdays"></DemoCalander>
+
   <div class="review-2">
     <h1>회고록</h1>
 
@@ -54,37 +91,6 @@
     <!-- <ReviewNewView ></ReviewNewView> -->
 
   </div>
-  <hr>
-      <h1>DDAY 목록</h1>
-      {{currentDdays}}
-    <div class="review-3 ">
-        <div class="card " style="width: 15rem;" v-for="(ddays, index) in currentDdays" :key="index">
-          <div class="card-body">
-            <h5 class="card-title">{{ddays.ddayTitle}}</h5>
-            {{ddays}}
-            <h6 class="card-subtitle mb-2 text-muted">날짜 {{ddays.ddayDate}}</h6>
-            <p  v-if="(restday[index] < 0)" class="card-text-1">D-DAY {{restday[index]}} </p>
-            <p  v-else class="card-text-2">D-DAY {{restday[index]}} </p>
-            <button @click="showModalE = true">수정</button>
-                <ModalEdit v-if="showModalE" @close="showModalE = false" :dday="ddays" :key="ddays.ddayNo+1" >
-                  <h3 slot="header">dday 수정</h3>
-                </ModalEdit>
-            <button @click="deleteDDAY(ddays.ddayNo)">삭제</button>
-          </div>
-        </div>
-    </div>
-
-  	<button id="button-review" @click="showModal = true"><p id="a">DDAY 작성하기</p></button>
-
-     <Modaldday v-if="showModal" @close="showModal = false" :dday="currentDdays">
-
-       <h3 slot="header">dday 생성</h3>
-     </Modaldday>
-  </div>
-  <hr>
-    <DemoCalander :reviews="reviewContents" :dday="currentDdays"></DemoCalander>
-
-
 </div>
 </template>
 
@@ -114,12 +120,13 @@ export default {
         ddayDate:''
       },
       showModal: false ,
-      showModalE: false,
+      // showModalE: false,
       showReviewForm: false,
       roomName : '',
       headers: ['번호','제목', '날짜', '유형'],
       Editsum: [false*this.ddaylen],
-
+      openedModal: null,
+      // dday:this.dday
 
       // reviewContents:{},
       // review:{}
@@ -132,36 +139,30 @@ export default {
     'numberOfReview',
     'currentDdays',
     'restday',
-    'ddaylen'
+    'ddaylen',
+    'dday'
 
 
     ]),
 
   },
   methods:{
+    showModalE(id) {
+      this.openedModal = id
+    },
     getLengthOfObject(obj){
       let lengthOfObject = Object.keys(obj).length;
       console.log(lengthOfObject);
 },
-    openModal(ddayNo){
-        var index = this.currentDdays.findIndex(function(ddays){
-          return ddays["ddayNo"] === ddayNo
-        })
-        this.stateid = index
-        this.showModalE = true
-      },
-      closeModal(){
-        // this.stateid = 0
-        this.showModalE = false
 
-      },
     ...mapActions([
       "getResumeInfo",
       "getReviewInfo",
       "addNewResume",
       "getDdayInfo",
       "deleteReview",
-      "deleteDDAY"
+      "deleteDDAY",
+      "getDdayDetail"
 
       ]),
     findresumes(){
@@ -189,6 +190,11 @@ export default {
     this.getDday();
     console.log('김'+this.Editsum)
 
+  },
+
+  beforeMount() {
+    // this.getReview();
+    // this.getDday();
   },
 
 

@@ -2,7 +2,10 @@
 
   {{ member.user.ueserImg }}
   {{ member.user.userName }}
-  
+  {{ member }}
+
+
+
   <div>
     <label for="selectInterviewee">선택</label>
     <input type="checkbox" id="selectInterviewee" name="selectInterviewee">

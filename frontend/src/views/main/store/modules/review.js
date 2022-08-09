@@ -14,7 +14,9 @@ export default {
 
     ddays:[],
     restday:[],
-    ddaylen:''
+    ddaylen:'',
+
+    dday:[]
 
   },
 
@@ -26,7 +28,8 @@ export default {
     // resumeHeader: state => ({ Authorization: `Bearer ${state.token}`})
     restday: state => state.restday,
     currentDdays: state => state.ddays,
-    ddaylen: state => state.ddaylen
+    ddaylen: state => state.ddaylen,
+    dday: state => state.dday
   },
 
   mutations: {
@@ -47,6 +50,9 @@ export default {
     },
     SET_DDAYLEN(state, data){
       state.ddaylen = data;
+    },
+    SET_DDAY(state, data){
+      state.dday = data;
     }
   },
 
@@ -73,7 +79,7 @@ export default {
       }).then((data)=>{
         console.log(data.data.reviews);
         commit('SET_CURRENT_REVIEW', data.data)
-        // dispatch('getReviewInfo')
+        dispatch('getReviewInfo')
       }).catch((err)=>{
         console.log('회고 상세에러' + err);
       })
@@ -188,6 +194,21 @@ export default {
       })
     },
 
+    //dday 상세 가져오기
+    getDdayDetail({commit, getters, state}, ddayNo){
+      axios.get(api_url.accounts.ddayDetail(ddayNo), {
+        headers : getters.authHeader,
+      }).then((res)=>{
+        console.log(res.data);
+        // commit('SET_CURRENT_REVIEW', data.data)
+        commit('SET_DDAY', res.data);
+        console.log('디데이 상세가져오기 성공')
+      }).catch((err)=>{
+        console.log('dday 상세 가져오기 에러'+err);
+
+      })
+    },
+
     //디데이 작성하기
 
     createDday({ commit, getters, dispatch }, dday) {
@@ -223,10 +244,11 @@ export default {
         .then(res => {
           commit('SET_DDAYS', res.data.ddays)
           dispatch('getDdayInfo')
+          // router.push()
           console.log('디데이 수정 성공' + res.data)
-          // router.push({
-          //   name: 'myinterview',
-          // })
+          router.push({
+            name: 'myinterview',
+          })
         })
     },
     //디데이 삭제하기

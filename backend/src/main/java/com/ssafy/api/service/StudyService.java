@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface StudyService {
 
-    void createStudy(Long recruitNo);
+    Study createStudy(Long recruitNo);
 
     List<Study> getStudyList(Long userNo);
 

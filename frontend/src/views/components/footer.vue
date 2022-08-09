@@ -2,17 +2,11 @@
   <div
     class="main-footer"
     :gutter="10">
-    <div class="contents">
-      <div class="box">
-        <!-- <div class="word"> -->
           <router-link class="routerlink" :to="{ name: 'notices' }" id="a">
             공지사항
           </router-link>
           <a href="" id="b">이용약관</a>
           <a href="" id="c">고객센터</a>
-        <!-- </div> -->
-      </div>
-    </div>
   </div>
 </template>
 
@@ -43,6 +37,7 @@
   font-size: 20px;
   margin-left: 30px;
   font-family: "티머니 둥근바람";
+  text-align: center;
 }
 
 #b {
@@ -69,15 +64,16 @@
   /* flex-direction: row; */
   /* align-items: center; */
   padding: 0px;
-  gap: 40px;
+  /* gap: 40px; */
   margin-left: auto;
 }
 
 @media (max-width: 700px) {
   .main-footer {
-    height: 190px;
+    height: 140px;
     width: 100%;
     color: white;
+    text-align: center;
     background-color: #653FD3;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.08), 0px 4px 24px rgba(0, 0, 0, 0.08);
   }
@@ -98,12 +94,14 @@
 }
 @media (min-width: 701px) {
   .main-footer {
-    height: 80px;
+    height: 40px;
     width: 100%;
+    margin-top: 100px;
     background-color: #653FD3;
     color: white;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.08), 0px 4px 24px rgba(0, 0, 0, 0.08);
-
+    text-align: left;
+    padding: 10px;
 
 
 

@@ -1,5 +1,4 @@
 <template>
-
   <div class="container">
     <h6>스터디 그룹을 만들어 보세요!</h6>
     <form @submit.prevent="submitType(action)" enctype="">
@@ -82,8 +81,9 @@
           v-model="newrecruitmentInfo.stdLimit"
           type="number"
           id="stdLimit"
-          placeholder="4"
           style="width:70px"
+          min="1"
+          max="10"
         />
       </div>
       <div class="py-2 row">
@@ -106,22 +106,6 @@
           placeholder="스터디 설명을 작성하세요."
         />
       </div>
-
-      <!-- <div>
->>>>>>> 322e97b85f1ffcd87d04e0fd6ca27295d20c2bb0
-        이미지 :
-        <label for="stdImg">
-           <button id="file-button">파일</button>
-          <input multiple @change="onInputimage" ref="studyImage" type="file" id="stdImg" style="display:none">
-          <input v-model="newrecruitmentInfo.stdImg" type="image" id="stdImg" >
-        </label>
-<<<<<<< HEAD
-
-      </div>
-      <div>
-      <button id="b-button">{{ action }}</button>
-=======
-      </div> -->
       <div>
         <div class="py-2 row">
           <label for="inputImage" class="title">대표 이미지</label>
@@ -132,19 +116,13 @@
             type="file"
             id="inputImage"
             ref="inputImage"
-            @change="imageSelect"
+            @change="imageSelect()"
             multiple
           />
         </div>
         <button class="form-button-submit button">
           {{ action }}
         </button>
-        <!-- <div class="col-12">
-          <a href="#" class="form-button-submit button icon solid fa-envelope"
-            >Send Message</a
-          >
-        </div> -->
-
       </div>
     </form>
   </div>
@@ -156,77 +134,81 @@ import { mapActions } from "vuex";
 export default {
   name: "CreateMembersRecruitmentForm",
 
-  props:{
-    recruitDetail:Object,
-    action:String,
-    recruitNo:String,
-    },
+  props: {
+    recruitDetail: Object,
+    action: String,
+    recruitNo: String
+  },
 
-    data(){
-      return{
-
-        company : false,
-
-        newrecruitmentInfo:{
-          comName: this.recruitDetail.comName,
-          endDate: this.recruitDetail.endDate,
-          recruitTitle: this.recruitDetail.recruitTitle,
-          startDate: this.recruitDetail.startDate,
-          stdDay: this.recruitDetail.stdDay,
-          stdDetail: this.recruitDetail.stdDetail,
-          stdImg: this.recruitDetail.stdImg,
-          stdLimit: this.recruitDetail.stdLimit,
-          stdName: this.recruitDetail.stdName,
-          stdType: this.recruitDetail.stdType || "COM"
-        }
-
+  data() {
+    return {
+      company: false,
+      newrecruitmentInfo: {
+        comName: this.recruitDetail.comName,
+        endDate: this.recruitDetail.endDate,
+        recruitTitle: this.recruitDetail.recruitTitle,
+        startDate: this.recruitDetail.startDate,
+        stdDay: this.recruitDetail.stdDay,
+        stdDetail: this.recruitDetail.stdDetail,
+        stdImg: this.recruitDetail.stdImg,
+        stdLimit: this.recruitDetail.stdLimit,
+        stdName: this.recruitDetail.stdName,
+        stdType: this.recruitDetail.stdType || "COM"
       }
-
-    },
+    };
+  },
 
   computed: {
     findImage() {
       document.getElementById("inputImage").click();
+    }
+  },
+  methods: {
+    ...mapActions([
+      "createRecruitment",
+      "updateRecruitmentDetail",
+      "deleteRecruitmentDetail"
+    ]),
+    imageSelect() {
+      this.newrecruitmentInfo.stdImg = this.$refs.inputImage.files[0];
     },
-    imageSelect(){
-        this.newrecruitmentInfo.stdImg = this.$refs.inputImage.files[0]
-        console.log(this.newrecruitmentInfo.stdImg)
-      }
-
-    },
-    methods:{
-    ...mapActions(['createRecruitment','updateRecruitmentDetail','deleteRecruitmentDetail' ]),
-    upload(){
-      const formData = new FormData()
-      formData.append('multipartFile',this.newrecruitmentInfo.stdImg)
-      formData.append('recruitInfoReq.comName',this.newrecruitmentInfo.comName)
-      formData.append('recruitInfoReq.endDate',this.newrecruitmentInfo.endDate)
-      formData.append('recruitInfoReq.recruitTitle',this.newrecruitmentInfo.recruitTitle)
-      formData.append('recruitInfoReq.startDate',this.newrecruitmentInfo.startDate)
-      formData.append('recruitInfoReq.stdDay',this.newrecruitmentInfo.stdDay)
-      formData.append('recruitInfoReq.stdDetail',this.newrecruitmentInfo.stdDetail)
-      formData.append('recruitInfoReq.stdLimit',this.newrecruitmentInfo.stdLimit)
-      formData.append('recruitInfoReq.stdName',this.newrecruitmentInfo.stdName)
-      formData.append('recruitInfoReq.stdType',this.newrecruitmentInfo.stdType)
-      return formData
-    },
-    isCompany(type){
-      if(type==="COM"){
-        this.company = false
-      }else{
-        this.company = true
-      }
-    },
-    async submitType(action){
-        if(action==='만들기'){
-          console.log(action)
-          this.createRecruitment(this.newrecruitmentInfo)
-        }
-        else if (action==='수정하기'){
-          this.updateRecruitmentDetail([this.recruitNo,this.newrecruitmentInfo])
-        }
-      }
-
+    upload() {
+      const formData = new FormData();
+      formData.append("multipartFile", this.newrecruitmentInfo.stdImg);
+      formData.append(
+        "recruitInfoReq.comName",
+        this.newrecruitmentInfo.comName
+      );
+      formData.append(
+        "recruitInfoReq.endDate",
+        this.newrecruitmentInfo.endDate
+      );
+      formData.append(
+        "recruitInfoReq.recruitTitle",
+        this.newrecruitmentInfo.recruitTitle
+      );
+      formData.append(
+        "recruitInfoReq.startDate",
+        this.newrecruitmentInfo.startDate
+      );
+      formData.append("recruitInfoReq.stdDay", this.newrecruitmentInfo.stdDay);
+      formData.append(
+        "recruitInfoReq.stdDetail",
+        this.newrecruitmentInfo.stdDetail
+      );
+      formData.append(
+        "recruitInfoReq.stdLimit",
+        this.newrecruitmentInfo.stdLimit
+      );
+      formData.append(
+        "recruitInfoReq.stdName",
+        this.newrecruitmentInfo.stdName
+      );
+      formData.append(
+        "recruitInfoReq.stdType",
+        this.newrecruitmentInfo.stdType
+      );
+      return formData;
     },
     isCompany(type) {
       if (type === "COM") {
@@ -235,17 +217,17 @@ export default {
         this.company = true;
       }
     },
-
     async submitType(action) {
       if (action === "만들기") {
         const formData = await this.upload();
-        await this.createRecruitment(formData);
+        this.createRecruitment(formData);
       } else if (action === "수정하기") {
-        this.updateRecruitmentDetail([this.recruitNo, this.newrecruitmentInfo]);
+        const formData = await this.upload();
+        this.updateRecruitmentDetail([this.recruitNo, formData]);
       }
     }
-}
-
+  }
+};
 </script>
 
 <style scoped>
@@ -254,10 +236,9 @@ h6 {
   margin-right: 30px;
 }
 
-
-#file-button{
+#file-button {
   background-color: #5cb85c;
-  border:0;
+  border: 0;
   outline: 0;
   border-radius: 10%;
   color: white;
@@ -271,7 +252,6 @@ h6 {
 }
 input[type="text"]:focus {
   border: 2px solid #555;
-
 }
 .container {
   border: #d76d77;

@@ -33,7 +33,7 @@ export default {
     SET_TOKEN: (state, token) => (state.token = token),
     SET_STUDYSPACE_LIST: (state, studySpaceList) =>
       (state.studySpaceList = studySpaceList),
-    SET_RECRUIT_DETAIL: (state, studySpaceDetail) =>
+    SET_STUDYSPACE_DETAIL: (state, studySpaceDetail) =>
       (state.studySpaceDetail = studySpaceDetail),
     RESET_RESUME_QUESTION_LIST: state => (state.resumeQuestionList = []),
     ADD_RESUME_QUESTION_LIST: (state, data) =>
@@ -132,24 +132,20 @@ export default {
       }
       console.log(getters.resumeQuestionList);
     },
-    createStudySpace({ commit, state, dispatch }, recruitNo) {
+    async createStudySpace({ commit, state, getters }, recruitNo) {
       console.log(recruitNo);
       const recruitNoForURL = `?recruitNo=${recruitNo}`;
       console.log(api_url.study.studyspace() + recruitNoForURL);
-      axios({
+      await axios({
         url: api_url.study.studyspace() + recruitNoForURL,
-        method: "post"
+        method: "post",
+        headers: getters.authHeader
       })
         .then(res => {
           console.log(res.data);
-          dispatch("bringStudySpace");
-        })
-        .catch(err => {
-          console.log(err.response);
-          alert("이미 스터디를 시작하셨습니다.");
-        })
-        .then(res => {
-          console.log(res.data);
+          console.log(res.data.stdNo);
+          commit("SET_STD_NO", res.data.stdNo);
+          // dispatch("bringStudySpace");
         })
         .catch(err => {
           console.log(err.response);
@@ -157,6 +153,7 @@ export default {
         });
     },
     bringStudySpace({ commit, getters }) {
+      console.log("확인");
       axios({
         url: api_url.study.studyspace(),
         method: "get",
@@ -170,15 +167,15 @@ export default {
           console.log(err.response);
         });
     },
-    async bringStudySpaceDetail({ commit, getters }, stdSpaceInfo) {
+    async bringStudySpaceDetail({ commit, getters }, stdNo) {
       await axios({
-        url: api_url.study.studyspacedetail(stdSpaceInfo),
+        url: api_url.study.studyspacedetail(stdNo),
         method: "get",
         headers: getters.authHeader
       })
         .then(res => {
           console.log(res.data);
-          commit("SET_RECRUIT_DETAIL", res.data);
+          commit("SET_STUDYSPACE_DETAIL", res.data);
         })
         .catch(err => {
           console.log(err.response);

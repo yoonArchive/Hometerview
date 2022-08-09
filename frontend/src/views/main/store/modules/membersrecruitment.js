@@ -31,9 +31,6 @@ export default {
   },
   actions: {
     createRecruitment({ getters }, formData) {
-      console.log(getters.authHeader);
-      console.log(formData);
-      // console.log(formData)
       console.log("키 값 확인");
       for (let key of formData.keys()) {
         console.log(key);
@@ -92,13 +89,17 @@ export default {
           console.log(err.response);
         });
     },
-    updateRecruitmentDetail({ commit }, recruitInfo) {
+    updateRecruitmentDetail({ commit, getters }, recruitInfo) {
       const recruitNo = recruitInfo[0];
       const recruitmentInfo = recruitInfo[1];
       axios({
         url: api_url.membersrecruitment.membersrecruitment(recruitNo),
         method: "put",
-        data: recruitmentInfo
+        data: recruitmentInfo,
+        headers: {
+          Authorization: getters.memberHeader,
+          "Context-Type": "multipart/form-data"
+        }
       })
         .then(res => {
           console.log(res.data);
