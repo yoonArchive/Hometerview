@@ -51,6 +51,9 @@ public class Recruit {
     @Column(name = "std_limit")
     private int stdLimit;
 
+    @Column(name = "std_no")
+    private Long stdNo;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "recruit_status")
     private RecruitStatus recruitStatus;
@@ -78,5 +81,9 @@ public class Recruit {
 
     public void updateStdImg(String fileUrl) {
         this.stdImg = fileUrl;
+    }
+
+    public void addStdNo(Long stdNo) {
+        this.stdNo = stdNo;
     }
 }
