@@ -66,7 +66,7 @@ export default {
       ]),
 
     checkModal(){
-      if (this.dday.ddayNo !== this.key){
+      if (this.dday.ddayNo != this.key){
         this.$emit('close')
       }
     }

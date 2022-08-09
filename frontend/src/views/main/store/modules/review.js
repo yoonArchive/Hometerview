@@ -67,12 +67,13 @@ export default {
       })
     },
     //회고 상세가져오기
-    getReviewDetail({commit, getters,state}, reviewNo){
+    getReviewDetail({commit, getters,dispatch}, reviewNo){
       axios.get(api_url.review.review(reviewNo), {
         headers : getters.authHeader,
       }).then((data)=>{
         console.log(data.data.reviews);
         commit('SET_CURRENT_REVIEW', data.data)
+        // dispatch('getReviewInfo')
       }).catch((err)=>{
         console.log('회고 상세에러' + err);
       })
@@ -117,13 +118,13 @@ export default {
         })
     },
     //회고 수정하기
-    updateReview({ commit, getters, dispatch }, { reviewNo, reviewType, reviewTitle, reviewContents}) {
+    updateReview({ commit, getters, dispatch }, { reviewNo, reviewType, reviewDate, reviewTitle, reviewContents}) {
       console.log(reviewTitle)
       console.log(reviewContents)
       axios({
         url: api_url.review.review(reviewNo),
         method: 'put',
-        data: { reviewTitle, reviewContents, reviewType },
+        data: { reviewTitle, reviewContents, reviewType, reviewDate },
         headers: getters.authHeader,
       })
         .then(res => {

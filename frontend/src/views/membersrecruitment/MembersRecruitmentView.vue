@@ -1,12 +1,57 @@
 <template>
   <div class="container">
+    <div class="row">
+      <div class="title col-md-9">
+        <h5 id="title-name">나의 스터디</h5>
+      </div>
+      <div class="col-md-3">
+        <span>전체</span>
+        <span style="margin-left:25px">신청 완료</span>
+        <span style="margin-left:25px">신청 중</span>
+      </div>
+    </div>
+    <hr />
+    <div
+      id="carouselExampleCaptions"
+      class="carousel slide"
+      data-bs-ride="carousel"
+    >
+      <div class="carousel-inner">
+        <div
+          class="carousel-item"
+          v-for="(studySpace, idx) in studySpaceList"
+          :key="idx"
+          :class="{ active: idx == 0 }"
+        >
+          <study-space-item :studySpace="studySpace"></study-space-item>
+        </div>
+      </div>
+      <button
+        class="carousel-control-prev"
+        type="button"
+        data-bs-target="#carouselExampleCaptions"
+        data-bs-slide="prev"
+      >
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button
+        class="carousel-control-next"
+        type="button"
+        data-bs-target="#carouselExampleCaptions"
+        data-bs-slide="next"
+      >
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
     <div class="row" style="margin-bottom:20px;">
       <div class="title col-md-9">
         <h5 id="title-name">스터디 모집글 목록</h5>
       </div>
       <button
         type="button"
-        class="button small"
+        class="createBtn small"
         @click="moveToCreate"
         style="margin-left:70px"
       >
@@ -71,13 +116,15 @@
 
 <script>
 import MembersRecruitmentItem from "./components/MembersRecruitmentItem.vue";
+import StudySpaceItem from "../studyspace/components/StudySpaceItem.vue";
 import router from "@/common/lib/vue-router.js";
 import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "MembersRecruitmentView",
   components: {
-    MembersRecruitmentItem
+    MembersRecruitmentItem,
+    StudySpaceItem
   },
   data() {
     return {
@@ -85,27 +132,30 @@ export default {
       recruitingState: false,
       recruitSearchKeyword: "",
       recruitType: "1",
-      image: require("../../assets/images/samsung.jpg")
+      image: require("../../assets/images/purple.jpg"),
+      isloading: false,
+      carouselBtnNum: 0
     };
   },
   created() {
     this.bringRecruitmentList();
+    this.bringStudySpace();
+    console.log(this.recruitmentList);
   },
-  computed: { ...mapGetters(["recruitmentList"]) },
+  computed: { ...mapGetters(["recruitmentList", "studySpaceList"]) },
   methods: {
     ...mapActions([
       "bringRecruitSearchList",
       "bringRecruitTypeList",
       "bringRecruitingList",
-      "bringRecruitmentList"
+      "bringRecruitmentList",
+      "bringStudySpace"
     ]),
-
     moveToCreate() {
       router.push({ name: "createmembersrecruitment" });
     },
     // async moveToRecruitSearch(recruitSearchKeyword){
     //   await this.bringRecruitSearchList(recruitSearchKeyword)
-
     // },
     isRecruiting() {
       if (this.recruitState === true) {
@@ -125,10 +175,16 @@ export default {
       } else {
         this.bringRecruitTypeList(this.recruitType);
       }
+    },
+    show(idx) {
+      console.log(idx);
     }
   },
   mounted() {
     window.scrollTo(0, 0);
+  },
+  beforeUpdate() {
+    console.log(this.studySpaceList.length);
   }
 };
 </script>
@@ -159,6 +215,9 @@ export default {
   border-radius: 40%;
   font-family: "티머니 둥근바람";
 } */
+.title {
+  font-family: "티머니 둥근바람 볼드";
+}
 .selectBar {
   border-radius: 10px;
   font-size: 17px;
@@ -239,9 +298,7 @@ button.small,
 .button.small {
   font-size: 0.7em;
 }
-input[type="button"],
-button,
-.button {
+.createBtn {
   -moz-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
   -webkit-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
   -ms-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
@@ -264,9 +321,7 @@ button,
   overflow: hidden;
   text-overflow: ellipsis;
 }
-input[type="button"]:hover,
-button:hover,
-.button:hover {
+.createBtn:hover {
   background-color: #653fd3;
   color: #ffffff;
 }
@@ -294,5 +349,50 @@ textarea {
 }
 .recruitSearch {
   font-size: 19px;
+}
+.carousel {
+  margin-bottom: 5em;
+}
+.carousel-inner {
+  border-radius: 30px;
+  height: 200px;
+  background-color: #282a30;
+}
+.carousel-item {
+  /* margin-top: 30px; */
+  height: 110%;
+  /* min-height: 200px; */
+  background: no-repeat scroll center scroll;
+  background-size: cover;
+}
+.carousel-item::before {
+  /* content: ""; */
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  /* background: #000; */
+  /* opacity: 0.7; */
+}
+.carousel-caption h5 {
+  font-size: 100px;
+  font-weight: 700;
+}
+.carousel-caption p {
+  font-size: 18px;
+  top: 2rem;
+}
+.slider-btn {
+  margin-top: 20px;
+}
+.slider-btn .carouselBtn {
+  background-color: #ff5f6d;
+  columns: white;
+  border-radius: 0;
+  padding: 1.5rem 2rem;
+  font-size: 0.8rem;
+  margin-right: 15px;
 }
 </style>
