@@ -188,7 +188,7 @@ blockquote {
   quotes: none;
   border-left: solid 3px rgba(210, 215, 217, 0.75);
   font-style: italic;
-  margin: 0 0 2em 0;
+  margin: 0 0 1.7em 0;
   padding: 0.5em 0 0.5em 2em;
 }
 #banner {
@@ -333,6 +333,7 @@ header.main > :last-child {
   border-radius: 0.375em;
   border: solid 2px rgba(210, 215, 217, 0.75);
   padding: 0.8em;
+  margin: 0 0 1.7em 0;
   font-size: 20px;
 }
 .box > :last-child,
