@@ -46,6 +46,7 @@ public class StudyServiceImpl implements StudyService {
                 .stdLimit(recruit.getStdLimit())
                 .build();
         studyRepository.save(study);
+        recruit.addStdNo(study.getStdNo());
         this.recruitComplete(recruit);
         //스터디 조인
         List<Apply> applyList = applyRepositorySupport.findApplyByRecruitNo(recruitNo);
