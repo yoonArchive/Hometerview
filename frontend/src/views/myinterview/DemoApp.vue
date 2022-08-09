@@ -4,7 +4,8 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import { INITIAL_EVENTS } from './event-utils'
-import { mapActions } from 'vuex'
+import ReviewForm from './review/components/ReviewForm.vue'
+import { mapActions, mapGetters } from 'vuex'
 // import review from '../main/store/modules/review'
 const today = new Date().toLocaleString('ko-kr');
 
@@ -15,6 +16,7 @@ export default {
   },
   components: {
     FullCalendar,
+    ReviewForm
 
   },
 
@@ -31,6 +33,7 @@ export default {
           reviewDate: today
           },
       modal: false,
+      showReviewForm: false,
       message: '',
       calendarOptions: {
         plugins: [
@@ -66,7 +69,11 @@ export default {
         events:[],
 
       }}},
+   computed:{
+    ...mapGetters(['currentReview',
+    'reviewContents'
 
+    ]),
   methods: {
     ...mapActions([
       "getResumeInfo",
@@ -88,7 +95,7 @@ export default {
       let title = prompt('이벤트, 회고를 작성해보세요')
       let contents = prompt('내용을 입력하세요')
       let calendarApi = selectInfo.view.calendar
-
+      this.showReviewForm = true
       calendarApi.unselect() // clear date selection
       let mmax = 0
       for (const aareview of this.reviews){
@@ -197,7 +204,7 @@ export default {
   },
 
 
-}
+}}
 
 
 </script>
@@ -254,7 +261,11 @@ export default {
 
 
 <!--모달-->
+ <!-- <button id="button-review" @click="showReviewForm = true">작성하기</button> -->
 
+       <ReviewForm v-if="showReviewForm" @close="showReviewForm = false" :review="reviewContents" action="create">
+        <h3 slot="header">회고록작성 폼</h3>
+        </ReviewForm>
 </template>
 
 <style lang='css'>
