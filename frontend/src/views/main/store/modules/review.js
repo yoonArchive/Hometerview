@@ -73,7 +73,7 @@ export default {
       }).then((data)=>{
         console.log(data.data.reviews);
         commit('SET_CURRENT_REVIEW', data.data)
-        // dispatch('getReviewInfo')
+        dispatch('getReviewInfo')
       }).catch((err)=>{
         console.log('회고 상세에러' + err);
       })
@@ -223,10 +223,11 @@ export default {
         .then(res => {
           commit('SET_DDAYS', res.data.ddays)
           dispatch('getDdayInfo')
+          // router.push()
           console.log('디데이 수정 성공' + res.data)
-          // router.push({
-          //   name: 'myinterview',
-          // })
+          router.push({
+            name: 'myinterview',
+          })
         })
     },
     //디데이 삭제하기

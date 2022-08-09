@@ -8,6 +8,7 @@
       <div class="modal-header">
        <slot name="header">
         DDAY 를 설정해보세요
+        <button @click="checkdday()"></button>
        </slot>
       </div>
 
@@ -27,7 +28,7 @@
         <button class="modal-default-button" @click="$emit('close')">
 
          닫기</button>
-
+        {{this.ddaykim}}
        </slot>
       </div>
      </div>
@@ -45,18 +46,25 @@ export default {
   props:{
     dday: Object,
     key: Number
-
   },
   data(){
     return {
       ddays:{
       ddayDate:this.dday.ddayDate,
       ddayTitle:this.dday.ddayTitle
-}
+
+
+},
+  ddaykim:{
+
+      }
 
 
     }
 
+  },
+  computed:{
+    ...mapGetters(['currentDdays'])
   },
   methods: {
     ...mapActions([
@@ -68,15 +76,31 @@ export default {
     checkModal(){
       if (this.dday.ddayNo != this.key){
         this.$emit('close')
-      }
-    }
-  },
+
+      } },
+
+    checkdday() {
+      for (aa of currentDdays){
+        if (aa.ddayNo ===this.key ){
+          this.ddayKim = aa
+        }
+      }console.log('kim')
+    },
+
+
+
+
   mounted() {
     console.log('밑에 디데이'+this.dday)
     console.log('키' + this.key)
-    // this.checkModal()
+    this.checkModal()
+
   },
-}
+  created(){
+    console.log('폼생성')
+    this.checkModal()
+  }
+}}
 </script>
 
 
