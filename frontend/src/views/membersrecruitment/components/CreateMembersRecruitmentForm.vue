@@ -82,8 +82,9 @@
           v-model="newrecruitmentInfo.stdLimit"
           type="number"
           id="stdLimit"
-          placeholder="4"
           style="width:70px"
+          min="1"
+          max="10"
         />
       </div>
       <div class="py-2 row">
@@ -106,22 +107,6 @@
           placeholder="스터디 설명을 작성하세요."
         />
       </div>
-
-      <!-- <div>
->>>>>>> 322e97b85f1ffcd87d04e0fd6ca27295d20c2bb0
-        이미지 :
-        <label for="stdImg">
-           <button id="file-button">파일</button>
-          <input multiple @change="onInputimage" ref="studyImage" type="file" id="stdImg" style="display:none">
-          <input v-model="newrecruitmentInfo.stdImg" type="image" id="stdImg" >
-        </label>
-<<<<<<< HEAD
-
-      </div>
-      <div>
-      <button id="b-button">{{ action }}</button>
-=======
-      </div> -->
       <div>
         <div class="py-2 row">
           <label for="inputImage" class="title">대표 이미지</label>
@@ -132,19 +117,13 @@
             type="file"
             id="inputImage"
             ref="inputImage"
-            @change="imageSelect"
+            @change="imageSelect()"
             multiple
           />
         </div>
         <button class="form-button-submit button">
           {{ action }}
         </button>
-        <!-- <div class="col-12">
-          <a href="#" class="form-button-submit button icon solid fa-envelope"
-            >Send Message</a
-          >
-        </div> -->
-
       </div>
     </form>
   </div>
@@ -164,9 +143,7 @@ export default {
 
     data(){
       return{
-
         company : false,
-
         newrecruitmentInfo:{
           comName: this.recruitDetail.comName,
           endDate: this.recruitDetail.endDate,
@@ -179,23 +156,20 @@ export default {
           stdName: this.recruitDetail.stdName,
           stdType: this.recruitDetail.stdType || "COM"
         }
-
       }
-
     },
 
   computed: {
     findImage() {
       document.getElementById("inputImage").click();
     },
-    imageSelect(){
-        this.newrecruitmentInfo.stdImg = this.$refs.inputImage.files[0]
-        console.log(this.newrecruitmentInfo.stdImg)
-      }
 
     },
     methods:{
     ...mapActions(['createRecruitment','updateRecruitmentDetail','deleteRecruitmentDetail' ]),
+    imageSelect(){
+        this.newrecruitmentInfo.stdImg = this.$refs.inputImage.files[0]
+      },
     upload(){
       const formData = new FormData()
       formData.append('multipartFile',this.newrecruitmentInfo.stdImg)
@@ -218,32 +192,15 @@ export default {
       }
     },
     async submitType(action){
-        if(action==='만들기'){
-          console.log(action)
-          this.createRecruitment(this.newrecruitmentInfo)
+      if(action==='만들기'){
+        const formData = await this.upload()
+        this.createRecruitment(formData)
         }
-        else if (action==='수정하기'){
-          this.updateRecruitmentDetail([this.recruitNo,this.newrecruitmentInfo])
-        }
-      }
-
-    },
-    isCompany(type) {
-      if (type === "COM") {
-        this.company = false;
-      } else {
-        this.company = true;
-      }
-    },
-
-    async submitType(action) {
-      if (action === "만들기") {
-        const formData = await this.upload();
-        await this.createRecruitment(formData);
-      } else if (action === "수정하기") {
-        this.updateRecruitmentDetail([this.recruitNo, this.newrecruitmentInfo]);
+      else if (action==='수정하기'){
+        this.updateRecruitmentDetail([this.recruitNo,this.newrecruitmentInfo])
       }
     }
+    },
 }
 
 </script>

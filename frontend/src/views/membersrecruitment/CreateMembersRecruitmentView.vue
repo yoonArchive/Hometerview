@@ -69,7 +69,7 @@
           startDate: '',
           stdDay: '',
           stdDetail: '',
-          stdLimit: '',
+          stdLimit: 3,
           stdName: '',
           stdType: 'COM',
           stdImg : File,
