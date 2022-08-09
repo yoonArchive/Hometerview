@@ -1,7 +1,6 @@
 <template>
   <div class="container">
     <header>
-      <!-- <h4 style="text-align: center; "></h4> -->
       <h3 style="text-align: center; ">
         <span
           v-if="recruitDetail.recruitStatus === '모집 중'"
