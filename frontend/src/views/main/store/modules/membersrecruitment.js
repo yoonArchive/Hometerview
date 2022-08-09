@@ -31,9 +31,6 @@ export default {
   },
   actions: {
     createRecruitment({ getters }, formData) {
-      console.log(getters.authHeader);
-      console.log(formData);
-      // console.log(formData)
       console.log("키 값 확인");
       for (let key of formData.keys()) {
         console.log(key);
