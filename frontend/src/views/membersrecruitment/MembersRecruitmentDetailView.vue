@@ -51,11 +51,15 @@
             <span>{{ recruitDetail.count }}/{{ recruitDetail.stdLimit }}</span>
           </div>
         </div>
-        <div class="applyBtn">
+        <div>
           <div v-if="applyType === 'LEADER'">
-            <button @click="studyStart(recruitNo)">스터디 시작</button>
-            <button @click="moveToUpdate">수정</button>
-            <button @click="deleteRecruitmentDetail([recruitNo])">삭제</button>
+            <div v-if="recruitDetail.recruitStatus === '모집 중'">
+              <button @click="studyStart(recruitNo)">스터디 시작</button>
+              <button @click="moveToUpdate">수정</button>
+              <button @click="deleteRecruitmentDetail([recruitNo])">
+                삭제
+              </button>
+            </div>
           </div>
           <div
             v-else-if="
@@ -67,13 +71,26 @@
               스터디 신청 취소
             </button>
           </div>
-          <div
-            v-else-if="
-              applyType === null && recruitDetail.recruitStatus === '모집 중'
+          <div v-else-if="applyType === null">
+            <div v-if="recruitDetail.recruitStatus === '모집 중'">
+              <button @click="studyApply(recruitNo)">스터디 신청하기</button>
+            </div>
+            <div v-else>
+              <button @click="goStudySpace(recruitNo)">
+                스터디 스페이스 이동
+              </button>
+            </div>
+          </div>
+          <!-- <div
+            v-if="
+              applyType === 'LEADER' &&
+                recruitDetail.recruitStatus === '모집 완료'
             "
           >
-            <button @click="studyApply(recruitNo)">스터디 신청하기</button>
-          </div>
+            <button @click="studyApplyCancel(recruitNo)">
+              스터디 신청 취소
+            </button>
+          </div> -->
         </div>
       </div>
     </section>
@@ -124,6 +141,7 @@ export default {
         params: { recruitNo: this.recruitNo }
       });
     },
+    goStudySpace() {},
     async studyStart() {
       await this.createStudySpace(this.recruitNo);
       await router.push({ name: "study" });
@@ -164,17 +182,11 @@ h3 {
   font-weight: 600;
   font-size: 25px;
 }
-.title {
-  font-size: 15;
-}
 .info {
   margin-bottom: 12px;
 }
 .comName {
   color: #f56a6a;
-}
-.applyBtn {
-  margin-top: 20px;
 }
 blockquote {
   quotes: none;
@@ -320,6 +332,9 @@ header.main > :last-child {
 }
 .image.main img {
   width: 100%;
+}
+.image :hover {
+  transform: scale(1.03);
 }
 .box {
   border-radius: 0.375em;
