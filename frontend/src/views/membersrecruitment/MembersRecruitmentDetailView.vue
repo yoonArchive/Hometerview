@@ -44,7 +44,7 @@
             >
           </div>
           <div class="info">
-            <span class="detail">⏰&nbsp; 진행 일자 : </span>
+            <span class="detail">⏰ &nbsp; 진행 일자 : </span>
             <span>{{ recruitDetail.stdDay }}</span>
           </div>
           <div v-if="recruitDetail.recruitStatus === '모집 중'" class="info">
@@ -54,16 +54,9 @@
         </div>
         <div class="applyBtn">
           <div v-if="applyType === 'LEADER'">
+            <button @click="studyStart(recruitNo)">스터디 시작</button>
             <button @click="moveToUpdate">수정</button>
             <button @click="deleteRecruitmentDetail([recruitNo])">삭제</button>
-            <button @click="studyStart(recruitNo)">스터디 시작</button>
-            <button
-              type="button"
-              class="btn btn-bd-primary"
-              style="color:indigo"
-            >
-              Primary
-            </button>
           </div>
           <div
             v-else-if="
@@ -341,8 +334,6 @@ header.main > :last-child {
 .box > :last-child > :last-child > :last-child {
   margin-bottom: 0;
 }
-input[type="submit"],
-input[type="reset"],
 input[type="button"],
 button,
 .button {
@@ -371,6 +362,7 @@ button,
   text-decoration: none;
   text-transform: uppercase;
   white-space: nowrap;
+  margin: 0 0.5em 0 0;
 }
 input[type="button"]:hover,
 button:hover,
