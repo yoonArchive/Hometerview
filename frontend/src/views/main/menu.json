@@ -1,22 +1,15 @@
 {
-  "mystudy" : {
-    "name" : "마이스터디",
-    "hidden" : false,
-    "path" : "/home/study",
-    "icon" : "el-icon-s-home",
-    "children" : []
+  "findstudy": {
+    "name": "스터디 찾기",
+    "hidden": false,
+    "path": "/home/membersrecruitment",
+    "icon": "el-icon-s-order",
+    "children": []
   },
-  "findstudy" : {
-    "name" : "스터디 찾기",
-    "hidden" : false,
-    "path" : "/home/membersrecruitment",
-    "icon" : "el-icon-s-order",
-    "children" : []
-  },
-  "myinterview":{
-    "name":"나의 면접",
-    "hidden" :false,
-    "path" : "/home/myinterview",
-    "children" : []
+  "myinterview": {
+    "name": "나의 면접",
+    "hidden": false,
+    "path": "/home/myinterview",
+    "children": []
   }
 }

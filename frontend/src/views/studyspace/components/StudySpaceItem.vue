@@ -83,20 +83,6 @@ export default {
   font-size: 18px;
 }
 
-.study-item-text {
-  color: rgb(138, 138, 138);
-  font-size: 15px;
-}
-
-.card-body {
-  width: auto;
-}
-
-.study-image {
-  width: 100%;
-  height: auto;
-}
-
 .moveBtn:hover {
   font-weight: 700;
   color: #76bef8;
