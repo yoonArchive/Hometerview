@@ -17,6 +17,9 @@ import java.util.List;
 @ApiModel("StudyResponse")
 public class StudyRes extends BaseResponseBody {
 
+    @ApiModelProperty(name = "스터디 번호")
+    Long stdNo;
+
     @ApiModelProperty(name = "스터디 이름")
     String stdName;
 
@@ -58,6 +61,7 @@ public class StudyRes extends BaseResponseBody {
 
     public static StudyRes of(Study study, long[] detailCounts, ApplyType joinType, Integer statusCode, String message) {
         StudyRes res = new StudyRes();
+        res.setStdNo(study.getStdNo());
         res.setStdName(study.getStdName());
         res.setStdDetail(study.getStdDetail());
         res.setStdImg(study.getStdImg());
