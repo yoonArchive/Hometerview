@@ -6,15 +6,15 @@ import router from "@/common/lib/vue-router";
 export default {
   // namespaced: true,
   state: {
-    studySpaceList : [],
-    studySpaceDetail : {},
-    token: localStorage.getItem('token') || '' ,
-    resumeQuestionList : [],
-    studentIndex : null,
-    coverLetter : false,
-    memberList : true,
+    studySpaceList: [],
+    studySpaceDetail: {},
+    token: localStorage.getItem("token") || "",
+    resumeQuestionList: [],
+    studentIndex: null,
+    coverLetter: false,
+    memberList: true,
     selectedQuestionNum: 0,
-    selStdNo: Number,
+    selStdNo: Number
   },
 
   getters: {
@@ -31,7 +31,7 @@ export default {
 
   mutations: {
     SET_TOKEN: (state, token) => (state.token = token),
-    SET_RECRUITMENT_LIST: (state, studySpaceList) =>
+    SET_STUDYSPACE_LIST: (state, studySpaceList) =>
       (state.studySpaceList = studySpaceList),
     SET_RECRUIT_DETAIL: (state, studySpaceDetail) =>
       (state.studySpaceDetail = studySpaceDetail),
@@ -133,6 +133,7 @@ export default {
       console.log(getters.resumeQuestionList);
     },
     createStudySpace({ commit, state, dispatch }, recruitNo) {
+      console.log(recruitNo);
       const recruitNoForURL = `?recruitNo=${recruitNo}`;
       console.log(api_url.study.studyspace() + recruitNoForURL);
       axios({
@@ -163,7 +164,7 @@ export default {
       })
         .then(res => {
           console.log(res.data);
-          commit("SET_RECRUITMENT_LIST", res.data.studies);
+          commit("SET_STUDYSPACE_LIST", res.data.studies);
         })
         .catch(err => {
           console.log(err.response);
