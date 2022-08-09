@@ -1,4 +1,5 @@
 <template>
+ {{ studySpaceDetail }}
   <select-interveiwee-detail
     v-for="(member,index) in studySpaceDetail.studyJoins"
       :key="member.joinNo"
@@ -25,11 +26,11 @@ export default {
     ...mapGetters(['studySpaceDetail']),
   },
   methods:{
-  ...mapActions(['bringStudySpaceDetail']),
+  // ...mapActions(['bringStudySpaceDetail']),
   },
-  created(){
-    this.bringStudySpaceDetail(this.sessionNo)
-  }
+  // created(){
+  //   this.bringStudySpaceDetail(this.sessionNo)
+  // }
 
 }
 </script>

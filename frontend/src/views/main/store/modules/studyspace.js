@@ -33,7 +33,7 @@ export default {
     SET_TOKEN: (state, token) => (state.token = token),
     SET_STUDYSPACE_LIST: (state, studySpaceList) =>
       (state.studySpaceList = studySpaceList),
-    SET_RECRUIT_DETAIL: (state, studySpaceDetail) =>
+    SET_STUDYSPACE_DETAIL: (state, studySpaceDetail) =>
       (state.studySpaceDetail = studySpaceDetail),
     RESET_RESUME_QUESTION_LIST: state => (state.resumeQuestionList = []),
     ADD_RESUME_QUESTION_LIST: (state, data) =>
@@ -148,15 +148,9 @@ export default {
           console.log(err.response);
           alert("이미 스터디를 시작하셨습니다.");
         })
-        .then(res => {
-          console.log(res.data);
-        })
-        .catch(err => {
-          console.log(err.response);
-          alert("이미 스터디를 시작하셨습니다.");
-        });
     },
     bringStudySpace({ commit, getters }) {
+      console.log('확인')
       axios({
         url: api_url.study.studyspace(),
         method: "get",
@@ -178,7 +172,7 @@ export default {
       })
         .then(res => {
           console.log(res.data);
-          commit("SET_RECRUIT_DETAIL", res.data);
+          commit("SET_STUDYSPACE_DETAIL", res.data);
         })
         .catch(err => {
           console.log(err.response);
