@@ -39,13 +39,19 @@ public class StudyController {
             @ApiResponse(code = 200, message = "스터디 생성 성공", response = BaseResponseBody.class),
             @ApiResponse(code = 401, message = "스터디 생성 실패", response = BaseResponseBody.class),
             @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)})
-    public ResponseEntity<? extends BaseResponseBody> createStudy(@RequestParam @ApiParam(value = "모집글 번호", required = true) Long recruitNo) throws Exception {
+    public ResponseEntity<? extends BaseResponseBody> createStudy(@ApiIgnore Authentication authentication, @RequestParam @ApiParam(value = "모집글 번호", required = true) Long recruitNo) throws Exception {
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        Long userNo = userDetails.getUserNo();
+        Study study;
         try {
-            studyService.createStudy(recruitNo);
+            study = studyService.createStudy(recruitNo);
         } catch (Exception e) {
             return ResponseEntity.status(401).body(BaseResponseBody.of(401, "스터디 생성에 실패하였습니다."));
         }
-        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "스터디 생성에 성공하였습니다."));
+        Long stdNo = study.getStdNo();
+        long[] detailCounts = studyService.getDetailCounts(stdNo);
+        ApplyType joinType = studyService.getJoinType(userNo, stdNo);
+        return ResponseEntity.status(200).body(StudyRes.of(study, detailCounts, joinType, 200, "스터디가 생성되었습니다."));
     }
 
     @GetMapping()

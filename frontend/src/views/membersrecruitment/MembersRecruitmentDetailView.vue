@@ -112,7 +112,8 @@ export default {
       "currentUser",
       "isApplied",
       "applyType",
-      "recruitCount"
+      "recruitCount",
+      "selStdNo"
     ])
   },
   methods: {
@@ -139,10 +140,11 @@ export default {
         params: { recruitNo: this.recruitNo }
       });
     },
-    studyStart() {
-      this.createStudySpace(this.recruitNo);
-      this.bringStudySpace();
-      router.push({ name: "studydetail", params: { stdNo: this.recruitNo } });
+    async studyStart() {
+      await this.createStudySpace(this.recruitNo);
+      console.log(this.applyType);
+      console.log(this.selStdNo + "로 이동");
+      router.push({ name: "studydetail", params: { stdNo: this.selStdNo } });
     }
   },
   async created() {
