@@ -1,6 +1,7 @@
 package com.ssafy.api.controller;
 
 import com.ssafy.api.request.RecruitReq;
+import com.ssafy.api.response.ApplyListRes;
 import com.ssafy.api.response.RecruitListRes;
 import com.ssafy.api.response.RecruitRes;
 import com.ssafy.api.service.ApplyService;
@@ -76,6 +77,20 @@ public class RecruitController {
         List<Recruit> recruitings = recruitService.getRecruitingList(type);
         long[] applyCounts = applyService.getApplyCounts(recruitings);
         return ResponseEntity.status(200).body(RecruitListRes.of(recruitings, applyCounts, 200, "모집 중인 스터디 모집글 목록 조회를 성공하였습니다."));
+    }
+
+    @GetMapping("/applying")
+    @ApiOperation(value = "신청 중 스터디 모집글 목록 조회", notes = "(token) 신청 현황이 신청 중인 스터디 모집글 목록을 조회한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "스터디 모집글 목록 조회 성공", response = ApplyListRes.class),
+            @ApiResponse(code = 401, message = "스터디 모집글 목록 조회 실패", response = BaseResponseBody.class),
+            @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
+    })
+    public ResponseEntity<ApplyListRes> getApplingList(@ApiIgnore Authentication authentication) throws Exception {
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        Long userNo = userDetails.getUserNo();
+        List<Recruit> applyings = recruitService.getApplyingList(userNo);
+        return ResponseEntity.status(200).body(ApplyListRes.of(applyings, 200, "신청 중인 스터디 모집글 목록 조회를 성공하였습니다."));
     }
 
     @GetMapping("/type") // 전체: 1, 기업: 2, 자율: 3

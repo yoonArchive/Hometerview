@@ -4,7 +4,6 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssafy.db.entity.Apply;
 import com.ssafy.db.entity.ApplyType;
 import com.ssafy.db.entity.QApply;
-import com.ssafy.db.entity.ResumeDetail;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -47,6 +46,12 @@ public class ApplyRepositorySupport {
                 .fetchOne();
         if (applyType == null) return null;
         return applyType;
+    }
+
+    public List<Apply> findAllByUserNo(Long userNo) {
+        List<Apply> applies = jpaQueryFactory.selectFrom(qApply)
+                .where(qApply.user.userNo.eq(userNo)).fetch();
+        return applies;
     }
 
 }
