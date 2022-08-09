@@ -26,13 +26,14 @@ export default {
     }
   },
   computed:{
-    ...mapGetters(['studySpaceDetail']),
+    ...mapGetters(['studySpaceDetail','interviewUser']),
   },
   methods:{
-  ...mapActions(['bringStudySpaceDetail']),
+  ...mapActions(['bringStudySpaceDetail','changeInterviewUserFixed']),
   },
   intervieweeApply(){
     console.log('확인')
+    this.changeInterviewUserFixed(this.interviewUser)
   },
 
   // created(){

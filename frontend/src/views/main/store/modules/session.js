@@ -6,18 +6,26 @@ import { OpenVidu } from 'openvidu-browser';
 
 export default {
   state: {
-    interviewUser : ''
+    interviewUser : '',
+    interviewUserFixed : ''
   },
   getters: {
-    interviewUser : state => state.interviewUser
+    interviewUser : state => state.interviewUser,
+    interviewUserFixed : state => state.interviewUserFixed
   },
   mutations: {
     SET_INTERVIEW_USER : (state, interviewUser)=>
-      (state.interviewUser = interviewUser)
+      (state.interviewUser = interviewUser),
+    SET_INTERVIEW_USER_FIXED : (state, interviewUserFixed)=>
+      (state.interviewUserFixed = interviewUserFixed)
+    
   },
   actions: {
-    chageInterviewUser({ commit },interviewUser){
+    changeInterviewUser({ commit },interviewUser){
       commit('SET_INTERVIEW_USER', interviewUser)
+    },
+    changeInterviewUserFixed({commit}, interviewUserFixed){
+      commit('SET_INTERVIEW_USER_FIXED', interviewUserFixed)
     }
 
 

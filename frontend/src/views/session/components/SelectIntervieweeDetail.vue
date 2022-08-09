@@ -1,11 +1,10 @@
 <template>
 
-  {{ member }}
+  {{ member.user.userNo }} <br>
   {{ member.user.ueserImg }} <br>
   {{ member.user.userName }}
   <label for={{member.user.userName}}>선택</label>
-  <input @change="change()" type="radio" id={{member.user.userName}} :value="member.user.userName" name="selectInterviewee" v-model="interviewUser">
-
+  <input @change="change()" type="radio" id={{member.user.userName}} :value="member.user.userNo" name="selectInterviewee" v-model="interviewUser">
 
 </template>
 
@@ -20,16 +19,15 @@ export default {
   data(){
     return{
       interviewUser : ''
-
     }
   },
   computed:{
-    ...mapGetters([]),
+    ...mapGetters(['interviewUser']),
   },
   methods:{
-    ...mapActions([]),
+    ...mapActions(['changeInterviewUser']),
     change(){
-      console.log(this.interviewUser)
+      this.changeInterviewUser(this.interviewUser)
     }
   },
 
