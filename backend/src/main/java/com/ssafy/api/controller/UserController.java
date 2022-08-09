@@ -370,8 +370,25 @@ public class UserController {
         return ResponseEntity.status(200).body(DdayListRes.of(ddays, results, 200, "D-day 목록 조회에 성공하였습니다."));
     }
 
+    @GetMapping("/dday/{ddayNo}")
+    @ApiOperation(value = "D-day 상세 조회", notes = "(token) D-day를 상세 조회한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "D-day 상세 조회 성공", response = DdayRes.class),
+            @ApiResponse(code = 401, message = "D-day 상세 조회 실패", response = BaseResponseBody.class),
+            @ApiResponse(code = 402, message = "해당 D-day 없음", response = BaseResponseBody.class),
+            @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
+    })
+    public ResponseEntity<? extends BaseResponseBody> getDdayDetail(@ApiIgnore Authentication authentication,
+                                                                    @PathVariable @ApiParam(value = "D-day 번호", required = true) Long ddayNo) throws Exception {
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        Long userNo = userDetails.getUserNo();
+        Dday dday = ddayService.getDday(ddayNo, userNo);
+        if (dday == null) return ResponseEntity.status(402).body(BaseResponseBody.of(402, "해당하는 D-day가 없습니다."));
+        return ResponseEntity.status(200).body(DdayRes.of(dday, 200, "D-day 상세 조회에 성공하였습니다."));
+    }
+
     @PutMapping("/dday/{ddayNo}")
-    @ApiOperation(value = "일정 수정", notes = "(token) 일정을 수정한다.")
+    @ApiOperation(value = "D-day 수정", notes = "(token) 일정을 수정한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "일정 수정 성공", response = BaseResponseBody.class),
             @ApiResponse(code = 401, message = "일정 수정 실패", response = BaseResponseBody.class),

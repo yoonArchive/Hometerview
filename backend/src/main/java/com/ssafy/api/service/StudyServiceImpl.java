@@ -31,7 +31,7 @@ public class StudyServiceImpl implements StudyService {
     private final ResumeDetailRepositorySupport resumeDetailRepositorySupport;
 
     @Override
-    public void createStudy(Long recruitNo) {
+    public Study createStudy(Long recruitNo) {
         // 스터디 생성
         Recruit recruit = recruitRepository.findByRecruitNo(recruitNo).orElse(null);
         Study study = Study.builder()
@@ -47,7 +47,6 @@ public class StudyServiceImpl implements StudyService {
                 .build();
         studyRepository.save(study);
         this.recruitComplete(recruit);
-
         //스터디 조인
         List<Apply> applyList = applyRepositorySupport.findApplyByRecruitNo(recruitNo);
         for (Apply apply : applyList) {
@@ -59,6 +58,7 @@ public class StudyServiceImpl implements StudyService {
             studyJoinRepository.save(studyJoin);
             applyRepository.deleteByApplyNo(apply.getApplyNo());
         }
+        return study;
     }
 
     @Override
@@ -142,13 +142,13 @@ public class StudyServiceImpl implements StudyService {
     }
 
     @Override
-    public ApplyType getJoinType(Long userNo, Long stdNo){
+    public ApplyType getJoinType(Long userNo, Long stdNo) {
         return studyJoinRepositorySupport.findStudyJoinByUserNoAndStdNo(userNo, stdNo).get().getJoinType();
     }
 
     @Override
     @Transactional
-    public int deleteStudy(Long stdNo){
+    public int deleteStudy(Long stdNo) {
         try {
             Study study = studyRepository.findByStdNo(stdNo).get();
         } catch (Exception e) {

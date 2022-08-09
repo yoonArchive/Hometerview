@@ -25,7 +25,7 @@
             <h6 class="card-subtitle mb-2 text-muted">날짜 {{ddays.ddayDate}}</h6>
             <p  v-if="(restday[index] < 0)" class="card-text-1">D-DAY {{restday[index]}} </p>
             <p  v-else class="card-text-2">D-DAY {{restday[index]}} </p>
-            <button @click="showModalE(ddays.ddayNo)">수정</button>
+            <button @click="showModalE(ddays.ddayNo), getDdayDetail(ddays.ddayNo)">수정</button>
                 <!-- <ModalEdit v-if="showModalE" @close="showModalE = false" :dday="ddays" :key="ddays.ddayNo+1" >
                   <h3 slot="header">dday 수정</h3>
                 </ModalEdit> -->
@@ -35,7 +35,7 @@
     </div>
 
 
-    <ModalEdit :id="'ModalEdit '+ddays.ddayNo" v-if="openedModal !== null" @close="openedModal = null" :dday="ddays" :key="this.openedModal" >
+    <ModalEdit v-if="openedModal !== null" @close="openedModal = null" :dday="this.dday" :key="this.openedModal" >
       <h3 slot="header">dday 수정</h3>
     </ModalEdit>
 
@@ -126,7 +126,7 @@ export default {
       headers: ['번호','제목', '날짜', '유형'],
       Editsum: [false*this.ddaylen],
       openedModal: null,
-
+      // dday:this.dday
 
       // reviewContents:{},
       // review:{}
@@ -139,7 +139,8 @@ export default {
     'numberOfReview',
     'currentDdays',
     'restday',
-    'ddaylen'
+    'ddaylen',
+    'dday'
 
 
     ]),
@@ -160,7 +161,8 @@ export default {
       "addNewResume",
       "getDdayInfo",
       "deleteReview",
-      "deleteDDAY"
+      "deleteDDAY",
+      "getDdayDetail"
 
       ]),
     findresumes(){

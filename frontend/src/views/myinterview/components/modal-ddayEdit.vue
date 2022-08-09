@@ -23,12 +23,13 @@
 
       <div class="modal-footer">
        <slot name="footer">
-        <button class="modal-default-button" @click="updateDday([dday.ddayNo, ddays]), $emit('close')">수정하기</button>
+        <button class="modal-default-button" @click="updateDday([this.key, ddays]), $emit('close')">수정하기</button>
 
         <button class="modal-default-button" @click="$emit('close')">
-
+        {{ dday}}
+        키{{key}}
          닫기</button>
-        {{this.ddaykim}}
+
        </slot>
       </div>
      </div>
@@ -64,28 +65,18 @@ export default {
 
   },
   computed:{
-    ...mapGetters(['currentDdays'])
+    ...mapGetters(['currentDdays',
+
+    'dday'
+    ])
   },
   methods: {
     ...mapActions([
       "createDday",
-      "updateDday"
+      "updateDday",
+      "getDdayDetail",
 
       ]),
-
-    checkModal(){
-      if (this.dday.ddayNo != this.key){
-        this.$emit('close')
-
-      } },
-
-    checkdday() {
-      for (aa of currentDdays){
-        if (aa.ddayNo ===this.key ){
-          this.ddayKim = aa
-        }
-      }console.log('kim')
-    },
 
 
 
@@ -93,12 +84,11 @@ export default {
   mounted() {
     console.log('밑에 디데이'+this.dday)
     console.log('키' + this.key)
-    this.checkModal()
+
 
   },
   created(){
     console.log('폼생성')
-    this.checkModal()
   }
 }}
 </script>

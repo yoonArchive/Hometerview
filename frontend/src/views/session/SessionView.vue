@@ -71,7 +71,8 @@
 			<div v-if="participant">
 				<study-member-list></study-member-list>
 			</div>
-			<div v-if="usertype==='LEADERS' && selectinterviewee ">
+			<div v-if="selectinterviewee ">
+				<!-- usertype==='LEADERS' && 리더만 보이게 하기 =   -->
 				<select-interveiwee></select-interveiwee>
 			</div>
 		</div>

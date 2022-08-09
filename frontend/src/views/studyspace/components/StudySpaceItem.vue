@@ -27,7 +27,7 @@
       </h5>
       <p class="stdDetail">스터디 설명 : {{ studySpace.stdDetail }}</p>
       <div class="slider-btn">
-        <span class="moveBtn" @click="moveToStudyDetail"
+        <span class="moveBtn" @click="moveToStudyDetail()"
           >🏠 스터디 스페이스로 이동</span
         >
       </div>
