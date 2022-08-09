@@ -6,6 +6,7 @@
 	  <div class="section">
 	</div> -->
     <div :class="maincontainer">
+      <button @click="sendTTSRequest">요청 버튼</button>
       <router-view></router-view>
 
     </div>
@@ -94,10 +95,17 @@ import { reactive } from "vue";
 import { useRouter } from "vue-router";
 import headerVue from "../components/header.vue";
 import footerVue from "../components/footer.vue"
-import { mapGetters, mapMutations } from "vuex";
+import { mapActions, mapGetters, mapMutations } from "vuex";
+
 export default {
   name: "Home",
-
+  data(){
+    return {
+      dataset : {
+        text:"안녕?",
+      }
+    }
+  },
   components: {
     headerVue,
     Conference,
@@ -107,9 +115,31 @@ export default {
     ...mapGetters(['fullcontainer','maincontainer'])
   },
   methods:{
-    ...mapMutations(['SET_MAIN_CONTAINER','SET_FULL_CONTAINER'])
+    ...mapMutations(['SET_MAIN_CONTAINER','SET_FULL_CONTAINER']),
+    ...mapActions(['ttsrequest']),
+    sendTTSRequest(){
+      console.log(this.dataset);
+      this.ttsrequest(this.dataset);
+      // axios.post('http://localhost:9002/ttsrequest', dataset, null)
+      // .then((data)=>{
+      //   // 음원 재생
+      //   console.log("음성 저장 성공");
+      // });
+      // }).catch((err)=>{
+      //   console.log(err);
+      //   console.log("음성 저장 실패");
+      // });
+      // ttsrequest.get('/ttsrequest', {
+
+      // }).then(()=>{
+      //   console.log("음성 저장 성공");
+      // }).catch((err)=>{
+      //   console.log(err);
+      //   console.log("음성 저장 실패");
+      // });
+    }
   },
-  mounted(){
+  mounted() {
 
   },
   setup() {
