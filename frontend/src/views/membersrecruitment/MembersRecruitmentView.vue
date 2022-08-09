@@ -11,39 +11,46 @@
       </div>
     </div>
     <hr />
-    <div
-      id="carouselExampleCaptions"
-      class="carousel slide"
-      data-bs-ride="carousel"
-    >
-      <div class="carousel-inner">
-        <div
-          class="carousel-item"
-          v-for="(studySpace, idx) in studySpaceList"
-          :key="idx"
-          :class="{ active: idx == 0 }"
-        >
-          <study-space-item :studySpace="studySpace"></study-space-item>
+    <div v-if="studySpaceList.length != 0">
+      <div
+        id="carouselExampleCaptions"
+        class="carousel slide"
+        data-bs-ride="carousel"
+      >
+        <div class="carousel-inner">
+          <div
+            class="carousel-item"
+            v-for="(studySpace, idx) in studySpaceList"
+            :key="idx"
+            :class="{ active: idx == 0 }"
+          >
+            <study-space-item :studySpace="studySpace"></study-space-item>
+          </div>
         </div>
+        <button
+          class="carousel-control-prev"
+          type="button"
+          data-bs-target="#carouselExampleCaptions"
+          data-bs-slide="prev"
+        >
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button
+          class="carousel-control-next"
+          type="button"
+          data-bs-target="#carouselExampleCaptions"
+          data-bs-slide="next"
+        >
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
       </div>
-      <button
-        class="carousel-control-prev"
-        type="button"
-        data-bs-target="#carouselExampleCaptions"
-        data-bs-slide="prev"
-      >
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button
-        class="carousel-control-next"
-        type="button"
-        data-bs-target="#carouselExampleCaptions"
-        data-bs-slide="next"
-      >
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
+    </div>
+    <div v-else>
+      <div class="carousel carousel-inner">
+        <h1 style="color:white;">스터디에 가입해보세요</h1>
+      </div>
     </div>
     <div class="row" style="margin-bottom:20px;">
       <div class="title col-md-9">
@@ -175,14 +182,11 @@ export default {
       } else {
         this.bringRecruitTypeList(this.recruitType);
       }
-    },
-    show(idx) {
-      console.log(idx);
     }
   },
   mounted() {
     window.scrollTo(0, 0);
-  },
+  }
   // beforeUpdate() {
   //   console.log(this.studySpaceList.length);
   // }
