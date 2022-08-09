@@ -142,14 +142,7 @@ export default {
       })
         .then(res => {
           console.log(res.data);
-          dispatch("bringStudySpace");
-        })
-        .catch(err => {
-          console.log(err.response);
-          alert("이미 스터디를 시작하셨습니다.");
-        })
-        .then(res => {
-          console.log(res.data);
+          //dispatch("bringStudySpaceDetail", recruitNo);
         })
         .catch(err => {
           console.log(err.response);

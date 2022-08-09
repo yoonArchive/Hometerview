@@ -53,13 +53,11 @@
         </div>
         <div>
           <div v-if="applyType === 'LEADER'">
-            <div v-if="recruitDetail.recruitStatus === '모집 중'">
-              <button @click="studyStart(recruitNo)">스터디 시작</button>
-              <button @click="moveToUpdate">수정</button>
-              <button @click="deleteRecruitmentDetail([recruitNo])">
-                삭제
-              </button>
-            </div>
+            <button @click="studyStart()">스터디 시작</button>
+            <button @click="moveToUpdate">수정</button>
+            <button @click="deleteRecruitmentDetail([recruitNo])">
+              삭제
+            </button>
           </div>
           <div
             v-else-if="
@@ -76,7 +74,7 @@
               <button @click="studyApply(recruitNo)">스터디 신청하기</button>
             </div>
             <div v-else>
-              <button @click="goStudySpace(recruitNo)">
+              <button>
                 스터디 스페이스 이동
               </button>
             </div>
@@ -136,15 +134,15 @@ export default {
       }
     },
     moveToUpdate() {
+      console.log(this.recruitNo);
       router.push({
         name: "membersrecruitmentedit",
         params: { recruitNo: this.recruitNo }
       });
     },
-    goStudySpace() {},
     async studyStart() {
       await this.createStudySpace(this.recruitNo);
-      await router.push({ name: "study" });
+      await this.bringRecruitmentDetail(this.recruitNo);
     }
   },
   async created() {
