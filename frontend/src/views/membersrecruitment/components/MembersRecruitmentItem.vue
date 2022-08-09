@@ -30,7 +30,7 @@
           </div>
           <div class="ing" v-else>
             <i class="input-icon uil uil-users-alt"></i
-            ><b>{{ applyCounts[index] }}/{{ recruitment.stdLimit }}</b
+            ><b> {{ applyCounts[index] }}/{{ recruitment.stdLimit }}</b
             >&nbsp;
             {{ recruitment.recruitStatus.status }}
           </div>
@@ -94,7 +94,7 @@ export default {
   background: #4b4b4b;
   color: white;
   border-radius: 15px;
-  width: 6.5em;
+  width: 7em;
   margin-top: 8px;
   padding: 6px;
   font-size: 16px;
@@ -103,7 +103,7 @@ export default {
   background: #5fc971;
   color: black;
   border-radius: 15px;
-  width: 7.3em;
+  width: 8.1em;
   margin-top: 8px;
   padding: 6px;
   font-size: 16px;

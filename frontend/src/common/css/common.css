@@ -1,7 +1,8 @@
 /* 공통으로 적용되어야할 css */
-html, body {
+html,
+body {
   height: 100vh;
-  font-family: '티머니 둥근바람';
+  font-family: "티머니 둥근바람";
 }
 
 body {
@@ -11,14 +12,12 @@ body {
 }
 
 @font-face {
-  font-family: '티머니 둥근바람 볼드';
-  font-weight: 600;
-  src: url('../../assets/fonts/TMONEYROUNDWINDEXTRABOLD.TTF');
+  font-family: "티머니 둥근바람 볼드";
+  /* font-weight: 600; */
+  src: url("../../assets/fonts/TMONEYROUNDWINDEXTRABOLD.TTF");
 }
 @font-face {
-  font-family: '티머니 둥근바람';
+  font-family: "티머니 둥근바람";
   font-weight: 400;
-  src: url('../../assets/fonts/TMONEYROUNDWINDREGULAR.TTF');
+  src: url("../../assets/fonts/TMONEYROUNDWINDREGULAR.TTF");
 }
-
-
