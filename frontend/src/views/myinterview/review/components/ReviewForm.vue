@@ -142,24 +142,29 @@ import { mapActions } from 'vuex'
       <div class="mb-3">
         <label for="title" class="form-label" >제목: </label>
         <input type="text" class="form-control" v-model="newreview.reviewTitle" id="title" />
+
       </div>
       <div class="mb">
         <label for="exampleFormControlTextarea1" class="form-label">내용: </label>
         <textarea class="form-control" v-model="newreview.reviewContents" type="text" id="content" rows="3"></textarea>
+
       </div>
 
       <div>
         <input v-model="newreview.reviewDate" type="date" name="reviewDate" required>
+
       </div>
 
       <div>
         <input type="radio" name="reviewType" value="REAL" v-model="newreview.reviewType" required>
+
         <label for="newreview.reviewType">REAL</label>
         <input  type="radio" name="reviewType" value="FAKE" v-model="newreview.reviewType" required>
         <label for="newreview.reviewType">FAKE</label>
+
       </div>
-       <button id="button-review"   v-if="action==='create'" @click="$emit('close'), createReview(this.newreview)">만들기</button>
-      <button id="button-review" v-else  @click="$emit('close'), updateReview(this.newreview)">수정하기</button>
+       <button id="button-review"  v-if="action==='create'" @click="$emit('close'), createReview(this.newreview)">만들기</button>
+      <button id="button-review"  v-else  @click="$emit('close'), updateReview(this.newreview)">수정하기</button>
         <!-- </form> -->
 
         </slot>
