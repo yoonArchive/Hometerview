@@ -1,13 +1,26 @@
 <template>
   <div class="container">
     <div class="row">
-      <div class="title col-md-9">
+      <div class="title col-md-10">
         <h5 id="title-name">나의 스터디</h5>
       </div>
-      <div class="col-md-3">
-        <span>전체</span>
-        <span style="margin-left:25px">신청 완료</span>
-        <span style="margin-left:25px">신청 중</span>
+      <div class="select col-md-2">
+        <input
+          type="radio"
+          id="completed"
+          v-model="recruitStatus"
+          value="completed"
+          style="margin-left:25px"
+        />
+        <label for="completed">신청 완료</label>
+        <input
+          type="radio"
+          id="ing"
+          v-model="recruitStatus"
+          value="ing"
+          style="margin-left:25px"
+        />
+        <label for="ing">신청 중</label>
       </div>
     </div>
     <hr />
@@ -17,14 +30,42 @@
         class="carousel slide"
         data-bs-ride="carousel"
       >
-        <div class="carousel-inner">
-          <div
-            class="carousel-item"
-            v-for="(studySpace, idx) in studySpaceList"
-            :key="idx"
-            :class="{ active: idx == 0 }"
-          >
-            <study-space-item :studySpace="studySpace"></study-space-item>
+        <div v-if="recruitStatus === 'all'">
+          <div class="carousel-inner">
+            <div
+              class="carousel-item"
+              v-for="(studySpace, idx) in studySpaceList"
+              :key="idx"
+              :class="{ active: idx == 0 }"
+            >
+              <study-space-item :studySpace="studySpace"></study-space-item>
+            </div>
+          </div>
+        </div>
+        <div v-else-if="recruitStatus === 'completed'">
+          <div class="carousel-inner">
+            <div
+              class="carousel-item"
+              v-for="(studySpace, idx) in studySpaceList"
+              :key="idx"
+              :class="{ active: idx == 0 }"
+            >
+              <study-space-item :studySpace="studySpace"></study-space-item>
+            </div>
+          </div>
+        </div>
+        <div v-else>
+          <div class="carousel-inner">
+            <div
+              class="carousel-item"
+              v-for="(applyingRecruit, idx) in applyingList"
+              :key="idx"
+              :class="{ active: idx == 0 }"
+            >
+              <applying-recruit-item
+                :applyingRecruit="applyingRecruit"
+              ></applying-recruit-item>
+            </div>
           </div>
         </div>
         <button
@@ -53,22 +94,56 @@
       </div>
     </div>
     <div class="row" style="margin-bottom:20px;">
-      <div class="title col-md-9">
+      <div class="title col-md-3">
         <h5 id="title-name">스터디 모집글 목록</h5>
       </div>
-      <button
+      <div class=" col-md-6">
+        <button
+          type="button"
+          class="createBtn small"
+          @click="moveToCreate"
+          style="margin-left:-100px"
+        >
+          스터디 만들기
+        </button>
+      </div>
+      <div class="col-md-2">
+        <select
+          name="recruitSearch"
+          class="selectBar"
+          v-model="recruitType"
+          @change="getRecruitTypeList()"
+        >
+          <option value="1" class="option" selected>전체 스터디</option>
+          <option value="2" class="option">기업 면접 스터디</option>
+          <option value="3" class="option">자율 면접 스터디</option>
+        </select>
+      </div>
+      <div class="form-check col-md-1">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          name="recruitType"
+          id="recruiting"
+          v-model="recruiting"
+          @change="isRecruiting()"
+        />
+        <label class="form-check-label" for="recruiting">모집 중</label>
+      </div>
+      <!-- </div> -->
+      <!-- <button
         type="button"
         class="createBtn small"
         @click="moveToCreate"
         style="margin-left:70px"
       >
         스터디 만들기
-      </button>
+      </button> -->
     </div>
     <hr />
     <div>
       <div class="row">
-        <div class="col-md-6"></div>
+        <!-- <div class="col-md-6"></div>
         <div class="col-md-4">
           <select
             name="recruitSearch"
@@ -91,7 +166,7 @@
             @change="isRecruiting()"
           />
           <label class="form-check-label" for="recruiting">모집 중</label>
-        </div>
+        </div> -->
       </div>
       <div class="inner-container2">
         <div class="row row-cols-1 row-cols-md-3 g-5">
@@ -124,6 +199,7 @@
 <script>
 import MembersRecruitmentItem from "./components/MembersRecruitmentItem.vue";
 import StudySpaceItem from "../studyspace/components/StudySpaceItem.vue";
+import ApplyingRecruitItem from "../studyspace/components/ApplyingRecruitItem.vue";
 import router from "@/common/lib/vue-router.js";
 import { mapActions, mapGetters } from "vuex";
 
@@ -131,7 +207,8 @@ export default {
   name: "MembersRecruitmentView",
   components: {
     MembersRecruitmentItem,
-    StudySpaceItem
+    StudySpaceItem,
+    ApplyingRecruitItem
   },
   data() {
     return {
@@ -139,24 +216,27 @@ export default {
       recruitingState: false,
       recruitSearchKeyword: "",
       recruitType: "1",
-      image: require("../../assets/images/purple.jpg"),
       isloading: false,
-      carouselBtnNum: 0
+      carouselBtnNum: 0,
+      recruitStatus: "completed"
     };
   },
   created() {
     this.bringRecruitmentList();
     this.bringStudySpace();
-    console.log(this.recruitmentList);
+    this.bringApplyingRecruit();
   },
-  computed: { ...mapGetters(["recruitmentList", "studySpaceList"]) },
+  computed: {
+    ...mapGetters(["recruitmentList", "studySpaceList", "applyingList"])
+  },
   methods: {
     ...mapActions([
       "bringRecruitSearchList",
       "bringRecruitTypeList",
       "bringRecruitingList",
       "bringRecruitmentList",
-      "bringStudySpace"
+      "bringStudySpace",
+      "bringApplyingRecruit"
     ]),
     moveToCreate() {
       router.push({ name: "createmembersrecruitment" });
@@ -177,6 +257,7 @@ export default {
       }
     },
     getRecruitTypeList() {
+      console.log(this.recruitType);
       if (this.recruitingState === true) {
         this.bringRecruitingList(this.recruitType);
       } else {
@@ -222,10 +303,41 @@ export default {
 .title {
   font-family: "티머니 둥근바람 볼드";
 }
+.select {
+  padding: 10px 8px;
+}
+.select input[type="radio"] {
+  display: none;
+}
+.select input[type="radio"] + label {
+  display: inline-block;
+  cursor: pointer;
+  height: 30px;
+  width: 100px;
+  border: 1px solid #333;
+  line-height: 25px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 18px;
+}
+.select input[type="radio"] + label {
+  background-color: #fff;
+  color: #333;
+}
+.select input[type="radio"]:checked + label {
+  background-color: #333;
+  color: #fff;
+}
 .selectBar {
+  background-color: #333;
+  color: #fff;
   border-radius: 10px;
-  font-size: 17px;
+  font-size: 18px;
   float: right;
+  height: 35px;
+  width: 170px;
+  font-weight: bold;
+  text-align: center;
 }
 .btn::before {
   content: "전체 스터디";
@@ -310,7 +422,7 @@ button.small,
   border-radius: 5px;
   border: 0;
   box-shadow: inset 0 0 0 2px #653fd3;
-  background-color: #f3f0fa;
+  background-color: #ffffff;
   color: #653fd3;
   cursor: pointer;
   display: inline-block;
@@ -326,15 +438,15 @@ button.small,
   text-overflow: ellipsis;
 }
 .createBtn:hover {
-  background-color: #653fd3;
-  color: #ffffff;
+  background-color: rgba(161, 104, 253, 0.05);
+}
+.createBtn:active {
+  background-color: rgba(161, 104, 253, 0.15);
 }
 .row.aln-center {
   justify-content: center;
 }
-input[type="text"],
-/* select, */
-textarea {
+input[type="text"] {
   -moz-appearance: none;
   -webkit-appearance: none;
   -ms-appearance: none;
