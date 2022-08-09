@@ -147,10 +147,10 @@ export default {
         .catch(err => {
           console.log(err.response);
           alert("이미 스터디를 시작하셨습니다.");
-        })
+        });
     },
     bringStudySpace({ commit, getters }) {
-      console.log('확인')
+      console.log("확인");
       axios({
         url: api_url.study.studyspace(),
         method: "get",

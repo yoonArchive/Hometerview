@@ -18,69 +18,10 @@
       </h5>
       <h5 v-else style="text-align: center;">[ 자율 면접 스터디 ]</h5>
     </header>
-    <!-- 여기부터 -->
     <section id="banner">
       <span class="image object">
         <img :src="image" alt="" class="stdImg" style="width:550px" />
       </span>
-    <h2 class="py-3">
-      {{ recruitDetail.recruitTitle }}
-    </h2>
-    <div class="d-flex justify-content-around">
-      <div>
-        대표 이미지 :
-        <!-- {{ recruitDetail }} -->
-        <!-- <img src="{{ recruitDetail.stdImg }}" alt=""> -->
-      </div>
-      <div>
-        스터디 이름 :{{ recruitDetail.stdName }} <br />
-        활동기간 : {{ recruitDetail.startDate }} ~ {{ recruitDetail.endDate
-        }}<br />
-        진행 일자 : {{ recruitDetail.stdDay }} <br />
-        모집인원 : {{ recruitDetail.count }}/{{ recruitDetail.stdLimit }}<br />
-        스터디 타입 : {{ recruitDetail.stdType }} <br />
-      </div>
-    </div>
-    <hr />
-    <div
-      class="card border-secondary mb-3"
-      style="max-width: 80rem; height: 20rem;"
-    >
-      <div class="card-header">스터디 소개</div>
-      <div class="card-body text-secondary">
-        <h5 class="card-title">{{ recruitDetail.stdName }}</h5>
-        <p class="card-text">{{ recruitDetail.stdDetail }}</p>
-      </div>
-    </div>
-    기업명 : {{ recruitDetail.comName }} <br />
-    스터디 현황 : {{ recruitDetail.recruitStatus }}
-    <div v-if="applyType === 'LEADER'">
-      <button @click="moveToUpdate">수정</button>
-      <button @click="deleteRecruitmentDetail([recruitNo])">삭제</button>
-      <button @click="studyStart()">스터디 시작</button>
-      <button type="button" class="btn btn-bd-primary" style="color:indigo">
-        Primary
-      </button>
-    </div>
-    <div
-      v-else-if="
-        applyType === 'NORMAL' && recruitDetail.recruitStatus === '모집 중'
-      "
-    >
-      <button @click="studyApplyCancel(recruitNo)">스터디 신청 취소</button>
-    </div>
-    <div
-      v-else-if="
-        applyType === null && recruitDetail.recruitStatus === '모집 중'
-      "
-    >
-      <button @click="studyApply(recruitNo)">스터디 신청하기</button>
-    </div>
-    <div v-if="recruitDetail.recruitStatus === '모집 완료'">
-      <button>모집 완료</button>
-    </div>
-    타입 : {{ applyType }} <br />
-
       <div class="content">
         <blockquote>
           <div class="info">
@@ -110,13 +51,11 @@
         </div>
         <div>
           <div v-if="applyType === 'LEADER'">
-            <div v-if="recruitDetail.recruitStatus === '모집 중'">
-              <button @click="studyStart(recruitNo)">스터디 시작</button>
-              <button @click="moveToUpdate">수정</button>
-              <button @click="deleteRecruitmentDetail([recruitNo])">
-                삭제
-              </button>
-            </div>
+            <button @click="studyStart()">스터디 시작</button>
+            <button @click="moveToUpdate">수정</button>
+            <button @click="deleteRecruitmentDetail([recruitNo])">
+              삭제
+            </button>
           </div>
           <div
             v-else-if="
@@ -133,7 +72,7 @@
               <button @click="studyApply(recruitNo)">스터디 신청하기</button>
             </div>
             <div v-else>
-              <button @click="goStudySpace(recruitNo)">
+              <button>
                 스터디 스페이스 이동
               </button>
             </div>
@@ -194,18 +133,17 @@ export default {
       }
     },
     moveToUpdate() {
+      console.log(this.recruitNo);
       router.push({
         name: "membersrecruitmentedit",
         params: { recruitNo: this.recruitNo }
       });
     },
-
     studyStart() {
       this.createStudySpace(this.recruitNo);
-      this.bringStudySpace()
-      router.push({ name: "studydetail", params:{stdNo:this.recruitNo}});
+      this.bringStudySpace();
+      router.push({ name: "studydetail", params: { stdNo: this.recruitNo } });
     }
-    
   },
   async created() {
     this.bringRecruitmentDetail(this.recruitNo);

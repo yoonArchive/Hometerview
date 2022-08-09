@@ -57,7 +57,7 @@ public class Recruit {
 
     @JsonIgnore
     @Builder.Default
-    @OneToMany(mappedBy = "recruit")
+    @OneToMany(mappedBy = "recruit", orphanRemoval = true)
     private List<Apply> applies = new ArrayList<>();
 
     public void initRecruit(String recruitTitle, String stdName, String stdDetail, StdType stdType, String comName, String startDate, String endDate, String stdDay, int stdLimit) {
