@@ -1,11 +1,14 @@
 <template>
- {{ studySpaceDetail }}
-  <select-interveiwee-detail
-    v-for="(member,index) in studySpaceDetail.studyJoins"
-      :key="member.joinNo"
-      :member="member"
-      :studentindex="index"
-  ></select-interveiwee-detail>
+
+  <form @submit.prevent="intervieweeApply()">
+    <select-interviewee-detail
+      v-for="(member,index) in studySpaceDetail.studyJoins"
+        :key="member.joinNo"
+        :member="member"
+        :studentindex="index"
+    ></select-interviewee-detail>
+    <button> Apply </button>
+  </form>
 </template>
 
 <script>
@@ -28,9 +31,13 @@ export default {
   methods:{
   ...mapActions(['bringStudySpaceDetail']),
   },
-  created(){
-    this.bringStudySpaceDetail(this.sessionNo)
-  }
+  intervieweeApply(){
+    console.log('확인')
+  },
+
+  // created(){
+  //   this.bringStudySpaceDetail(this.sessionNo)
+  // }
 
 }
 </script>

@@ -1,9 +1,4 @@
 <template>
-  <div>
-    {{ studySpaceDetail }}
-    {{ studySpaceDetail.studyJoins }}
-    {{  }}
-  </div>
   <!-- 자소서 보기 -->
   <div v-if="coverLetter">
     <button @click="changeToCoverLetter(['memberlist',null])">닫기</button>

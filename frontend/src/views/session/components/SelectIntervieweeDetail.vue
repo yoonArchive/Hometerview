@@ -1,15 +1,11 @@
 <template>
 
-  {{ member.user.ueserImg }}
-  {{ member.user.userName }}
   {{ member }}
+  {{ member.user.ueserImg }} <br>
+  {{ member.user.userName }}
+  <label for={{member.user.userName}}>선택</label>
+  <input @change="change()" type="radio" id={{member.user.userName}} :value="member.user.userName" name="selectInterviewee" v-model="interviewUser">
 
-
-
-  <div>
-    <label for="selectInterviewee">선택</label>
-    <input type="checkbox" id="selectInterviewee" name="selectInterviewee">
-  </div>
 
 </template>
 
@@ -23,6 +19,7 @@ export default {
   },
   data(){
     return{
+      interviewUser : ''
 
     }
   },
@@ -30,7 +27,10 @@ export default {
     ...mapGetters([]),
   },
   methods:{
-  ...mapActions([]),
+    ...mapActions([]),
+    change(){
+      console.log(this.interviewUser)
+    }
   },
 
 

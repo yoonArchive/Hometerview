@@ -9,6 +9,7 @@ import commonquestion from '@/views/main/store/modules/commonquestion'
 import studyspace from '@/views/main/store/modules/studyspace'
 import cssstore from '@/views/main/store/modules/css'
 import createPersistedState from 'vuex-persistedstate'
+import session from '@/views/main/store/modules/session'
 
 
 
@@ -22,7 +23,8 @@ export default createStore({
     membersrecruitment,
     studyspace,
     commonquestion,
-    cssstore
+    cssstore,
+    session,
   },
   plugins:[
     createPersistedState()
