@@ -1,11 +1,7 @@
 <template>
   <div>
 
-    <!-- <review-form v-if="isreview" :review="review" action="update">
-
-    </review-form> -->
-  <review-form :review="currentReview" action="update"></review-form>
-  {{ currentReview }}
+  <review-form :review="currentReview" action="update" @close="gomy()"></review-form>
   </div>
 
 </template>
@@ -17,13 +13,13 @@ import { mapGetters, mapActions } from 'vuex'
     data() {
       return {
         review: {
-          // reviewNo: null,
+          reviewNo: null,
 
           // reviewContents: this.currentReview.reviewContents,
           // reviewTitle: this.currentReview.reviewTitle,
           // reviewType: this.currentReview.reviewType
 
-          reviewNo: null,
+          // reviewNo: null,
           reviewContents: '',
           reviewTitle: '',
           reviewType:''
@@ -36,7 +32,10 @@ import { mapGetters, mapActions } from 'vuex'
       ...mapGetters(['review', 'currentReview'])
     },
     methods: {
-      ...mapActions(['getReviewDetail'])
+      ...mapActions(['getReviewDetail']),
+      gomy(){
+        this.$router.push({ name: 'myinterview' })
+      }
     },
     created() {
       this.getReviewDetail(this.$route.params.reviewNo)

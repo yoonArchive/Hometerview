@@ -103,7 +103,6 @@ export default {
         .then(res => {
           console.log(res.data);
           commit("SET_RECRUIT_DETAIL", res.data);
-
           router.push({
             name: "membersrecruitmentdetail",
             params: { recruitNo: recruitNo }
@@ -149,7 +148,6 @@ export default {
       const encodeSearchKeyword = `?keyword=${encodeURIComponent(
         recruitSearchKeyword
       )}`;
-
       axios({
         url:
           api_url.membersrecruitment.membersrecruitsearch() +
@@ -182,7 +180,7 @@ export default {
           console.log(err.response);
         });
     },
-    studyApply({ commit, getters }, recruitNo) {
+    async studyApply({ commit, getters, dispatch }, recruitNo) {
       console.log(api_url.membersrecruitment.studyApply(recruitNo));
       axios({
         url: api_url.membersrecruitment.studyApply(recruitNo),
@@ -192,12 +190,13 @@ export default {
         .then(res => {
           console.log(res.data);
           commit("SET_APPLY_TYPE", "NORMAL");
+          dispatch("bringRecruitmentDetail", recruitNo);
         })
         .catch(err => {
           console.log(err.response);
         });
     },
-    studyApplyCancel({ commit, getters }, recruitNo) {
+    async studyApplyCancel({ commit, getters, dispatch }, recruitNo) {
       axios({
         url: api_url.membersrecruitment.studyApply(recruitNo),
         method: "delete",
@@ -206,6 +205,7 @@ export default {
         .then(res => {
           console.log(res.data);
           commit("SET_APPLY_TYPE", null);
+          dispatch("bringRecruitmentDetail", recruitNo);
         })
         .catch(err => {
           console.log(err.response);

@@ -1,7 +1,14 @@
 <template>
   <div class="container">
-    <div class="title col-md-9">
-      <h5 id="title-name">나의 스터디</h5>
+    <div class="row">
+      <div class="title col-md-9">
+        <h5 id="title-name">나의 스터디</h5>
+      </div>
+      <div class="col-md-3">
+        <span>전체</span>
+        <span style="margin-left:25px">신청 완료</span>
+        <span style="margin-left:25px">신청 중</span>
+      </div>
     </div>
     <hr />
     <div
@@ -133,6 +140,7 @@ export default {
   created() {
     this.bringRecruitmentList();
     this.bringStudySpace();
+    console.log(this.recruitmentList);
   },
   computed: { ...mapGetters(["recruitmentList", "studySpaceList"]) },
   methods: {
@@ -207,6 +215,9 @@ export default {
   border-radius: 40%;
   font-family: "티머니 둥근바람";
 } */
+.title {
+  font-family: "티머니 둥근바람 볼드";
+}
 .selectBar {
   border-radius: 10px;
   font-size: 17px;
