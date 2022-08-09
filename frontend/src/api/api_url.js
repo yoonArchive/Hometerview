@@ -81,7 +81,7 @@ export default {
       HOST + STUDY + `${stdNo}/` + "common/" + `${questionNo}`,
     commonquestiontype: (stdNo, questionNo) =>
       HOST + STUDY + `${stdNo}/` + "common/" + `${questionNo}/` + "type",
-    studyspacedetail: stdNo => HOST + STUDY + `${stdNo}/`,
+    studyspacedetail: stdNo => HOST + STUDY + `${stdNo}`,
     studyCoverLetter: (stdNo, resumeNo) =>
       HOST + STUDY + RESUME + `${stdNo}/` + `${resumeNo}`
 

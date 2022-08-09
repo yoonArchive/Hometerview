@@ -13,7 +13,6 @@
 
 			<!-- 장치 옵션 -->
 			<div>
-
 				<!-- 마이크 ONOFF-->
 				<div>
 					<button v-if="audioOnoff" @click="audioONOFF()">오디오ON</button>
@@ -24,20 +23,15 @@
 					<button v-if="videoOnoff" @click="videoONOFF()">비디오ON {{ videoOnoff }}</button>
 					<button v-else @click="videoONOFF()">비디오OFF {{ videoOnoff }}</button>
 				</div>
-
-
 				<!-- 화면 공유 -->
 				<div>
 					<button @click="ShareScreen()">화면 공유</button>
 				</div>
-
 				<!-- 더보기 -->
 				<div>
 					<button></button>
 				</div>
 			</div>
-
-
 
 			<!-- 비디오 그룹 -->
 			<!-- 비디오를 클릭할 경우 메인 비디오로 이동 : updateMainVideoStreamManager -->
@@ -51,6 +45,8 @@
 		</div>
 
 		<!-- 사이드  -->
+		<div>
+		</div>
 		<div class="side-panel">
 			<button @click="changeContent('chatting')">메시지</button>
 			<button @click="changeContent('participant')">참가자</button>
@@ -471,8 +467,8 @@ export default {
 		},
 
 	},
-	async created(){
-		await this.bringStudySpaceDetail(this.sessionNo)
+	created(){
+		this.bringStudySpaceDetail(this.sessionNo)
 	},
 	async beforeMount(){
 		this.myUserName = await this.currentUser.userName

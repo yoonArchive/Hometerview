@@ -19,6 +19,7 @@
 
   <!-- <img :src="image" class="d-block w-100" alt="..." /> -->
   <div class="carousel-caption d-none d-md-block">
+    {{ studySpace.stdNo }}
     <div class="row">
       <h5>
         <span class="comName" v-if="studySpace.comName != null"
@@ -27,7 +28,7 @@
       </h5>
       <p class="stdDetail">스터디 설명 : {{ studySpace.stdDetail }}</p>
       <div class="slider-btn">
-        <span class="moveBtn" @click="moveToStudyDetail"
+        <span class="moveBtn" @click="moveToStudyDetail()"
           >🏠 스터디 스페이스로 이동</span
         >
       </div>
@@ -61,7 +62,7 @@ export default {
     moveToStudyDetail() {
       router.push({
         name: "studydetail",
-        params: { stdNo: this.studySpace.stdNo }
+        params: { stdNo: this.studySpace.stdNo, }
       });
     }
   }
