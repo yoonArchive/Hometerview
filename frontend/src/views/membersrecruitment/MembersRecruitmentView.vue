@@ -130,9 +130,9 @@ export default {
       carouselBtnNum: 0
     };
   },
-  created() {
-    this.bringRecruitmentList();
-    this.bringStudySpace();
+  async created() {
+    await this.bringRecruitmentList();
+    await this.bringStudySpace();
   },
   computed: { ...mapGetters(["recruitmentList", "studySpaceList"]) },
   methods: {
@@ -175,9 +175,9 @@ export default {
   mounted() {
     window.scrollTo(0, 0);
   },
-  beforeUpdate() {
-    console.log(this.studySpaceList.length);
-  }
+  // beforeUpdate() {
+  //   console.log(this.studySpaceList.length);
+  // }
 };
 </script>
 

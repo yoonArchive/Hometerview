@@ -36,7 +36,7 @@
     <div v-if="applyType === 'LEADER'">
       <button @click="moveToUpdate">수정</button>
       <button @click="deleteRecruitmentDetail([recruitNo])">삭제</button>
-      <button @click="studyStart(recruitNo)">스터디 시작</button>
+      <button @click="studyStart()">스터디 시작</button>
       <button type="button" class="btn btn-bd-primary" style="color:indigo">
         Primary
       </button>
@@ -92,7 +92,8 @@ export default {
       "deleteRecruitmentDetail",
       "createStudySpace",
       "studyApply",
-      "studyApplyCancel"
+      "studyApplyCancel",
+      "bringStudySpace"
     ]),
     interviewType() {
       if (this.recruitDetail.stdType === "COM") {
@@ -107,35 +108,12 @@ export default {
         params: { recruitNo: this.recruitNo }
       });
     },
-    methods: {
-      ...mapActions([
-        "bringRecruitmentDetail",
-        "updateRecruitmentDetail",
-        "deleteRecruitmentDetail",
-        "createStudySpace",
-        "studyApply",
-        "studyApplyCancel",
-        "bringStudySpace"
-      ]),
-      interviewType() {
-        if (this.recruitDetail.stdType === "COM") {
-          this.studyType = "기업 면접";
-        } else {
-          this.studyType = "자율 면접";
-        }
-      },
-      moveToUpdate() {
-        router.push({
-          name: "membersrecruitmentedit",
-          params: { recruitNo: this.recruitNo }
-        });
-      },
-      async studyStart() {
-        await this.createStudySpace(this.recruitNo);
-        // await this.bringStudySpace()
-        await router.push({ name: "study" });
-      }
+    studyStart() {
+      this.createStudySpace(this.recruitNo);
+      this.bringStudySpace()
+      router.push({ name: "studydetail", params:{stdNo:this.recruitNo}});
     }
+    
   },
   async created() {
     this.bringRecruitmentDetail(this.recruitNo);
