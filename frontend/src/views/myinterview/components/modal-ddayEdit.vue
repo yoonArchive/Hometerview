@@ -8,6 +8,7 @@
       <div class="modal-header">
        <slot name="header">
         DDAY 를 설정해보세요
+        <button @click="checkdday()"></button>
        </slot>
       </div>
 
@@ -19,13 +20,14 @@
        </slot>
       </div>
 
-      {{dday}}
+
       <div class="modal-footer">
        <slot name="footer">
-        <button class="modal-default-button" @click="updateDday([dday.ddayNo, ddays]), $emit('close')">수정하기</button>
+        <button class="modal-default-button" @click="updateDday([this.key, ddays]), $emit('close')">수정하기</button>
 
         <button class="modal-default-button" @click="$emit('close')">
-
+        {{ dday}}
+        키{{key}}
          닫기</button>
 
        </slot>
@@ -45,38 +47,50 @@ export default {
   props:{
     dday: Object,
     key: Number
-
   },
   data(){
     return {
       ddays:{
       ddayDate:this.dday.ddayDate,
       ddayTitle:this.dday.ddayTitle
-}
+
+
+},
+  ddaykim:{
+
+      }
 
 
     }
 
+  },
+  computed:{
+    ...mapGetters(['currentDdays',
+
+    'dday'
+    ])
   },
   methods: {
     ...mapActions([
       "createDday",
-      "updateDday"
+      "updateDday",
+      "getDdayDetail",
 
       ]),
 
-    checkModal(){
-      if (this.dday.ddayNo != this.key){
-        this.$emit('close')
-      }
-    }
-  },
+
+
+
   mounted() {
     console.log('밑에 디데이'+this.dday)
     console.log('키' + this.key)
-    // this.checkModal()
+
+
   },
-}
+  created(){
+    console.log('폼생성')
+  }
+}}
 </script>
 
 
