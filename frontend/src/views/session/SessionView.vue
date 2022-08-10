@@ -17,43 +17,34 @@
         <user-video :stream-manager="mainStreamManager" />
       </div>
 
-      <!-- 장치 옵션 -->
-      <div>
-        <!-- 마이크 ONOFF-->
-        <div>
-          <button v-if="audioOnoff" @click="audioONOFF()">오디오ON</button>
-          <button v-else @click="audioONOFF()">오디오OFF</button>
-        </div>
-        <!-- 비디오 ONOFF -->
-        <div>
-          <button v-if="videoOnoff" @click="videoONOFF()">
-            비디오ON {{ videoOnoff }}
-          </button>
-          <button v-else @click="videoONOFF()">
-            비디오OFF {{ videoOnoff }}
-          </button>
-        </div>
+			<!-- 장치 옵션 -->
+			<div>
+				<!-- 마이크 ONOFF-->
+				<div>
+					<button v-if="audioOnoff" @click="audioONOFF()">오디오ON</button>
+					<button v-else @click="audioONOFF()">오디오OFF</button>
+				</div>
+				<!-- 비디오 ONOFF -->
+				<div>
+					<button v-if="videoOnoff" @click="videoONOFF()">비디오ON {{ videoOnoff }}</button>
+					<button v-else @click="videoONOFF()">비디오OFF {{ videoOnoff }}</button>
+				</div>
+				<!-- 화면 공유 -->
+				<div>
+					<button @click="ShareScreen()">화면 공유</button>
+				</div>
+				<!-- 더보기 -->
+				<div>
+					<button></button>
+				</div>
+			</div>
 
-        <!-- 화면 공유 -->
-        <div>
-          <button @click="ShareScreen()">화면 공유</button>
-        </div>
-
-        <!-- 더보기 -->
-        <div>
-          <button></button>
-        </div>
-      </div>
-
-      <!-- 비디오 그룹 -->
-      <!-- 비디오를 클릭할 경우 메인 비디오로 이동 : updateMainVideoStreamManager -->
-      <div id="video-container" class="col-md-6">
-        <!-- 자기화면 (작은) -->
-        <user-video
-          :stream-manager="publisher"
-          @click="updateMainVideoStreamManager(publisher)"
-        />
-        <!-- native : 상위 컴포넌트(즉 여기 있는 이벤트)를 하위 컴포넌트에서 작동시키고 싶을 때 사용한다. -->
+			<!-- 비디오 그룹 -->
+			<!-- 비디오를 클릭할 경우 메인 비디오로 이동 : updateMainVideoStreamManager -->
+			<div id="video-container" class="col-md-6">
+				<!-- 자기화면 (작은) -->
+				<user-video :stream-manager="publisher" @click="updateMainVideoStreamManager(publisher)"/>
+				<!-- native : 상위 컴포넌트(즉 여기 있는 이벤트)를 하위 컴포넌트에서 작동시키고 싶을 때 사용한다. -->
         <!-- vue3에서 native가 사라지고 그냥 click을 누르면 된다. -->
         <user-video
           v-for="sub in subscribers"
@@ -64,30 +55,35 @@
       </div>
     </div>
 
-    <!-- 사이드  -->
-    <div class="side-panel">
-      <button @click="changeContent('chatting')">메시지</button>
-      <button @click="changeContent('participant')">참가자</button>
-      <button @click="changeContent('selectinterviewee')">면접자 지정</button>
-      <!-- 메시지 -->
-      <div v-if="chatting">
-        <message-list
-          :msgs="msgs"
-          :myId="publisher.stream.connection.connectionId"
-          :fromId="fromId"
-        ></message-list>
-        <message-form @sendMsg="sendMsg" :user-name="myUserName"></message-form>
-      </div>
-      <!-- 멤버 리스트 -->
-      <div v-if="participant">
-        <study-member-list></study-member-list>
-      </div>
-      <div v-if="selectinterviewee">
-        <!-- usertype==='LEADERS' && 리더만 보이게 하기 =   -->
-        <select-interveiwee></select-interveiwee>
-      </div>
-    </div>
-  </div>
+		<!-- 사이드  -->
+		<div>
+		</div>
+		<div class="side-panel">
+			<button @click="changeContent('chatting')">메시지</button>
+			<button @click="changeContent('participant')">참가자</button>
+			<button @click="changeContent('selectinterviewee')">면접자 지정</button>
+			<!-- 메시지 -->
+			<div v-if="chatting">
+				<message-list
+					:msgs="msgs"
+					:myId="publisher.stream.connection.connectionId"
+					:fromId="fromId"
+				></message-list>
+				<message-form
+					@sendMsg="sendMsg"
+					:user-name="myUserName"
+				></message-form>
+			</div>
+			<!-- 멤버 리스트 -->
+			<div v-if="participant">
+				<study-member-list></study-member-list>
+			</div>
+			<div v-if="selectinterviewee">
+				<select-interviewee :interviewUserFixed="interviewUserFixed" @streamUpdate="streamUpdate"></select-interviewee>
+				<!-- usertype==='LEADERS' && 리더만 보이게 하기 =   -->
+			</div>
+		</div>
+	</div>
 </template>
 
 <script>
@@ -125,7 +121,6 @@ export default {
       userType: "",
       mySessionId: ``,
       myUserName: "",
-
       OV: undefined,
       session: undefined,
       mainStreamManager: undefined,
@@ -156,10 +151,10 @@ export default {
       isSharingMode: false
     };
   },
-  computed: {
-    // studySpaceDetail.joinType
-    ...mapGetters(["currentUser", "studySpaceDetail"])
-  },
+	computed:{
+		// studySpaceDetail.joinTyped
+		...mapGetters(['currentUser','studySpaceDetail','interviewUserFixed']),
+	},
 
   methods: {
     ...mapActions(["bringStudySpaceDetail"]),
@@ -229,7 +224,7 @@ export default {
       this.getToken(this.mySessionId).then(token => {
         // 여기는 client에 대한 정보 보내기
         this.session
-          .connect(token, { clientData: this.myUserName })
+          .connect(token, { clientData: this.myUserName, clientId:this.myUserId })
           .then(() => {
             // 여기부터는 장치 정보
             // --- Get your own camera stream with the desired properties ---
@@ -243,7 +238,7 @@ export default {
               insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
               mirror: true // Whether to mirror your local video or not
             });
-
+						// updateMainVideoStreamManager(publisher)
             this.mainStreamManager = publisher;
             this.publisher = publisher;
 
@@ -269,13 +264,13 @@ export default {
       if (this.session) this.session.disconnect();
 
       this.session = undefined;
+			// updateMainVideoStreamManager(undefined)
       this.mainStreamManager = undefined;
       this.publisher = undefined;
       this.subscribers = [];
       this.OV = undefined;
 
       window.removeEventListener("beforeunload", this.leaveSession);
-
       this.moveToStudy();
     },
 
@@ -461,8 +456,31 @@ export default {
       }
     },
 
-    //메시지
-    sendMsg(msg) {
+
+		// 사이드 패널
+		changeContent(content){
+			console.log(content)
+			if(content==="chatting"){
+				this.chatting = true
+				this.participant = false
+				this.selectinterviewee = false
+			}
+			else if(content==="participant"){
+				this.chatting = false
+				this.participant = true
+				this.selectinterviewee = false
+			}
+			else if(content==="selectinterviewee"){
+				this.chatting = false
+				this.participant = false
+				this.selectinterviewee = true
+			}
+			console.log(this.selectinterviewee)
+		},
+
+
+		//메시지
+		sendMsg(msg) {
       // Sender of the message (after 'session.connect')
       this.session
         .signal({
@@ -477,28 +495,32 @@ export default {
           console.error(error);
         });
     },
-    changeSessionId(sessionNo) {
-      return `Session${sessionNo}`;
-    },
-    moveToStudy() {
-      router.push({
-        name: "studydetail",
-        params: { stdNo: this.sessionNo }
-      });
-    }
-  },
-  async created() {
-    await this.bringStudySpaceDetail(this.sessionNo);
-  },
-  async beforeMount() {
-    this.myUserName = await this.currentUser.userName;
-    this.mySessionId = await this.changeSessionId(this.sessionNo);
-    this.joinSession();
-  },
-  mounted() {
-    this.userType = this.studySpaceDetail.joinType;
-  }
-};
+		changeSessionId(sessionNo){
+			return `Session${sessionNo}`
+		},
+		moveToStudy(){
+			router.push({
+				name:'studydetail',
+				params : {stdNo:this.sessionNo}
+			})
+		},
+
+	},
+	created(){
+		this.bringStudySpaceDetail(this.sessionNo)
+	},
+	async beforeMount(){
+		this.myUserName = await this.currentUser.userName
+		this.myUserId = await this.currentUser.userId
+		this.mySessionId = await this.changeSessionId(this.sessionNo)
+		console.log('확인!!!!')
+		console.log(this.myUserId)
+		this.joinSession()
+	},
+	mounted(){
+		this.userType = this.studySpaceDetail.joinType
+	}
+}
 </script>
 <style scoped>
 .side-panel {

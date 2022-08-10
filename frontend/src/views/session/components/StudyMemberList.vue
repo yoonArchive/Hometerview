@@ -1,5 +1,4 @@
 <template>
-
   <!-- 자소서 보기 -->
   <div v-if="coverLetter">
     <button @click="changeToCoverLetter(['memberlist',null])">닫기</button>
@@ -42,12 +41,12 @@ export default {
     ...mapGetters(['studySpaceDetail','studentIndex','coverLetter','memberList']),
   },
   methods:{
-  ...mapActions(['bringStudySpaceDetail','changeToCoverLetter']),
+  ...mapActions(['changeToCoverLetter']),
   },
 
-  created(){
-    this.bringStudySpaceDetail(this.sessionNo)
-  }
+  // created(){
+  //   this.bringStudySpaceDetail(this.sessionNo)
+  // }
 
 }
 </script>
