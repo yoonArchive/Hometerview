@@ -89,8 +89,12 @@
       </div>
     </div>
     <div v-else>
-      <div class="carousel carousel-inner">
-        <h1 style="color:white;">스터디에 가입해보세요</h1>
+      <div class="carousel carousel-inner" style=" text-align:center;">
+        <i
+          class="input-icon uil uil-plus-circle"
+          style="color:red; width:1000px; "
+        ></i>
+        <h3 style="color:white; ">스터디에 가입해보세요</h3>
       </div>
     </div>
     <div class="row" style="margin-bottom:20px;">
