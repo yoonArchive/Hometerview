@@ -8,8 +8,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @Setter
-@ApiModel("UpdateStdImgPutRequest")
-public class UpdateStdImgPutReq {
+@ApiModel("UpdateStudyPutRequest")
+public class StudyPutReq {
+
+    @ApiModelProperty(name = "스터디 정보 객체")
+    StudyInfoPutReq studyInfoPutReq;
 
     @ApiModelProperty(name = "multipartFile")
     MultipartFile multipartFile;

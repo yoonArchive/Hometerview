@@ -2,6 +2,7 @@ package com.ssafy.api.controller;
 
 import com.ssafy.api.request.*;
 import com.ssafy.api.response.CommonQuestionListRes;
+import com.ssafy.api.response.RecruitRes;
 import com.ssafy.api.response.StudyListRes;
 import com.ssafy.api.response.StudyRes;
 import com.ssafy.api.service.CommonQuestionService;
@@ -131,6 +132,31 @@ public class StudyController {
         else return ResponseEntity.status(401).body(BaseResponseBody.of(401, "스터디 삭제에 실패하였습니다."));
     }
 
+    @PutMapping("/{stdNo}")
+    @ApiOperation(value = "스터디 수정", notes = "스터디 내용을 수정한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "스터디 수정 성공", response = RecruitRes.class),
+            @ApiResponse(code = 401, message = "스터디 수정 실패", response = BaseResponseBody.class),
+            @ApiResponse(code = 402, message = "썸네일 이미지 수정 실패", response = BaseResponseBody.class),
+            @ApiResponse(code = 403, message = "해당 스터디 없음", response = BaseResponseBody.class),
+            @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
+    })
+    public ResponseEntity<? extends BaseResponseBody> updateStudy(@ApiIgnore Authentication authentication,
+                                                                  @PathVariable @ApiParam(value = "스터디 번호", required = true) Long stdNo,
+                                                                  @ModelAttribute @Valid StudyPutReq studyPutReq) {
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        Long userNo = userDetails.getUserNo();
+        Study study = studyService.detailStudy(stdNo);
+        if (study == null) return ResponseEntity.status(402).body(BaseResponseBody.of(402, "스터디가 존재하지 않습니다."));
+        int result = studyService.updateStudy(study, studyPutReq);
+        if (result == 0) return ResponseEntity.status(401).body(BaseResponseBody.of(401, "스터디 모집글 수정에 실패하였습니다."));
+        else if (result == 1) return ResponseEntity.status(402).body(BaseResponseBody.of(402, "썸네일 이미지 수정에 실패하였습니다."));
+        Study updateStudy = studyService.detailStudy(stdNo);
+        long[] detailCounts = studyService.getDetailCounts(stdNo);
+        ApplyType joinType = studyService.getJoinType(userNo, stdNo);
+        return ResponseEntity.status(200).body(StudyRes.of(updateStudy, detailCounts, joinType, 200, "스터디 모집글이 수정되었습니다."));
+    }
+
     @PutMapping("notice/{stdNo}")
     @ApiOperation(value = "스터디 공지사항 작성", notes = "스터디 공지사항을 작성한다.")
     @ApiResponses({
@@ -178,7 +204,7 @@ public class StudyController {
         Study study = studyService.detailStudy(stdNo);
         if (study == null) return ResponseEntity.status(402).body(BaseResponseBody.of(402, "스터디가 존재하지 않습니다."));
         try {
-            studyService.updateStdImg(study, updateStdImgPutReq.getNewStdImg());
+            studyService.updateStdImg(study, updateStdImgPutReq.getMultipartFile());
         } catch (Exception e) {
             return ResponseEntity.status(401).body(BaseResponseBody.of(401, "스터디 이미지 변경에 실패하였습니다."));
         }
