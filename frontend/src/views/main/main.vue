@@ -152,30 +152,6 @@
       <div id="copyright" class="container"></div>
     </div>
   </body>
-  <!-- <div id="mainBackground" class="container" ref="mainBackground">
-    <div id="mainDivLogo">
-      <img :src="logo" id="mainImageLogo" />
-    </div>
-
-    <div>
-      <img :src="images[0]" alt="" class="main-image" />
-    </div>
-    <router-link to="/home">
-      <button id="mainBtn">홈페이지 바로가기</button>
-    </router-link>
-    <div>
-      <img :src="images[1]" alt="" class="main-image" />
-    </div>
-    <div>
-      <img :src="images[2]" alt="" class="main-image" />
-    </div>
-    <div>
-      <img :src="images[3]" alt="" class="main-image" />
-    </div>
-    <div>
-      <img :src="images[4]" alt="" class="main-image" />
-    </div>
-  </div> -->
 </template>
 <style>
 @import "https://unpkg.com/element-plus/lib/theme-chalk/index.css";
