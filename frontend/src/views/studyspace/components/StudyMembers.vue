@@ -23,6 +23,7 @@
                 params: { studentindex: studentindex }
               }"
             >
+              <button>asd</button>
               <i class="far fa-file-alt fa-lg" style="color:#653FD3"></i>
             </router-link>
           </div>

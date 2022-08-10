@@ -6,7 +6,7 @@
 
 <script>
 import StudySpaceInfo from "./components/StudySpaceInfo.vue";
-
+import { mapActions } from "vuex";
 export default {
   name: "StudySpaceDetailView",
   data() {
@@ -14,8 +14,14 @@ export default {
       stdNo: this.$route.params.stdNo
     };
   },
+  methods: {
+    ...mapActions(["setStudyNoAction"])
+  },
   components: {
     StudySpaceInfo
+  },
+  mounted() {
+    this.setStudyNoAction(this.stdNo);
   }
 };
 </script>

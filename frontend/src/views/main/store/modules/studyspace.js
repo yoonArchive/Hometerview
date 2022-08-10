@@ -160,6 +160,7 @@ export default {
         headers: getters.authHeader
       })
         .then(res => {
+          console.log("스터디 스페이스 리스트!!");
           console.log(res.data);
           commit("SET_STUDYSPACE_LIST", res.data.studies);
         })
@@ -226,6 +227,9 @@ export default {
             console.log(err.response);
           });
       }
+    },
+    setStudyNoAction({ commit }, data) {
+      commit("SET_STD_NO", data);
     }
   }
 };
