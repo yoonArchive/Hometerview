@@ -1,9 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "@/views/home/home";
 import store from "@/common/lib/store.js";
-import ConferencesDetail from "@/views/conferences/conference-detail";
-
-import History from "@/views/history/history";
 import Main from "@/views/main/main";
 
 /* 로그인 회원가입 등 계정 관련 페이지 */
@@ -78,11 +75,6 @@ function makeRoutesFromMenu() {
   routes = routes.filter(item => item);
   // menu 자체에는 나오지 않는 페이지 라우터에 추가(방 상세보기)
   routes.push(
-    {
-      path: "/conferences/:conferenceId",
-      name: "conference-detail",
-      component: ConferencesDetail
-    },
     {
       path: "/home",
       name: "home",

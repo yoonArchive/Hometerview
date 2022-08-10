@@ -1,28 +1,28 @@
 <template>
-
-  <form v-on:keydown.enter.prevent ="submitForm">
-    <input           
+  <form v-on:keydown.enter.prevent="submitForm">
+    <input
       id="input_textarea"
       type="textarea"
       :rows="2"
       placeholder="채팅을 입력하세요."
       v-model="messageForm.message"
-      style="width:80%">
+      style="width:80%"
+    />
 
-      <button
-        class="my-btn"
-        type="primary"
-        @click.prevent="submitForm"
-        style="border-radius:0px 0px 10px 0px; width:20%; height:3%;"
-      >
+    <button
+      class="my-btn"
+      type="primary"
+      @click.prevent="submitForm"
+      style="border-radius:0px 0px 10px 0px; width:20%; height:3%;"
+    >
       입력
-      </button>
+    </button>
   </form>
 </template>
 
 <script>
 export default {
-  name:'MessageForm',
+  name: "MessageForm",
   data() {
     return {
       messageForm: {
@@ -43,7 +43,7 @@ export default {
           userName: this.userName,
           msg: msg
         });
-        this.$emit("sendMsg", string)
+        this.$emit("sendMsg", string);
       }
       this.messageForm.message = "";
     }
@@ -51,6 +51,4 @@ export default {
 };
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -5,7 +5,7 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import { INITIAL_EVENTS } from "./event-utils";
 import ReviewForm from "./components/modal-review.vue";
-import ReviewFormEdit from "./components/modal-reviewEdit.vue"
+import ReviewFormEdit from "./components/modal-reviewEdit.vue";
 import { mapActions, mapGetters } from "vuex";
 // import review from '../main/store/modules/review'
 const today = new Date().toLocaleString("ko-kr");
@@ -23,7 +23,7 @@ export default {
 
   data: function() {
     return {
-      reviewdate:'',
+      reviewdate: "",
 
       getReviewOk: true,
       currentday: null,
@@ -34,9 +34,7 @@ export default {
       //   reviewDate: this.currentReview.reviewDate
       // },
 
-      fetchReview: {
-
-      },
+      fetchReview: {},
       newreview: {
         // title: this.review.reviewTitle,
         // content: this.review.reviewContents,
@@ -46,7 +44,7 @@ export default {
         reviewType: this.reviews.reviewType,
         reviewDate: today
       },
-      id:'',
+      id: "",
       reviewmodalE: false,
       reviewmodal: false,
       message: "",
@@ -86,14 +84,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters([
-      "currentReview",
-      "reviewContents",
-      "currentDdays"
-
-
-
-      ])
+    ...mapGetters(["currentReview", "reviewContents", "currentDdays"])
   },
   methods: {
     ...mapActions([
@@ -119,7 +110,7 @@ export default {
       calendarApi.unselect(); // clear date selection
       let mmax = 0;
 
-      console.log('커런트 데이'+this.currentday);
+      console.log("커런트 데이" + this.currentday);
       for (const aareview of this.reviews) {
         if (aareview.reviewNo > mmax) {
           mmax = aareview.reviewNo;
@@ -164,48 +155,40 @@ export default {
     },
     //내용 클릭했을 시
     handleEventClick(clickInfo) {
+      this.getReviewDetail(clickInfo.event.id);
 
-
-
-      this.getReviewDetail(clickInfo.event.id)
-
-
-      this.id = clickInfo.event.id
-      console.log('아이디'+this.id)
+      this.id = clickInfo.event.id;
+      console.log("아이디" + this.id);
       this.fetchReview = {
         reviewNo: clickInfo.event.id,
         reviewContents: this.currentReview.reviewContents,
         reviewTitle: this.currentReview.reviewTitle,
         reviewType: this.currentReview.reviewType,
         reviewDate: this.currentReview.reviewDate
-      }
-
+      };
 
       this.reviewmodalE = true;
-
 
       // this.fetchReview = null
       // if (confirm(`삭제하시겠습니까? '${clickInfo.event.title}'`)) {
 
-
-        if (clickInfo.event.id === '999'){
-
-          const ddayName = clickInfo.event.title
-          console.log('디데이네임'+ddayName)
-          for (const ddaykim of this.currentDdays){
-            if (ddaykim.ddayTitle === ddayName){
-              const ddayNum = ddaykim.ddayNo
-              console.log('디데이넘버'+ddayNum)
-              this.deleteDDAY(ddayNum)
-              // this.getDdayInfo()
-              clickInfo.event.remove();
-            }else{
-              console.log('김김')
-              this.getDdayInfo()
-            }
+      if (clickInfo.event.id === "999") {
+        const ddayName = clickInfo.event.title;
+        console.log("디데이네임" + ddayName);
+        for (const ddaykim of this.currentDdays) {
+          if (ddaykim.ddayTitle === ddayName) {
+            const ddayNum = ddaykim.ddayNo;
+            console.log("디데이넘버" + ddayNum);
+            this.deleteDDAY(ddayNum);
+            // this.getDdayInfo()
+            clickInfo.event.remove();
+          } else {
+            console.log("김김");
+            this.getDdayInfo();
           }
         }
-        // else{
+      }
+      // else{
       //   this.deleteReview1(clickInfo.event.id);
       //   console.log("삭제완료");
       //   clickInfo.event.remove();
@@ -241,9 +224,9 @@ export default {
   },
 
   beforeMount() {
-    this.checkReview()
+    this.checkReview();
   },
-  created(){
+  created() {
     // this.checkReview()
   }
 };
@@ -303,18 +286,17 @@ export default {
     :currentday="this.currentday"
     action="create"
   >
-    <h3 slot="header">회고록작성 폼</h3>
+    <!-- <h3 slot="header">회고록작성 폼</h3> -->
   </ReviewForm>
 
-
-    <ReviewFormEdit
+  <ReviewFormEdit
     v-if="reviewmodalE"
     @close="reviewmodalE = false"
     :fetchReview="this.fetchReview"
     :currentday="this.currentday"
     :id="this.id"
   >
-    <h3 slot="header">회고록수정 폼</h3>
+    <!-- <h3 slot="header">회고록수정 폼</h3> -->
   </ReviewFormEdit>
 </template>
 

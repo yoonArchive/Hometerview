@@ -1,44 +1,47 @@
 <template>
-<div v-if="streamManager">
-	<ov-video :stream-manager="streamManager"/>
-	<div><p>{{ clientData }}</p></div>
-	<div><p>{{ clinentId }}</p></div>
-</div>
+  <div v-if="streamManager">
+    <ov-video :stream-manager="streamManager" />
+    <div>
+      <p>{{ clientData }}</p>
+    </div>
+    <div>
+      <p>{{ clinentId }}</p>
+    </div>
+  </div>
 </template>
 
 <script>
-import OvVideo from './OvVideo';
+import OvVideo from "./OvVideo";
 
 export default {
-	name: 'UserVideo',
+  name: "UserVideo",
 
-	components: {
-		OvVideo,
-	},
+  components: {
+    OvVideo
+  },
 
-	props: {
-		streamManager: Object,
-	},
+  props: {
+    streamManager: Object
+  },
 
-	computed: {
-    clientData () {
-			// 이름 띄우기
-			const { clientData } = this.getConnectionData();
-			return clientData
-		},
-		clinentId(){
-			const { clientId } = this.getConnectionData();
-			return clientId
-		}
-	},
-	methods: {
-		getConnectionData () {
-			const { connection } = this.streamManager.stream;
-			console.log('제발!!!')
-			console.log(connection)
-			return JSON.parse(connection.data);
-		},
-	},
+  computed: {
+    clientData() {
+      // 이름 띄우기
+      const { clientData } = this.getConnectionData();
+      return clientData;
+    },
+    clinentId() {
+      const { clientId } = this.getConnectionData();
+      return clientId;
+    }
+  },
+  methods: {
+    getConnectionData() {
+      const { connection } = this.streamManager.stream;
+      console.log("제발!!!");
+      console.log(connection);
+      return JSON.parse(connection.data);
+    }
+  }
 };
 </script>
-	

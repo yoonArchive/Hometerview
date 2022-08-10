@@ -5,7 +5,7 @@
         <!-- <router-link :to="{ name: 'profile', params: { username: commonquestion.user.username } }">
           {{ commonquestion.user.username }}
         </router-link> 님 : -->
-        {{commonquestion.questionNo}}
+        {{ commonquestion.questionNo }}
       </div>
       <div class="commonquestion-time">
         <!-- <div class="commonquestion-create">
@@ -16,30 +16,47 @@
         </div> -->
       </div>
 
-      {{commonquestion.contents}}
+      {{ commonquestion.contents }}
     </div>
     <div class="commonquestion-mid">
       <!-- <div v-if="!isEditing">{{ payload.content }}</div> -->
-      {{commonquestion.questionType}}
+      {{ commonquestion.questionType }}
     </div>
     <div class="commonquestion-bottom">
       <div class="commonquestion-button">
         <span v-if="isEditing">
-          <input type="text" v-model="payload.contents">
-            <button @click="onUpdate">Update</button> |
-            <button @click="switchIsEditing">Cancel</button>
-            <div>
-              <input type="radio" name="reviewType" value="JOB" v-model="payload.questionType">
-              <label for="questionType">공통질문</label>
-              <input  type="radio" name="reviewType" value="FREE" v-model="payload.questionType">
-              <label for="questionType">자율질문</label>
-            </div>
-
+          <input type="text" v-model="payload.contents" />
+          <button @click="onUpdate">Update</button> |
+          <button @click="switchIsEditing">Cancel</button>
+          <div>
+            <input
+              type="radio"
+              name="reviewType"
+              value="JOB"
+              v-model="payload.questionType"
+            />
+            <label for="questionType">공통질문</label>
+            <input
+              type="radio"
+              name="reviewType"
+              value="FREE"
+              v-model="payload.questionType"
+            />
+            <label for="questionType">자율질문</label>
+          </div>
         </span>
 
-        <span v-if="commonquestion.writerNo === commonquestion.writerNo && !isEditing">
+        <span
+          v-if="
+            commonquestion.writerNo === commonquestion.writerNo && !isEditing
+          "
+        >
           <button @click="switchIsEditing">Edit</button> |
-          <button @click="deletecommonQuestion([stdNo, commonquestion.questionNo])">Delete</button>
+          <button
+            @click="deletecommonQuestion([stdNo, commonquestion.questionNo])"
+          >
+            Delete
+          </button>
         </span>
       </div>
     </div>
@@ -47,15 +64,14 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapActions } from "vuex";
 
 export default {
-  name: 'commonquestionListItem',
+  name: "commonquestionListItem",
   props: {
     commonquestion: Object,
     stdNo: Number,
     questionNo: Number
-
   },
   data() {
     return {
@@ -64,33 +80,29 @@ export default {
       payload: {
         // questionNo: this.commonquestion.questionNo,
         contents: this.commonquestion.contents,
-        questionType:this.commonquestion.questionType
-      },
+        questionType: this.commonquestion.questionType
+      }
       // questionNo: this.commonquestion.questionNo,
-
-    }
+    };
   },
   computed: {
-    ...mapGetters(['authHeader']),
-
+    ...mapGetters(["authHeader"])
   },
   methods: {
-    ...mapActions(['updatecommonQuestion','deletecommonQuestion']),
+    ...mapActions(["updatecommonQuestion", "deletecommonQuestion"]),
     switchIsEditing() {
-      this.isEditing = !this.isEditing
+      this.isEditing = !this.isEditing;
     },
     onUpdate() {
-      this.updatecommonQuestion([this.stdNo, this.payload, this.commonquestion.questionNo])
-      this.isEditing = false
-    },
-
-
-  },
-
-}
+      this.updatecommonQuestion([
+        this.stdNo,
+        this.payload,
+        this.commonquestion.questionNo
+      ]);
+      this.isEditing = false;
+    }
+  }
+};
 </script>
 
-<style scoped>
-
-
-</style>
+<style scoped></style>

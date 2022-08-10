@@ -17,31 +17,31 @@
 
     <div id="headerBtnGroup" v-if="!isLoggedIn">
       <router-link to="/home/login" class="header-routerlink-decoration">
-        <div class="header-btn" >
+        <div class="header-btn">
           <!-- <div class="header-btn-text"> -->
-            로그인
+          로그인
           <!-- </div> -->
         </div>
       </router-link>
       <router-link to="/home/signup" class="header-routerlink-decoration">
         <div class="header-btn" v-if="!isLoggedIn" id="signup">
           <!-- <div class="header-btn-text" style="color:white"> -->
-            회원가입
+          회원가입
           <!-- </div> -->
         </div>
       </router-link>
     </div>
     <div class="header-btngroup" v-else>
-      <router-link to="/home/logout" class="header-routerlink-decoration" >
+      <router-link to="/home/logout" class="header-routerlink-decoration">
         <div class="header-btn" v-if="isLoggedIn" id="signup">
           <!-- <div class="header-btn-text"> -->
-            로그아웃
+          로그아웃
           <!-- </div> -->
         </div>
       </router-link>
       <div>
         <router-link to="/home/mypage">
-          <img :src="imagesrc" alt="" >
+          <img :src="imagesrc" alt="" />
         </router-link>
       </div>
     </div>
@@ -54,12 +54,12 @@ import { useStore } from "vuex";
 import { mapGetters } from "vuex";
 export default {
   name: "header",
-  computed:{
-    ...mapGetters(['isLoggedIn'])
+  computed: {
+    ...mapGetters(["isLoggedIn"])
   },
   data() {
     return {
-      imagesrc: require("../../assets/images/ssafy-logo.png")
+      imagesrc: require("../../../assets/images/ssafy-logo.png")
     };
   },
   setup() {
@@ -89,33 +89,32 @@ export default {
 </script>
 
 <style>
-#signup{
+#signup {
   color: white;
-  background-color: #653FD3;
+  background-color: #653fd3;
 }
-#signup:hover{
+#signup:hover {
   background-color: #9779f0;
 }
-#signup:active{
-  background-color:#7455d1;
+#signup:active {
+  background-color: #7455d1;
 }
-.header-btn{
+.header-btn {
   color: black;
   width: 100px;
   /* height: 50px; */
   font-weight: bold;
-
 }
-.header-btn:hover{
-  background-color: #653FD3;
+.header-btn:hover {
+  background-color: #653fd3;
   color: white;
 }
-.header-btn:active{
-  background-color:#7455d1;
+.header-btn:active {
+  background-color: #7455d1;
   color: white;
 }
 
-.header-btngroup{
+.header-btngroup {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -124,7 +123,5 @@ export default {
   gap: 16px;
   order: 2;
   color: black;
-
 }
-
 </style>

@@ -32,7 +32,7 @@ export default {
   },
   data() {
     return {
-      isScrolled: false,
+      isScrolled: false
     };
   },
   updated() {
@@ -63,7 +63,7 @@ export default {
 
 <style scoped>
 .container {
-  background: #FFFF;
+  background: #ffff;
   overflow: scroll;
   border-radius: 10px 10px 0px 0px;
   height: 700px;
@@ -74,5 +74,4 @@ export default {
   position: relative;
   top: -30px;
 }
-
 </style>

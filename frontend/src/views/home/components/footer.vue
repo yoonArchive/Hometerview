@@ -1,35 +1,30 @@
 <template>
-  <div
-    class="main-footer"
-    :gutter="10">
-          <router-link class="routerlink" :to="{ name: 'notices' }" id="a">
-            공지사항
-          </router-link>
-          <a href="" id="b">이용약관</a>
-          <a href="" id="c">고객센터</a>
+  <div class="main-footer" :gutter="10">
+    <router-link class="routerlink" :to="{ name: 'notices' }" id="a">
+      공지사항
+    </router-link>
+    <a href="" id="b">이용약관</a>
+    <a href="" id="c">고객센터</a>
   </div>
 </template>
 
 <style scoped>
-.logo-image{
+.logo-image {
   display: flex;
   /* margin-left: 500px; */
   margin-left: auto;
 }
-#arrow{
+#arrow {
   margin-left: 30px;
   height: auto;
   width: 50px;
 }
 .word {
-
-
 }
 #logo {
   width: 150px;
   height: 100px;
   /* float: right */
-
 }
 #a {
   text-decoration-line: none;
@@ -74,8 +69,9 @@
     width: 100%;
     color: white;
     text-align: center;
-    background-color: #653FD3;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.08), 0px 4px 24px rgba(0, 0, 0, 0.08);
+    background-color: #653fd3;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.08),
+      0px 4px 24px rgba(0, 0, 0, 0.08);
   }
   .main-footer .contents {
     line-height: 190px;
@@ -83,12 +79,12 @@
     margin: 0 auto;
   }
 
-  .word{
+  .word {
     /* display: none; */
   }
 }
-@media (max-width: 1218px){
-  .word{
+@media (max-width: 1218px) {
+  .word {
     /* display: none; */
   }
 }
@@ -97,13 +93,12 @@
     height: 40px;
     width: 100%;
     margin-top: 100px;
-    background-color: #653FD3;
+    background-color: #653fd3;
     color: white;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.08), 0px 4px 24px rgba(0, 0, 0, 0.08);
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.08),
+      0px 4px 24px rgba(0, 0, 0, 0.08);
     text-align: left;
     padding: 10px;
-
-
 
     /* display: flex;
 flex-direction: row;
@@ -117,9 +112,10 @@ width: auto;
 height: 76px;
 
 background: #653FD3; */
-/* Shadow/4dp */
+    /* Shadow/4dp */
 
-box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.08), 0px 4px 24px rgba(0, 0, 0, 0.08);
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.08),
+      0px 4px 24px rgba(0, 0, 0, 0.08);
   }
   .main-footer .contents {
     line-height: 110px;
@@ -127,8 +123,6 @@ box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.08), 0px 4px 24px rgba(0, 0, 0, 0.08);
     text-align: center;
     margin: 0 auto;
 
-
-
     /* display: flex;
 flex-direction: row;
 justify-content: space-between;
@@ -141,39 +135,36 @@ width: auto;
 height: 76px;
 
 background: #653FD3; */
-/* Shadow/4dp */
+    /* Shadow/4dp */
 
-box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.08), 0px 4px 24px rgba(0, 0, 0, 0.08);
-
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.08),
+      0px 4px 24px rgba(0, 0, 0, 0.08);
   }
 }
 </style>
 <script>
-import { reactive } from 'vue'
-import { useStore } from 'vuex'
+import { reactive } from "vue";
+import { useStore } from "vuex";
 
 export default {
-  name: 'footer',
+  name: "footer",
   data() {
     return {
-        imgsource: require("../../assets/images/logo.png"),
-
-    }
-
+      imgsource: require("../../../assets/images/logo.png")
+    };
   },
   props: {
     height: {
       type: String,
-      default: '110px'
+      default: "110px"
     }
   },
 
   setup() {
-    const state = reactive({})
+    const state = reactive({});
 
-    return { state }
+    return { state };
   }
-}
+};
 </script>
-<style>
-</style>
+<style></style>

@@ -19,7 +19,6 @@
 
   <!-- <img :src="image" class="d-block w-100" alt="..." /> -->
   <div class="carousel-caption d-none d-md-block">
-    {{ studySpace.stdNo }}
     <div class="row">
       <h5>
         <span class="comName" v-if="studySpace.comName != null"
@@ -62,7 +61,7 @@ export default {
     moveToStudyDetail() {
       router.push({
         name: "studydetail",
-        params: { stdNo: this.studySpace.stdNo, }
+        params: { stdNo: this.studySpace.stdNo }
       });
     }
   }

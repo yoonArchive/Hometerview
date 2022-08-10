@@ -159,7 +159,6 @@ export default {
               const email = kakaoacount.email;
               const profile1 = kakaoacount.thumbnail_image_url;
 
-
               // {
               //   "userEmail": "ssafy@ssafy.com",
               //   "userId": "your_id",
@@ -169,9 +168,9 @@ export default {
 
               const payload = {
                 userEmail: email,
-                userId : name,
-                userName: name,
-              }
+                userId: name,
+                userName: name
+              };
 
               // const splitedEmail = email.split("@");
               // const emailId = splitedEmail[0];
@@ -204,7 +203,7 @@ export default {
               //   // commit("SET_CHECK_EMAIL", true);
               //   alert("사용중인 이메일 입니다");
               // });
-              console.log(payload)
+              console.log(payload);
               // saveToken(response)
               const token = response.kakao_account.email;
               dispatch("saveToken", token);
