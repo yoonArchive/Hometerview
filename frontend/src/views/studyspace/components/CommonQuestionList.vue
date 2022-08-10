@@ -1,20 +1,21 @@
 <template>
   <div class="container">
     <common-question-item
-      v-for="commonquestion in commonquestions"
+      v-for="commonquestion in this.commonquestions"
       :commonquestion="commonquestion"
       :questionNo="commonquestion.questionNo"
       :stdNo="stdNo"
       :key="commonquestion.questionNo"
     >
     </common-question-item>
+
     <common-question-form></common-question-form>
   </div>
 </template>
 <script>
 import CommonQuestionForm from "./CommonQuestionForm.vue";
 import CommonQuestionItem from "./CommonQuestionItem.vue";
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "CommonQuestionList",
@@ -31,9 +32,13 @@ export default {
 
   beforeUpdate() {
     this.commonQuestions1(this.stdNo);
+    console.log("김" + this.stdNo);
   },
   methods: {
     ...mapActions(["getStd", "commonQuestions1"])
+  },
+  computed: {
+    ...mapGetters(["commonQuestions"])
   }
 };
 </script>

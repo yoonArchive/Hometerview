@@ -19,7 +19,6 @@ import MembersRecruitmentEditView from "@/views/membersrecruitment/MembersRecrui
 import StudyRecruitment from "@/views/home/components/study-recruitment";
 
 /* 스터디 스페이스 페이지ㅣ*/
-// import StudySpaceView from '@/views/studyspace/StudySpaceView'
 import StudySpaceDetailView from "@/views/studyspace/StudySpaceDetailView";
 import MemberCoverLetter from "@/views/studyspace/MemberCoverLetter";
 
@@ -46,7 +45,6 @@ import MyInterviewView from "@/views/myinterview/MyInterviewView";
 import ReviewView from "@/views/myinterview/review/ReviewView";
 import ReviewNew from "@/views/myinterview/review/ReviewNewView";
 import ReviewEdit from "@/views/myinterview/review/ReviewEditView";
-import { component } from "stylus/lib/functions";
 
 /* 세션 페이지 */
 import SessionView from "@/views/session/SessionView";
@@ -55,9 +53,7 @@ import SessionView from "@/views/session/SessionView";
 // import CommonQuestionDetailView from '@/views/studyspace/components/CommonQuestionDetailView'
 // import CommonQuestionNewView from '@/views/studyspace/components/CommonQuestionNewView'
 // import CommonQuestionEditView from '@/views/studyspace/components/CommonQuestionEditView'
-import StudyQuestionListView from "@/views/studyspace/StudyQuestionListView";
-
-import cc from "@/views/myinterview/StudyCalendar.vue";
+// import StudyQuestionListView from "@/views/studyspace/StudyQuestionListView";
 
 const fullMenu = require("@/views/main/menu.json");
 function makeRoutesFromMenu() {
@@ -239,33 +235,7 @@ function makeRoutesFromMenu() {
       path: "/",
       name: "main",
       component: Main
-    },
-    {
-      path: "/study/:stdNo/questionList",
-      name: "questionList",
-      component: StudyQuestionListView
-    },
-    {
-      path: "/c",
-      name: "c",
-      component: cc
     }
-
-    // {
-    //   path: '/study/:studyNo/common/new',
-    //   name: 'commonNew',
-    //   component: CommonQuestionNewView
-    // },
-    // {
-    //   path: '/study/:studyNo/common/edit',
-    //   name: 'commonEdit',
-    //   component: CommonQuestionEditView
-    // },
-    // {
-    //   path: '/study/:studyNo/common/:qustionNo',
-    //   name: 'commonDetail',
-    //   component: CommonQuestionDetailView
-    // },
   );
   return routes;
 }
