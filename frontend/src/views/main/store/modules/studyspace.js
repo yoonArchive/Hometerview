@@ -153,6 +153,7 @@ export default {
         });
     },
     bringStudySpace({ commit, getters }) {
+      console.log("확인");
       axios({
         url: api_url.study.studyspace(),
         method: "get",

@@ -4,7 +4,7 @@
     <button @click="changeToCoverLetter(['memberlist', null])">닫기</button>
     <member-cover-letter :studentindex="studentIndex"></member-cover-letter>
   </div>
-
+  <!-- this.studySpaceDetail.joinType.user.userId -->
   <!-- 리스트 보기 -->
   <div v-if="memberList">
     <study-members

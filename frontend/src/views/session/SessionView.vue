@@ -163,19 +163,48 @@ export default {
   },
 
   methods: {
-    ...mapActions(["bringStudySpaceDetail"]),
-    streamUpdate(interviewUserFixed) {
-      console.log(this.publisher);
+    ...mapActions(["bringStudySpaceDetail", "changeToCoverLetter"]),
+    async findIndex(userId) {
+      const members = this.studySpaceDetail.studyJoins;
+      let studentindex;
+      members.forEach(function(member, index) {
+        const checkId = member.user.userId;
+        if (userId === checkId) {
+          console.log("check!!!!!!!!!!");
+          console.log(index);
+          studentindex = index;
+          return;
+        }
+      });
+      if (studentindex) {
+        return studentindex;
+      } else {
+        return 0;
+      }
+    },
+    async streamUpdate(interviewUserFixed) {
       const { clientId } = JSON.parse(this.publisher.stream.connection.data);
-      console.log(typeof interviewUserFixed);
-      console.log(typeof clientId);
       if (clientId === interviewUserFixed) {
-        this.updateMainVideoStreamManager(this.publisher);
+        await this.updateMainVideoStreamManager(this.publisher);
+        const studentindex = await this.findIndex(interviewUserFixed);
+        this.chatting = false;
+        this.participant = true;
+        this.selectinterviewee = false;
+        console.log("확인");
+        console.log(studentindex);
+        this.changeToCoverLetter(["coverletter", studentindex]);
       } else if (this.subscribers === true) {
-        this.subscribers.forEach(sub => {
+        this.subscribers.forEach(async sub => {
           const { clientId } = JSON.parse(sub.stream.connection.data);
           if (clientId === interviewUserFixed) {
-            this.updateMainVideoStreamManager(sub);
+            const studentindex = await this.findIndex(interviewUserFixed);
+            await this.updateMainVideoStreamManager(sub);
+            this.chatting = false;
+            this.participant = true;
+            this.selectinterviewee = false;
+            console.log("확인");
+            console.log(studentindex);
+            this.changeToCoverLetter(["coverletter", studentindex]);
           }
         });
       }
