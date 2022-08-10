@@ -72,7 +72,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .clicked {
   color: white;
   background-color: #653fd3;

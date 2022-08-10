@@ -76,7 +76,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .card {
   width: 15rem;
   height: 16rem;

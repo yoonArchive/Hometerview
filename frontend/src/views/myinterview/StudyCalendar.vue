@@ -153,14 +153,10 @@ export default {
       // this.openModal()
     },
 
-
     //내용 클릭했을 시
     handleEventClick(clickInfo) {
-
-
       this.id = clickInfo.event.id;
       console.log("아이디" + this.id);
-
 
       // this.fetchReview = null
       // if (confirm(`삭제하시겠습니까? '${clickInfo.event.title}'`)) {
@@ -168,30 +164,31 @@ export default {
       if (clickInfo.event.id === "999") {
         const ddayName = clickInfo.event.title;
         console.log("디데이네임" + ddayName);
-        if (confirm(`삭제하시겠습니까? '${clickInfo.event.title}'`)){
-        for (const ddaykim of this.currentDdays) {
-          if (ddaykim.ddayTitle === ddayName) {
-            const ddayNum = ddaykim.ddayNo;
-            console.log("디데이넘버" + ddayNum);
-            this.deleteDDAY(ddayNum);
-            // this.getDdayInfo()
-            clickInfo.event.remove();
-          } else {
-            console.log("김김");
-            this.getDdayInfo();
+        if (confirm(`삭제하시겠습니까? '${clickInfo.event.title}'`)) {
+          for (const ddaykim of this.currentDdays) {
+            if (ddaykim.ddayTitle === ddayName) {
+              const ddayNum = ddaykim.ddayNo;
+              console.log("디데이넘버" + ddayNum);
+              this.deleteDDAY(ddayNum);
+              // this.getDdayInfo()
+              clickInfo.event.remove();
+            } else {
+              console.log("김김");
+              this.getDdayInfo();
+            }
           }
-        }}
-      }else{
+        }
+      } else {
         this.getReviewDetail(clickInfo.event.id);
         this.fetchReview = {
-        reviewNo: clickInfo.event.id,
-        reviewContents: this.currentReview.reviewContents,
-        reviewTitle: this.currentReview.reviewTitle,
-        reviewType: this.currentReview.reviewType,
-        reviewDate: this.currentReview.reviewDate
-      };
+          reviewNo: clickInfo.event.id,
+          reviewContents: this.currentReview.reviewContents,
+          reviewTitle: this.currentReview.reviewTitle,
+          reviewType: this.currentReview.reviewType,
+          reviewDate: this.currentReview.reviewDate
+        };
 
-      this.reviewmodalE = true;
+        this.reviewmodalE = true;
       }
       // else{
       //   this.deleteReview1(clickInfo.event.id);

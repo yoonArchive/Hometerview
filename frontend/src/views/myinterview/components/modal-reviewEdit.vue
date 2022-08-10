@@ -186,14 +186,12 @@ import { mapActions } from 'vuex'
               </div>
               <button
                 id="button-review"
-
                 @click="$emit('close'), updateReview(this.newreview)"
               >
                 수정하기
               </button>
               <button
                 id="button-review"
-
                 @click="$emit('close'), deleteReview(this.id)"
               >
                 삭제하기
@@ -249,7 +247,12 @@ export default {
     ...mapGetters(["currentReview"])
   },
   methods: {
-    ...mapActions(["createReview", "updateReview", "getReviewDetail","deleteReview"]),
+    ...mapActions([
+      "createReview",
+      "updateReview",
+      "getReviewDetail",
+      "deleteReview"
+    ]),
     onSubmit() {
       if (this.action === "create") {
         // this.action = '작성하기'
@@ -271,7 +274,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .modal-mask {
   position: fixed;
   z-index: 9998;

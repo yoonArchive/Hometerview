@@ -139,7 +139,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 a {
   text-decoration: none;
   color: black;

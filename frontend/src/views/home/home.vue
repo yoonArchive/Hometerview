@@ -151,7 +151,7 @@ export default {
   }
 };
 </script>
-<style>
+<style scoped>
 @import url("https://fonts.googleapis.com/css?family=Muli:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&subset=latin-ext,vietnamese");
 @import url("https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&subset=latin-ext");
 
@@ -340,7 +340,7 @@ body.light .progress-wrap svg.progress-circle path {
   min-height: 100%;
   margin-right: 10%;
   margin-left: 10%;
-  padding-top: 10%;
+  padding-top: 5%;
   border: 1px;
   background-color: white;
 }
