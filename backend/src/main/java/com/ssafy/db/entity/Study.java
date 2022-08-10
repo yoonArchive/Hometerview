@@ -69,13 +69,29 @@ public class Study {
     @OneToMany(mappedBy = "study")
     private List<RegistResume> registResumes = new ArrayList<>();
 
+    public void updateStudy(String newStdName, String newStdDetail, StdType newStdType,  String newComName,
+                            String newStartDate, String newEndDate,  String newStdDay, int newStdLimit, String newStdNotice) {
+        this.stdName = newStdName;
+        this.stdDetail = newStdDetail;
+        this.stdType = newStdType;
+        this.comName = newComName;
+        this.startDate = newStartDate;
+        this.endDate = newEndDate;
+        this.stdDay = newStdDay;
+        this.stdLimit = newStdLimit;
+        this.stdNotice = newStdNotice;
+
+    }
+
     public void updateNotice(String newStdNotice) { this.stdNotice = newStdNotice; }
 
     public void updateEndDate(String newEndDate) {
         this.endDate = newEndDate;
     }
 
-    public void updateStdImg(String newStdImg) { this.stdImg = newStdImg; }
+    public void updateStdImg(String fileUrl) {
+        this.stdImg = fileUrl;
+    }
 
     public void updateStdDay(String newStdDay) {
         this.stdDay = newStdDay;

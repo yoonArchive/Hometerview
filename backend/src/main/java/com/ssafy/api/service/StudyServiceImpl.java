@@ -1,14 +1,19 @@
 package com.ssafy.api.service;
 
-import com.querydsl.core.JoinType;
+import com.ssafy.api.request.StudyInfoPutReq;
+import com.ssafy.api.request.StudyPutReq;
 import com.ssafy.db.entity.*;
 import com.ssafy.db.repository.*;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -29,6 +34,10 @@ public class StudyServiceImpl implements StudyService {
     private final ApplyRepository applyRepository;
 
     private final ResumeDetailRepositorySupport resumeDetailRepositorySupport;
+
+    String uploadPath = "C:\\intervenience";
+
+    String uploadFolder = "stdImg";
 
     @Override
     public Study createStudy(Long recruitNo) {
@@ -89,6 +98,27 @@ public class StudyServiceImpl implements StudyService {
         }
         return 1;
     }
+    @Override
+    @Transactional
+    public int updateStudy(Study study, StudyPutReq studyPutReq){
+        String newStdName = studyPutReq.getStudyInfoPutReq().getStdName();
+        String newStdDetail = studyPutReq.getStudyInfoPutReq().getStdDetail();
+        StdType newStdType = studyPutReq.getStudyInfoPutReq().getStdType();
+        String newComName = studyPutReq.getStudyInfoPutReq().getComName();
+        String newStartDate = studyPutReq.getStudyInfoPutReq().getStartDate();
+        String newEndDate = studyPutReq.getStudyInfoPutReq().getEndDate();
+        String newStdDay = studyPutReq.getStudyInfoPutReq().getStdDay();
+        int newStdLimit = studyPutReq.getStudyInfoPutReq().getStdLimit();
+        String newStdNotice = studyPutReq.getStudyInfoPutReq().getStdNotice();
+        try {
+            study.updateStudy(newStdName, newStdDetail, newStdType, newComName, newStartDate, newEndDate, newStdDay, newStdLimit, newStdNotice);
+        } catch (Exception e) {
+            return 0;
+        }
+        int result = updateStdImg(study, studyPutReq.getMultipartFile());
+        if (result == 0) return 1;
+        return 2;
+    }
 
     @Override
     @Transactional
@@ -104,8 +134,38 @@ public class StudyServiceImpl implements StudyService {
 
     @Override
     @Transactional
-    public void updateStdImg(Study study, String newStdImg) {
-        study.updateStdImg(newStdImg);
+    public int updateStdImg(Study study,  MultipartFile multipartFile) {
+        try {
+            File uploadDir = new File(uploadPath + File.separator + uploadFolder);
+            if (!uploadDir.exists()) uploadDir.mkdir();
+            String preFileUrl = study.getStdImg();
+            File file;
+            if (preFileUrl != null) {
+                file = new File(preFileUrl);
+                if (file.exists()) {
+                    file.delete();
+                }
+            }
+            if (multipartFile.isEmpty()) { // 기본 이미지
+                String fileUrl = "";
+                study.updateStdImg(fileUrl);
+                return 1;
+            } else { // 업로드한 이미지
+                String fileName = multipartFile.getOriginalFilename();
+                String extension = FilenameUtils.getExtension(fileName).toLowerCase();
+                UUID uuid = UUID.randomUUID();
+                String destFileName = uuid + "." + extension;
+                File destFile = new File(uploadPath + File.separator + uploadFolder + File.separator + destFileName);
+                destFile.getParentFile().mkdirs();
+                multipartFile.transferTo(destFile);
+                // String fileUrl = "https://i7b105.p.ssafy.io:8080/static/" + uploadFolder + "/" + destFileName;
+                String fileUrl = uploadPath + "/" + uploadFolder + "/" + destFileName;
+                study.updateStdImg(fileUrl);
+                return 1;
+            }
+        } catch (Exception e) {
+            return 0;
+        }
     }
 
     @Override
