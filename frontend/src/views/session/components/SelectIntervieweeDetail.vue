@@ -38,19 +38,19 @@ export default {
     ...mapGetters(["interviewUser"]),
     clientData() {
       // 이름 띄우기
-      const { clientData, clinetNo } = this.getConnectionData();
-      return clientData, clinetNo;
-    }
-  },
-  methods: {
-    ...mapActions(["changeInterviewUser"]),
-    change() {
-      console.log(this.interviewUser);
-      this.changeInterviewUser(this.interviewUser);
+      const { clientData } = this.getConnectionData();
+      return clientData;
     },
-    getConnectionData() {
-      const { connection } = this.sub.stream;
-      return JSON.parse(connection.data);
+    methods: {
+      ...mapActions(["changeInterviewUser"]),
+      change() {
+        console.log(this.interviewUser);
+        this.changeInterviewUser(this.interviewUser);
+      },
+      getConnectionData() {
+        const { connection } = this.sub.stream;
+        return JSON.parse(connection.data);
+      }
     }
   }
 };
