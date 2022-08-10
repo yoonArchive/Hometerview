@@ -1,25 +1,21 @@
 <template>
-  <el-row>
-    <el-col :span="8">
-      <div>
-        <el-button type="primary">Primary</el-button>
-        <router-link to="/home/mypage/myaccount">
-          <button>계정</button>
-        </router-link>
-        <router-link to="/home/mypage/changepassword">
-          <button>비밀번호 변경</button>
-        </router-link>
-        <router-link to="/home/mypage/withdrawal">
-          <button>회원 탈퇴</button>
-        </router-link>
-      </div>
-    </el-col>
-    <el-col :span="16">
-      <div>
-        <router-view></router-view>
-      </div>
-    </el-col>
-  </el-row>
+  <row>
+    <div>
+      <router-link to="/home/mypage/myaccount">
+        <button>계정</button>
+      </router-link>
+      <router-link to="/home/mypage/changepassword">
+        <button>비밀번호 변경</button>
+      </router-link>
+      <router-link to="/home/mypage/withdrawal">
+        <button>회원 탈퇴</button>
+      </router-link>
+    </div>
+
+    <div>
+      <router-view></router-view>
+    </div>
+  </row>
 </template>
 
 <script>
@@ -29,13 +25,13 @@ export default {
 </script>
 
 <!-- <style lang="scss">
-.el-row {
+.row {
   margin-bottom: 20px;
 }
-.el-row:last-child {
+.row:last-child {
   margin-bottom: 0;
 }
-.el-col {
+.col {
   border-radius: 4px;
 }
 

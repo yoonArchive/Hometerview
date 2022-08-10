@@ -91,6 +91,7 @@ export default {
         userImg: credentials.userImg,
         userName: credentials.userName
       };
+      console.log("업데이트 유저 ");
       axios
         .put(api_url.accounts.updateUser(), updateUserPutReq, {
           headers: getters.authHeader

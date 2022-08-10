@@ -2,13 +2,12 @@
   <div class="container">
     <div class="inner-container">
       <p id="title">{{ notice.noticeTitle }}</p>
-
       <p>작성자 : 관리자</p>
+      <p>작성시간 : {{ notice.writeDate }}</p>
 
       <hr />
     </div>
-
-    <h1>{{ notice.noticeContents }}</h1>
+    <h3>{{ notice.noticeContents }}</h3>
     <!-- <div class="component1" v-if="isAuthor"> -->
     <div class="buttonbundle">
       <button id="button-review">
@@ -86,7 +85,9 @@ export default {
   flex-shrink: 0;
   width: 100%;
   text-align: center;
-
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
   /* justify-content: space-evenly; */
   /* justify-content: space-between; */
 }
@@ -98,10 +99,12 @@ export default {
   justify-content: center;
   /* text-align: center; */
   width: 90%;
-  height: 70%;
+  height: 500px;
+  max-height: 100%;
   background-color: white;
   margin: 10%;
   border: 1px;
+  border: solid;
 }
 
 .inner-container {

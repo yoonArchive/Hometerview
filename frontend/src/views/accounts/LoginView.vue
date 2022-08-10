@@ -4,7 +4,7 @@
       <div class="row full-height justify-content-center">
         <div class="col-12 text-center align-self-center py-5">
           <div class="section pb-5 pt-5 pt-sm-2 text-center">
-            <h6 class="mb-0 pb-3"><span>로그인 </span><span>회원가입</span></h6>
+            <h6 class="mb-0 pb-3"><span>로그인</span><span>회원가입</span></h6>
             <input
               class="checkbox"
               type="checkbox"

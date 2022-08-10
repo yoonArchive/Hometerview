@@ -1,21 +1,32 @@
 <template>
 <div class="container">
-  <div class="review-1">
-    <div>자소서 개수 {{resumeContents.length}}</div>
-    <button @click="addResume" id="cover-Pbutton">+</button>
-    <button id="cover-Mbutton">-</button>
-    <div v-for="(item, index) in resumeContents.length" :key="index">
-      <router-link :to="{name : 'coverletter', params : {'resumeindex' : item - 1}}" id="cover-router">
-        <div>{{resumeContents[item-1].resumeTitle}}</div>
-      </router-link>
+  <div class="my-top">
+    <div class="imgi">
+      <img :src="imgsource2" alt="imgsource1">
     </div>
+    <div class="review-1">
+      <div class="cover-letterL">자소서 개수 {{resumeContents.length}}</div>
+      <button @click="addResume" id="cover-Pbutton">+</button>
+      <button id="cover-Mbutton">-</button>
+      <div v-for="(item, index) in resumeContents.length" :key="index">
+        <ul>
+        <li id="inner-table"><router-link :to="{name : 'coverletter', params : {'resumeindex' : item - 1}}" id="cover-router">
+          <div>{{resumeContents[item-1].resumeTitle}}</div>
+        </router-link>
+        </li>
+      </ul>
+      </div>
+  </div>
+
+
   </div>
 
 
   <hr>
-      <h1>DDAY 목록</h1>
+
 
     <div class="review-3 ">
+      <h3>DDAY 목록</h3>
         <div class="card " style="width: 15rem;" v-for="(ddays, index) in currentDdays" :key="index">
           <div class="card-body">
             <h5 class="card-title">{{ddays.ddayTitle}}</h5>
@@ -44,7 +55,7 @@
      </Modaldday>
   </div>
   <hr>
-    <DemoCalander :reviews="reviewContents" :dday="currentDdays"></DemoCalander>
+    <StudyCalendar :reviews="reviewContents" :dday="currentDdays"></StudyCalendar>
 
   <div class="review-2">
     <h1>회고록</h1>
@@ -99,11 +110,11 @@ import Modaldday from './components/modal-dday'
 import ModalEdit from './components/modal-ddayEdit'
 import ReviewForm from './review/components/ReviewForm'
 // import ReviewNew from './review/components/ReviewNewView'
-import DemoCalander from './DemoApp'
+import StudyCalendar from './StudyCalendar'
 import ReviewNewView from './review/ReviewNewView.vue'
 export default {
   components:{
-    DemoCalander,
+    StudyCalendar,
     Modaldday,
     ModalEdit,
     ReviewForm,
@@ -121,9 +132,10 @@ export default {
       showReviewForm: false,
       roomName : '',
       headers: ['번호','제목', '날짜', '유형'],
-      Editsum: [false*this.ddaylen],
       openedModal: null,
-      // dday:this.dday
+      imgsource1: require("../../assets/images/myinterview1.png"),
+      imgsource2: require("../../assets/images/myinterview2.png"),
+      imgsource3: require("../../assets/images/myinterview3.jpg")
 
       // reviewContents:{},
       // review:{}
@@ -321,5 +333,14 @@ b { /* used for event dates/times */
   border-radius: 10%;
   color: white;
   padding: 5px;
+}
+.my-top{
+  display: flex;
+  justify-content: space-between;
+
+}
+#inner-table{
+  border:#653FD3
+
 }
 </style>
