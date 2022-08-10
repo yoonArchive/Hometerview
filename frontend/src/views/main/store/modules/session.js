@@ -7,17 +7,22 @@ import { OpenVidu } from 'openvidu-browser';
 export default {
   state: {
     interviewUser : '',
-    interviewUserFixed : ''
+    interviewUserFixed : undefined,
+    mainStreamManager: undefined
   },
   getters: {
     interviewUser : state => state.interviewUser,
-    interviewUserFixed : state => state.interviewUserFixed
+    interviewUserFixed : state => state.interviewUserFixed,
+    mainStreamManager : state => state.mainStreamManager,
   },
   mutations: {
     SET_INTERVIEW_USER : (state, interviewUser)=>
       (state.interviewUser = interviewUser),
     SET_INTERVIEW_USER_FIXED : (state, interviewUserFixed)=>
-      (state.interviewUserFixed = interviewUserFixed)
+      (state.interviewUserFixed = interviewUserFixed),
+    SET_MAIN_STREAM_MANAGER : (state, mainStreamManager)=>{
+      (state.mainStreamManager = mainStreamManager)
+    }
     
   },
   actions: {
@@ -26,8 +31,11 @@ export default {
     },
     changeInterviewUserFixed({commit}, interviewUserFixed){
       commit('SET_INTERVIEW_USER_FIXED', interviewUserFixed)
+    },
+    updateMainVideoStreamManager({commit,getters},stream){
+      if ( getters.mainStreamManager === stream) return
+      commit('SET_MAIN_STREAM_MANAGER',stream)
     }
-
 
 	}
 }

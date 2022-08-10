@@ -68,7 +68,7 @@
 				<study-member-list></study-member-list>
 			</div>
 			<div v-if="selectinterviewee">
-				<select-interviewee></select-interviewee>
+				<select-interviewee :interviewUserFixed="interviewUserFixed" @streamUpdate="streamUpdate"></select-interviewee>
 				<!-- usertype==='LEADERS' && 리더만 보이게 하기 =   -->
 			</div>
 		</div>
@@ -115,6 +115,7 @@ export default {
 			userType: '',
 			mySessionId: ``,
 			myUserName: '',
+			myUserId : '',
 
 
 			OV: undefined,
@@ -152,12 +153,15 @@ export default {
 		}
 	},
 	computed:{
-		// studySpaceDetail.joinType
-		...mapGetters(['currentUser','studySpaceDetail']),
+		// studySpaceDetail.joinTyped
+		...mapGetters(['currentUser','studySpaceDetail','interviewUserFixed']),
 	},
-
 	methods: {
 		...mapActions(['bringStudySpaceDetail']),
+		// streamUpdate(interviewUserFixed){
+			
+		// },
+
 		videoONOFF(){	
 			console.log(this.videoOnOff)
 			this.publisher.publishVideo(!this.videoOnOff)
@@ -224,10 +228,11 @@ export default {
 
 			// 'getToken' method is simulating what your server-side should do.
 			// 'token' parameter should be retrieved and returned by your own backend
+			// clientNo : this.studySpaceDetail.studyJoins.user.userNo
 
 			this.getToken(this.mySessionId).then(token => {
 				// 여기는 client에 대한 정보 보내기
-				this.session.connect(token, { clientData: this.myUserName })
+				this.session.connect(token, { clientData: this.myUserName, clientId:this.myUserId })
 					.then(() => {
 
 						// 여기부터는 장치 정보
@@ -239,10 +244,11 @@ export default {
 							publishVideo: true,  	// Whether you want to start publishing with your video enabled or not
 							resolution: '640x480',  // The resolution of your video
 							frameRate: 30,			// The frame rate of your video
-							insertMode: 'APPEND',	// How the video is inserted in the target element 'video-container'
+							insertMode: 'APPEND',	// How the video is inzserted in the target element 'video-container'
 							mirror: true       	// Whether to mirror your local video or not
 						});
 
+						// updateMainVideoStreamManager(publisher)
 						this.mainStreamManager = publisher;
 						this.publisher = publisher;
 
@@ -264,6 +270,7 @@ export default {
 			if (this.session) this.session.disconnect();
 
 			this.session = undefined;
+			// updateMainVideoStreamManager(undefined)
 			this.mainStreamManager = undefined;
 			this.publisher = undefined;
 			this.subscribers = [];
@@ -474,7 +481,10 @@ export default {
 	},
 	async beforeMount(){
 		this.myUserName = await this.currentUser.userName
+		this.myUserId = await this.currentUser.userId
 		this.mySessionId = await this.changeSessionId(this.sessionNo)
+		console.log('확인!!!!')
+		console.log(this.myUserId)
 		this.joinSession()
 	},
 	mounted(){
