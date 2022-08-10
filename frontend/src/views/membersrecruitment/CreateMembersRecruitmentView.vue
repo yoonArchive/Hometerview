@@ -89,16 +89,10 @@ p,
 em,
 center,
 dl,
-dt,
-dd,
-ol,
-ul,
 li,
 form,
 label,
 details,
-footer,
-header,
 section {
   margin: 0;
   padding: 0;
@@ -108,26 +102,15 @@ section {
   vertical-align: baseline;
 }
 
-article,
-aside,
 details,
-figcaption,
 figure,
 footer,
-header,
-hgroup,
 menu,
 nav,
 section {
   display: block;
 }
 
-ol,
-ul {
-  list-style: none;
-}
-
-blockquote,
 q {
   quotes: none;
 }
@@ -153,7 +136,7 @@ select {
 
 input,
 select {
-  font-family: "Source Sans Pro";
+  /* font-family: "Source Sans Pro"; */
   font-weight: 300;
   color: #ffffff;
   line-height: 1.65em;
@@ -161,32 +144,17 @@ select {
 }
 
 h3 {
+  font-family: "티머니 둥근바람 볼드";
   font-weight: 600;
   text-transform: uppercase;
   color: #3c1c9f;
-}
-
-h3 {
   font-size: 1.1em;
   letter-spacing: 2px;
-  /* margin: 0 0 1em 0; */
 }
 
 em,
 i {
   font-style: italic;
-}
-
-sub {
-  position: relative;
-  top: 0.5em;
-  font-size: 0.8em;
-}
-
-sup {
-  position: relative;
-  top: -0.5em;
-  font-size: 0.8em;
 }
 
 hr {
@@ -195,11 +163,11 @@ hr {
 }
 
 .question {
+  font-family: "티머니 둥근바람 볼드";
   text-align: justify;
   margin-top: 3em;
   margin-bottom: 0.5em;
   font-size: 19px;
-  font-weight: 600;
   color: #653fd3;
 }
 
@@ -209,14 +177,6 @@ hr {
   font-size: 16px;
   font-weight: 400;
   color: #b4aee8;
-}
-
-ul,
-ol,
-dl,
-table,
-blockquote {
-  margin-bottom: 2em;
 }
 
 br.clear {
@@ -1472,8 +1432,7 @@ br.clear {
 
 /* Sections/Article */
 
-section,
-article {
+section {
   margin-bottom: 3em;
 }
 
@@ -1613,12 +1572,6 @@ button.alt:active,
   background: #878787;
 }
 
-/* Box */
-
-.no-sidebar .box.post > header {
-  text-align: center;
-}
-
 /* Icons */
 
 .icon {
@@ -1660,44 +1613,6 @@ button.alt:active,
 
 #page-wrapper > section {
   margin-bottom: 0;
-}
-
-/* Header */
-
-#header {
-  position: relative;
-  position: relative;
-  background: #fff;
-  text-align: center;
-}
-
-#header > .container {
-  padding: 14em 0 7em 0;
-  border-bottom: solid 2px #e5e5e5;
-  box-shadow: inset 0px -8px 0px 0px #fff, inset 0px -10px 0px 0px #e5e5e5;
-}
-
-#header h1 {
-  font-family: "Arvo";
-  font-weight: 700;
-  color: #ed786a;
-  text-shadow: 0.05em 0.075em 0 rgba(0, 0, 0, 0.1);
-  font-size: 3em;
-  letter-spacing: 13px;
-}
-
-#header h1 a {
-  border: 0;
-}
-
-#header p {
-  text-transform: uppercase;
-  font-weight: 400;
-  color: #888;
-  margin: 2.5em 0 0 0;
-  font-size: 0.85em;
-  letter-spacing: 3px;
-  text-align: center;
 }
 
 /* Main */
@@ -1799,6 +1714,7 @@ button.alt:active,
   }
 
   h3 {
+    font-family: "티머니 둥근바람 볼드";
     font-size: 1.2em;
     letter-spacing: 2px;
     text-align: center;
@@ -1829,23 +1745,6 @@ button.alt:active,
 
   ul.actions li:first-child {
     margin-top: 0;
-  }
-
-  /* Header */
-
-  #header > .container {
-    padding: 6em 0 4em 0;
-  }
-
-  #header h1 {
-    font-size: 2em;
-    letter-spacing: 8px;
-    line-height: 1.325em;
-  }
-
-  #header p {
-    margin: 1.25em 0 0 0;
-    letter-spacing: 2px;
   }
 }
 .registform {

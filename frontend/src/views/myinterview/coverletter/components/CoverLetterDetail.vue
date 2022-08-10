@@ -92,7 +92,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 /* input[type=text]:focus {
   border: 3px solid #653FD3;
 } */

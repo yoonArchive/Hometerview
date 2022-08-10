@@ -212,7 +212,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .no-cover-letter-me {
   padding: 5%;
   background-color: white;

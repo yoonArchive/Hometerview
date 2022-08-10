@@ -54,7 +54,6 @@
   gap: 3%;
   z-index: 100;
   position: fixed;
-
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.08), 0px 4px 24px rgba(0, 0, 0, 0.08);
 }
 #headerLogo {
@@ -86,9 +85,7 @@
 }
 .header-btn {
   box-sizing: border-box;
-
   /* Auto layout */
-
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -112,7 +109,6 @@
   text-align: center;
   letter-spacing: 0.02em;
   font-feature-settings: "salt" on, "liga" off;
-
   color: #653fd3;
 }
 .header-menu-item {

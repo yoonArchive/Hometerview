@@ -54,14 +54,6 @@
         <input v-model="newrecruitmentInfo.startDate" type="date" id="Date" />
         ~
         <input v-model="newrecruitmentInfo.endDate" type="date" id="Date" />
-        <!-- <label class="title " for="startDate">
-          시작일
-          <input v-model="newrecruitmentInfo.startDate" type="date" id="Date" />
-        </label>
-        <label class="title" for="endDate"
-          >종료일
-          <input v-model="newrecruitmentInfo.endDate" type="date" id="Date" />
-        </label> -->
       </div>
 
       <div class="py-2 row">
@@ -109,8 +101,6 @@
       <div>
         <div class="py-2 row">
           <label for="inputImage" class="title">대표 이미지</label>
-          <!-- <input type="text" id="dump" disabled>
-          <button type="button" @click="findImage">Add</button> -->
           <input
             class="box3"
             type="file"
@@ -232,6 +222,7 @@ export default {
 
 <style scoped>
 h6 {
+  font-family: "티머니 둥근바람 볼드";
   color: #3c1c9f;
   margin-right: 30px;
 }
@@ -265,12 +256,12 @@ input[type="text"]:focus {
   background: #f3f4ff;
 }
 .title {
+  font-family: "티머니 둥근바람";
   width: 130px;
   height: 24px;
-  font-family: "ABeeZee";
   font-style: normal;
   font-weight: 1000;
-  font-size: 16px;
+  font-size: 17px;
   line-height: 150%;
   color: #653fd3;
   margin-top: 4px;
@@ -342,21 +333,22 @@ input[type="submit"],
 input[type="reset"],
 button,
 .button {
-  -moz-transition: all 0.25s ease-in-out;
-  -webkit-transition: all 0.25s ease-in-out;
-  -ms-transition: all 0.25s ease-in-out;
-  transition: all 0.25s ease-in-out;
+  -moz-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+  -webkit-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+  -ms-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
   -webkit-appearance: none;
   position: relative;
   display: inline-block;
-  background: #ed786a;
-  color: #fff !important;
+  background-color: #ffffff;
+  color: #653fd3;
   text-transform: uppercase;
-  border-radius: 4px;
+  border-radius: 5px;
   border: 0;
   outline: 0;
-  font-size: 1em;
-  box-shadow: 0.125em 0.175em 0 0 rgba(0, 0, 0, 0.125);
+  font-size: 0.8em;
+  font-weight: 600;
+  box-shadow: inset 0 0 0 2px #653fd3;
   font-weight: 500;
   text-align: center;
   font-size: 0.7em;
@@ -364,15 +356,18 @@ button,
   padding: 0.65em 2em 0.65em 2em;
   margin-top: 0.5em;
   margin-bottom: 2em;
+  white-space: nowrap;
+  overflow: hidden;
+  height: 3em;
 }
 input[type="button"]:hover,
 button:hover,
 .button:hover {
-  background: #fd887a;
+  background-color: rgba(161, 104, 253, 0.05);
 }
 input[type="button"]:active,
 button:active,
 .button:active {
-  background: #ed786a;
+  background-color: rgba(161, 104, 253, 0.15);
 }
 </style>

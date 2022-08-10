@@ -460,7 +460,7 @@
     <!-- End Footer -->
   </body>
 </template>
-<style>
+<style scoped>
 @import "./main.css";
 @import "../../common/css/common.css";
 </style>
