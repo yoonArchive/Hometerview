@@ -194,7 +194,8 @@ import { mapActions, mapGetters } from 'vuex'
 export default {
   props: {
       review: Object,
-      action: String
+      action: String,
+      fetchReview: Object
     },
     data() {
       return {
@@ -202,10 +203,10 @@ export default {
           // title: this.review.reviewTitle,
           // content: this.review.reviewContents,
           reviewNo : this.$route.params.reviewNo,
-          reviewContents: this.review.reviewContents,
-          reviewTitle: this.review.reviewTitle,
-          reviewType: this.review.reviewType,
-          reviewDate: this.review.reviewDate
+          reviewContents: this.fetchReview.reviewContents,
+          reviewTitle: this.fetchReview.reviewTitle,
+          reviewType: this.fetchReview.reviewType,
+          reviewDate: this.fetchReview.reviewDate
           }
 
 

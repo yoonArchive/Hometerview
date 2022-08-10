@@ -222,7 +222,8 @@ export default {
     review: Object,
     action: String,
     currentday: Date,
-
+    fetchReview: Object,
+    id: Number
   },
   data() {
     return {
@@ -230,12 +231,16 @@ export default {
         // title: this.review.reviewTitle,
         // content: this.review.reviewContents,
         // reviewNo : this.$route.params.reviewNo,
-        reviewContents: '',
-        reviewTitle: '',
-        reviewType: '',
-        reviewDate: this.currentday
+        // reviewContents: this.currentReview.reviewContents,
+        // reviewTitle: this.currentReview.reviewTitle,
+        // reviewType: this.currentday,
+        // reviewDate: this.currentReview.reviewDate
 
-
+        reviewNo: this.fetchReview.reviewNo,
+        reviewContents: this.fetchReview.reviewContents,
+        reviewTitle: this.fetchReview.reviewTitle,
+        reviewType: this.fetchReview.reviewType,
+        reviewDate: this.fetchReview.reviewDate
       }
     };
   },

@@ -31,8 +31,6 @@
 @import "../../common/css/element-plus.css";
 </style>
 <script>
-
-
 //   const [red, green, blue] = [101, 63, 211]
 //   const section1 = document.querySelector(".mainBackground");
 //   let y = 1 + (window.scrollY || window.pageYOffset) / 5000
@@ -42,8 +40,7 @@
 
 export default {
   name: "Main",
-  components: {
-  },
+  components: {},
 
   data() {
     return {
@@ -57,8 +54,7 @@ export default {
       logo: require("../../assets/images/ssafy-logo.png")
     };
   },
-  methods: {
-  },
+  methods: {},
   created() {},
   destroyed() {},
   mounted() {}
