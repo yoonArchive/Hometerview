@@ -159,11 +159,27 @@ export default {
   },
   computed: {
     // studySpaceDetail.joinTyped
-    ...mapGetters(["currentUser", "studySpaceDetail", "interviewUserFixed"])
+    ...mapGetters(["currentUser", "studySpaceDetail"])
   },
 
   methods: {
     ...mapActions(["bringStudySpaceDetail"]),
+    streamUpdate(interviewUserFixed) {
+      console.log(this.publisher);
+      const { clientId } = JSON.parse(this.publisher.stream.connection.data);
+      console.log(typeof interviewUserFixed);
+      console.log(typeof clientId);
+      if (clientId === interviewUserFixed) {
+        this.updateMainVideoStreamManager(this.publisher);
+      } else if (this.subscribers === true) {
+        this.subscribers.forEach(sub => {
+          const { clientId } = JSON.parse(sub.stream.connection.data);
+          if (clientId === interviewUserFixed) {
+            this.updateMainVideoStreamManager(sub);
+          }
+        });
+      }
+    },
     videoONOFF() {
       console.log(this.videoOnOff);
       this.publisher.publishVideo(!this.videoOnOff);
