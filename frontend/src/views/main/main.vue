@@ -188,6 +188,7 @@
                 class="venobox play-btn mb-4"
                 data-vbtype="video"
                 data-autoplay="true"
+                target="_blank"
               ></a>
             </div>
 
