@@ -4,8 +4,9 @@
     {{ member.joinType }}
     &nbsp;&nbsp; {{ member.user.userId }} &nbsp;
     {{ member.user.userName }} &nbsp; {{ member.user.userEmail }} <br />
-    {{ member.user.ueserImg }} {{ member.user.joinTyp }}
-    {{ member.user.resumeNo }}
+    {{ member.user.ueserImg }} {{ member.user.joinType }}
+    {{ member.user.resumeNo }} <br />
+
     <button @click="changeToCoverLetter(['coverletter', studentindex])">
       자소서 보기
     </button>
@@ -27,7 +28,8 @@ export default {
 
   props: {
     member: Object,
-    studentindex: Number
+    studentindex: Number,
+    userId: String
   },
   data() {
     return {
