@@ -15,6 +15,8 @@ public interface RecruitService {
 
     List<Recruit> getRecruitingList(int type);
 
+    List<Recruit> getApplyingList(Long userNo);
+
     List<Recruit> getFilteredList(int type);
 
     List<Recruit> search(String keyword);

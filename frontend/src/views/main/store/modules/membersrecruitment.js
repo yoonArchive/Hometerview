@@ -5,20 +5,26 @@ import router from "@/common/lib/vue-router.js";
 export default {
   state: {
     recruitmentList: [],
+    applyingList: [],
     recruitDetail: {},
     token: localStorage.getItem("token") || "",
     isApplied: false,
     applyType: "",
-    applyCounts: []
+    applyCounts: [],
+    studySpaceNo: ""
   },
   mutations: {
     SET_TOKEN: (state, token) => (state.token = token),
     SET_RECRUITMENT_LIST: (state, recruitmentList) =>
       (state.recruitmentList = recruitmentList),
+    SET_APPLYING_LIST: (state, applyingList) =>
+      (state.applyingList = applyingList),
     SET_RECRUIT_DETAIL: (state, recruitDetail) =>
       (state.recruitDetail = recruitDetail),
     SET_APPLY_TYPE: (state, applyType) => (state.applyType = applyType),
-    SET_APPLY_COUNT: (state, applyCounts) => (state.applyCounts = applyCounts)
+    SET_APPLY_COUNT: (state, applyCounts) => (state.applyCounts = applyCounts),
+    SET_STUDYSPACE_NO: (state, studySpaceNo) =>
+      (state.studySpaceNo = studySpaceNo)
   },
   getters: {
     memberHeader: state => `Bearer ${state.token}`,
@@ -27,7 +33,8 @@ export default {
     recruitDetail: state => state.recruitDetail,
     applyType: state => state.applyType,
     recruitCount: state => state.recruitDetail.count,
-    applyCounts: state => state.applyCounts
+    applyCounts: state => state.applyCounts,
+    applyingList: state => state.applyingList
   },
   actions: {
     createRecruitment({ getters }, formData) {
@@ -73,6 +80,21 @@ export default {
           console.log(err.response);
         });
     },
+    bringApplyingRecruit({ commit, getters }) {
+      console.log("신청 중 모집글 가져오기");
+      axios({
+        url: api_url.membersrecruitment.membersapplying(),
+        method: "get",
+        headers: getters.authHeader
+      })
+        .then(res => {
+          console.log(res.data.recruits);
+          commit("SET_APPLYING_LIST", res.data.recruits);
+        })
+        .catch(err => {
+          console.log(err.response);
+        });
+    },
     bringRecruitmentDetail({ commit, getters }, recruitNo) {
       axios({
         url: api_url.membersrecruitment.membersrecruitment(recruitNo),
@@ -84,6 +106,7 @@ export default {
           console.log(res.data.applyType);
           commit("SET_RECRUIT_DETAIL", res.data);
           commit("SET_APPLY_TYPE", res.data.applyType);
+          commit("SET_STUDYSPACE_NO", res.data.stdNo);
         })
         .catch(err => {
           console.log(err.response);

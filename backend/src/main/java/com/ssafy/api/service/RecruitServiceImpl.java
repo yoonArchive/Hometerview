@@ -1,9 +1,11 @@
 package com.ssafy.api.service;
 
 import com.ssafy.api.request.RecruitReq;
+import com.ssafy.db.entity.Apply;
 import com.ssafy.db.entity.Recruit;
 import com.ssafy.db.entity.RecruitStatus;
 import com.ssafy.db.entity.StdType;
+import com.ssafy.db.repository.ApplyRepositorySupport;
 import com.ssafy.db.repository.RecruitRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.FilenameUtils;
@@ -12,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -20,6 +23,8 @@ import java.util.UUID;
 public class RecruitServiceImpl implements RecruitService {
 
     private final RecruitRepository recruitRepository;
+
+    private final ApplyRepositorySupport applyRepositorySupport;
 
     String uploadPath = "C:\\intervenience";
 
@@ -67,6 +72,16 @@ public class RecruitServiceImpl implements RecruitService {
         } else {
             return recruitRepository.findAllByRecruitStatusAndStdTypeOrderByRecruitNoDesc(RecruitStatus.RECRUITING, StdType.FREE);
         }
+    }
+
+    @Override
+    public List<Recruit> getApplyingList(Long userNo) {
+        List<Apply> applies = applyRepositorySupport.findAllByUserNo(userNo);
+        List<Recruit> recruits = new ArrayList<>();
+        for (Apply apply : applies) {
+            recruits.add(recruitRepository.findByRecruitNo(apply.getRecruit().getRecruitNo()).get());
+        }
+        return recruits;
     }
 
     @Override
