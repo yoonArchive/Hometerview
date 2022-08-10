@@ -33,14 +33,14 @@
 
 
     <ModalEdit v-if="openedModal !== null" @close="openedModal = null" :dday="this.dday" :key="this.openedModal" >
-      <h3 slot="header">dday 수정</h3>
+      <!-- <h3 slot="header">dday 수정</h3> -->
     </ModalEdit>
 
   	<button id="button-review" @click="showModal = true"><p id="a">DDAY 작성하기</p></button>
 
      <Modaldday v-if="showModal" @close="showModal = false" :dday="currentDdays">
 
-       <h3 slot="header">dday 생성</h3>
+       <!-- <h3 slot="header">dday 생성</h3> -->
      </Modaldday>
   </div>
   <hr>
@@ -83,7 +83,7 @@
       <button id="button-review" @click="showReviewForm = true">작성하기</button>
 
        <ReviewForm v-if="showReviewForm" @close="showReviewForm = false" :review="reviewContents" action="create">
-        <h3 slot="header">회고록작성 폼</h3>
+        <!-- <h3 slot="header">회고록작성 폼</h3>s -->
         </ReviewForm>
     <!-- <ReviewNewView ></ReviewNewView> -->
 
@@ -225,9 +225,6 @@ export default {
    border-color : #653FD3;
    border-radius: 10%;
    margin: 5px;
-
-}
-#button-review:hover{
 
 }
 #a {

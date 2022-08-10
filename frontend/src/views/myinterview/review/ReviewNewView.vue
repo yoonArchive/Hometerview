@@ -6,26 +6,24 @@
 </template>
 
 <script>
-  import ReviewForm from './components/ReviewForm.vue'
-  export default {
-    name: 'ReviewNewView',
-    components: { ReviewForm },
-    data() {
-      return {
-        review: {
-          // reviewNo: null,
-          reviewContents: '',
-          reviewTitle: '',
-          reviewType: 'REAL'
-        }
+import ReviewForm from "./components/ReviewForm.vue";
+export default {
+  name: "ReviewNewView",
+  components: { ReviewForm },
+  data() {
+    return {
+      review: {
+        // reviewNo: null,
+        reviewContents: "",
+        reviewTitle: "",
+        reviewType: "REAL"
       }
-    },
-    updated() {
-      event
-    },
+    };
+  },
+  updated() {
+    event;
   }
+};
 </script>
 
-<style>
-
-</style>
+<style></style>

@@ -83,7 +83,7 @@ export default {
           console.log(data.data.reviews);
           commit("SET_CURRENT_REVIEW", data.data);
           dispatch("getReviewInfo");
-          console.log('상세가져오기 성공')
+          console.log("상세가져오기 성공");
         })
         .catch(err => {
           console.log("회고 상세에러" + err);
@@ -172,8 +172,8 @@ export default {
         })
           .then(() => {
             commit("SET_CURRENT_REVIEW", {});
-            dispatch("getReviewInfo")
-            router.push({ name: 'myinterview' })
+            dispatch("getReviewInfo");
+            router.push({ name: "myinterview" });
           })
           .catch(err => console.error(err.response));
       }

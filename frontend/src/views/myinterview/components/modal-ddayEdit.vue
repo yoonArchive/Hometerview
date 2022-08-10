@@ -12,7 +12,6 @@
 
           <div class="modal-body">
             <slot name="body">
-
               <input type="text" v-model="dday.ddayTitle" required />
               <input type="date" v-model="dday.ddayDate" required />
             </slot>
@@ -28,7 +27,6 @@
               </button>
 
               <button class="modal-default-button" @click="$emit('close')">
-
                 닫기
               </button>
             </slot>

@@ -154,15 +154,11 @@
   </body>
 </template>
 <style>
-@import "https://unpkg.com/element-plus/lib/theme-chalk/index.css";
 @import "./main.css";
 @import "../../common/css/common.css";
-@import "../../common/css/element-plus.css";
 </style>
 <script>
-
 import router from "@/common/lib/vue-router";
-
 
 export default {
   name: "Main",
@@ -185,8 +181,7 @@ export default {
     goRecruit() {
       router.push({ name: "membersrecruitment" });
     }
-  },
-
+  }
 };
 </script>
 <style scoped>

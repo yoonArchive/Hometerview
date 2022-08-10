@@ -1,17 +1,14 @@
 <template>
-
-    <div id="chatbox">
-      <div id="chat" v-if="!ismy">
-        <span id="msgs">[{{ sendname }}]:{{ massage }}</span>
-      </div>
+  <div id="chatbox">
+    <div id="chat" v-if="!ismy">
+      <span id="msgs">[{{ sendname }}]:{{ massage }}</span>
     </div>
-    <div id="mychatbox">
-      <div id="mychat" v-if="ismy">
-        <span id="msgs">{{ massage }}</span>
-      </div>
+  </div>
+  <div id="mychatbox">
+    <div id="mychat" v-if="ismy">
+      <span id="msgs">{{ massage }}</span>
     </div>
-
-
+  </div>
 </template>
 
 <script>
@@ -47,7 +44,6 @@ export default {
 </script>
 
 <style scoped>
-
 #msgs {
   font-size: 15px;
   margin: 2px;
@@ -55,7 +51,7 @@ export default {
   padding-right: 5px;
 }
 #chat {
-  background-color: #C4C1C9;
+  background-color: #c4c1c9;
   margin: 5px;
   padding: 5px;
   border-radius: 15px;
@@ -64,7 +60,7 @@ export default {
   display: inline-block;
 }
 #mychat {
-  background-color: #B3A2E3;
+  background-color: #b3a2e3;
   margin: 5px;
   padding: 5px;
   border-radius: 15px;

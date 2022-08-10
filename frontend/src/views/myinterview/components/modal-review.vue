@@ -221,8 +221,7 @@ export default {
   props: {
     review: Object,
     action: String,
-    currentday: Date,
-
+    currentday: Date
   },
   data() {
     return {
@@ -230,12 +229,10 @@ export default {
         // title: this.review.reviewTitle,
         // content: this.review.reviewContents,
         // reviewNo : this.$route.params.reviewNo,
-        reviewContents: '',
-        reviewTitle: '',
-        reviewType: '',
+        reviewContents: "",
+        reviewTitle: "",
+        reviewType: "",
         reviewDate: this.currentday
-
-
       }
     };
   },
