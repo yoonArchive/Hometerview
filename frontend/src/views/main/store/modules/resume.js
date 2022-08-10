@@ -6,6 +6,7 @@ import { toRaw } from 'vue';
 
 
 
+
 export default {
   // namespaced: true,
   state: {
@@ -90,6 +91,24 @@ export default {
         headers : getters.resumeHeader,
       })
       dispatch('getResumeInfo');
+    },
+    async ttsrequest({},data1){
+      console.log(data1);
+      const url = 'http://localhost:9002/ttsrequest'
+      const data = await axios.post(url, data1,{
+        responseType : 'arraybuffer'
+      });
+      console.log(data.data);
+      AudioContext = (window.AudioContext|| window.webkitAudioContext);
+      const audioContext = new AudioContext();
+      const audioBuffer = await audioContext.decodeAudioData(data.data);
+      console.log(data);
+      const source = audioContext.createBufferSource();
+      source.buffer = audioBuffer;
+      source.connect(audioContext.destination);
+      source.start();
+
+      console.log(data);
     },
     removeResumeAction({getters}, resumeindex){
       const resumeNo =  getters.resumeContents[resumeindex].resumeNo;
