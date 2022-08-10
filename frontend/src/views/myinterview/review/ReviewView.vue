@@ -55,7 +55,7 @@ export default {
     ...mapGetters(['reviewContents','currentReview']),
   },
   methods:{
-    ...mapActions(["getReviewInfo", "getReviewDetail","fetchReview","deleteReview"]),
+    ...mapActions(["getReviewInfo", "getReviewDetail","deleteReview"]),
     // findreviews(){
     //   this.getreviewInfo(this.reviewNo);
 

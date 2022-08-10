@@ -160,13 +160,9 @@
 @import "../../common/css/element-plus.css";
 </style>
 <script>
+
 import router from "@/common/lib/vue-router";
-//   const [red, green, blue] = [101, 63, 211]
-//   const section1 = document.querySelector(".mainBackground");
-//   let y = 1 + (window.scrollY || window.pageYOffset) / 5000
-//   y = y < 1 ? 1 : y // ensure y is always >= 1 (due to Safari's elastic scroll)
-//   const [r, g, b] = [red*y, green/y, blue*y]
-//   section1.style.background = `rgb(${r}, ${g}, ${b})`
+
 
 export default {
   name: "Main",
@@ -184,14 +180,13 @@ export default {
       logo: require("../../assets/images/ssafy-logo.png")
     };
   },
+
   methods: {
     goRecruit() {
       router.push({ name: "membersrecruitment" });
     }
   },
-  created() {},
-  destroyed() {},
-  mounted() {}
+
 };
 </script>
 <style scoped>

@@ -6,21 +6,21 @@
 </template>
 
 <script>
-  import NoticeForm from './components/noticeForm.vue'
-  export default {
-    name: 'NoticeNewView',
-    components: { NoticeForm },
-    data() {
-      return {
-        notice: {
-          noticeNo: null,
-          noticeContents: '',
-          noticeTitle: '',
-          noticeDate: ''
-        }
+import NoticeForm from "./components/noticeForm.vue";
+export default {
+  name: "NoticeNewView",
+  components: { NoticeForm },
+  data() {
+    return {
+      notice: {
+        noticeNo: null,
+        noticeContents: "",
+        noticeTitle: "",
+        noticeDate: ""
       }
-    },
+    };
   }
+};
 </script>
 
 <style></style>
