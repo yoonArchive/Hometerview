@@ -186,17 +186,17 @@ import { mapActions } from 'vuex'
               </div>
               <button
                 id="button-review"
-                v-if="action === 'create'"
-                @click="$emit('close'), createReview(this.newreview)"
-              >
-                만들기
-              </button>
-              <button
-                id="button-review"
-                v-else
+
                 @click="$emit('close'), updateReview(this.newreview)"
               >
                 수정하기
+              </button>
+              <button
+                id="button-review"
+
+                @click="$emit('close'), deleteReview(this.id)"
+              >
+                삭제하기
               </button>
               <!-- </form> -->
             </slot>
@@ -249,7 +249,7 @@ export default {
     ...mapGetters(["currentReview"])
   },
   methods: {
-    ...mapActions(["createReview", "updateReview", "getReviewDetail"]),
+    ...mapActions(["createReview", "updateReview", "getReviewDetail","deleteReview"]),
     onSubmit() {
       if (this.action === "create") {
         // this.action = '작성하기'

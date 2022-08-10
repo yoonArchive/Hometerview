@@ -3,7 +3,6 @@ import FullCalendar from "@fullcalendar/vue3";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
-import { INITIAL_EVENTS } from "./event-utils";
 import ReviewForm from "./components/modal-review.vue";
 import ReviewFormEdit from "./components/modal-reviewEdit.vue";
 import { mapActions, mapGetters } from "vuex";
@@ -153,21 +152,15 @@ export default {
       // }
       // this.openModal()
     },
+
+
     //내용 클릭했을 시
     handleEventClick(clickInfo) {
-      this.getReviewDetail(clickInfo.event.id);
+
 
       this.id = clickInfo.event.id;
       console.log("아이디" + this.id);
-      this.fetchReview = {
-        reviewNo: clickInfo.event.id,
-        reviewContents: this.currentReview.reviewContents,
-        reviewTitle: this.currentReview.reviewTitle,
-        reviewType: this.currentReview.reviewType,
-        reviewDate: this.currentReview.reviewDate
-      };
 
-      this.reviewmodalE = true;
 
       // this.fetchReview = null
       // if (confirm(`삭제하시겠습니까? '${clickInfo.event.title}'`)) {
@@ -175,6 +168,7 @@ export default {
       if (clickInfo.event.id === "999") {
         const ddayName = clickInfo.event.title;
         console.log("디데이네임" + ddayName);
+        if (confirm(`삭제하시겠습니까? '${clickInfo.event.title}'`)){
         for (const ddaykim of this.currentDdays) {
           if (ddaykim.ddayTitle === ddayName) {
             const ddayNum = ddaykim.ddayNo;
@@ -186,7 +180,18 @@ export default {
             console.log("김김");
             this.getDdayInfo();
           }
-        }
+        }}
+      }else{
+        this.getReviewDetail(clickInfo.event.id);
+        this.fetchReview = {
+        reviewNo: clickInfo.event.id,
+        reviewContents: this.currentReview.reviewContents,
+        reviewTitle: this.currentReview.reviewTitle,
+        reviewType: this.currentReview.reviewType,
+        reviewDate: this.currentReview.reviewDate
+      };
+
+      this.reviewmodalE = true;
       }
       // else{
       //   this.deleteReview1(clickInfo.event.id);

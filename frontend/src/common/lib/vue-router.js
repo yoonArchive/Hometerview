@@ -57,7 +57,7 @@ import SessionView from "@/views/session/SessionView";
 // import CommonQuestionEditView from '@/views/studyspace/components/CommonQuestionEditView'
 import StudyQuestionListView from "@/views/studyspace/StudyQuestionListView";
 
-import cc from "@/views/myinterview/DemoApp.vue";
+import cc from "@/views/myinterview/StudyCalendar.vue";
 
 const fullMenu = require("@/views/main/menu.json");
 function makeRoutesFromMenu() {
