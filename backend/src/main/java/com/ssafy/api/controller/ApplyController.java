@@ -26,6 +26,7 @@ public class ApplyController {
     @ApiResponses({
             @ApiResponse(code = 200, message = "신청 완료", response = BaseResponseBody.class),
             @ApiResponse(code = 401, message = "신청 실패", response = BaseResponseBody.class),
+            @ApiResponse(code = 402, message = "정원 초과", response = BaseResponseBody.class),
             @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
     })
     public ResponseEntity<? extends BaseResponseBody> applyRecruit(@ApiIgnore Authentication authentication, @PathVariable @ApiParam(value = "모집글 번호", required = true) Long recruitNo) throws Exception {
@@ -33,6 +34,7 @@ public class ApplyController {
         Long userNo = userDetails.getUserNo();
         int result = applyService.applyRecruit(userNo, recruitNo, ApplyType.NORMAL);
         if (result == 0) return ResponseEntity.status(401).body(BaseResponseBody.of(401, "스터디 모집 신청에 실패하였습니다."));
+        else if (result == 1) return ResponseEntity.status(402).body(BaseResponseBody.of(402, "스터디 모집 정원을 초과하였습니다."));
         else return ResponseEntity.status(200).body(BaseResponseBody.of(200, "스터디 모집 신청이 완료되었습니다."));
     }
 

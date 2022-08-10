@@ -34,10 +34,12 @@ public class ApplyServiceImpl implements ApplyService {
         } catch (Exception e) {
             User user = userRepository.findByUserNo(userNo).get();
             Recruit recruit = recruitRepository.findByRecruitNo(recruitNo).get();
+            long applyCount = applyRepositorySupport.CountByRecruitNo(recruitNo);
+            if(applyCount >= recruit.getStdLimit()) return 1;
             Apply apply = new Apply();
             apply.createApply(user, recruit, applyType);
             applyRepository.save(apply);
-            return 1;
+            return 2;
         }
         return 0;
     }
