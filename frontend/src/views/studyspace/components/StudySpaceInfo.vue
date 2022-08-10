@@ -56,7 +56,7 @@
             >
           </div>
         </div>
-        <!-- <div>
+        <div>
           <div v-if="applyType === 'LEADER'">
             <button @click="studyStart()">스터디 시작</button>
             <button @click="moveToUpdate">수정</button>
@@ -84,11 +84,11 @@
               </button>
             </div>
           </div>
-        </div> -->
+        </div>
       </div>
     </section>
   </div>
-  <!-- <div class="row">
+  <div class="row">
     <div class="col-5">
       <img :src="imgsrc" alt="" class="study-image" />
     </div>
@@ -177,7 +177,7 @@
       :member="member"
       :studentindex="index"
     ></study-members>
-  </div> -->
+  </div>
 </template>
 
 <script>
