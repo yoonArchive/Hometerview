@@ -103,7 +103,6 @@
               {{ item.resumeTitle }}
             </option>
           </select>
-          {{ resumeContents }}
         </div>
         <div class="modal-footer">
           <button

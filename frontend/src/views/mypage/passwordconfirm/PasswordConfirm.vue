@@ -21,6 +21,7 @@
                           v-model="this.passwordToConfirm.userPw"
                           autocomplete="off"
                           required
+                          @keydown.enter="confirmpassword"
                         />
                         <i class="input-icon uil uil-lock-alt"></i>
                       </div>

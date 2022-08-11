@@ -20,9 +20,7 @@ export default {
       stdNo: this.$route.params.stdNo
     };
   },
-  methods: {
-    ...mapActions(["setStudyNoAction"])
-  },
+
   components: {
     StudySpaceInfo,
     MemberCommonQuestions
@@ -31,7 +29,7 @@ export default {
     ...mapGetters(["commonQuestion", "commonQuestions"])
   },
   methods: {
-    ...mapActions(["getStd", "commonQuestions1"])
+    ...mapActions(["getStd", "commonQuestions1", "setStudyNoAction"])
   },
   created() {
     //this.commonQuestions1(this.stdNo);

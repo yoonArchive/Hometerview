@@ -175,6 +175,7 @@ export default {
         .catch(err => {
           console.log(err);
         });
+      await dispatch("getResumeInfo");
       await dispatch("getCurrentResume", getters.resumeIndex);
     },
     async saveResumeChange({ dispatch, getters, commit }) {
@@ -202,6 +203,7 @@ export default {
         var resumeIndex = getters.resumeIndex;
         var numberOfQuestion = getters.numberOfQuestion[resumeIndex] + 1;
         var resumeNo = getters.resumeContents[resumeIndex].resumeNo;
+
         const data = {
           answer: currentResume[i].answer,
           item: currentResume[i].question,
@@ -214,12 +216,12 @@ export default {
           })
           .then(() => {
             console.log("데이터 추가 성공");
+            commit("PLUS_NUMBER_OF_QUESTION", resumeIndex);
+            commit("PLUS_ORIGINAL_NUMBER_QUESTION");
           })
           .catch(err => {
             console.log(err);
           });
-        commit("PLUS_NUMBER_OF_QUESTION", resumeIndex);
-        commit("PLUS_ORIGINAL_NUMBER_QUESTION");
       }
       await dispatch("getCurrentResume", getters.resumeIndex);
     },
