@@ -63,6 +63,7 @@ export default {
       for (var i = 0; i < buttons.length; i++) {
         buttons[i].classList.remove("clicked");
       }
+      console.log(this.selectedQuestionNum);
       buttons[this.selectedQuestionNum].classList.add("clicked");
     }
   },

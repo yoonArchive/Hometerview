@@ -9,14 +9,19 @@
 
 <script>
 import StudySpaceInfo from "./components/StudySpaceInfo.vue";
+
 import MemberCommonQuestions from "./components/CommonQuestionList.vue";
 import { mapActions, mapGetters } from "vuex";
+
 export default {
   name: "StudySpaceDetailView",
   data() {
     return {
       stdNo: this.$route.params.stdNo
     };
+  },
+  methods: {
+    ...mapActions(["setStudyNoAction"])
   },
   components: {
     StudySpaceInfo,
@@ -31,6 +36,9 @@ export default {
   created() {
     this.commonQuestions1(this.stdNo);
     console.log(this.stdNo);
+  },
+  mounted() {
+    this.setStudyNoAction(this.stdNo);
   }
 };
 </script>

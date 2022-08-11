@@ -1,35 +1,51 @@
 <template>
-  <div class="plus-container">
-    <div class="plus-buttons">
-      <button @click="changeIsremove" id="cover-Mbutton">-</button>
-      <button @click="addCurrentResume" id="cover-Pbutton">+</button>
-    </div>
-
+  <div class="member-cover-letter-detail-wrapper">
     <div v-if="currentResume.length != 0">
-      <input
-        type="button"
-        v-for="(item, index) in currentResume.length"
-        :key="index"
-        :value="item"
-        @click="returnnumbermethod(item)"
-      />
-
-      <div class="cover-inner">
-        <h3>자소서 질문</h3>
+      <div class="d-flex flex-row-reverse">
         <input
-          type="text"
-          v-model="currentResume[selectedNum].question"
-          id="cover-write"
+          class="cover-letter-button"
+          type="button"
+          @click="changeIsremove"
+          value="-"
         />
-        <!-- <input type="textarea" v-model="currentResume[selectedNum].answer"/> -->
-        <h3>질문 내용</h3>
-        <textarea
-          name=""
-          id="cover-write"
-          cols="30"
-          rows="10"
-          v-model="currentResume[selectedNum].answer"
-        ></textarea>
+        <input
+          class="cover-letter-button"
+          type="button"
+          @click="addCurrentResume"
+          value="+"
+        />
+        <template v-if="currentResume.length != 0">
+          <input
+            class="cover-letter-button"
+            type="button"
+            v-for="(item, index) in currentResume.length"
+            :key="index"
+            :value="item"
+            @click="returnnumbermethod(item)"
+          />
+        </template>
+      </div>
+      <div
+        class="member-cover-letter-contents"
+        v-if="currentResume.length != 0"
+      >
+        <div class="cover-letter-question">
+          <input
+            type="text"
+            v-model="currentResume[selectedNum].question"
+            id="cover-write"
+          />
+        </div>
+        <hr style="border-top: 3px dashed #663399;" />
+        <div class="cover-letter-answer">
+          <textarea
+            name=""
+            id="cover-write"
+            cols="30"
+            rows="10"
+            v-model="currentResume[selectedNum].answer"
+          ></textarea>
+        </div>
         <button @click="saveResumeChange" id="b-button">저장하기</button>
       </div>
     </div>

@@ -1,26 +1,69 @@
 <template>
-  <div v-if="!isloading">
-    자소서 번호 : {{ resumeContents.length }}
-    <div v-if="!isChange">
-      <div>자소서 제목 : {{ resumeContents[resumeindex].resumeTitle }}</div>
-      <div id="button-bundels">
-        <button @click="changeIsChange" id="b-button">제목 수정</button>
-        <button @click="removeResume(resumeindex)" id="b-button">
-          자소서 삭제
-        </button>
-        <router-link :to="{ name: 'myinterview' }">
-          <button id="b-button">목록으로</button>
-        </router-link>
+  <div class="member-cover-letter-title" v-if="!isloading">
+    <div class="row" v-if="!isChange">
+      <div class="col-6">
+        <div class="member-cover-letter-stdname">
+          {{ resumeContents[resumeindex].resumeTitle }} 자소서
+        </div>
+      </div>
+      <div class="col">
+        <div class="d-flex flex-row-reverse coverletter-buttons">
+          <button
+            type="button"
+            class="btn"
+            style="background-color:#653FD3; color: white;"
+            @click="changeIsChange"
+          >
+            제목 수정
+          </button>
+          <button
+            @click="removeResume(resumeindex)"
+            type="button"
+            class="btn"
+            style="background-color:#653FD3; color: white;"
+          >
+            자소서 삭제
+          </button>
+          <router-link :to="{ name: 'myinterview' }">
+            <button
+              type="button"
+              class="btn"
+              style="background-color:#653FD3; color: white;"
+            >
+              목록으로
+            </button>
+          </router-link>
+        </div>
       </div>
     </div>
     <div v-else>
-      <input type="text" v-model="resumeContents[resumeindex].resumeTitle" />
-      <button @click="changeResumeTitle(resumeindex)">수정</button>
-      <button @click="cancelChange">취소</button>
+      <div class="d-flex mb-3 coverletter-buttons">
+        <input
+          type="text"
+          v-model="resumeContents[resumeindex].resumeTitle"
+          class="me-auto p-2"
+        />
+        <button
+          @click="changeResumeTitle(resumeindex)"
+          type="button"
+          class="btn p-2"
+          style="background-color:#653FD3; color: white;"
+        >
+          수정
+        </button>
+        <button
+          @click="cancelChange"
+          type="button"
+          class="btn p-2"
+          style="background-color:#653FD3; color: white;"
+        >
+          취소
+        </button>
+      </div>
+      <div></div>
     </div>
-    <div></div>
-    <cover-letter-detail :resumeindex="resumeindex"></cover-letter-detail>
   </div>
+  <cover-letter-detail :resumeindex="resumeindex"></cover-letter-detail>
 </template>
 
 <script>
@@ -78,6 +121,10 @@ export default {
 </script>
 
 <style scoped>
+.coverletter-buttons {
+  gap: 10px;
+}
+
 #button-bundels {
 }
 #b-button {

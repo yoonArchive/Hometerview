@@ -103,6 +103,7 @@
               {{ item.resumeTitle }}
             </option>
           </select>
+          {{ resumeContents }}
         </div>
         <div class="modal-footer">
           <button
@@ -184,7 +185,7 @@ export default {
           studentindex: this.studentindex
         };
         await this.saveStudyCoverLetter(data);
-        await this.bringStudySpaceDetail();
+        await this.bringStudySpaceDetail(this.selStdNo);
         if (this.studySpaceDetail.detailCounts[realindex] !== 0) {
           await this.getStudyResume(realindex);
         }
@@ -197,6 +198,7 @@ export default {
 
   computed: {
     ...mapGetters([
+      "selStdNo",
       "resumeQuestionList",
       "currentUser",
       "studySpaceDetail",
