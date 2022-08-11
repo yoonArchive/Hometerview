@@ -13,10 +13,11 @@ import javax.validation.constraints.NotEmpty;
 public class UpdateUserProfileReq {
 
     @NotEmpty
-    @ApiModelProperty(name = "updateUserProfileRequest.userName")
+    @ApiModelProperty(name = "updateUserProfileReq.userName")
     String userName;
 
     @NotEmpty
-    @ApiModelProperty(name = "updateUserProfileRequest.userEmail")
+    @ApiModelProperty(name = "updateUserProfileReq.userEmail")
     String userEmail;
+
 }
