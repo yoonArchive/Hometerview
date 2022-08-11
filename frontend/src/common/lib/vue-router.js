@@ -244,7 +244,9 @@ const routes = makeRoutesFromMenu();
 
 const router = createRouter({
   history: createWebHistory(),
-  routes
+  routes,
+  linkActiveClass: "route-active",
+  linkExactActiveClass: "route-active"
 });
 
 router.afterEach(to => {

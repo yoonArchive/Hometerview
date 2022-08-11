@@ -83,7 +83,7 @@ export default {
     },
     //공통질문 작성하기
     createcommonQuestion(
-      { commit, getters },
+      { commit, getters, dispatch },
       { stdNo, content, questionType }
     ) {
       const newcommonQuestion = {
@@ -100,6 +100,7 @@ export default {
         .then(res => {
           commit("SET_commonQuestion", res.data.commonQuestions);
           console.log("공통질문 작성 성공" + res);
+          dispatch(`${commonQuestions1stdNo(stdNo)}`);
           // router.push({
           //   name: 'commonQuestion',
           //   params: { commonQuestionNo: getters.commonQuestion.commonQuestionNo  }
@@ -110,7 +111,7 @@ export default {
         });
     },
     //공통질문 수정하기
-    updatecommonQuestion({ commit, getters }, info) {
+    updatecommonQuestion({ commit, getters, dispatch }, info) {
       const stdNo = info[0];
       const payload = info[1];
       const commonQuestionNo = info[2];
@@ -121,10 +122,12 @@ export default {
         url: api_url.study.commonquestion(stdNo, commonQuestionNo),
         method: "put",
         data: payload,
-        headers: this.getters.authHeader
+        headers: getters.authHeader
       }).then(res => {
         console.log("수정성공");
         commit("SET_commonQuestion", res.data);
+        dispatch(`${commonQuestions1stdNo(stdNo)}`);
+
         // router.push({
         //   name: 'commonQuestion',
         //   params: { commonQuestionNo: getters.commonQuestion.commonQuestionNo }
@@ -132,7 +135,7 @@ export default {
       });
     },
     //공통질문 삭제하기
-    deletecommonQuestion({ commit, getters }, info) {
+    deletecommonQuestion({ commit, getters, dispatch }, info) {
       const stdNo = info[0];
       const questionNo = info[1];
       console.log("인포" + info);
@@ -142,10 +145,12 @@ export default {
           url: api_url.study.commonquestion(stdNo, questionNo),
           method: "delete",
           data: {},
-          headers: this.getters.authHeader
+          headers: getters.authHeader
         })
           .then(res => {
             commit("SET_commonQuestion", res.data);
+            dispatch(`${commonQuestions1stdNo(stdNo)}`);
+
             // router.push({ name: 'myinterview' }) 라우터위치 어디로안정함
           })
           .catch(err => console.error(err.response));

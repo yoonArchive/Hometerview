@@ -1,14 +1,28 @@
 <template>
-  <div>비밀번호 변경 페이지</div>
-  <from>
-    <div>현재 비밀번호</div>
-    <input type="password" v-model="currentpassword" />
-    <div>변경할 비밀번호</div>
-    <input type="password" v-model="tochange" />
-    <div>비밀번호 확인</div>
-    <input type="password" v-model="tochangeconfirm" />
-    <button @click="signupComfirmation">변경</button>
-  </from>
+  <div class="container">
+    <div id="myaccount-title"><h2>비밀번호 변경</h2></div>
+    <div id="inner-myaccount">
+      <from>
+        <div>현재 비밀번호</div>
+
+        <input type="password" v-model="currentpassword" class="form-control" />
+        <br />
+        <div>변경할 비밀번호</div>
+
+        <input
+          placeholder="영문, 숫자, 특수기호 포함 8~20자"
+          type="password"
+          v-model="tochange"
+          class="form-control"
+        />
+        <br />
+        <div>비밀번호 확인</div>
+        <input type="password" v-model="tochangeconfirm" class="form-control" />
+        <br />
+      </from>
+    </div>
+    <button id="button" @click="signupComfirmation">변경하기</button>
+  </div>
 </template>
 
 <script>
@@ -57,4 +71,43 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 100px;
+  height: 100%;
+}
+#myaccount-title {
+  margin-top: 20px;
+}
+#button {
+  margin: 10px;
+  background-color: #6610f2;
+  color: white;
+  border-radius: 10%;
+  border: white;
+  width: 30%;
+}
+#button:hover {
+  background-color: #6f42c1;
+}
+.form-control {
+  /* margin-top: 10px; */
+  /* margin-bottom: 10px; */
+  width: 350px;
+}
+#myaccount-title {
+  margin-top: 50px;
+
+  margin-bottom: 60px;
+}
+#inner-myaccount {
+  border: 0.1px solid rgb(134, 132, 132);
+  width: 200%;
+  height: 300%;
+  padding: 30px;
+  border-color: rgb(134, 132, 132);
+  border-radius: 10px;
+}
+</style>

@@ -229,7 +229,7 @@ export default {
     this.checkReview();
   },
   created() {
-    // this.checkReview()
+    // this.checkReview();
   }
 };
 </script>
