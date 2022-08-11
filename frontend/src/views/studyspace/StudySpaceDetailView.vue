@@ -29,7 +29,7 @@ export default {
     ...mapActions(["getStd", "commonQuestions1"])
   },
   created() {
-    this.commonQuestions1(this.stdNo);
+    //this.commonQuestions1(this.stdNo);
     console.log(this.stdNo);
   }
 };

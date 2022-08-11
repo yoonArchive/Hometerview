@@ -41,40 +41,212 @@
             <span>{{ studySpaceDetail.stdDay }}</span>
           </div>
         </div>
-        <div>
-          <button @click="moveToSession()" class="study-space-btn">
-            스터디룸 입장
-          </button>
-          <button
-            v-if="studySpaceDetail.joinType == 'LEADER'"
-            @click="changeStudyInfomation()"
-          >
-            수정
-          </button>
-          <button v-else @click="leaveStudy(stdNo)">
-            스터디 탈퇴
-          </button>
+        <button @click="moveToSession()" class="study-space-btn">
+          스터디룸 입장
+        </button>
+        <button
+          type="button"
+          v-if="studySpaceDetail.joinType == 'LEADER'"
+          data-bs-toggle="modal"
+          data-bs-target="#studyUpdateModal"
+          data-bs-whatever="@mdo"
+        >
+          수정
+        </button>
+        <button v-else @click="leaveStudy(stdNo)">
+          스터디 탈퇴
+        </button>
+        <div
+          class="modal fade"
+          id="studyUpdateModal"
+          tabindex="-1"
+          aria-labelledby="studyUpdateModalLabel"
+          aria-hidden="true"
+          data-bs-backdrop="static"
+          data-bs-keyboard="false"
+        >
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="studyUpdateModalLabel">
+                  스터디 정보 수정
+                </h5>
+              </div>
+              <div class="modal-body">
+                <form>
+                  <div class="mb-3">
+                    <div class="mb-3">
+                      <label for="recipient-name" class="col-form-label"
+                        >스터디명</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="recipient-name"
+                        v-model="this.studyUpdateInfo.studyName"
+                      />
+                    </div>
+                    <label for="recipient-name" class="col-form-label"
+                      >스터디 설명</label
+                    >
+                    <textarea
+                      class="form-control autoTextarea"
+                      id="floatingTextarea"
+                      v-model="this.studyUpdateInfo.studyDetail"
+                      @keyup="autoResizeTextarea"
+                      @keydown="autoResizeTextarea"
+                    >
+                    </textarea>
+                    <div class="mb-3">
+                      <label for="recipient-name" class="col-form-label"
+                        >기간</label
+                      >
+                      <div class="row">
+                        <input
+                          type="date"
+                          class="form-control"
+                          id="recipient-name"
+                          v-model="this.studyUpdateInfo.studyStartDate"
+                          style="width:40%; margin-left:15px"
+                        />
+                        &nbsp;~&nbsp;
+                        <input
+                          type="date"
+                          class="form-control"
+                          id="recipient-name"
+                          v-model="this.studyUpdateInfo.studyEndDate"
+                          style="width:40%"
+                        />
+                      </div>
+                    </div>
+                    <div class="mb-3">
+                      <label for="recipient-name" class="col-form-label"
+                        >진행 일자</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="recipient-name"
+                        v-model="this.studyUpdateInfo.studyDay"
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label for="recipient-name" class="col-form-label"
+                        >대표 이미지</label
+                      >
+                      <input
+                        type="file"
+                        class="form-control"
+                        id="inputImage"
+                        ref="inputImage"
+                        @change="imageSelect()"
+                        multiple
+                      />
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="small"
+                  data-bs-dismiss="modal"
+                  @click="initStudy()"
+                >
+                  수정
+                </button>
+                <button
+                  type="button"
+                  class="small"
+                  data-bs-dismiss="modal"
+                  @click="bringStudyInfoBack()"
+                >
+                  취소
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
     <div class="study-detail-information-wrapper">
-      <h2 style="color:#653FD3">공지사항</h2>
-      <div class="form-floating">
-        <textarea
-          class="form-control autoTextarea"
-          placeholder="Leave a comment here"
-          id="floatingTextarea"
-          v-model="studySpaceDetail.stdNotice"
-          @keyup="autoResizeTextarea"
-          @keydown="autoResizeTextarea"
-          @focusout="updateStudyNotice"
+      <div class="row">
+        <h3 class="stdNotice col-md-3">스터디 공지사항</h3>
+        <button
+          type="button"
+          class="col-md-1 small"
+          v-if="studySpaceDetail.joinType == 'LEADER'"
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModal"
+          data-bs-whatever="@mdo"
         >
-        </textarea>
+          수정
+        </button>
+        <div
+          class="modal fade"
+          id="exampleModal"
+          tabindex="-1"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+          data-bs-backdrop="static"
+          data-bs-keyboard="false"
+        >
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                  공지사항 수정
+                </h5>
+              </div>
+              <div class="modal-body">
+                <form>
+                  <div class="mb-3">
+                    <label for="floatingTextarea" class="col-form-label"
+                      >공지사항을 입력해주세요</label
+                    >
+                    <textarea
+                      class="form-control autoTextarea"
+                      id="floatingTextarea"
+                      v-model="noticeContent"
+                      @keyup="autoResizeTextarea"
+                      @keydown="autoResizeTextarea"
+                    >
+                    </textarea>
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="small"
+                  data-bs-dismiss="modal"
+                  @click="initNotice()"
+                >
+                  수정
+                </button>
+                <button
+                  type="button"
+                  class="small"
+                  data-bs-dismiss="modal"
+                  @click="bringNoticeBack"
+                >
+                  취소
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="study-detail-information-wrapper">
-        <h2>스터디원</h2>
-        <hr />
+      <div class="box">
+        <div class="info noticebox">
+          <span v-if="studySpaceDetail.stdNotice == null"
+            >공지사항을 입력해주세요.</span
+          >
+          <span v-else>{{ studySpaceDetail.stdNotice }} </span>
+        </div>
       </div>
+      <h3 class="stdMembers">스터디원</h3>
+      <hr />
       <div class="table-wrapper">
         <table>
           <tbody>
@@ -103,17 +275,30 @@ export default {
   data() {
     return {
       stdNo: this.$route.params.stdNo,
+      studyUpdateInfo: {
+        studyName: null,
+        studyDetail: null,
+        studyStartDate: null,
+        studyEndDate: null,
+        studyDay: null,
+        studyImage: null
+      },
+      noticeContent: null,
       imgsrc: require("@/assets/images/fighting.jpeg")
     };
   },
   computed: {
-    ...mapGetters(["studySpaceDetail"])
+    ...mapGetters(["studySpaceDetail"]),
+    findImage() {
+      document.getElementById("inputImage").click();
+    }
   },
   methods: {
     ...mapActions([
       "bringStudySpaceDetail",
       "leaveStudy",
-      "updateStudyNoticeAction"
+      "updateStudyNoticeAction",
+      "updateStudyAction"
     ]),
     ...mapMutations(["SET_STD_NO"]),
     moveToSession() {
@@ -122,77 +307,95 @@ export default {
         params: { sessionNo: this.stdNo }
       });
     },
+    handleNoticeModal() {
+      this.is_show = !this.is_show;
+    },
     autoResizeTextarea(e) {
       let textarea = document.querySelector(".autoTextarea");
       console.log(e + " : " + textarea);
       if (textarea) {
         textarea.style.height = "auto";
-        let height = textarea.scrollHeight; // 높이
+        let height = textarea.scrollHeight;
         textarea.style.height = `${height + 8}px`;
       }
     },
-    updateStudyNotice() {
+    bringStudyInfoBack() {
+      this.studyUpdateInfo.studyName = this.studySpaceDetail.stdName;
+      this.studyUpdateInfo.studyDetail = this.studySpaceDetail.stdDetail;
+      this.studyUpdateInfo.studyStartDate = this.studySpaceDetail.startDate;
+      this.studyUpdateInfo.studyEndDate = this.studySpaceDetail.endDate;
+      this.studyUpdateInfo.studyDay = this.studySpaceDetail.stdDay;
+      this.studyUpdateInfo.studyImage = this.studySpaceDetail.stdImg;
+    },
+    bringNoticeBack() {
+      this.noticeContent = this.studySpaceDetail.stdNotice;
+    },
+    imageSelect() {
+      this.studyUpdateInfo.studyImage = this.$refs.inputImage.files[0];
+    },
+    upload() {
+      const formData = new FormData();
+      formData.append("multipartFile", this.studyUpdateInfo.studyImage);
+      formData.append("studyInfoPutReq.comName", this.studySpaceDetail.comName);
+      formData.append(
+        "studyInfoPutReq.endDate",
+        this.studyUpdateInfo.studyEndDate
+      );
+      formData.append(
+        "studyInfoPutReq.startDate",
+        this.studyUpdateInfo.studyStartDate
+      );
+      formData.append("studyInfoPutReq.stdDay", this.studyUpdateInfo.studyDay);
+      formData.append(
+        "studyInfoPutReq.stdDetail",
+        this.studyUpdateInfo.studyDetail
+      );
+      formData.append(
+        "studyInfoPutReq.stdLimit",
+        this.studySpaceDetail.stdLimit
+      );
+      formData.append(
+        "studyInfoPutReq.stdName",
+        this.studyUpdateInfo.studyName
+      );
+      formData.append("studyInfoPutReq.stdType", this.studySpaceDetail.stdType);
+      console.log(formData);
+      return formData;
+    },
+    async initStudy() {
+      const formData = await this.upload();
+      console.log(formData);
+      this.updateStudyAction([this.studySpaceDetail.stdNo, formData]);
+    },
+    initNotice() {
+      this.studySpaceDetail.stdNotice = this.noticeContent;
       this.updateStudyNoticeAction();
     }
   },
   created() {
     this.SET_STD_NO(this.stdNo);
     this.bringStudySpaceDetail(this.stdNo);
+    this.bringStudyInfoBack();
+    this.bringNoticeBack();
     // await this.deleteStudySpace([this.stdNo])
   }
 };
 </script>
 
 <style scoped>
-/* .study-detail-information-wrapper {
-  margin-top: 50px;
+.study-detail-information-wrapper {
+  margin-left: 3.5em;
 }
-.introduce-study-wrapper {
-  border: 1px black solid;
-  border-radius: 15px;
-}
-.study-space-btn {
-  border-radius: 30px;
-  color: #ffffff;
-  font-size: 20px;
-  font-weight: 400;
-  margin-left: 3%;
-  border: none;
-}
-.study-space-content-wrapper {
-  padding: 5%;
-}
-.study-title-wrapper {
-  background-color: #f3f4ff;
-  padding: 5%;
-  border-radius: 30px 30px 0 0;
-  width: 100%;
-}
-
-.study-image {
-  width: 100%;
-}
-.study-information-wrapper {
-  border: 1px black solid;
-}
-.information-box {
-  width: 100%;
-  background: #ffffff;
-  box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 30px;
-}
-.box1 {
-  width: 400px;
-  height: 50px;
-  background: #f3f4ff;
-  border-radius: 10px;
-} */
 h3,
 h5 {
   font-family: "티머니 둥근바람 볼드";
 }
 h3 {
   margin-bottom: 25px;
+}
+.stdNotice,
+.stdMembers {
+  font-family: "티머니 둥근바람";
 }
 .status {
   font-size: 25px;
@@ -221,7 +424,6 @@ h3 {
 blockquote {
   quotes: none;
   border-left: solid 3px rgba(210, 215, 217, 0.75);
-  /* font-style: italic; */
   margin: 0 0 1.7em 0;
   padding: 0.5em 0 0.5em 2em;
 }
@@ -431,7 +633,9 @@ button.fit,
 input[type="button"].small,
 button.small,
 .button.small {
-  font-size: 0.6em;
+  font-size: 0.63em;
+  width: 7em;
+  text-align: center;
 }
 input[type="button"].large,
 button.large,
@@ -462,6 +666,7 @@ table tbody tr {
   border: solid 1px rgba(210, 215, 217, 0.75);
   border-left: 0;
   border-right: 0;
+  height: 60px;
 }
 table tbody tr:nth-child(2n + 1) {
   background-color: rgba(230, 235, 237, 0.25);
