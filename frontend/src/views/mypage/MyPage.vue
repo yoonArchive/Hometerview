@@ -27,7 +27,7 @@
       </router-link>
     </div>
 
-    <div>
+    <div class="router-view">
       <router-view></router-view>
     </div>
   </div>
@@ -40,19 +40,29 @@ export default {
 </script>
 
 <style scoped>
+.router-view {
+  height: 100%;
+  margin: 10px;
+}
+#title-word {
+  margin-bottom: 50px;
+}
 .mypage {
   display: flex;
   flex-direction: row;
+  /* align-items: center; */
+  margin-right: 50px;
 }
 .mypage-banner {
   display: flex;
   flex-direction: column;
-  margin: 50px;
+  /* margin: 50px; */
+  /* position: absolute; */
 }
 #mypage-button {
-  border: white;
-  width: 400px;
-  border-radius: 10%;
+  border: 1px rgb(160, 160, 160);
+  width: 300px;
+  border-radius: 10px;
   height: 100px;
   background-color: #f3f4ff;
   margin: 10px;
@@ -60,17 +70,31 @@ export default {
   display: flex;
   align-items: center;
 }
+/* 라우터 버튼 호버*/
 #mypage-button:hover #mypageicon {
   background-color: #653fd3;
-  border-radius: 10%;
+  border-radius: 10px;
   color: white;
   padding: 10px;
   border: #653fd3;
 }
 #mypage-button:hover {
-  border-radius: 10%;
+  border-radius: 10px;
   border: solid #653fd3;
 }
+/* #mypage-button:hover, */
+.route-active #mypage-button {
+  background-color: #653fd3;
+  border-radius: 10px;
+  color: white;
+  padding: 10px;
+  border: #653fd3;
+  /* cursor: pointer; */
+}
+/* #mypage-button:active {
+  border: solid #653fd3;
+} */
+
 #mypageicon {
   width: 50px;
   height: 50px;
