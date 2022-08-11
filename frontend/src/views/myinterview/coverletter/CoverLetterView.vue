@@ -1,7 +1,7 @@
 <template>
   <div class="member-cover-letter-title" v-if="!isloading">
     <div class="row" v-if="!isChange">
-      <div class="col-6">
+      <div class="col-5">
         <div class="member-cover-letter-stdname">
           {{ resumeContents[resumeindex].resumeTitle }} 자소서
         </div>
@@ -67,7 +67,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions, mapMutations } from "vuex";
 import CoverLetterDetail from "./components/CoverLetterDetail.vue";
 export default {
   data() {
@@ -78,8 +78,13 @@ export default {
       originaltitle: ""
     };
   },
-
+  beforeUnmount() {
+    this.SET_MAIN_CONTAINER("main-container");
+    this.SET_FULL_CONTAINER("full-container");
+  },
   async mounted() {
+    this.SET_MAIN_CONTAINER("main-container-coverletter");
+    this.SET_FULL_CONTAINER("full-container-coverletter");
     await this.getResumeInfo();
     await this.getCurrentResume(this.resumeindex);
     await this.settingResumeIndex(this.resumeindex);
@@ -87,6 +92,7 @@ export default {
     this.isloading = false;
   },
   methods: {
+    ...mapMutations(["SET_MAIN_CONTAINER", "SET_FULL_CONTAINER"]),
     ...mapActions([
       "settingResumeIndex",
       "getCurrentResume",
@@ -121,6 +127,17 @@ export default {
 </script>
 
 <style scoped>
+.no-cover-letter-me {
+  padding: 5%;
+  background-color: white;
+  border: 1px solid black;
+}
+.member-cover-letter-comname {
+  font-size: 20px;
+}
+.member-cover-letter-stdname {
+  font-size: 30px;
+}
 .coverletter-buttons {
   gap: 10px;
 }
