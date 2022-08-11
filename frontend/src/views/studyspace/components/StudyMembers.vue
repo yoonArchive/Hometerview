@@ -1,38 +1,31 @@
 <template>
-  <div class="member">
-    <div class="study-member-wrapper">
-      <div class="row justify-content-between">
-        <div class="col-8">
-          {{ member.user.userId }} {{ member.user.userName }}
-          {{ member.user.userEmail }}
-        </div>
-        <div class="col-4">
-          <div class="d-flex flex-row-reverse">
-            <button
-              @click="kickMember(stdMemberInfo)"
-              v-if="
-                studySpaceDetail.joinType === 'LEADER' &&
-                  member.joinType !== 'LEADER'
-              "
-            >
-              추방하기
-            </button>
-            <router-link
-              :to="{
-                name: 'membercoverletter',
-                params: { studentindex: studentindex }
-              }"
-            >
-              <i class="far fa-file-alt fa-lg" style="color:#653FD3"></i>
-            </router-link>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <tr>
+    <td>{{ member.user.userId }}</td>
+    <td>{{ member.user.userName }}</td>
+    <td>{{ member.user.userEmail }}</td>
+    <td>
+      <router-link
+        :to="{
+          name: 'membercoverletter',
+          params: { studentindex: studentindex }
+        }"
+      >
+        <i class="input-icon uil uil-file-alt"></i>
+      </router-link>
+    </td>
+    <td>
+      <button
+        @click="kickMember(stdMemberInfo)"
+        v-if="
+          studySpaceDetail.joinType === 'LEADER' && member.joinType !== 'LEADER'
+        "
+      >
+        추방하기
+      </button>
+    </td>
+  </tr>
 </template>
 <script>
-import router from "@/common/lib/vue-router";
 import { mapActions, mapGetters } from "vuex";
 
 export default {
@@ -60,17 +53,14 @@ export default {
 </script>
 
 <style scoped>
-.study-member-wrapper {
+/* .study-member-wrapper {
   padding: 5%;
 }
 .member {
   box-sizing: border-box;
   width: 100%;
-  /* left: 300px;
-  top: 391px; */
-
   background: #fcfcfc;
   border: 1px solid #653fd3;
   border-radius: 30px;
-}
+} */
 </style>
