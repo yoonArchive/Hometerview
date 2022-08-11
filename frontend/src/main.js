@@ -9,6 +9,19 @@ import i18n from "./common/lib/i18n";
 import router from "./common/lib/vue-router";
 // import "@fortawesome/fontawesome-free/js/all.js";
 import "@fortawesome/fontawesome-free/css/all.css";
+
+import "./fontAwesomeIcon";
+
+import { library } from "@fortawesome/fontawesome-svg-core";
+import {
+  faUserSecret,
+  faPersonShelter,
+  faShieldHalved,
+  faPersonRunning
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+library.add(faUserSecret, faPersonShelter, faShieldHalved, faPersonRunning);
+
 // import MyInterviewView from './views/myinterview/MyInterviewView;
 // import firebase from 'firebase'
 // import "element-plus/packages/theme-chalk/src/base.scss";
@@ -32,6 +45,7 @@ const app = createApp({
   render: () => h(App)
 });
 // app.use(ElementPlus);
+app.component("font-awesome-icon", FontAwesomeIcon);
 app.use(VueAxios, axios);
 app.use(store);
 app.use(i18n);

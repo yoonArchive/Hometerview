@@ -302,7 +302,7 @@ export default {
   </ReviewFormEdit>
 </template>
 
-<style lang="css">
+<style scoped lang="css">
 h2 {
   margin: 0;
   font-size: 16px;
