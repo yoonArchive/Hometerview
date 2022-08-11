@@ -26,6 +26,7 @@
 /* Please ❤ this if you like it! */
 
 import Main from "./views/main/main.vue";
+/* Set up using Vue 3 */
 
 export default {
   name: "App",

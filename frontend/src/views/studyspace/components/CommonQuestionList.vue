@@ -31,8 +31,8 @@ export default {
   setup() {},
 
   beforeUpdate() {
-    this.commonQuestions1(this.stdNo);
-    console.log("김" + this.stdNo);
+    // this.commonQuestions1(this.stdNo);
+    // console.log("김" + this.stdNo);
   },
   methods: {
     ...mapActions(["getStd", "commonQuestions1"])
