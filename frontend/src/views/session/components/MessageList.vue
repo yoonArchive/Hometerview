@@ -66,7 +66,7 @@ export default {
   background: #ffff;
   overflow: scroll;
   border-radius: 10px 10px 0px 0px;
-  height: 700px;
+  height: 93vh;
 }
 #rctmsg {
   height: 0px;

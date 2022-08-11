@@ -223,13 +223,13 @@ function makeRoutesFromMenu() {
           path: "membercoverletter/:studentindex",
           name: "membercoverletter",
           component: MemberCoverLetter
-        },
-        {
-          path: "session/:sessionNo",
-          name: "session",
-          component: SessionView
         }
       ]
+    },
+    {
+      path: "/home/session/:sessionNo",
+      name: "session",
+      component: SessionView
     },
     {
       path: "/",
