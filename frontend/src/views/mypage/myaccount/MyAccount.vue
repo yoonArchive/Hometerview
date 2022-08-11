@@ -21,7 +21,7 @@
       <input type="email" v-model="this.userdata.userEmail" />
       <div>이름</div>
       <input type="text" v-model="this.userdata.userName" />
-      <button @click="this.updateUser(this.userdata)">변경 저장하기</button>
+      <button @click="this.updateuserM()">변경 저장하기</button>
     </div>
   </div>
 </template>

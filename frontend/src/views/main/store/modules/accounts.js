@@ -86,15 +86,22 @@ export default {
     },
     updateUser({ dispatch, getters }, credentials) {
       console.log(credentials);
-      const updateUserPutReq = {
-        userEmail: credentials.userEmail,
-        userImg: credentials.userImg,
-        userName: credentials.userName
-      };
+      const formData = new FormData();
+      formData.append("multipartFile", credentials.userImg);
+      formData.append("updateUserProfileReq.userEmail", credentials.userEmail);
+      formData.append("updateUserProfileReq.userName", credentials.userName);
       console.log("업데이트 유저 ");
+      console.log(getters.authHeader);
+      console.log(formData.get);
+      for (let value of formData.values()) {
+        console.log(value);
+      }
       axios
-        .put(api_url.accounts.updateUser(), updateUserPutReq, {
-          headers: getters.authHeader
+        .put(api_url.accounts.updateUser(), formData, {
+          headers: {
+            Authorization: getters.authHeader.Authorization,
+            "Context-Type": "multipart/form-data"
+          }
         })
         .then(data => {
           console.log(data);
