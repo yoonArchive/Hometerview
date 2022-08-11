@@ -75,6 +75,38 @@ export default {
           console.log("공지사항 변경에 실패했습니다.");
         });
     },
+    updateStudyAction({ commit, getters }, studyUpdateInfo) {
+      console.log(studyUpdateInfo);
+      const stdNo = studyUpdateInfo[0];
+      const stdInfo = studyUpdateInfo[1];
+
+      console.log("키 값 확인");
+      for (let key of stdInfo.keys()) {
+        console.log(key);
+      }
+
+      console.log("벨류 값 확인");
+      for (let value of stdInfo.values()) {
+        console.log(value);
+      }
+      axios({
+        url: api_url.study.studyspacedetail(stdNo),
+        method: "put",
+        data: stdInfo,
+        headers: {
+          Authorization: getters.memberHeader,
+          "Context-Type": "multipart/form-data"
+        }
+      })
+        .then(res => {
+          console.log(res.data);
+          commit("SET_STUDYSPACE_DETAIL", res.data);
+        })
+        .catch(err => {
+          console.log(err.response);
+        });
+    },
+
     async saveStudyCoverLetter({ getters }, data) {
       console.log(getters.studySpaceList);
       const studentindex = data.studentindex;

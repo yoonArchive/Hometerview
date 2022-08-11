@@ -1,8 +1,9 @@
 <template>
   <tr>
-    <td>{{ member.user.userId }}</td>
-    <td>{{ member.user.userName }}</td>
+    <td style="width:30px"></td>
+    <td style="font-weight:700">{{ member.user.userName }}</td>
     <td>{{ member.user.userEmail }}</td>
+    <td style="width:100px"></td>
     <td>
       <router-link
         :to="{
@@ -20,7 +21,7 @@
           studySpaceDetail.joinType === 'LEADER' && member.joinType !== 'LEADER'
         "
       >
-        추방하기
+        <i class="input-icon uil uil-ban"></i>
       </button>
     </td>
   </tr>
@@ -63,4 +64,10 @@ export default {
   border: 1px solid #653fd3;
   border-radius: 30px;
 } */
+td {
+  font-size: 23px;
+}
+tr:hover {
+  background-color: rgba(161, 104, 253, 0.05) !important;
+}
 </style>
