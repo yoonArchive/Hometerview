@@ -103,7 +103,6 @@
 </template>
 
 <script>
-const today = new Date()
 
 import { mapActions, mapGetters } from 'vuex'
 import Modaldday from './components/modal-dday'
@@ -188,6 +187,10 @@ export default {
     getDday(){
       this.getDdayInfo()
     },
+    refreshAll() {
+            // 새로고침
+            this.$router.go();
+        }
 
 
 

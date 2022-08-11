@@ -29,7 +29,9 @@ export default {
     };
   },
   setup() {},
-
+  created() {
+    this.commonQuestions1(this.stdNo);
+  },
   beforeUpdate() {
     // this.commonQuestions1(this.stdNo);
     // console.log("김" + this.stdNo);
