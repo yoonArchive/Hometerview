@@ -1,11 +1,8 @@
 <template>
   <div v-if="streamManager">
-    <ov-video :stream-manager="streamManager" />
-    <div>
-      <p>{{ clientData }}</p>
-    </div>
-    <div>
-      <p>{{ clinentId }}</p>
+    <ov-video :streamManager="streamManager" :mainStream="mainStream" />
+    <div class="video-name">
+      {{ clientData }}
     </div>
   </div>
 </template>
@@ -21,7 +18,8 @@ export default {
   },
 
   props: {
-    streamManager: Object
+    streamManager: Object,
+    mainStream: Boolean
   },
 
   computed: {
@@ -38,10 +36,15 @@ export default {
   methods: {
     getConnectionData() {
       const { connection } = this.streamManager.stream;
-      console.log("제발!!!");
-      console.log(connection);
       return JSON.parse(connection.data);
     }
   }
 };
 </script>
+<style scoped>
+.video-name {
+  position: absolute;
+  background-color: #272930;
+  color: whitesmoke;
+}
+</style>

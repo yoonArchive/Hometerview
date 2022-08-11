@@ -88,7 +88,7 @@
       </div>
     </section>
   </div>
-  <!-- <div class="row">
+  <div class="row">
     <div class="col-5">
       <img :src="imgsrc" alt="" class="study-image" />
     </div>
@@ -177,7 +177,7 @@
       :member="member"
       :studentindex="index"
     ></study-members>
-  </div> -->
+  </div>
 </template>
 
 <script>

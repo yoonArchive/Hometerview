@@ -1,96 +1,141 @@
 <template>
-  <div id="session-header">
-    <h1 id="session-title">{{ mySessionId }}</h1>
-    <input
-      class="btn btn-large btn-danger"
-      type="button"
-      id="buttonLeaveSession"
-      @click="leaveSession"
-      value="Leave session"
-    />
-  </div>
-  <div class="container d-flex justify-content-between">
-    <!-- session -->
-    <div id="session">
-      <!-- 자기 화면(큰) => mainStreamManager-->
-      <div id="main-video" class="col-md-6">
-        <user-video :stream-manager="mainStreamManager" />
+  <div class="main">
+    <!-- <div id="session-title">{{ mySessionId }}</div><br> -->
+    <div class="container d-flex justify-content-between">
+      <div class="side-left col-md-8">
+        <div class="center">
+          <!-- 중앙 -->
+          <!-- 메인 화면, 사이드 -->
+
+          <!-- session -->
+          <div class="video-group">
+            <!-- 자기 화면(큰) => mainStreamManager-->
+            <div id="main-video" class="col-md-12">
+              <user-video
+                class="large-video"
+                :stream-manager="mainStreamManager"
+                :mainStream="true"
+              />
+            </div>
+
+            <!-- 비디오 그룹 -->
+            <div
+              class="video-container col-md-12 d-flex justify-content-center"
+            >
+              <!-- 자기화면 (작은) -->
+              <user-video
+                class="small-video col-md-3"
+                :stream-manager="publisher"
+                :mainStream="false"
+                @click="updateMainVideoStreamManager(publisher)"
+              />
+              <!-- native : 상위 컴포넌트(즉 여기 있는 이벤트)를 하위 컴포넌트에서 작동시키고 싶을 때 사용한다. -->
+              <!-- vue3에서 native가 사라지고 그냥 click을 누르면 된다. -->
+              <user-video
+                class="col-md-3"
+                v-for="sub in subscribers"
+                :key="sub.stream.connection.connectionId"
+                :stream-manager="sub"
+                :mainStream="false"
+                @click="updateMainVideoStreamManager(sub)"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="bottom d-flex justify-content-around">
+          <!-- 하단 -->
+          <!-- 비디오, 오디오, leave, 더보기 -->
+          <!-- 장치 옵션 -->
+          <!-- 마이크 ONOFF-->
+
+          <div>
+            <button v-if="audioOnoff" @click="audioONOFF()">오디오ON</button>
+            <button v-else @click="audioONOFF()">오디오OFF</button>
+          </div>
+          <!-- 비디오 ONOFF -->
+          <div>
+            <button v-if="videoOnoff" @click="videoONOFF()">
+              비디오ON {{ videoOnoff }}
+            </button>
+            <button v-else @click="videoONOFF()">
+              비디오OFF {{ videoOnoff }}
+            </button>
+          </div>
+          <!-- 나가기 -->
+          <div>
+            <input
+              class="btn btn-large btn-danger"
+              type="button"
+              id="buttonLeaveSession"
+              @click="leaveSession"
+              value="Leave session"
+            />
+          </div>
+          <!-- 화면 공유 -->
+          <div>
+            <button @click="ShareScreen()">화면 공유</button>
+          </div>
+          <!-- 더보기 -->
+          <div>
+            <button></button>
+          </div>
+        </div>
       </div>
 
-      <!-- 장치 옵션 -->
-      <div>
-        <!-- 마이크 ONOFF-->
-        <div>
-          <button v-if="audioOnoff" @click="audioONOFF()">오디오ON</button>
-          <button v-else @click="audioONOFF()">오디오OFF</button>
-        </div>
-        <!-- 비디오 ONOFF -->
-        <div>
-          <button v-if="videoOnoff" @click="videoONOFF()">
-            비디오ON {{ videoOnoff }}
+      <div class="side-right col-md-4">
+        <!-- 사이드 -->
+        <!-- 메시지, 자소서, 참가자 지정 -->
+        <div class="select-side-bottons">
+          <button @click="changeContent('chatting')">메시지</button>
+          <button @click="changeContent('participant')">참가자</button>
+          <button @click="changeContent('selectinterviewee')">
+            면접자 지정
           </button>
-          <button v-else @click="videoONOFF()">
-            비디오OFF {{ videoOnoff }}
-          </button>
         </div>
-        <!-- 화면 공유 -->
-        <div>
-          <button @click="ShareScreen()">화면 공유</button>
+        <!-- 메시지 -->
+        <div v-if="chatting">
+          <message-list
+            :msgs="msgs"
+            :myId="publisher.stream.connection.connectionId"
+            :fromId="fromId"
+          ></message-list>
+          <message-form
+            @sendMsg="sendMsg"
+            :user-name="myUserName"
+          ></message-form>
         </div>
-        <!-- 더보기 -->
-        <div>
-          <button></button>
+        <!-- 멤버 리스트 -->
+        <div v-if="participant">
+          <study-member-list></study-member-list>
         </div>
-      </div>
-
-      <!-- 비디오 그룹 -->
-      <!-- 비디오를 클릭할 경우 메인 비디오로 이동 : updateMainVideoStreamManager -->
-      <div id="video-container" class="col-md-6">
-        <!-- 자기화면 (작은) -->
-        <user-video
-          :stream-manager="publisher"
-          @click="updateMainVideoStreamManager(publisher)"
-        />
-        <!-- native : 상위 컴포넌트(즉 여기 있는 이벤트)를 하위 컴포넌트에서 작동시키고 싶을 때 사용한다. -->
-        <!-- vue3에서 native가 사라지고 그냥 click을 누르면 된다. -->
-        <user-video
-          v-for="sub in subscribers"
-          :key="sub.stream.connection.connectionId"
-          :stream-manager="sub"
-          @click="updateMainVideoStreamManager(sub)"
-        />
-      </div>
-    </div>
-
-    <!-- 사이드  -->
-    <div></div>
-    <div class="side-panel">
-      <button @click="changeContent('chatting')">메시지</button>
-      <button @click="changeContent('participant')">참가자</button>
-      <button @click="changeContent('selectinterviewee')">면접자 지정</button>
-      <!-- 메시지 -->
-      <div v-if="chatting">
-        <message-list
-          :msgs="msgs"
-          :myId="publisher.stream.connection.connectionId"
-          :fromId="fromId"
-        ></message-list>
-        <message-form @sendMsg="sendMsg" :user-name="myUserName"></message-form>
-      </div>
-      <!-- 멤버 리스트 -->
-      <div v-if="participant">
-        <study-member-list></study-member-list>
-      </div>
-      <div v-if="selectinterviewee">
-        <select-interviewee
-          :interviewUserFixed="interviewUserFixed"
-          @streamUpdate="streamUpdate"
-        ></select-interviewee>
-        <!-- usertype==='LEADERS' && 리더만 보이게 하기 =   -->
+        <div v-if="selectinterviewee">
+          <select-interviewee
+            :interviewUserFixed="interviewUserFixed"
+            @streamUpdate="streamUpdate"
+          ></select-interviewee>
+          <!-- usertype==='LEADERS' && 리더만 보이게 하기 =   -->
+        </div>
       </div>
     </div>
   </div>
 </template>
+
+<style scoped>
+.main {
+  background-color: #272930;
+  color: whitesmoke;
+  height: 100%;
+}
+.side-right {
+  height: 100%;
+}
+.side-left {
+  height: 100%;
+}
+/* .video-group{
+  height: ;
+} */
+</style>
 
 <script>
 import axios from "axios";
@@ -571,8 +616,3 @@ export default {
   }
 };
 </script>
-<style scoped>
-.side-panel {
-  width: 400px;
-}</style
->f
