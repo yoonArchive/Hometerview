@@ -4,12 +4,6 @@
       <h3 style="text-align: center; ">
         [ {{ studySpaceDetail.stdName }} ] 스터디 스페이스
       </h3>
-
-      <!-- <span class="title" v-if="studySpaceDetail.stdType == 'COM'" style="text-align: center; ">
-        [ 기업 면접 스터디 ]
-        <span class="comName"> {{ studySpaceDetail.comName }}</span>
-      </span>
-      <span class="title" v-else style="text-align: center;">[ 자율 면접 스터디 ]</span> -->
     </header>
     <section id="banner">
       <span class="image object">
@@ -34,7 +28,6 @@
             <span class="detail">{{ studySpaceDetail.stdDetail }}</span>
           </div>
         </blockquote>
-
         <div class="box">
           <div class="info">
             <span class="detail">🗓️ &nbsp; 기간 : </span>
@@ -47,136 +40,54 @@
             <span class="detail">⏰ &nbsp; 진행 일자 : </span>
             <span>{{ studySpaceDetail.stdDay }}</span>
           </div>
-          <div v-if="studySpaceDetail.recruitStatus === '모집 중'" class="info">
-            <span class="detail">🤝 &nbsp; 모집인원 : </span>
-            <span
-              >{{ studySpaceDetail.count }}/{{
-                studySpaceDetail.stdLimit
-              }}</span
-            >
-          </div>
         </div>
         <div>
-          <div v-if="applyType === 'LEADER'">
-            <button @click="studyStart()">스터디 시작</button>
-            <button @click="moveToUpdate">수정</button>
-            <button @click="deleteRecruitmentDetail([recruitNo])">
-              삭제
-            </button>
-          </div>
-          <div
-            v-else-if="
-              applyType === 'NORMAL' &&
-                studySpaceDetail.recruitStatus === '모집 중'
-            "
+          <button @click="moveToSession()" class="study-space-btn">
+            스터디룸 입장
+          </button>
+          <button
+            v-if="studySpaceDetail.joinType == 'LEADER'"
+            @click="changeStudyInfomation()"
           >
-            <button @click="studyApplyCancel(recruitNo)">
-              스터디 신청 취소
-            </button>
-          </div>
-          <div v-else-if="applyType === null">
-            <div v-if="recruitDetail.recruitStatus === '모집 중'">
-              <button @click="studyApply(recruitNo)">스터디 신청하기</button>
-            </div>
-            <div v-else>
-              <button @click="goStudySpace()">
-                스터디 스페이스 이동
-              </button>
-            </div>
-          </div>
+            수정
+          </button>
+          <button v-else @click="leaveStudy(stdNo)">
+            스터디 탈퇴
+          </button>
         </div>
       </div>
     </section>
-  </div>
-  <div class="row">
-    <div class="col-5">
-      <img :src="imgsrc" alt="" class="study-image" />
-    </div>
-    <div class="col-7">
-      <div class="study-information-wrapper information-box">
-        <div class="study-title-wrapper">
-          <span v-if="studySpaceDetail.comName != null"
-            >[{{ studySpaceDetail.comName }}]</span
-          >{{ studySpaceDetail.stdName }}
-        </div>
-        <div class="study-space-content-wrapper">
-          <div>
-            타입 : <span v-if="studySpaceDetail.stdType == 'COM'">기업면접</span
-            ><span v-else>자율면접</span>
-          </div>
-          <div>
-            기간 : {{ studySpaceDetail.startDate }} ~
-            {{ studySpaceDetail.endDate }}
-          </div>
-          <div>진행 일자 : {{ studySpaceDetail.stdDay }}</div>
-          <div>모집 인원 : {{ studySpaceDetail.stdLimit }}</div>
-          <div class="d-flex flex-row-reverse">
-            <button
-              @click="moveToSession()"
-              class="study-space-btn"
-              style="background-color:#653FD3;"
-            >
-              스터디 입장하기
-            </button>
-            <div v-if="studySpaceDetail.joinType == 'LEADER'">
-              <button
-                @click="changeStudyInfomation()"
-                class="study-space-btn"
-                style="background-color:#A6A6A6"
-              >
-                수정하기
-              </button>
-            </div>
-            <div v-else>
-              <button
-                @click="leaveStudy(stdNo)"
-                class="study-space-btn bg-danger"
-              >
-                스터디 탈퇴
-              </button>
-            </div>
-          </div>
-        </div>
+    <div class="study-detail-information-wrapper">
+      <h2 style="color:#653FD3">공지사항</h2>
+      <div class="form-floating">
+        <textarea
+          class="form-control autoTextarea"
+          placeholder="Leave a comment here"
+          id="floatingTextarea"
+          v-model="studySpaceDetail.stdNotice"
+          @keyup="autoResizeTextarea"
+          @keydown="autoResizeTextarea"
+          @focusout="updateStudyNotice"
+        >
+        </textarea>
+      </div>
+      <div class="study-detail-information-wrapper">
+        <h2>스터디원</h2>
+        <hr />
+      </div>
+      <div class="table-wrapper">
+        <table>
+          <tbody>
+            <study-members
+              v-for="(member, index) in studySpaceDetail.studyJoins"
+              :key="member.joinNo"
+              :member="member"
+              :studentindex="index"
+            ></study-members>
+          </tbody>
+        </table>
       </div>
     </div>
-  </div>
-  <div class="study-detail-information-wrapper">
-    <div class="introduce-study-wrapper">
-      <div
-        class="study-title-wrapper"
-        style="border-radius:15px 15px 0 0; border-bottom: 1px black solid;"
-      >
-        스터디 소개
-      </div>
-      <div class="study-space-content-wrapper">
-        {{ studySpaceDetail.stdDetail }}
-      </div>
-    </div>
-  </div>
-  <div class="study-detail-information-wrapper">
-    <h2 style="color:#653FD3">공지사항</h2>
-    <div class="form-floating">
-      <textarea
-        class="form-control autoTextarea"
-        placeholder="Leave a comment here"
-        id="floatingTextarea"
-        v-model="studySpaceDetail.stdNotice"
-        @keyup="autoResizeTextarea"
-        @keydown="autoResizeTextarea"
-        @focusout="updateStudyNotice"
-      >
-      </textarea>
-    </div>
-  </div>
-  <div class="study-detail-information-wrapper">
-    <h2 style="color:#653FD3">스터디 멤버</h2>
-    <hr style="color:#653FD3" />
-    <study-members
-      v-for="(member, index) in studySpaceDetail.studyJoins"
-      :key="member.joinNo"
-      :member="member"
-      :studentindex="index"
-    ></study-members>
   </div>
 </template>
 
@@ -186,7 +97,6 @@ import { mapActions, mapGetters, mapMutations } from "vuex";
 import StudyMembers from "./StudyMembers.vue";
 export default {
   name: "StudySpaceInfo",
-
   components: {
     StudyMembers
   },
@@ -483,7 +393,7 @@ button,
   border-radius: 0.375em;
   border: 0;
   box-shadow: inset 0 0 0 2px #653fd3;
-  color: #653fd3 !important;
+  /* color: #653fd3 !important; */
   cursor: pointer;
   display: inline-block;
   font-size: 0.8em;
@@ -538,5 +448,58 @@ button:disabled,
 .button:disabled {
   pointer-events: none;
   opacity: 0.25;
+}
+
+.table-wrapper {
+  -webkit-overflow-scrolling: touch;
+  overflow-x: auto;
+}
+table {
+  margin: 0 0 2em 0;
+  width: 100%;
+}
+table tbody tr {
+  border: solid 1px rgba(210, 215, 217, 0.75);
+  border-left: 0;
+  border-right: 0;
+}
+table tbody tr:nth-child(2n + 1) {
+  background-color: rgba(230, 235, 237, 0.25);
+}
+table td {
+  padding: 0.75em 0.75em;
+}
+table th {
+  color: #3d4449;
+  font-size: 0.9em;
+  font-weight: 600;
+  padding: 0 0.75em 0.75em 0.75em;
+  text-align: left;
+}
+table thead {
+  border-bottom: solid 2px rgba(210, 215, 217, 0.75);
+}
+table tfoot {
+  border-top: solid 2px rgba(210, 215, 217, 0.75);
+}
+table.alt {
+  border-collapse: separate;
+}
+table.alt tbody tr td {
+  border: solid 1px rgba(210, 215, 217, 0.75);
+  border-left-width: 0;
+  border-top-width: 0;
+}
+table.alt tbody tr td:first-child {
+  border-left-width: 1px;
+}
+table.alt tbody tr:first-child td {
+  border-top-width: 1px;
+}
+table.alt thead {
+  border-bottom: 0;
+}
+table.alt tfoot {
+  border-top: 0;
 }
 </style>

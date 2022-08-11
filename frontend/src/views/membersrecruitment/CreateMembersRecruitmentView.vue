@@ -52,7 +52,6 @@
 
 <script>
 import CreateMembersRecruitmentForm from "./components/CreateMembersRecruitmentForm.vue";
-import { mapActions } from "vuex";
 
 export default {
   name: "CreateMembersRecruitmentView",
