@@ -65,8 +65,8 @@ export default {
 .container {
   background: #ffff;
   overflow: scroll;
-  border-radius: 10px 10px 0px 0px;
-  height: 93vh;
+  border-radius: 10px 10px 10px 10px;
+  height: 88vh;
 }
 #rctmsg {
   height: 0px;

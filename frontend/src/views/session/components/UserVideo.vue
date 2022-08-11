@@ -4,6 +4,7 @@
     <div class="video-name">
       {{ clientData }}
     </div>
+    <!-- <p style="margin:0px;">{{ clientData }}</p> -->
   </div>
 </template>
 
@@ -43,7 +44,7 @@ export default {
 </script>
 <style scoped>
 .video-name {
-  position: absolute;
+  position: relative;
   background-color: #272930;
   color: whitesmoke;
 }

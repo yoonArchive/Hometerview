@@ -40,13 +40,21 @@ export default {
 };
 </script>
 <style scoped>
-.video-name {
-  position: absolute;
-}
 .main {
+  width: 98%;
+  height: 100%;
+  border-radius: 2% 2% 2% 2%;
+  margin-top: 20px;
+}
+.sub {
+  /* width: 320px; */
+  height: 200px;
+  border-radius: 4% 4% 4% 4%;
+}
+/* .main {
   height: 70%;
 }
 .sub {
   height: 50%;
-}
+} */
 </style>
