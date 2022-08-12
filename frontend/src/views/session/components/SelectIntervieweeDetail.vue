@@ -1,23 +1,26 @@
 <template>
-  <!-- <label :for="clientData">
-    {{ clientData }}
+  <label
+    class="form-check-label"
+    :for="member.user.userId"
+    style="margin-bottom:4vh; margin-top:4vh;"
+  >
+    <input
+      class="form-check-input"
+      @change="change()"
+      type="radio"
+      :id="member.user.userId"
+      :value="member.user.userId"
+      name="selectInterviewee"
+      v-model="interviewUser"
+      style="margin-top:1.5vh; color:#653FD3"
+    />
+    &nbsp;&nbsp;&nbsp;{{ member.user.userName }}
+    <img
+      class="profile-photo"
+      :src="require(`@/assets/images/session/profile.png`)"
+      style="box-shadow: 0px 0px 7px 1px rgba(0, 0, 0, 0.6); margin-left:4vh;"
+    />
   </label>
-  <input type="radio" :id="clientData" :value="sub" name="selectInterviewee"> -->
-
-  <label :for="member.user.userId">
-    {{ member.user.userNo }} <br />
-    {{ member.user.ueserImg }} <br />
-    {{ member.user.userName }} <br />
-    {{ member.user.userId }}
-  </label>
-  <input
-    @change="change()"
-    type="radio"
-    :id="member.user.userId"
-    :value="member.user.userId"
-    name="selectInterviewee"
-    v-model="interviewUser"
-  />
 </template>
 
 <script>
@@ -56,4 +59,14 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.profile-photo {
+  border-radius: 100%;
+  background-color: #c4c1c9;
+  margin-left: 4vh;
+  height: 5.4vh;
+}
+.form-check-input {
+  color: #653fd3;
+}
+</style>

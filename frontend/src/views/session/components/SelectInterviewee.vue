@@ -1,23 +1,26 @@
 <template>
-  <div>
-    <form @submit.prevent="intervieweeApply()">
-      <!-- <select-interviewee-detail
-        :sub="publisher"
-      ></select-interviewee-detail>
-      <select-interviewee-detail
-        v-for="sub in subscribers"
-        :key="sub.stream.connection.connectionId"
-        :sub="sub"
-      ></select-interviewee-detail> -->
-      <select-interviewee-detail
-        v-for="(member, index) in studySpaceDetail.studyJoins"
-        :key="member.joinNo"
-        :member="member"
-        :studentindex="index"
-      ></select-interviewee-detail>
-      <button>Apply</button>
-    </form>
-    {{ interviewUserFixed }}
+  {{ interviewUserFixed }}
+  <div class="container select-member">
+    <div class="d-flex justify-content-center">
+      <form @submit.prevent="intervieweeApply()">
+        <div>
+          <select-interviewee-detail
+            v-for="(member, index) in studySpaceDetail.studyJoins"
+            :key="member.joinNo"
+            :member="member"
+            :studentindex="index"
+          ></select-interviewee-detail>
+          <div class="buttons">
+            <div>
+              <button>면접자 초기화</button>
+            </div>
+            <div>
+              <button>Apply</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
     <!-- <button @click="intervieweeCancel()"> 면접자 없애기 </button> -->
   </div>
 </template>
@@ -66,4 +69,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.select-member {
+  height: 85vh;
+}
+</style>

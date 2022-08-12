@@ -161,6 +161,30 @@
                     v-else
                   />
                 </div>
+                <div class="row">
+                  <div class="col">
+                    <img
+                      :src="require(`@/assets/images/session/videoOn.png`)"
+                      style="height:3vh; margin-top:%;"
+                      v-if="recordOnOff"
+                      @click="recordONOFF()"
+                    />
+                    <img
+                      :src="require(`@/assets/images/session/videoOff.png`)"
+                      style="height:3vh; margin-top:%;"
+                      @click="recordONOFF()"
+                      v-else
+                    />
+                  </div>
+                  <div class="col">
+                    <img
+                      :src="require(`@/assets/images/session/stop.png`)"
+                      style="height:3vh; margin-top:;"
+                      @click="stop"
+                      v-if="true"
+                    />
+                  </div>
+                </div>
               </div>
 
               <!-- <button @click="changeContent('chatting')">메시지</button>
@@ -202,7 +226,6 @@
 <style scoped>
 .full-con {
   background-color: #272930;
-  color: whitesmoke;
   min-height: 100%;
 }
 .main-con {
@@ -328,6 +351,7 @@ export default {
       videoOnOff: true,
       audioOnOff: true,
       mirrorOnOff: true,
+      recordOnOff: false,
 
       //scree share
       screenOV: undefined,
@@ -391,14 +415,14 @@ export default {
         });
       }
     },
+    recordONOFF() {
+      this.recordOnOff = !this.recordOnOff;
+    },
     videoONOFF() {
-      console.log(this.videoOnOff);
       this.publisher.publishVideo(!this.videoOnOff);
       this.videoOnOff = !this.videoOnOff;
-      console.log(this.videoOnOff);
     },
     audioONOFF() {
-      console.log(this.audioOnOff);
       this.publisher.publishAudio(!this.audioOnOff);
       this.audioOnOff = !this.audioOnOff;
     },
