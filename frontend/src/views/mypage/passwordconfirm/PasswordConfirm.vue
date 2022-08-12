@@ -10,8 +10,11 @@
                 <div class="card-front">
                   <div class="center-wrap">
                     <div class="section text-center">
-                      <h4 class="mb-4 pb-3">비밀번호 확인</h4>
-
+                      <h4 class="mb-4 ">비밀번호 확인</h4>
+                      <div class="msg mb-4">
+                        개인 정보 조회를 위해서는 인증이 필요합니다.<br />
+                        비밀번호 입력 후 확인 버튼을 클릭해주세요.
+                      </div>
                       <div class="form-group mt-2">
                         <input
                           type="password"
@@ -26,7 +29,7 @@
                         <i class="input-icon uil uil-lock-alt"></i>
                       </div>
                       <button class="btn mt-4" @click="confirmpassword">
-                        로그인
+                        확인
                       </button>
                       <!-- <button class="btn mt-4" @click="kakaoLoginBtn()">카카오 로그인</button> -->
                     </div>
@@ -112,7 +115,7 @@ h6 span {
   display: block;
 }
 .full-height {
-  min-height: 100vh;
+  min-height: 50vh;
 }
 [type="checkbox"]:checked,
 [type="checkbox"]:not(:checked) {
@@ -178,7 +181,7 @@ h6 span {
 .card-front,
 .card-back {
   width: 100%;
-  height: 100%;
+  height: 70%;
   background-color: #ececec;
   /* background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/1462889/pat.svg"); */
   background-position: bottom center;
@@ -432,12 +435,6 @@ h6 span {
   color: #ffffff;
   box-shadow: 0 8px 24px 0 rgba(16, 39, 112, 0.2);
 }
-
-.pw-msg {
-  color: #757575;
-  font-size: small;
-}
-
 .logo {
   position: absolute;
   top: 30px;
@@ -450,5 +447,8 @@ h6 span {
   height: 26px;
   width: auto;
   display: block;
+}
+.msg {
+  font-size: 17px;
 }
 </style>

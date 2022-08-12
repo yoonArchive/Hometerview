@@ -3,30 +3,23 @@
     <div class="mypage-banner">
       <router-link to="/home/mypage/myaccount" id="word">
         <button id="mypage-button">
-          <font-awesome-icon
-            id="mypageicon"
-            icon="fa-solid fa-person-shelter"
-          />
-          계정 기본정보
+          <i class="input-icon uil uil-user-square"></i>
+          <span>계정 기본정보</span>
         </button>
       </router-link>
       <router-link to="/home/mypage/changepassword" id="word">
         <button id="mypage-button">
-          <font-awesome-icon id="mypageicon" icon="fa-solid fa-shield-halved" />
-          비밀번호 변경
+          <i class="input-icon uil uil-shield-check"></i>
+          <span>비밀번호 변경</span>
         </button>
       </router-link>
       <router-link to="/home/mypage/withdrawal" id="word">
         <button id="mypage-button">
-          <font-awesome-icon
-            id="mypageicon"
-            icon="fa-solid fa-person-running"
-          />
-          회원 탈퇴
+          <i class="input-icon uil uil-exclamation-triangle"></i>
+          <span>회원 탈퇴</span>
         </button>
       </router-link>
     </div>
-
     <div class="router-view">
       <router-view></router-view>
     </div>
@@ -51,21 +44,25 @@ export default {
   display: flex;
   flex-direction: row;
   /* align-items: center; */
-  margin-right: 50px;
+  margin-left: 170px;
+  /* margin-right: 50px; */
 }
 .mypage-banner {
   display: flex;
   flex-direction: column;
+  margin-top: 104px;
+  margin-right: 30px;
   /* margin: 50px; */
   /* position: absolute; */
 }
 #mypage-button {
-  border: 1px rgb(160, 160, 160);
+  /* border: 1px rgb(160, 160, 160); */
+  border: none;
   width: 300px;
   border-radius: 10px;
-  height: 100px;
+  height: 50px;
   background-color: #f3f4ff;
-  margin: 10px;
+  margin: 6px;
   text-align: left;
   display: flex;
   align-items: center;
@@ -104,5 +101,9 @@ export default {
 }
 #word {
   text-decoration-line: none;
+}
+span {
+  font-size: 17px;
+  letter-spacing: 0.04em;
 }
 </style>
