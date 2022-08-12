@@ -1,5 +1,6 @@
 package com.ssafy.db.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.Getter;
 
@@ -58,6 +59,7 @@ public class Study {
     private List<StudyJoin> studyJoins = new ArrayList<>();
 
     @Builder.Default
+    @JsonIgnore
     @OneToMany(mappedBy = "study")
     private List<Recording> recordings = new ArrayList<>();
 
