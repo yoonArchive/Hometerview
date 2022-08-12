@@ -2,7 +2,13 @@
   <nav class="navbar">
     <div class="navbar__logo col-md-1">
       <router-link to="/home" class="header-routerlink-decoration">
-        <img id="headerLogo" :src="imagesrc" alt="" style="padding-left:2%;" />
+        <img
+          id="headerLogo"
+          class="logo"
+          :src="imagesrc"
+          alt=""
+          style="padding-left:2%;"
+        />
       </router-link>
     </div>
     <div class="col-md-7">
@@ -20,7 +26,7 @@
     </div>
     <div class="account-menu">
       <div v-if="isLoggedIn" class="dropdown">
-        <img :src="profile" alt="" />
+        <img class="profile-img" :src="profile" alt="" />
         <button
           type="button"
           class="btn  dropdown-toggle"
@@ -194,8 +200,12 @@ a {
     display: flex;
   }
 }
-img {
-  height: 50px;
+.logo {
+  height: 70px;
+  margin-left: 10px;
+}
+.profile-img {
+  height: 40px;
   margin-left: 30px;
 }
 .route-active #title {

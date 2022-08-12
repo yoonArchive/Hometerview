@@ -171,7 +171,7 @@
     </section>
     <div class="study-detail-information-wrapper">
       <div class="row">
-        <h3 class="stdNotice col-md-3">스터디 공지사항</h3>
+        <h4 class="stdNotice col-md-3">스터디 공지사항</h4>
         <button
           type="button"
           class="col-md-1 small"
@@ -245,8 +245,8 @@
           <span v-else>{{ studySpaceDetail.stdNotice }} </span>
         </div>
       </div>
-      <h3 class="stdMembers">스터디원</h3>
       <hr />
+      <h4 class="stdMembers">스터디원</h4>
       <div class="table-wrapper">
         <table>
           <tbody>
@@ -396,6 +396,8 @@ h3 {
 .stdNotice,
 .stdMembers {
   font-family: "티머니 둥근바람";
+  font-weight: bold;
+  margin-bottom: 20px;
 }
 .status {
   font-size: 25px;
