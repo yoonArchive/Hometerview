@@ -69,6 +69,9 @@ export default {
   },
   mounted() {
     this.settingvalue();
+  },
+  unmounted() {
+    this.SET_SELECTED_QUESTION_NUM(0);
   }
 };
 </script>

@@ -14,7 +14,10 @@ export default {
     coverLetter: false,
     memberList: true,
     selectedQuestionNum: 0,
-    selStdNo: Number
+    selStdNo: Number,
+
+    /**예상 질문 리스트 */
+    expectedQuestionList: []
   },
 
   getters: {
@@ -26,7 +29,8 @@ export default {
     coverLetter: state => state.coverLetter,
     memberList: state => state.memberList,
     selStdNo: state => state.selStdNo,
-    selectedQuestionNum: state => state.selectedQuestionNum
+    selectedQuestionNum: state => state.selectedQuestionNum,
+    expectedQuestionList: state => state.expectedQuestionList
   },
 
   mutations: {
@@ -45,7 +49,9 @@ export default {
       (state.memberList = memberList),
     SET_STD_NO: (state, data) => (state.selStdNo = data),
     SET_SELECTED_QUESTION_NUM: (state, data) =>
-      (state.selectedQuestionNum = data)
+      (state.selectedQuestionNum = data),
+    SET_EXPECTED_QUESTION_LIST: (state, data) =>
+      (state.expectedQuestionList = data)
   },
   actions: {
     async changeToCoverLetter({ commit, dispatch }, changeInfo) {
@@ -262,6 +268,23 @@ export default {
     },
     setStudyNoAction({ commit }, data) {
       commit("SET_STD_NO", data);
+    },
+    getQuestionList({ commit, getters }) {
+      const params = {
+        detailNo:
+          getters.resumeQuestionList[getters.selectedQuestionNum].detailNo,
+        stdNo: getters.selStdNo
+      };
+      axios
+        .get(api_url.study.expectedQuestion(), {
+          params: params
+        })
+        .then(data => {
+          commit("SET_EXPECTED_QUESTION_LIST", data);
+        })
+        .catch(() => {
+          console.log("예상 질문을 가져오는데 실패했습니다.");
+        });
     }
   }
 };
