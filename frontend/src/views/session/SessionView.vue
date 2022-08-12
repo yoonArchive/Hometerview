@@ -42,6 +42,19 @@
                 />
               </div>
             </div>
+
+            <div>자세 분석</div>
+            <div hidden="ture" ref="webcam"></div>
+            <button type="button" @click="init()">Start</button>
+            <div
+              v-for="prediction in predictions"
+              :key="prediction.className"
+              style="color:whitesmoke;"
+            >
+              {{ prediction.className }}:
+              {{ prediction.probability.toFixed(2) }}
+            </div>
+
             <div class="bottom d-flex justify-content-evenly">
               <!-- 하단 -->
               <!-- 비디오, 오디오, leave, 더보기 -->
@@ -186,12 +199,6 @@
                   </div>
                 </div>
               </div>
-
-              <!-- <button @click="changeContent('chatting')">메시지</button>
-              <button @click="changeContent('participant')">참가자</button>
-              <button @click="changeContent('selectinterviewee')">
-                면접자 지정
-              </button> -->
               <!-- 메시지 -->
               <div v-if="chatting">
                 <message-list
@@ -303,12 +310,18 @@ import { OpenVidu } from "openvidu-browser";
 import router from "@/common/lib/vue-router";
 import { mapActions, mapGetters } from "vuex";
 
+// components
 import UserVideo from "./components/UserVideo";
 import MessageForm from "./components/MessageForm.vue";
 import MessageList from "./components/MessageList.vue";
 import StudyMemberList from "./components/StudyMemberList.vue";
 import SelectInterviewee from "./components/SelectInterviewee.vue";
 
+// teacherable
+import "@tensorflow/tfjs";
+import * as tmPose from "@teachablemachine/pose";
+
+//default
 axios.defaults.headers.post["Content-Type"] = "application/json"; // 글로벌 axios 기본(defaults) 설정 => application/json
 const s = "i7b105.p.ssafy.io";
 const OPENVIDU_SERVER_URL = "https://" + s + ":8443";
@@ -337,6 +350,16 @@ export default {
       mainStreamManager: undefined,
       publisher: undefined, //local
       subscribers: [], // remotes
+
+      //teacherable
+      model: null,
+      webcam: null,
+      labelContainer: null,
+      maxPredictions: null,
+      url: "https://teachablemachine.withgoogle.com/models/s2xpz62oC/",
+      predictions: [],
+      pose: null,
+      posenetOutput: null,
 
       // massege
       msgs: [],
@@ -367,9 +390,46 @@ export default {
     // studySpaceDetail.joinTyped
     ...mapGetters(["currentUser", "studySpaceDetail"])
   },
-
   methods: {
     ...mapActions(["bringStudySpaceDetail", "changeToCoverLetter"]),
+    async init() {
+      const modelURL = `${this.url}model.json`;
+      const metadataURL = `${this.url}metadata.json`;
+      const webcamContainer = this.$refs.webcam;
+      const flip = false; // whether to flip the webcam
+      // load the model and metadata
+      // Refer to tmImage.loadFromFiles() in the API to support files from a file picker
+      // or files from your local hard drive
+      // Note: the pose library adds "tmImage" object to your window (window.tmImage)
+      // this.model = await tmPose.load(modelURL, metadataURL);
+      this.model = Object.freeze(await tmPose.load(modelURL, metadataURL));
+      // Convenience function to setup a webcam
+      this.webcam = new tmPose.Webcam(
+        webcamContainer.width,
+        webcamContainer.height,
+        flip
+      ); // width, height, flip
+      await this.webcam.setup(); // request access to the webcam
+      await this.webcam.play();
+      webcamContainer.appendChild(this.webcam.canvas);
+
+      window.requestAnimationFrame(this.loop);
+    },
+    async loop() {
+      console.log("hi");
+      this.webcam.update();
+      await this.predict();
+      window.requestAnimationFrame(this.loop);
+    },
+    async predict() {
+      const { posenetOutput } = await this.model.estimatePose(
+        this.webcam.canvas
+      );
+      console.log("check!!");
+      this.predictions = await this.model.predict(posenetOutput);
+      console.log("prediction");
+    },
+
     async findIndex(userId) {
       const members = this.studySpaceDetail.studyJoins;
       let studentindex;
