@@ -62,6 +62,9 @@
       <member-cover-letter-detail
         :studentindex="studentindex"
       ></member-cover-letter-detail>
+      <expected-question-vue
+        :IsHavingCoverLetter="studySpaceDetail.detailCounts[studentindex] != 0"
+      ></expected-question-vue>
     </div>
   </div>
 
@@ -129,6 +132,7 @@
 <script>
 import { mapGetters, mapActions, mapMutations } from "vuex";
 import MemberCoverLetterDetail from "./components/MemberCoverLetterDetail.vue";
+import ExpectedQuestionVue from "./components/ExpectedQuestion.vue";
 export default {
   data() {
     return {
@@ -192,7 +196,8 @@ export default {
     }
   },
   components: {
-    MemberCoverLetterDetail
+    MemberCoverLetterDetail,
+    ExpectedQuestionVue
   },
 
   computed: {

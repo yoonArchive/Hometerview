@@ -13,8 +13,8 @@ const OPENVIDU = "openvidu/api/";
 const SESSIONS = "sessions/";
 const s = "i7b105.p.ssafy.io";
 const OPENVIDU_SERVER_URL = "https://" + s + ":8443";
-const DETAIL = "detail";
-const QUESTION = "question";
+const DETAIL = "detail/";
+const QUESTION = "question/";
 // https:// YOUR_OPENVIDUSERVER_IP/openvidu/api/sessions
 
 export default {
@@ -84,15 +84,16 @@ export default {
     studyCoverLetter: (stdNo, resumeNo) =>
       HOST + STUDY + RESUME + `${stdNo}/` + `${resumeNo}`,
     expectedQuestion: (stdNo, detailNo) =>
-      HOST + STUDY + `${stdNo}` + DETAIL + `${detailNo}` + QUESTION,
+      HOST + RESUME + STUDY + `${stdNo}/` + DETAIL + `${detailNo}/` + QUESTION,
     changeExpectedQuestion: (stdNo, detailNo, questionNo) =>
       HOST +
+      RESUME +
       STUDY +
-      `${stdNo}` +
+      `${stdNo}/` +
       DETAIL +
-      `${detailNo}` +
+      `${detailNo}/` +
       QUESTION +
-      `${questionNo}`
+      `${questionNo}/`
   },
   session: {
     createSession: () => OPENVIDU_SERVER_URL + OPENVIDU + SESSIONS,

@@ -117,7 +117,10 @@ export default {
       console.log(getters.studySpaceList);
       const studentindex = data.studentindex;
       const resumeNo = data.resumeNo;
-      const stdNo = getters.studySpaceList[studentindex].stdNo;
+      console.log(getters.selStdNo);
+      console.log(getters.studySpaceList[studentindex]);
+
+      const stdNo = getters.selStdNo;
       console.log(stdNo + " : " + resumeNo);
       await axios
         .put(
@@ -269,22 +272,114 @@ export default {
     setStudyNoAction({ commit }, data) {
       commit("SET_STD_NO", data);
     },
-    getQuestionList({ commit, getters }) {
+    async getQuestionList({ commit, getters }) {
       const params = {
         detailNo:
           getters.resumeQuestionList[getters.selectedQuestionNum].detailNo,
         stdNo: getters.selStdNo
       };
-      axios
-        .get(api_url.study.expectedQuestion(), {
-          params: params
+      await axios
+        .get(api_url.study.expectedQuestion(params.stdNo, params.detailNo), {
+          headers: getters.authHeader
         })
         .then(data => {
-          commit("SET_EXPECTED_QUESTION_LIST", data);
+          console.log("예상질문을 가져왔습니다.");
+          console.log(data);
+          const memberlist = getters.studySpaceDetail.studyJoins;
+          const datadetail = data.data.personalQuestions;
+          console.log(memberlist);
+          for (var l = 0; l < datadetail.length; l++) {
+            const writerNo = datadetail[l].writerNo;
+            for (var i = 0; i < memberlist.length; i++) {
+              if (memberlist[i].user.userNo == writerNo) {
+                datadetail[l].writerName = memberlist[i].user.userName;
+              }
+            }
+          }
+          console.log(data);
+
+          commit("SET_EXPECTED_QUESTION_LIST", data.data);
         })
-        .catch(() => {
+        .catch(err => {
           console.log("예상 질문을 가져오는데 실패했습니다.");
+          console.log(err);
         });
+    },
+    async addQuestionList({ getters, dispatch }, contents) {
+      const params = {
+        detailNo:
+          getters.resumeQuestionList[getters.selectedQuestionNum].detailNo,
+        stdNo: getters.selStdNo
+      };
+      const personalQuestionReq = {
+        contents: contents
+      };
+      await axios
+        .post(
+          api_url.study.expectedQuestion(params.stdNo, params.detailNo),
+          personalQuestionReq,
+          {
+            headers: getters.authHeader
+          }
+        )
+        .then(() => {
+          console.log("성공적으로 저장되었습니다.");
+        })
+        .catch(err => {
+          console.log("질문을 저장하는데 실패했습니다.");
+          console.log(err);
+        });
+      dispatch("getQuestionList");
+    },
+    async changeQuestionList({ getters, dispatch }, data) {
+      console.log(data);
+      const params = {
+        detailNo:
+          getters.resumeQuestionList[getters.selectedQuestionNum].detailNo,
+        stdNo: getters.selStdNo
+      };
+      const personalQuestionReq = {
+        contents: data.contents
+      };
+
+      await axios
+        .put(
+          api_url.study.changeExpectedQuestion(
+            params.stdNo,
+            params.detailNo,
+            data.questionNo
+          ),
+          personalQuestionReq,
+          {
+            headers: getters.authHeader
+          }
+        )
+        .then(() => {
+          console.log("수정완료 되었습니다.");
+        })
+        .catch(err => {
+          console.log(err);
+          console.log("수정에 실패했습니다.");
+        });
+      dispatch("getQuestionList");
+    },
+    async deleteQuestionList({ getters, dispatch }, questionNo) {
+      const params = {
+        detailNo:
+          getters.resumeQuestionList[getters.selectedQuestionNum].detailNo,
+        stdNo: getters.selStdNo
+      };
+      await axios.delete(
+        api_url.study.changeExpectedQuestion(
+          params.stdNo,
+          params.detailNo,
+          questionNo
+        ),
+        {
+          headers: getters.authHeader
+        }
+      );
+      dispatch("getQuestionList");
     }
   }
 };

@@ -24,5 +24,9 @@ export default createStore({
     cssstore,
     session
   },
-  plugins: [createPersistedState()]
+  plugins: [
+    createPersistedState({
+      storage: window.sessionStorage
+    })
+  ]
 });
