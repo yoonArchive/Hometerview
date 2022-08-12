@@ -37,7 +37,6 @@
             </button>
           </div>
         </div>
-
         <!-- Slide 2 -->
         <div class="carousel-item">
           <div class="carousel-container">
@@ -57,38 +56,15 @@
             >
           </div>
         </div>
-
-        <!-- Slide 3 -->
-        <div class="carousel-item">
-          <div class="carousel-container">
-            <h2 class="animate__animated animate__fadeInDown">
-              Sequi ea ut et est quaerat
-            </h2>
-            <p class="animate__animated animate__fadeInUp">
-              Ut velit est quam dolor ad a aliquid qui aliquid. Sequi ea ut et
-              est quaerat sequi nihil ut aliquam. Occaecati alias dolorem
-              mollitia ut. Similique ea voluptatem. Esse doloremque accusamus
-              repellendus deleniti vel. Minus et tempore modi architecto.
-            </p>
-            <a
-              href=""
-              class="btn-get-started animate__animated animate__fadeInUp"
-              >Read More</a
-            >
-          </div>
-        </div>
-
-        <a
+        <button
           class="carousel-control-prev"
           href="#heroCarousel"
-          role="button"
+          type="button"
           data-bs-slide="prev"
         >
-          <span
-            class="carousel-control-prev-icon bx bx-chevron-left"
-            aria-hidden="true"
-          ></span>
-        </a>
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
 
         <a
           class="carousel-control-next"

@@ -24,13 +24,24 @@
       </div>
     </div>
     <hr />
-    <div v-if="studySpaceList.length != 0">
-      <div
-        id="carouselExampleCaptions"
-        class="carousel slide"
-        data-bs-ride="carousel"
-      >
-        <div v-if="recruitStatus === 'all'">
+    <div
+      id="carouselExampleCaptions"
+      class="carousel slide"
+      data-bs-ride="carousel"
+    >
+      <div v-if="recruitStatus === 'completed'">
+        <div v-if="studySpaceList.length == 0">
+          <div class="carousel carousel-inner">
+            <i
+              class="input-icon uil uil-plus-circle"
+              style="color:red; text-align:center; width=90; "
+            ></i>
+            <h3 style="color:white; text-align:center;">
+              스터디에 가입해보세요
+            </h3>
+          </div>
+        </div>
+        <div v-else>
           <div class="carousel-inner">
             <div
               class="carousel-item"
@@ -42,16 +53,17 @@
             </div>
           </div>
         </div>
-        <div v-else-if="recruitStatus === 'completed'">
-          <div class="carousel-inner">
-            <div
-              class="carousel-item"
-              v-for="(studySpace, idx) in studySpaceList"
-              :key="idx"
-              :class="{ active: idx == 0 }"
-            >
-              <study-space-item :studySpace="studySpace"></study-space-item>
-            </div>
+      </div>
+      <div v-else>
+        <div v-if="applyingList.length == 0">
+          <div class="carousel carousel-inner">
+            <i
+              class="input-icon uil uil-plus-circle"
+              style="color:red; text-align:center; width=90; "
+            ></i>
+            <h3 style="color:white; text-align:center;">
+              스터디에 가입해보세요
+            </h3>
           </div>
         </div>
         <div v-else>
@@ -68,34 +80,25 @@
             </div>
           </div>
         </div>
-        <button
-          class="carousel-control-prev"
-          type="button"
-          data-bs-target="#carouselExampleCaptions"
-          data-bs-slide="prev"
-        >
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-        </button>
-        <button
-          class="carousel-control-next"
-          type="button"
-          data-bs-target="#carouselExampleCaptions"
-          data-bs-slide="next"
-        >
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-        </button>
       </div>
-    </div>
-    <div v-else>
-      <div class="carousel carousel-inner">
-        <i
-          class="input-icon uil uil-plus-circle"
-          style="color:red; text-align:center; width=90; "
-        ></i>
-        <h3 style="color:white; text-align:center;">스터디에 가입해보세요</h3>
-      </div>
+      <button
+        class="carousel-control-prev"
+        type="button"
+        data-bs-target="#carouselExampleCaptions"
+        data-bs-slide="prev"
+      >
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button
+        class="carousel-control-next"
+        type="button"
+        data-bs-target="#carouselExampleCaptions"
+        data-bs-slide="next"
+      >
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
     </div>
     <div class="row" style="margin-bottom:20px;">
       <div class="title col-md-3">
@@ -134,44 +137,9 @@
         />
         <label class="form-check-label" for="recruiting">모집 중</label>
       </div>
-      <!-- </div> -->
-      <!-- <button
-        type="button"
-        class="createBtn small"
-        @click="moveToCreate"
-        style="margin-left:70px"
-      >
-        스터디 만들기
-      </button> -->
     </div>
     <hr />
     <div>
-      <div class="row">
-        <!-- <div class="col-md-6"></div>
-        <div class="col-md-4">
-          <select
-            name="recruitSearch"
-            class="selectBar"
-            v-model="recruitType"
-            @change="getRecruitTypeList()"
-          >
-            <option value="1" class="option" selected>전체 스터디</option>
-            <option value="2" class="option">기업 면접 스터디</option>
-            <option value="3" class="option">자율 면접 스터디</option>
-          </select>
-        </div>
-        <div class="form-check col-md-2">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            name="recruiting"
-            id="recruiting"
-            v-model="recruiting"
-            @change="isRecruiting()"
-          />
-          <label class="form-check-label" for="recruiting">모집 중</label>
-        </div> -->
-      </div>
       <div class="inner-container2">
         <div class="row row-cols-1 row-cols-md-3 g-5">
           <members-recruitment-item
@@ -201,11 +169,13 @@
 </template>
 
 <script>
+import { computed, reactive } from "@vue/runtime-core";
 import MembersRecruitmentItem from "./components/MembersRecruitmentItem.vue";
 import StudySpaceItem from "../studyspace/components/StudySpaceItem.vue";
 import ApplyingRecruitItem from "../studyspace/components/ApplyingRecruitItem.vue";
 import router from "@/common/lib/vue-router.js";
 import { mapActions, mapGetters } from "vuex";
+import { useStore } from "vuex";
 
 export default {
   name: "MembersRecruitmentView",
@@ -221,17 +191,23 @@ export default {
       recruitSearchKeyword: "",
       recruitType: "1",
       isloading: false,
-      carouselBtnNum: 0,
-      recruitStatus: "completed"
+      recruitStatus: "completed",
+      isLoggedIn: computed(() => store.getters.isLoggedIn)
     };
   },
   created() {
     this.bringRecruitmentList();
     this.bringStudySpace();
     this.bringApplyingRecruit();
+    this.refreshsetting();
   },
   computed: {
-    ...mapGetters(["recruitmentList", "studySpaceList", "applyingList"])
+    ...mapGetters([
+      "recruitmentList",
+      "studySpaceList",
+      "applyingList",
+      "isLoggedIn"
+    ])
   },
   methods: {
     ...mapActions([
@@ -242,6 +218,10 @@ export default {
       "bringStudySpace",
       "bringApplyingRecruit"
     ]),
+    async refreshsetting() {
+      await this.fetchCurrentUser();
+      await this.setting();
+    },
     moveToCreate() {
       router.push({ name: "createmembersrecruitment" });
     },
@@ -271,6 +251,30 @@ export default {
   },
   mounted() {
     window.scrollTo(0, 0);
+    this.refreshsetting();
+  },
+  setup() {
+    const store = useStore();
+    const state = reactive({
+      headeritems: computed(() => {
+        const headeritems = store.getters["root/getMenus"];
+        console.log(headeritems + "?");
+        let keys = Object.keys(headeritems);
+        console.log(keys + "!");
+        let headmenu = [];
+        for (var i = 0; i < keys.length; i++) {
+          let menuobject = {};
+          menuobject.path = headeritems[keys[i]].path;
+          menuobject.title = headeritems[keys[i]].name;
+          headmenu.push(menuobject);
+        }
+        return headmenu;
+      })
+    });
+    return {
+      state,
+      isLoggedIn: computed(() => store.getters.isLoggedIn)
+    };
   }
   // beforeUpdate() {
   //   console.log(this.studySpaceList.length);
