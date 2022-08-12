@@ -126,9 +126,9 @@ h6 span {
   width: 100%;
   display: block;
 }
-.full-height {
+/* .full-height {
   min-height: 100vh;
-}
+} */
 [type="checkbox"]:checked,
 [type="checkbox"]:not(:checked) {
   position: absolute;
@@ -192,6 +192,7 @@ h6 span {
 }
 .card-front,
 .card-back {
+  margin-top: 10px;
   width: 100%;
   height: 100%;
   background-color: #ececec;

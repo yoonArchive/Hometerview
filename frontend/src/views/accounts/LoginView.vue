@@ -2,7 +2,7 @@
   <div class="section">
     <div class="container">
       <div class="row full-height justify-content-center">
-        <div class="col-12 text-center align-self-center py-5">
+        <div class="col-12 text-center align-self-center ">
           <div class="section pb-5 pt-5 pt-sm-2 text-center">
             <h6 class="mb-0 pb-3"><span>로그인</span><span>회원가입</span></h6>
             <input
@@ -350,9 +350,7 @@ h6 span {
   width: 100%;
   display: block;
 }
-.full-height {
-  min-height: 100vh;
-}
+
 [type="checkbox"]:checked,
 [type="checkbox"]:not(:checked) {
   position: absolute;
@@ -628,7 +626,6 @@ h6 span {
   color: #faeaff;
   box-shadow: 0 8px 24px 0 rgba(16, 39, 112, 0.2);
 }
-
 .btncheck {
   border-radius: 4px;
   height: 48px;
@@ -652,24 +649,17 @@ h6 span {
   justify-content: center;
   -ms-flex-pack: center;
   text-align: center;
-  border: none;
-  border-style: solid;
-  border-width: 2px;
-  border-color: #afa8ba;
-  background-color: #f8f8f8;
-  color: #000000;
-  box-shadow: 0 8px 24px 0 rgba(255, 235, 167, 0.2);
+  border: 0;
+  box-shadow: inset 0 0 0 2px #653fd3;
+  background-color: #ffffff;
+  color: #653fd3;
 }
 .btncheck:active,
 .btncheck:focus {
-  background-color: #3b2677;
-  color: #ffffff;
-  box-shadow: 0 8px 24px 0 rgba(16, 39, 112, 0.2);
+  background-color: rgba(161, 104, 253, 0.15);
 }
 .btncheck:hover {
-  background-color: #3b2677;
-  color: #ffffff;
-  box-shadow: 0 8px 24px 0 rgba(16, 39, 112, 0.2);
+  background-color: rgba(161, 104, 253, 0.05);
 }
 
 .pw-msg {
