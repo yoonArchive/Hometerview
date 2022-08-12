@@ -102,7 +102,7 @@ export default {
         commit("SET_CURRENT_REVIEW", res.data);
         console.log("회고 작성 성공" + res);
         dispatch("getReviewInfo");
-        router.push({ name: "myinterview" });
+        router.push({ name: "diary" });
         // router.push({
         //   name: 'myinterview',
         //   // params: { reviewNo: getters.currentReview.reviewNo  }
@@ -121,7 +121,6 @@ export default {
         commit("SET_CURRENT_REVIEW", res.data);
         console.log("공지사항 작성 성공" + res);
         dispatch("getReviewInfo");
-        router.push({ name: "myinterview" });
       });
     },
     //회고 수정하기
@@ -227,15 +226,17 @@ export default {
       }).then(res => {
         commit("SET_DDAYS", res.data.ddays);
         dispatch("getDdayInfo");
-        console.log("디데이 작성 성공" + res.data);
-        // router.push({
-        //   name: 'myinterview',
-        // })
+        // console.log("디데이 작성 성공" + res.data);
+        // this.$router.go();
+        router.push({
+          name: "diary"
+        });
       });
     },
     //디데이 수정하기
     updateDday({ commit, getters, dispatch }, ddays) {
       const ddayNo = ddays[0];
+      console.log("ddayNo" + ddayNo);
       const ddayData = ddays[1];
 
       axios({
@@ -249,7 +250,7 @@ export default {
         // router.push()
         console.log("디데이 수정 성공" + res.data);
         router.push({
-          name: "myinterview"
+          name: "diary"
         });
       });
     },

@@ -17,10 +17,27 @@ import {
   faUserSecret,
   faPersonShelter,
   faShieldHalved,
-  faPersonRunning
+  faPersonRunning,
+  faCalendar,
+  faFile,
+  faTape,
+  faTrashCan,
+  faPenToSquare,
+  faSquarePlus
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-library.add(faUserSecret, faPersonShelter, faShieldHalved, faPersonRunning);
+library.add(
+  faUserSecret,
+  faPersonShelter,
+  faShieldHalved,
+  faPersonRunning,
+  faCalendar,
+  faFile,
+  faTape,
+  faTrashCan,
+  faPenToSquare,
+  faSquarePlus
+);
 
 // import MyInterviewView from './views/myinterview/MyInterviewView;
 // import firebase from 'firebase'

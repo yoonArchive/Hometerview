@@ -1,15 +1,17 @@
 <template>
   <div class="container">
-    <common-question-item
-      v-for="commonquestion in this.commonquestions"
-      :commonquestion="commonquestion"
-      :questionNo="commonquestion.questionNo"
-      :stdNo="stdNo"
-      :key="commonquestion.questionNo"
-    >
-    </common-question-item>
+    <div class="commonQ">
+      <common-question-item
+        v-for="commonquestion in this.commonquestions"
+        :commonquestion="commonquestion"
+        :questionNo="commonquestion.questionNo"
+        :stdNo="stdNo"
+        :key="commonquestion.questionNo"
+      >
+      </common-question-item>
 
-    <common-question-form></common-question-form>
+      <common-question-form></common-question-form>
+    </div>
   </div>
 </template>
 <script>
@@ -44,3 +46,8 @@ export default {
   }
 };
 </script>
+<style>
+.commonQ {
+  padding: 90px;
+}
+</style>
