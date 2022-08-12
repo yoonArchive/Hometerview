@@ -32,7 +32,7 @@ export default {
     ...mapActions(["getStd", "commonQuestions1", "setStudyNoAction"])
   },
   created() {
-    //this.commonQuestions1(this.stdNo);
+    this.commonQuestions1(this.stdNo);
     console.log(this.stdNo);
   },
   mounted() {
@@ -41,4 +41,9 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.container {
+  display: flex;
+  flex-direction: column;
+}
+</style>

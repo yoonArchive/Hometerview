@@ -6,9 +6,11 @@
       </h3>
     </header>
     <section id="banner">
-      <span class="image object">
+      <!-- <span class="image object"> -->
+      <div class="image object">
         <img :src="imgsrc" alt="" class="stdImg" style="width:550px" />
-      </span>
+      </div>
+      <!-- </span> -->
       <div class="content">
         <blockquote>
           <div class="info">

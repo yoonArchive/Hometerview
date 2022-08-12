@@ -1,30 +1,20 @@
 <template>
-  <li class="commonquestion-list-item">
-    <div class="commonquestion-content">
-      <div class="commonquestion-user">
-        <!-- <router-link :to="{ name: 'profile', params: { username: commonquestion.user.username } }">
-          {{ commonquestion.user.username }}
-        </router-link> 님 : -->
-        {{ commonquestion.questionNo }}
-      </div>
-      <div class="commonquestion-time">
-        <!-- <div class="commonquestion-create">
-          작성: {{timeForToday(commonquestion.created_at)}}
-        </div>
-        <div class="commonquestion-update">
-          수정: {{timeForToday(commonquestion.updated_at)}}
-        </div> -->
-      </div>
 
-      {{ commonquestion.contents }}
-    </div>
-    <div class="commonquestion-mid">
-      <!-- <div v-if="!isEditing">{{ payload.content }}</div> -->
-      {{ commonquestion.questionType }}
-    </div>
-    <div class="commonquestion-bottom">
-      <div class="commonquestion-button">
-        <span v-if="isEditing">
+
+  <div class="card" style="width: 18rem;">
+    <div class="card-body">
+      <h5 class="card-title">
+        {{ commonquestion.contents }}
+      </h5>
+      <p class="card-text">
+
+        <div v-if="commonquestion.questionType=='JOB'">
+         {{ commonquestion.questionNo }}. 기업 면접
+        </div>
+        <div v-else>
+         {{ commonquestion.questionNo }}. 자율 면접
+        </div>
+         <span v-if="isEditing">
           <input type="text" v-model="payload.contents" />
           <button @click="onUpdate">Update</button> |
           <button @click="switchIsEditing">Cancel</button>
@@ -58,9 +48,9 @@
             Delete
           </button>
         </span>
-      </div>
+      </p>
     </div>
-  </li>
+  </div>
 </template>
 
 <script>

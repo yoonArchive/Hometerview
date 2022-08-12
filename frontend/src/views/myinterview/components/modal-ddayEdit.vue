@@ -12,23 +12,45 @@
 
           <div class="modal-body">
             <slot name="body">
-              <input type="text" v-model="dday.ddayTitle" required />
-              <input type="date" v-model="dday.ddayDate" required />
+              <input
+                class="form-control"
+                type="text"
+                v-model="dday.ddayTitle"
+                required
+              />
+
+              <br />
+              <input
+                class="form-control"
+                type="date"
+                v-model="dday.ddayDate"
+                required
+              />
             </slot>
           </div>
 
           <div class="modal-footer">
             <slot name="footer">
-              <button
-                class="modal-default-button"
-                @click="updateDday([this.key, ddays]), $emit('close')"
+              <div
+                class="btn-group"
+                role="group"
+                aria-label="Basic outlined example"
               >
-                수정하기
-              </button>
-
-              <button class="modal-default-button" @click="$emit('close')">
-                닫기
-              </button>
+                <button
+                  type="button"
+                  class="btn btn-outline-primary"
+                  @click="updateDday([this.key, ddays]), $emit('close')"
+                >
+                  수정하기
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-outline-primary"
+                  @click="$emit('close')"
+                >
+                  닫기
+                </button>
+              </div>
             </slot>
           </div>
         </div>

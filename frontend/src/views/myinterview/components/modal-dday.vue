@@ -11,8 +11,20 @@
 
           <div class="modal-body">
             <slot name="body">
-              <input type="text" v-model="ddays.ddayTitle" />
-              <input type="date" v-model="ddays.ddayDate" />
+              <input
+                class="form-control"
+                type="text"
+                v-model="ddays.ddayTitle"
+                required
+              />
+
+              <br />
+              <input
+                class="form-control"
+                type="date"
+                v-model="ddays.ddayDate"
+                required
+              />
             </slot>
           </div>
 
@@ -20,16 +32,26 @@
             <slot name="footer">
               <!-- <button v-if="action==='update'" class="modal-default-button" @click="updateDday([dday.ddayNo, ddays])">수정하기</button> -->
 
-              <button
-                class="modal-default-button"
-                @click="createDday(ddays), $emit('close')"
+              <div
+                class="btn-group"
+                role="group"
+                aria-label="Basic outlined example"
               >
-                작성하기
-              </button>
-
-              <button class="modal-default-button" @click="$emit('close')">
-                닫기
-              </button>
+                <button
+                  type="button"
+                  class="btn btn-outline-primary"
+                  @click="createDday(ddays), $emit('close')"
+                >
+                  작성하기
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-outline-primary"
+                  @click="$emit('close')"
+                >
+                  닫기
+                </button>
+              </div>
             </slot>
           </div>
         </div>
@@ -83,7 +105,7 @@ export default {
   margin: 0px auto;
   padding: 20px 30px;
   background-color: #fff;
-  border-radius: 2px;
+  border-radius: 20px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
   transition: all 0.3s ease;
   font-family: Helvetica, Arial, sans-serif;

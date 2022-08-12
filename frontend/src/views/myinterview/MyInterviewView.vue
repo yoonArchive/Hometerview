@@ -1,4 +1,32 @@
 <template>
+  <div class="mypage">
+    <div class="mypage-banner">
+      <router-link :to="{ name: 'diary' }" id="word">
+        <button id="mypage-button">
+          <font-awesome-icon icon="fa-solid fa-calendar" />&nbsp; &nbsp;
+          <span>다이어리</span>
+        </button>
+      </router-link>
+      <router-link :to="{ name: 'coverPage' }" id="word">
+        <button id="mypage-button">
+          <!-- <i class="input-icon uil uil-shield-check"></i> -->
+          <font-awesome-icon icon="fa-solid fa-file" />&nbsp; &nbsp;
+          <span>자기소개서</span>
+        </button>
+      </router-link>
+      <router-link :to="{ name: 'coverPage' }" id="word">
+        <button id="mypage-button">
+          <!-- <i class="input-icon uil uil-exclamation-triangle"></i> -->
+          <font-awesome-icon icon="fa-solid fa-tape" />&nbsp; &nbsp;
+          <span>녹화</span>
+        </button>
+      </router-link>
+    </div>
+    <div class="router-view">
+      <router-view></router-view>
+    </div>
+  </div>
+  <!--
 <div class="container">
   <div class="my-top">
 
@@ -23,7 +51,7 @@
 
 
       <div class="review-3 ">
-        	<!-- <button id="button-review" @click="showModal = true"><p id="a">DDAY 작성하기</p></button>
+        <button id="button-review" @click="showModal = true"><p id="a">DDAY 작성하기</p></button>
           <div class="card " style="width: 10rem;" v-for="(ddays, index) in currentDdays" :key="index">
             <div class="card-body">
               <h5 class="card-title">{{ddays.ddayTitle}}</h5>
@@ -33,7 +61,7 @@
               <button @click="showModalE(ddays.ddayNo), getDdayDetail(ddays.ddayNo)">수정</button>
               <button @click="deleteDDAY(ddays.ddayNo)">삭제</button>
             </div>
-          </div> -->
+          </div>
 
 
           <div v-for="(ddays, index) in currentDdays" :key="index">
@@ -52,14 +80,14 @@
   </div>
 
     <ModalEdit v-if="openedModal !== null" @close="openedModal = null" :dday="this.dday" :key="this.openedModal" >
-      <!-- <h3 slot="header">dday 수정</h3> -->
+     <h3 slot="header">dday 수정</h3>
     </ModalEdit>
 
 
 
      <Modaldday v-if="showModal" @close="showModal = false" :dday="currentDdays">
 
-       <!-- <h3 slot="header">dday 생성</h3> -->
+      <h3 slot="header">dday 생성</h3>
      </Modaldday>
   </div>
   <hr>
@@ -106,72 +134,66 @@
   </div>
   </div>
 
-
-
-
-
+-->
 </template>
 
 <script>
-
-import { mapActions, mapGetters } from 'vuex'
-import Modaldday from './components/modal-dday'
-import ModalEdit from './components/modal-ddayEdit'
-import ReviewForm from './review/components/ReviewForm'
+import { mapActions, mapGetters } from "vuex";
+import Modaldday from "./components/modal-dday";
+import ModalEdit from "./components/modal-ddayEdit";
+import ReviewForm from "./review/components/ReviewForm";
 // import ReviewNew from './review/components/ReviewNewView'
-import StudyCalendar from './StudyCalendar'
-import ReviewNewView from './review/ReviewNewView.vue'
+import StudyCalendar from "./StudyCalendar";
+import ReviewNewView from "./review/ReviewNewView.vue";
 export default {
-  components:{
+  components: {
     StudyCalendar,
     Modaldday,
     ModalEdit,
     ReviewForm,
     // ReviewNew,
     ReviewNewView
-},
-  data(){
+  },
+  data() {
     return {
-      ddays:{
-        ddayTitle:'',
-        ddayDate:''
+      ddays: {
+        ddayTitle: "",
+        ddayDate: ""
       },
-      showModal: false ,
+      showModal: false,
       // showModalE: false,
       showReviewForm: false,
-      roomName : '',
-      headers: ['번호','제목', '날짜', '유형'],
-      openedModal: null,
-      imgsource1: require("../../assets/images/myinterview1.png"),
-      imgsource2: require("../../assets/images/myinterview2.png"),
-      imgsource3: require("../../assets/images/myinterview3.jpg")
+      roomName: "",
+      headers: ["번호", "제목", "날짜", "유형"],
+      openedModal: null
+      // imgsource1: require("../../assets/images/myinterview1.png"),
+      // imgsource2: require("../../assets/images/myinterview2.png"),
+      // imgsource3: require("../../assets/images/myinterview3.jpg")
 
       // reviewContents:{},
       // review:{}
-    }
+    };
   },
-  computed:{
-    ...mapGetters(['resumeContents',
-    'numberOfResume',
-    'reviewContents',
-    'numberOfReview',
-    'currentDdays',
-    'restday',
-    'ddaylen',
-    'dday'
-
-
-    ]),
-
+  computed: {
+    ...mapGetters([
+      "resumeContents",
+      "numberOfResume",
+      "reviewContents",
+      "numberOfReview",
+      "currentDdays",
+      "restday",
+      "ddaylen",
+      "dday"
+    ])
   },
-  methods:{
+  methods: {
     showModalE(id) {
-      this.openedModal = id
+      this.openedModal = id;
     },
-    getLengthOfObject(obj){
+    getLengthOfObject(obj) {
       let lengthOfObject = Object.keys(obj).length;
       console.log(lengthOfObject);
-},
+    },
 
     ...mapActions([
       "getResumeInfo",
@@ -181,102 +203,165 @@ export default {
       "deleteReview",
       "deleteDDAY",
       "getDdayDetail"
-
-      ]),
-    findresumes(){
+    ]),
+    findresumes() {
       this.getResumeInfo();
     },
-    addResume(){
+    addResume() {
       this.addNewResume();
     },
 
-    getReview(){
-      this.getReviewInfo()
+    getReview() {
+      this.getReviewInfo();
     },
 
-    getDday(){
-      this.getDdayInfo()
+    getDday() {
+      this.getDdayInfo();
     },
     refreshAll() {
-            // 새로고침
-            this.$router.go();
-        }
-
-
-
-
+      // 새로고침
+      this.$router.go();
+    }
   },
-  mounted(){
+  mounted() {
     this.findresumes();
     this.getReview();
     this.getDday();
-    console.log('김'+this.Editsum)
-
+    console.log("김" + this.Editsum);
   },
 
   beforeMount() {
     // this.getReview();
     // this.getDday();
-  },
-
-
-
-}
+  }
+};
 </script>
 
 <style scoped>
+/*라우터 버튼디자인 */
+.router-view {
+  height: 100%;
 
-  @import './main.css';
-  /* @import './fullcalander/main.js'; */
+  margin: 10px;
+}
+#title-word {
+  margin-bottom: 50px;
+}
+.mypage {
+  display: flex;
+  flex-direction: row;
+  /* align-items: center; */
+  margin-left: 170px;
+  /* margin-right: 50px; */
+}
+.mypage-banner {
+  display: flex;
+  flex-direction: column;
+  margin-top: 104px;
+  margin-right: 30px;
+  /* margin: 50px; */
+  /* position: absolute; */
+}
+#mypage-button {
+  /* border: 1px rgb(160, 160, 160); */
+  border: none;
+  width: 300px;
+  border-radius: 10px;
+  height: 50px;
+  background-color: #f3f4ff;
+  margin: 6px;
+  text-align: left;
+  display: flex;
+  align-items: center;
+}
+/* 라우터 버튼 호버*/
+#mypage-button:hover #mypageicon {
+  background-color: #653fd3;
+  border-radius: 10px;
+  color: white;
+  padding: 10px;
+  border: #653fd3;
+}
+#mypage-button:hover {
+  border-radius: 10px;
+  border: solid #653fd3;
+}
+/* #mypage-button:hover, */
+.route-active #mypage-button {
+  background-color: #653fd3;
+  border-radius: 10px;
+  color: white;
+  padding: 10px;
+  border: #653fd3;
+  /* cursor: pointer; */
+}
+/* #mypage-button:active {
+  border: solid #653fd3;
+} */
 
-.conatiner{
+#mypageicon {
+  width: 50px;
+  height: 50px;
+  padding: 10px;
+  border-radius: 10%;
+  margin-right: 30px;
+}
+#word {
+  text-decoration-line: none;
+}
+span {
+  font-size: 17px;
+  letter-spacing: 0.04em;
+}
+
+@import "./main.css";
+/* @import './fullcalander/main.js'; */
+
+.conatiner {
   display: flex;
   flex-direction: row;
 }
-.my-top{
+.my-top {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-
 }
-.my-left{
+.my-left {
   display: flex;
   flex-direction: column;
 }
-.calendar{
+.calendar {
   width: 1000px;
   /* height: 800px; */
   /* display: flex; */
 }
 
-#cover-router{
+#cover-router {
   text-decoration-line: none;
 }
-.review-1{
+.review-1 {
   /* margin-top: 100px; */
 }
-.review-2{
+.review-2 {
   margin-top: 100px;
 }
 
-.review-3{
+.review-3 {
   /* display: flex;
   flex-direction: row; */
   /* margin: 30px; */
 }
-.conatiner{
-
+.conatiner {
   display: flex;
   flex-direction: column;
 }
-#button-review{
-   width: 100px;
-   height: 50px;
-   background-color: #653FD3;
-   border-color : #653FD3;
-   border-radius: 10%;
-   margin: 5px;
-
+#button-review {
+  width: 100px;
+  height: 50px;
+  background-color: #653fd3;
+  border-color: #653fd3;
+  border-radius: 10%;
+  margin: 5px;
 }
 #a {
   text-decoration-line: none;
@@ -285,26 +370,24 @@ export default {
   font-family: "티머니 둥근바람";
   margin: 3px;
 }
-.buttonbundle{
+.buttonbundle {
   flex-direction: row-reverse;
   margin: 10px;
   width: 100px;
-
 }
-.table{
+.table {
   text-align: center;
   padding: 10px;
 }
 th {
-    text-align: left;
-  }
+  text-align: left;
+}
 /* td {
     text-align: right;
   } */
 
-
-  /* 달력 스타일 */
-  h2 {
+/* 달력 스타일 */
+h2 {
   margin: 0;
   font-size: 16px;
 }
@@ -319,7 +402,8 @@ li {
   padding: 0;
 }
 
-b { /* used for event dates/times */
+b {
+  /* used for event dates/times */
   margin-right: 3px;
 }
 
@@ -346,32 +430,30 @@ b { /* used for event dates/times */
   padding: 3em;
 }
 
-.fc { /* the calendar root */
+.fc {
+  /* the calendar root */
   max-width: 1100px;
   margin: 0 auto;
 }
 
-
-.card{
+.card {
   margin: 20px;
 }
-.card-text-2{
+.card-text-2 {
   background-color: rgb(114, 209, 114);
   border-radius: 10%;
   color: white;
   padding: 5px;
-
 }
 
-.card-text-1{
+.card-text-1 {
   background-color: rgb(236, 145, 145);
   border-radius: 10%;
   color: white;
   padding: 5px;
 }
 
-#inner-table{
-  border:#653FD3
-
+#inner-table {
+  border: #653fd3;
 }
 </style>

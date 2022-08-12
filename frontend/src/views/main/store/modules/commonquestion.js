@@ -100,7 +100,7 @@ export default {
         .then(res => {
           commit("SET_commonQuestion", res.data.commonQuestions);
           console.log("공통질문 작성 성공" + res);
-          dispatch(`${commonQuestions1stdNo(stdNo)}`);
+          dispatch("commonQuestions1", stdNo);
           // router.push({
           //   name: 'commonQuestion',
           //   params: { commonQuestionNo: getters.commonQuestion.commonQuestionNo  }
@@ -126,7 +126,7 @@ export default {
       }).then(res => {
         console.log("수정성공");
         commit("SET_commonQuestion", res.data);
-        dispatch(`${commonQuestions1stdNo(stdNo)}`);
+        dispatch("commonQuestions1", stdNo);
 
         // router.push({
         //   name: 'commonQuestion',
@@ -149,7 +149,7 @@ export default {
         })
           .then(res => {
             commit("SET_commonQuestion", res.data);
-            dispatch(`${commonQuestions1stdNo(stdNo)}`);
+            dispatch("commonQuestions1", stdNo);
 
             // router.push({ name: 'myinterview' }) 라우터위치 어디로안정함
           })

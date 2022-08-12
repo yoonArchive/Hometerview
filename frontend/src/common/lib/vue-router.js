@@ -49,6 +49,9 @@ import ReviewEdit from "@/views/myinterview/review/ReviewEditView";
 /* 세션 페이지 */
 import SessionView from "@/views/session/SessionView";
 
+/* 내 면접관리 페이지 */
+import diary from "@/views/myinterview/diary/diary";
+import coverLetterPage from "@/views/myinterview/coverletter/CoverLetterPage";
 /* 마이스터디-공통질문 페이지 */
 // import CommonQuestionDetailView from '@/views/studyspace/components/CommonQuestionDetailView'
 // import CommonQuestionNewView from '@/views/studyspace/components/CommonQuestionNewView'
@@ -172,7 +175,20 @@ function makeRoutesFromMenu() {
         {
           path: "myinterview",
           name: "myinterview",
-          component: MyInterviewView
+          component: MyInterviewView,
+          redirect: "myinterview/diary",
+          children: [
+            {
+              path: "diary",
+              name: "diary",
+              component: diary
+            },
+            {
+              path: "coverPage",
+              name: "coverPage",
+              component: coverLetterPage
+            }
+          ]
         },
         {
           path: "review/:reviewNo",

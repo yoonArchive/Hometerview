@@ -219,7 +219,7 @@ export default {
           id: 999,
           title: dday.ddayTitle,
           start: dday.ddayDate,
-          color: "red"
+          color: "orange"
         });
         console.log("콘솔 로그 리뷰 " + dday.ddayTitle);
       }
@@ -232,6 +232,16 @@ export default {
   created() {
     // this.checkReview();
   }
+  // watch: {
+  //   currentReview(a, b) {
+  //     this.calendarOptions.events = [];
+  //     this.checkReview();
+  //   },
+  //   currentDdays(a, b) {
+  //     this.calendarOptions.events = [];
+  //     this.checkReview();
+  //   }
+  // }
 };
 </script>
 
@@ -326,6 +336,7 @@ b {
   min-height: 100%;
   font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
   font-size: 14px;
+  width: 900px;
 }
 
 .demo-app-sidebar {
