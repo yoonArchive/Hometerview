@@ -1,12 +1,12 @@
 <template>
   <!-- 자소서 보기 -->
-  <div v-if="coverLetter">
+  <div v-if="coverLetter" class="cover-letter-list">
     <button @click="changeToCoverLetter(['memberlist', null])">닫기</button>
     <member-cover-letter :studentindex="studentIndex"></member-cover-letter>
   </div>
   <!-- this.studySpaceDetail.joinType.user.userId -->
   <!-- 리스트 보기 -->
-  <div v-if="memberList">
+  <div v-if="memberList" class="study-member-list">
     <study-members
       v-for="(member, index) in studySpaceDetail.studyJoins"
       :key="member.joinNo"
@@ -50,4 +50,11 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.cover-letter-list {
+  height: 85vh;
+}
+.study-member-list {
+  height: 85vh;
+}
+</style>

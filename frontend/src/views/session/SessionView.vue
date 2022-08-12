@@ -1,119 +1,222 @@
 <template>
-  <div class="main">
-    <!-- <div id="session-title">{{ mySessionId }}</div><br> -->
-    <div class="container d-flex justify-content-between">
-      <div class="side-left col-md-8">
-        <div class="center">
-          <!-- 중앙 -->
-          <!-- 메인 화면, 사이드 -->
+  <div class="full-con">
+    <div class="main-con">
+      <!-- <div id="session-title">{{ mySessionId }}</div><br> -->
+      <div class="con d-flex justify-content-between row">
+        <div class="side-left col-md-8">
+          <div class="center">
+            <!-- 중앙 -->
+            <!-- 메인 화면, 사이드 -->
 
-          <!-- session -->
-          <div class="video-group">
-            <!-- 자기 화면(큰) => mainStreamManager-->
-            <div id="main-video" class="col-md-12">
-              <user-video
-                class="large-video"
-                :stream-manager="mainStreamManager"
-                :mainStream="true"
-              />
+            <!-- session -->
+            <div class="video-group">
+              <!-- 자기 화면(큰) => mainStreamManager-->
+              <div id="main-video" class="col">
+                <user-video
+                  class="large-video"
+                  :stream-manager="mainStreamManager"
+                  :mainStream="true"
+                />
+              </div>
+
+              <!-- 비디오 그룹 -->
+              <div
+                class="video-container row d-flex justify-content-center  mb-2"
+              >
+                <!-- 자기화면 (작은) -->
+                <user-video
+                  class="small-video my-video col-md-3"
+                  :stream-manager="publisher"
+                  :mainStream="false"
+                  @click="updateMainVideoStreamManager(publisher)"
+                />
+                <!-- native : 상위 컴포넌트(즉 여기 있는 이벤트)를 하위 컴포넌트에서 작동시키고 싶을 때 사용한다. -->
+                <!-- vue3에서 native가 사라지고 그냥 click을 누르면 된다. -->
+                <user-video
+                  class="user-video col-md-3"
+                  v-for="sub in subscribers"
+                  :key="sub.stream.connection.connectionId"
+                  :stream-manager="sub"
+                  :mainStream="false"
+                  @click="updateMainVideoStreamManager(sub)"
+                />
+              </div>
             </div>
+            <div class="bottom d-flex justify-content-evenly">
+              <!-- 하단 -->
+              <!-- 비디오, 오디오, leave, 더보기 -->
+              <!-- 장치 옵션 -->
 
-            <!-- 비디오 그룹 -->
-            <div
-              class="video-container col-md-12 d-flex justify-content-center"
-            >
-              <!-- 자기화면 (작은) -->
-              <user-video
-                class="small-video col-md-3"
-                :stream-manager="publisher"
-                :mainStream="false"
-                @click="updateMainVideoStreamManager(publisher)"
-              />
-              <!-- native : 상위 컴포넌트(즉 여기 있는 이벤트)를 하위 컴포넌트에서 작동시키고 싶을 때 사용한다. -->
-              <!-- vue3에서 native가 사라지고 그냥 click을 누르면 된다. -->
-              <user-video
-                class="col-md-3"
-                v-for="sub in subscribers"
-                :key="sub.stream.connection.connectionId"
-                :stream-manager="sub"
-                :mainStream="false"
-                @click="updateMainVideoStreamManager(sub)"
-              />
+              <!-- 마이크 ONOFF-->
+              <div>
+                <!-- <div class="video-button"></div> -->
+                <div v-if="audioOnOff" class="mic-button-on">
+                  <img
+                    @click="audioONOFF()"
+                    :src="require(`@/assets/images/session/micOn.png`)"
+                    style="height:4vh; margin-left:1.5vh; margin-top:1vh;"
+                  />
+                </div>
+                <div v-else class="mic-button-off">
+                  <img
+                    @click="audioONOFF()"
+                    :src="require(`@/assets/images/session/micOn.png`)"
+                    style="height:4vh; margin-left:1.5vh; margin-top:1vh;"
+                  />
+                </div>
+                <!-- <button v-if="audioOnOff" @click="audioONOFF()">오디오ON</button>
+                <button v-else @click="audioONOFF()">오디오OFF</button> -->
+              </div>
+
+              <!-- 비디오 ONOFF -->
+              <div>
+                <div v-if="videoOnOff" class="video-button-on">
+                  <img
+                    @click="videoONOFF()"
+                    :src="require(`@/assets/images/session/video.png`)"
+                    style="height:2.4vh; margin-left: 1.2vh; margin-top: 1.8vh;"
+                  />
+                </div>
+                <div v-else class="video-button-off">
+                  <img
+                    @click="videoONOFF()"
+                    :src="require(`@/assets/images/session/video.png`)"
+                    style="height:2.4vh; margin-left: 1.2vh; margin-top: 1.8vh;"
+                  />
+                </div>
+                <!-- <button v-if="videoOnOff" @click="videoONOFF()">비디오ON</button>
+                <button v-else @click="videoONOFF()">비디오OFF</button> -->
+              </div>
+              <!-- 나가기 -->
+              <div>
+                <div class="leave-button">
+                  <img
+                    @click="leaveSession"
+                    :src="require(`@/assets/images/session/leave.png`)"
+                    style="height:3.5vh; margin-left: 1.3vh; margin-top: 1.2vh;"
+                  />
+                </div>
+              </div>
+              <!-- 화면 공유 -->
+              <!-- <div>
+                <button @click="ShareScreen()">화면 공유</button>
+              </div> -->
+              <!-- 더보기 -->
+              <div>
+                <div class="add-button">
+                  <img
+                    :src="require(`@/assets/images/session/add.png`)"
+                    style="height:3.8vh; margin-left: 1vh; margin-top: 1.1vh;"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
-        <div class="bottom d-flex justify-content-around">
-          <!-- 하단 -->
-          <!-- 비디오, 오디오, leave, 더보기 -->
-          <!-- 장치 옵션 -->
-          <!-- 마이크 ONOFF-->
+        <div class="side-right col-md-4">
+          <!-- 사이드 -->
+          <!-- 메시지, 자소서, 참가자 지정 -->
+          <div class="side-panel">
+            <div class="select-side-bottons">
+              <div class="d-flex justify-content-start">
+                <div>
+                  <img
+                    :src="require(`@/assets/images/session/chatOn.png`)"
+                    @click="changeContent('chatting')"
+                    style="height:6vh; margin-top:-5%;"
+                    v-if="chatting"
+                  />
+                  <img
+                    :src="require(`@/assets/images/session/chatOff.png`)"
+                    @click="changeContent('chatting')"
+                    style="height:6vh; margin-top:-5%;"
+                    v-else
+                  />
+                </div>
+                <div>
+                  <img
+                    :src="require(`@/assets/images/session/resumeOn.png`)"
+                    @click="changeContent('participant')"
+                    v-if="participant"
+                    style="margin-top:5%; height:4.8vh"
+                  />
+                  <img
+                    :src="require(`@/assets/images/session/resumeOff.png`)"
+                    @click="changeContent('participant')"
+                    v-else
+                    style="margin-top:5%; height:4.8vh"
+                  />
+                </div>
+                <div>
+                  <img
+                    :src="require(`@/assets/images/session/memberOn.png`)"
+                    @click="changeContent('selectinterviewee')"
+                    style="height:5.7vh; margin-top:5%"
+                    v-if="selectinterviewee"
+                  />
+                  <img
+                    :src="require(`@/assets/images/session/memberOff.png`)"
+                    @click="changeContent('selectinterviewee')"
+                    style="height:5.7vh; margin-top:5%"
+                    v-else
+                  />
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <img
+                      :src="require(`@/assets/images/session/videoOn.png`)"
+                      style="height:3vh; margin-top:%;"
+                      v-if="recordOnOff"
+                      @click="recordONOFF()"
+                    />
+                    <img
+                      :src="require(`@/assets/images/session/videoOff.png`)"
+                      style="height:3vh; margin-top:%;"
+                      @click="recordONOFF()"
+                      v-else
+                    />
+                  </div>
+                  <div class="col">
+                    <img
+                      :src="require(`@/assets/images/session/stop.png`)"
+                      style="height:3vh; margin-top:;"
+                      @click="stop"
+                      v-if="true"
+                    />
+                  </div>
+                </div>
+              </div>
 
-          <div>
-            <button v-if="audioOnoff" @click="audioONOFF()">오디오ON</button>
-            <button v-else @click="audioONOFF()">오디오OFF</button>
+              <!-- <button @click="changeContent('chatting')">메시지</button>
+              <button @click="changeContent('participant')">참가자</button>
+              <button @click="changeContent('selectinterviewee')">
+                면접자 지정
+              </button> -->
+              <!-- 메시지 -->
+              <div v-if="chatting">
+                <message-list
+                  :msgs="msgs"
+                  :myId="publisher.stream.connection.connectionId"
+                  :fromId="fromId"
+                ></message-list>
+                <message-form
+                  @sendMsg="sendMsg"
+                  :user-name="myUserName"
+                ></message-form>
+              </div>
+            </div>
+            <div v-if="participant">
+              <study-member-list></study-member-list>
+            </div>
+            <div v-if="selectinterviewee">
+              <select-interviewee
+                :interviewUserFixed="interviewUserFixed"
+                @streamUpdate="streamUpdate"
+              ></select-interviewee>
+              <!-- usertype==='LEADERS' && 리더만 보이게 하기 =   -->
+            </div>
           </div>
-          <!-- 비디오 ONOFF -->
-          <div>
-            <button v-if="videoOnoff" @click="videoONOFF()">
-              비디오ON {{ videoOnoff }}
-            </button>
-            <button v-else @click="videoONOFF()">
-              비디오OFF {{ videoOnoff }}
-            </button>
-          </div>
-          <!-- 나가기 -->
-          <div>
-            <input
-              class="btn btn-large btn-danger"
-              type="button"
-              id="buttonLeaveSession"
-              @click="leaveSession"
-              value="Leave session"
-            />
-          </div>
-          <!-- 화면 공유 -->
-          <div>
-            <button @click="ShareScreen()">화면 공유</button>
-          </div>
-          <!-- 더보기 -->
-          <div>
-            <button></button>
-          </div>
-        </div>
-      </div>
-
-      <div class="side-right col-md-4">
-        <!-- 사이드 -->
-        <!-- 메시지, 자소서, 참가자 지정 -->
-        <div class="select-side-bottons">
-          <button @click="changeContent('chatting')">메시지</button>
-          <button @click="changeContent('participant')">참가자</button>
-          <button @click="changeContent('selectinterviewee')">
-            면접자 지정
-          </button>
-        </div>
-        <!-- 메시지 -->
-        <div v-if="chatting">
-          <message-list
-            :msgs="msgs"
-            :myId="publisher.stream.connection.connectionId"
-            :fromId="fromId"
-          ></message-list>
-          <message-form
-            @sendMsg="sendMsg"
-            :user-name="myUserName"
-          ></message-form>
-        </div>
-        <!-- 멤버 리스트 -->
-        <div v-if="participant">
-          <study-member-list></study-member-list>
-        </div>
-        <div v-if="selectinterviewee">
-          <select-interviewee
-            :interviewUserFixed="interviewUserFixed"
-            @streamUpdate="streamUpdate"
-          ></select-interviewee>
-          <!-- usertype==='LEADERS' && 리더만 보이게 하기 =   -->
+          <!-- 멤버 리스트 -->
         </div>
       </div>
     </div>
@@ -121,20 +224,77 @@
 </template>
 
 <style scoped>
-.main {
+.full-con {
   background-color: #272930;
-  color: whitesmoke;
-  height: 100%;
+  min-height: 100%;
+}
+.main-con {
+  margin-right: 2%;
+  margin-left: 2%;
+  padding-bottom: 3%;
 }
 .side-right {
+  display: inline-block;
   height: 100%;
 }
 .side-left {
+  display: inline-block;
   height: 100%;
 }
-/* .video-group{
-  height: ;
-} */
+.user-video {
+  display: inline-block;
+  margin: 1px;
+}
+.my-video {
+  display: inline-block;
+  margin: 1px;
+}
+.main-video {
+  margin-top: 20px;
+}
+.select-side-bottons {
+  margin-top: 20px;
+}
+.side-panel {
+  background-color: whitesmoke;
+  border-radius: 10px 10px 10px 10px;
+}
+.video-button-on {
+  background-color: #baaaea;
+  height: 6vh;
+  width: 6vh;
+  border-radius: 100% 100% 100% 100%;
+}
+.video-button-off {
+  background-color: #d9d9d9;
+  height: 6vh;
+  width: 6vh;
+  border-radius: 100% 100% 100% 100%;
+}
+.mic-button-on {
+  background-color: #baaaea;
+  height: 6vh;
+  width: 6vh;
+  border-radius: 100% 100% 100% 100%;
+}
+.mic-button-off {
+  background-color: #d9d9d9;
+  height: 6vh;
+  width: 6vh;
+  border-radius: 100% 100% 100% 100%;
+}
+.leave-button {
+  background-color: #ec5c5c;
+  height: 6vh;
+  width: 6vh;
+  border-radius: 100% 100% 100% 100%;
+}
+.add-button {
+  background-color: #d9d9d9;
+  height: 6vh;
+  width: 6vh;
+  border-radius: 100% 100% 100% 100%;
+}
 </style>
 
 <script>
@@ -191,6 +351,7 @@ export default {
       videoOnOff: true,
       audioOnOff: true,
       mirrorOnOff: true,
+      recordOnOff: false,
 
       //scree share
       screenOV: undefined,
@@ -254,13 +415,14 @@ export default {
         });
       }
     },
+    recordONOFF() {
+      this.recordOnOff = !this.recordOnOff;
+    },
     videoONOFF() {
-      console.log(this.videoOnOff);
       this.publisher.publishVideo(!this.videoOnOff);
       this.videoOnOff = !this.videoOnOff;
     },
     audioONOFF() {
-      console.log(this.audioOnOff);
       this.publisher.publishAudio(!this.audioOnOff);
       this.audioOnOff = !this.audioOnOff;
     },

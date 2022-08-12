@@ -20,15 +20,9 @@ export default {
     Message
   },
   props: {
-    msgs: {
-      type: Array
-    },
-    myId: {
-      type: String
-    },
-    fromId: {
-      type: String
-    }
+    msgs: Array,
+    myId: String,
+    fromId: String
   },
   data() {
     return {
@@ -65,8 +59,8 @@ export default {
 .container {
   background: #ffff;
   overflow: scroll;
-  border-radius: 10px 10px 0px 0px;
-  height: 93vh;
+  border-radius: 10px 10px 10px 10px;
+  height: 85vh;
 }
 #rctmsg {
   height: 0px;

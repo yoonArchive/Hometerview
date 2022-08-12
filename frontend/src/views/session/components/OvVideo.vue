@@ -1,6 +1,6 @@
 <template>
   <!-- 가능한 빨리 재생을 시작하는 video속성 -->
-  <video v-if="mainStream" class="main" autoplay />
+  <video v-if="mainStream" class="main col-12" autoplay />
   <video v-else class="sub" autoplay />
 
   <!-- <div class="video-name">{{ clientData }}</div> -->
@@ -40,13 +40,21 @@ export default {
 };
 </script>
 <style scoped>
-.video-name {
-  position: absolute;
-}
 .main {
+  /* width: 98%; */
+  height: 60vh;
+  border-radius: 2% 2% 2% 2%;
+  margin-top: 20px;
+}
+.sub {
+  /* width: 320px; */
+  height: 20vh;
+  border-radius: 4% 4% 4% 4%;
+}
+/* .main {
   height: 70%;
 }
 .sub {
   height: 50%;
-}
+} */
 </style>
