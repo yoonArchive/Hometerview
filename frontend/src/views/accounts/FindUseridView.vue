@@ -9,7 +9,7 @@
                 <div class="card-front">
                   <div class="center-wrap">
                     <div class="section text-center">
-                      <h4 class="mb-1 pb-3">아이디 찾기</h4>
+                      <h4 class="mb-4">아이디 찾기</h4>
                       <div class="msg mb-4">
                         회원가입 시 입력하신 이름과 이메일로<br />
                         아이디를 확인하실 수 있습니다.
@@ -192,9 +192,9 @@ h6 span {
 }
 .card-front,
 .card-back {
-  margin-top: 10px;
+  margin-top: 12px;
   width: 100%;
-  height: 100%;
+  height: 80%;
   background-color: #ececec;
   /* background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/1462889/pat.svg"); */
   background-position: bottom center;
@@ -466,5 +466,8 @@ msg {
   height: 26px;
   width: auto;
   display: block;
+}
+.msg {
+  font-size: 17px;
 }
 </style>

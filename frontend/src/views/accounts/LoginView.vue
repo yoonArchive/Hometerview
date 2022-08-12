@@ -344,6 +344,7 @@ h6 span {
   padding: 0 20px;
   text-transform: uppercase;
   font-weight: 700;
+  margin-bottom: 30px;
 }
 .section {
   position: relative;

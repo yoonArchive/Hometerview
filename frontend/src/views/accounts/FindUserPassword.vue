@@ -2,14 +2,14 @@
   <div class="section">
     <div class="container">
       <div class="row full-height justify-content-center">
-        <div class="col-12 text-center align-self-center py-5">
+        <div class="col-12 text-center align-self-center">
           <div class="section pb-5 pt-5 pt-sm-2 text-center">
             <div class="card-3d-wrap mx-auto">
               <div class="card-3d-wrapper">
                 <div class="card-front">
                   <div class="center-wrap">
                     <div class="section text-center">
-                      <h4 class="mb-1 pb-3">비밀번호 찾기</h4>
+                      <h4 class="mb-4">비밀번호 찾기</h4>
                       <div class="msg mb-4">
                         회원가입 시 입력하신 이메일로<br />
                         임시 비밀번호가 전송됩니다.
@@ -135,9 +135,6 @@ h6 span {
   width: 100%;
   display: block;
 }
-.full-height {
-  min-height: 100vh;
-}
 [type="checkbox"]:checked,
 [type="checkbox"]:not(:checked) {
   position: absolute;
@@ -201,8 +198,9 @@ h6 span {
 }
 .card-front,
 .card-back {
+  margin-top: 70px;
   width: 100%;
-  height: 100%;
+  height: 80%;
   background-color: #ececec;
   /* background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/1462889/pat.svg"); */
   background-position: bottom center;
@@ -474,5 +472,8 @@ msg {
   height: 26px;
   width: auto;
   display: block;
+}
+.msg {
+  font-size: 17px;
 }
 </style>
