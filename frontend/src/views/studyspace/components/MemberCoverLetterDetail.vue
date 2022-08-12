@@ -7,7 +7,7 @@
           type="button"
           v-for="(item, index) in resumeQuestionList.length"
           :key="index"
-          :value="item"
+          :value="item - 1"
           @click="changeSelectedNum(item, $event)"
         />
       </div>
@@ -57,18 +57,23 @@ export default {
       console.log("선택된 질문 : " + this.selectedQuestionNum);
       var buttons = document.getElementsByClassName("cover-letter-button");
       buttons[this.selectedQuestionNum].classList.add("clicked");
-    },
-    resumeQuestionList() {
-      var buttons = document.getElementsByClassName("cover-letter-button");
-      for (var i = 0; i < buttons.length; i++) {
-        buttons[i].classList.remove("clicked");
-      }
-      console.log(this.selectedQuestionNum);
-      buttons[this.selectedQuestionNum].classList.add("clicked");
     }
+    // resumeQuestionList() {
+    //   var buttons = document.getElementsByClassName("cover-letter-button");
+    //   for (var i = 0; i < buttons.length; i++) {
+    //     buttons[i].classList.remove("clicked");
+    //   }
+    //   console.log(this.selectedQuestionNum);
+    //   console.log(buttons[this.selectedQuestionNum]);
+    //   buttons[this.selectedQuestionNum].classList.add("clicked");
+    // }
+  },
+  created() {
+    this.SET_SELECTED_QUESTION_NUM(0);
   },
   mounted() {
     this.settingvalue();
+    this.SET_SELECTED_QUESTION_NUM(0);
   },
   unmounted() {
     this.SET_SELECTED_QUESTION_NUM(0);

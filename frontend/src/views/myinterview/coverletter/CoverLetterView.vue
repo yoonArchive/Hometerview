@@ -1,12 +1,12 @@
 <template>
   <div class="member-cover-letter-title" v-if="!isloading">
     <div class="row" v-if="!isChange">
-      <div class="col-5">
+      <div class="row">
         <div class="member-cover-letter-stdname">
           {{ resumeContents[resumeindex].resumeTitle }} 자소서
         </div>
       </div>
-      <div class="col">
+      <div class="row">
         <div class="d-flex flex-row-reverse coverletter-buttons">
           <button
             type="button"
