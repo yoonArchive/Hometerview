@@ -54,9 +54,10 @@ export default {
           interactionPlugin // needed for dateClick
         ],
         headerToolbar: {
-          left: "prev,next today",
+          left: "prev,today",
           center: "title",
-          right: "dayGridMonth,timeGridWeek,timeGridDay"
+          // right: "dayGridMonth,timeGridWeek,timeGridDay",
+          right: "next"
         },
         initialView: "dayGridMonth",
         // initialEvents , // alternatively, use the `events` setting to fetch from a feed
@@ -236,11 +237,9 @@ export default {
 
 <template>
   <div class="demo-app">
-    <div class="demo-app-sidebar">
+    <!-- <div class="demo-app-sidebar">
       <div class="demo-app-sidebar-section">
         <h2>소개</h2>
-
-        <!-- <button v-if="getReviewOk" @click="checkReview(), getReviewOk=false">회고 가져오기</button> -->
         <ul>
           <li>날짜를 선택하고 회고를 작성하세요</li>
           <li>빨간색은 DDAY, 보라색은 회고입니다.</li>
@@ -258,8 +257,7 @@ export default {
         </label>
       </div>
       <div class="demo-app-sidebar-section">
-        <!-- <h2 v-if="(currentEvents.length) ">모든 이벤트({{ currentEvents.length }})</h2>
-        <h2 v-else>이벤트 없음</h2> -->
+
         <h2>일정</h2>
         <ul>
           <li v-for="event in currentEvents" :key="event.id">
@@ -269,7 +267,7 @@ export default {
           </li>
         </ul>
       </div>
-    </div>
+    </div> -->
     <div class="demo-app-main">
       <FullCalendar class="demo-app-calendar" :options="calendarOptions">
         <template v-slot:eventContent="arg">

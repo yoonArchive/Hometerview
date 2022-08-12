@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div id="myaccount-title"><h2>내 계정 정보</h2></div>
-    <div id="inner-myaccount">
+    <!-- <div id="inner-myaccount">
       <div id="profile">
         <img id="preview" src="@/assets/images/notloginimg.png" />
         <form enctype="multipart/form-data">
@@ -23,27 +23,69 @@
         </button>
       </div>
 
-      <div id="email">
-        이메일
-        <input
-          type="email"
-          v-model="this.userdata.userEmail"
-          class="form-control"
-        />
-      </div>
-
       <div id="name">
-        이름
+        <span class="content">이름</span>
         <input
           type="text"
           v-model="this.userdata.userName"
-          class="form-control"
+          class="form-control name"
         />
+      </div>
+
+      <div id="email">
+        <span class="content">이메일</span>
+        <div class="row" style="margin-left:1px">
+          <input
+            type="email"
+            v-model="this.userdata.userEmail"
+            class="form-control email col-md-9"
+          />
+          <button class="col-md-2" style="margin-left:1px">인증</button>
+        </div>
       </div>
     </div>
     <button @click="this.updateUser(this.userdata)" id="button">
       변경하기
-    </button>
+    </button> -->
+    <div id="inner-myaccount">
+      <div class="wrap">
+        <div class="form-item">
+          <label class="content">프로필 사진</label>
+          <input type="file" placeholder="파일을 선택해주세요." />
+        </div>
+        <div id="name" class="form-item">
+          <label class="content">이름</label>
+          <input
+            type="text"
+            v-model="this.userdata.userName"
+            class="form-control name"
+          />
+        </div>
+        <div class="form-item">
+          <label class="content">이메일</label>
+          <div class="input-group mb-3">
+            <input
+              type="email"
+              class="form-control"
+              v-model="this.userdata.userEmail"
+              aria-describedby="basic-addon2"
+            />
+            <div class="input-group-append">
+              <button
+                class="btn btn-outline-secondary"
+                type="button"
+                style="margin-left:10px"
+              >
+                인증
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button @click="this.updateUser(this.userdata)" id="button" class="btn">
+        저장
+      </button>
+    </div>
   </div>
 </template>
 
@@ -115,17 +157,81 @@ export default {
 </script>
 
 <style scoped>
+.wrap {
+  display: flex;
+  flex-direction: column;
+  /* margin-top: 50px; */
+}
+
+.wrap > .form-item {
+  margin-bottom: 20px;
+}
+
+.form-item {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.form-item > label {
+  width: 140px;
+  padding-right: 20px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.form-item > input {
+  flex-grow: 1;
+}
+
+#myaccount-title {
+  font-family: "티머니 둥근바람 볼드";
+  margin-bottom: 50px;
+}
+
 #inner-myaccount {
-  border: 1px solid;
-  width: 200%;
-  height: 300%;
-  padding: 30px;
-  border-color: rgb(134, 132, 132);
-  border-radius: 10px;
+  border: 2px solid;
+  padding: 35px;
+  border-color: rgb(241, 241, 241);
+  border-radius: 20px;
+  width: 800px;
 }
-#name {
-  /* margin: 20px; */
+
+label {
+  font-size: 18px;
 }
+
+.btn {
+  -moz-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+  -webkit-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+  -ms-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+  border-radius: 5px;
+  border: 0;
+  box-shadow: inset 0 0 0 2px #653fd3;
+  background-color: #ffffff;
+  color: #653fd3;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 0.8em;
+  font-weight: 600;
+  height: 3em;
+  width: 5em;
+  letter-spacing: 0.15em;
+  text-align: center;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.btn:hover {
+  background-color: rgba(161, 104, 253, 0.05);
+}
+.btn:active {
+  background-color: rgba(161, 104, 253, 0.15);
+}
+/*
+
 #profile {
   display: flex;
   flex-direction: row;
@@ -152,23 +258,25 @@ export default {
   background-color: #6f42c1;
 }
 #inner-myaccount {
-  /* text-align: center; */
   text-align: left;
 }
-/* 내계정정보 타이틀 움직이는용도 */
-#myaccount-title {
-  margin-top: 50px;
-  margin-bottom: 60px;
+
+.content {
+  font-size: 17px;
 }
-.form-control {
-  /* margin-top: 10px; */
-  /* margin-bottom: 10px; */
-  width: 350px;
+
+.name {
+
+  width: 700px;
+}
+.email {
+
+  width: 550px;
 }
 .container {
   display: flex;
   flex-direction: column;
   margin-bottom: 100px;
   height: 100%;
-}
+} */
 </style>

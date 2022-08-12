@@ -1,53 +1,61 @@
 <template>
 <div class="container">
   <div class="my-top">
-    <div class="imgi">
-      <img :src="imgsource2" alt="imgsource1">
-    </div>
-    <div class="review-1">
-      <div class="cover-letterL">자소서 개수 {{resumeContents.length}}</div>
-      <button @click="addResume" id="cover-Pbutton">+</button>
-      <button id="cover-Mbutton">-</button>
-      <div v-for="(item, index) in resumeContents.length" :key="index">
-        <ul>
-        <li id="inner-table"><router-link :to="{name : 'coverletter', params : {'resumeindex' : item - 1}}" id="cover-router">
-          <div>{{resumeContents[item-1].resumeTitle}}</div>
-        </router-link>
-        </li>
-      </ul>
-      </div>
-  </div>
 
 
-  </div>
 
-
-  <hr>
-
-
-    <div class="review-3 ">
-      <h3>DDAY 목록</h3>
-        <div class="card " style="width: 15rem;" v-for="(ddays, index) in currentDdays" :key="index">
-          <div class="card-body">
-            <h5 class="card-title">{{ddays.ddayTitle}}</h5>
-            <h6 class="card-subtitle mb-2 text-muted">날짜 {{ddays.ddayDate}}</h6>
-            <p  v-if="(restday[index] < 0)" class="card-text-1">D-DAY {{restday[index]}} </p>
-            <p  v-else class="card-text-2">D-DAY {{restday[index]}} </p>
-            <button @click="showModalE(ddays.ddayNo), getDdayDetail(ddays.ddayNo)">수정</button>
-                <!-- <ModalEdit v-if="showModalE" @close="showModalE = false" :dday="ddays" :key="ddays.ddayNo+1" >
-                  <h3 slot="header">dday 수정</h3>
-                </ModalEdit> -->
-            <button @click="deleteDDAY(ddays.ddayNo)">삭제</button>
-          </div>
+    <div class="my-left">
+      <div class="review-1">
+        <div class="cover-letterL">자소서 개수 {{resumeContents.length}}</div>
+        <button @click="addResume" id="cover-Pbutton">+</button>
+        <button id="cover-Mbutton">-</button>
+        <div v-for="(item, index) in resumeContents.length" :key="index">
+          <ul>
+          <li id="inner-table"><router-link :to="{name : 'coverletter', params : {'resumeindex' : item - 1}}" id="cover-router">
+            <div>{{resumeContents[item-1].resumeTitle}}</div>
+          </router-link>
+          </li>
+        </ul>
         </div>
-    </div>
+      </div>
 
+
+
+
+      <div class="review-3 ">
+        	<!-- <button id="button-review" @click="showModal = true"><p id="a">DDAY 작성하기</p></button>
+          <div class="card " style="width: 10rem;" v-for="(ddays, index) in currentDdays" :key="index">
+            <div class="card-body">
+              <h5 class="card-title">{{ddays.ddayTitle}}</h5>
+              <h6 class="card-subtitle mb-2 text-muted">{{ddays.ddayDate}}</h6>
+              <p  v-if="(restday[index] < 0)" class="card-text-1">D-DAY {{restday[index]}} </p>
+              <p  v-else class="card-text-2">D-DAY {{restday[index]}} </p>
+              <button @click="showModalE(ddays.ddayNo), getDdayDetail(ddays.ddayNo)">수정</button>
+              <button @click="deleteDDAY(ddays.ddayNo)">삭제</button>
+            </div>
+          </div> -->
+
+
+          <div v-for="(ddays, index) in currentDdays" :key="index">
+          <ul>
+          <li id="inner-table">
+            {{ddays.ddayTitle}} {{restday[index]}}
+             <button @click="showModalE(ddays.ddayNo), getDdayDetail(ddays.ddayNo)">수정</button>
+              <button @click="deleteDDAY(ddays.ddayNo)">삭제</button>
+          </li>
+        </ul>
+        </div>
+      </div>
+    </div>
+     <div class="calendar">
+    <StudyCalendar :reviews="reviewContents" :dday="currentDdays"></StudyCalendar>
+  </div>
 
     <ModalEdit v-if="openedModal !== null" @close="openedModal = null" :dday="this.dday" :key="this.openedModal" >
       <!-- <h3 slot="header">dday 수정</h3> -->
     </ModalEdit>
 
-  	<button id="button-review" @click="showModal = true"><p id="a">DDAY 작성하기</p></button>
+
 
      <Modaldday v-if="showModal" @close="showModal = false" :dday="currentDdays">
 
@@ -55,8 +63,6 @@
      </Modaldday>
   </div>
   <hr>
-    <StudyCalendar :reviews="reviewContents" :dday="currentDdays"></StudyCalendar>
-
   <div class="review-2">
     <h1>회고록</h1>
 
@@ -94,12 +100,16 @@
       <button id="button-review" @click="showReviewForm = true">작성하기</button>
 
        <ReviewForm v-if="showReviewForm" @close="showReviewForm = false" :review="reviewContents" action="create">
-        <!-- <h3 slot="header">회고록작성 폼</h3>s -->
         </ReviewForm>
-    <!-- <ReviewNewView ></ReviewNewView> -->
 
+    </div>
   </div>
-</div>
+  </div>
+
+
+
+
+
 </template>
 
 <script>
@@ -219,14 +229,40 @@ export default {
   @import './main.css';
   /* @import './fullcalander/main.js'; */
 
+.conatiner{
+  display: flex;
+  flex-direction: row;
+}
+.my-top{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+}
+.my-left{
+  display: flex;
+  flex-direction: column;
+}
+.calendar{
+  width: 1000px;
+  /* height: 800px; */
+  /* display: flex; */
+}
+
 #cover-router{
   text-decoration-line: none;
 }
 .review-1{
-  margin-top: 100px;
+  /* margin-top: 100px; */
 }
 .review-2{
   margin-top: 100px;
+}
+
+.review-3{
+  /* display: flex;
+  flex-direction: row; */
+  /* margin: 30px; */
 }
 .conatiner{
 
@@ -315,11 +351,7 @@ b { /* used for event dates/times */
   margin: 0 auto;
 }
 
-.review-3{
-  display: flex;
-  flex-direction: row;
-  margin: 30px;
-}
+
 .card{
   margin: 20px;
 }
@@ -337,11 +369,7 @@ b { /* used for event dates/times */
   color: white;
   padding: 5px;
 }
-.my-top{
-  display: flex;
-  justify-content: space-between;
 
-}
 #inner-table{
   border:#653FD3
 
