@@ -51,9 +51,7 @@ export default {
   width: fit-content;
   height: fit-content;
   display: block;
-
-  /* filter: sepia(80%); */
-
+  border: solid #8c1d1d 3px;
   background-color: black;
   border-radius: 1.28rem;
   object-fit: cover;
@@ -72,9 +70,7 @@ export default {
   width: fit-content;
   height: fit-content;
   display: block;
-
-  /* filter: sepia(80%); */
-
+  border: solid #8c1d1d 3px;
   background-color: black;
   border-radius: 1.28rem;
   object-fit: cover;

@@ -4,7 +4,6 @@
     <div class="video-name">
       {{ clientData }}
     </div>
-    <!-- <p style="margin:0px;">{{ clientData }}</p> -->
   </div>
 </template>
 
