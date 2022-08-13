@@ -395,7 +395,12 @@ export default {
     ...mapGetters(["currentUser", "studySpaceDetail"])
   },
   methods: {
-    ...mapActions(["bringStudySpaceDetail", "changeToCoverLetter"]),
+    ...mapActions([
+      "bringStudySpaceDetail",
+      "changeToCoverLetter",
+      "needToFixPosture",
+      "stopToFixPosture"
+    ]),
     async init() {
       const modelURL = `${this.url}model.json`;
       const metadataURL = `${this.url}metadata.json`;
@@ -434,21 +439,29 @@ export default {
       );
       this.predictions = await this.model.predict(posenetOutput);
     },
-    inference() {
+    async inference() {
       for (const prediction of this.predictions) {
-        const className = prediction.className;
-        const pred = prediction.probability.toFixed(2);
-        if (className !== "center" && pred > 0.7) {
-          this.needToFixPosture(true);
+        const className = await prediction.className;
+        const pred = await prediction.probability.toFixed(2);
+
+        if (className === "center") {
+          const postureColor = "";
+          await this.needToFixPosture(postureColor);
           console.log("자세교정 필요함");
-        } else {
-          this.needToFixPosture(false);
+        } else if (className === "left" && pred > 0.9) {
+          const postureColor = "#8c1d1d";
+          console.log("left");
+          await this.needToFixPosture(postureColor);
+        } else if (className === "right" && pred > 0.9) {
+          const postureColor = "#8c1d1d";
+          console.log("right");
+          await this.needToFixPosture(postureColor);
         }
       }
     },
-    tmStop() {
+    async tmStop() {
+      await this.stopToFixPosture();
       this.webcam = null;
-      this.stopToFixPosture();
     },
     async findIndex(userId) {
       const members = this.studySpaceDetail.studyJoins;

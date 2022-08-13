@@ -7,7 +7,7 @@ export default {
   state: {
     interviewUser: "",
     interviewUserFixed: undefined,
-    posture: false
+    posture: ""
   },
   getters: {
     interviewUser: state => state.interviewUser,
@@ -32,7 +32,7 @@ export default {
       commit("SET_FIX_POSTURE", needInfo);
     },
     stopToFixPosture({ commit }) {
-      commit("SET_FIX_POSTURE", false);
+      commit("SET_FIX_POSTURE", "");
     }
   }
 };
