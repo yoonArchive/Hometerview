@@ -42,14 +42,43 @@ export default {
 <style scoped>
 .main {
   /* width: 98%; */
-  height: 60vh;
+  /* height: 60vh;
   border-radius: 2% 2% 2% 2%;
-  margin-top: 20px;
+  margin-top: 20px; */
+  aspect-ratio: 4/3;
+  max-height: calc(100vh - 6rem);
+  max-width: 100%;
+  width: fit-content;
+  height: fit-content;
+  display: block;
+
+  /* filter: sepia(80%); */
+
+  background-color: black;
+  border-radius: 1.28rem;
+  object-fit: cover;
+  align-self: center;
+  margin-left: auto;
+  margin-right: auto;
+  /* border-color: red; */
 }
 .sub {
   /* width: 320px; */
-  height: 20vh;
-  border-radius: 4% 4% 4% 4%;
+  /* height: 20vh; */
+  /* border-radius: 4% 4% 4% 4%; */
+  aspect-ratio: 4/3;
+  max-height: calc(100vh - 6rem);
+  max-width: 100%;
+  width: fit-content;
+  height: fit-content;
+  display: block;
+
+  /* filter: sepia(80%); */
+
+  background-color: black;
+  border-radius: 1.28rem;
+  object-fit: cover;
+  align-self: center;
 }
 /* .main {
   height: 70%;

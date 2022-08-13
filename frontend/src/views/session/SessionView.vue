@@ -4,7 +4,7 @@
       <!-- <div id="session-title">{{ mySessionId }}</div><br> -->
       <div class="con d-flex justify-content-between row">
         <div class="side-left col-md-8">
-          <div class="center">
+          <div class="center" style="margin-top:3vh;">
             <!-- 중앙 -->
             <!-- 메인 화면, 사이드 -->
 
@@ -16,12 +16,13 @@
                   class="large-video"
                   :stream-manager="mainStreamManager"
                   :mainStream="true"
+                  style="height:65vh;"
                 />
               </div>
 
               <!-- 비디오 그룹 -->
               <div
-                class="video-container row d-flex justify-content-center  mb-2"
+                class="video-container row d-flex justify-content-center mt-1"
               >
                 <!-- 자기화면 (작은) -->
                 <user-video
@@ -29,6 +30,7 @@
                   :stream-manager="publisher"
                   :mainStream="false"
                   @click="updateMainVideoStreamManager(publisher)"
+                  style="height:15vh;"
                 />
                 <!-- native : 상위 컴포넌트(즉 여기 있는 이벤트)를 하위 컴포넌트에서 작동시키고 싶을 때 사용한다. -->
                 <!-- vue3에서 native가 사라지고 그냥 click을 누르면 된다. -->
@@ -39,6 +41,7 @@
                   :stream-manager="sub"
                   :mainStream="false"
                   @click="updateMainVideoStreamManager(sub)"
+                  style="height:15vh;"
                 />
               </div>
             </div>
@@ -46,14 +49,15 @@
             <div>자세 분석</div>
             <div hidden="ture" ref="webcam"></div>
             <button type="button" @click="init()">Start</button>
-            <div
+            <button type="button" @click="tmStop()">Stop</button>
+            <!-- <div
               v-for="prediction in predictions"
               :key="prediction.className"
               style="color:whitesmoke;"
             >
               {{ prediction.className }}:
               {{ prediction.probability.toFixed(2) }}
-            </div>
+            </div> -->
 
             <div class="bottom d-flex justify-content-evenly">
               <!-- 하단 -->
@@ -416,11 +420,13 @@ export default {
       window.requestAnimationFrame(this.loop);
     },
     async loop() {
-      console.log("hi");
-      this.webcam.update();
-      await this.predict();
-      await this.inference();
-      window.requestAnimationFrame(this.loop);
+      if (this.webcam != null) {
+        console.log("hi");
+        this.webcam.update();
+        await this.predict();
+        await this.inference();
+        window.requestAnimationFrame(this.loop);
+      }
     },
     async predict() {
       const { posenetOutput } = await this.model.estimatePose(
@@ -440,7 +446,10 @@ export default {
         }
       }
     },
-
+    tmStop() {
+      this.webcam = null;
+      this.stopToFixPosture();
+    },
     async findIndex(userId) {
       const members = this.studySpaceDetail.studyJoins;
       let studentindex;
