@@ -11,7 +11,7 @@
         />
       </router-link>
     </div>
-    <div class="col-md-7">
+    <div class="col-md-8">
       <ul class="navbar__menu">
         <router-link
           :to="item.path"
@@ -24,42 +24,44 @@
         </router-link>
       </ul>
     </div>
-    <div class="account-menu">
-      <div v-if="isLoggedIn" class="dropdown">
-        <img class="profile-img" :src="profile" alt="" />
-        <button
-          type="button"
-          class="btn  dropdown-toggle"
-          data-bs-toggle="dropdown"
-          aria-expanded="false"
-        >
-          <span>{{ currentUser.userName }}</span
-          >님 오늘도 화이팅하세요
-        </button>
-        <ul class="dropdown-menu dropdown-menu-end" style="">
-          <li>
-            <button class="dropdown-item" type="button">
-              <router-link to="/home/mypage"
-                ><span class="dropdown-title">마이페이지</span></router-link
-              >
-            </button>
-          </li>
-          <li>
-            <button class="dropdown-item" type="button">
-              <router-link to="/home/logout" id="signup"
-                ><span class="dropdown-title">로그아웃</span></router-link
-              >
-            </button>
-          </li>
-        </ul>
-      </div>
-      <div v-else>
-        <router-link to="/home/login" class="header-routerlink-decoration">
-          <span class="account-title">로그인</span>
-        </router-link>
-        <router-link to="/home/signup" class="header-routerlink-decoration">
-          <span class="account-title">회원가입</span>
-        </router-link>
+    <div class="account-menu col">
+      <div class="d-flex flex-row-reverse">
+        <div v-if="isLoggedIn" class="dropdown">
+          <img class="profile-img" :src="profile" alt="" />
+          <button
+            type="button"
+            class="btn  dropdown-toggle"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <span>{{ currentUser.userName }}</span
+            >님 오늘도 화이팅하세요
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end" style="">
+            <li>
+              <button class="dropdown-item" type="button">
+                <router-link to="/home/mypage"
+                  ><span class="dropdown-title">마이페이지</span></router-link
+                >
+              </button>
+            </li>
+            <li>
+              <button class="dropdown-item" type="button">
+                <router-link to="/home/logout" id="signup"
+                  ><span class="dropdown-title">로그아웃</span></router-link
+                >
+              </button>
+            </li>
+          </ul>
+        </div>
+        <div v-else>
+          <router-link to="/home/login" class="header-routerlink-decoration">
+            <span class="account-title">로그인</span>
+          </router-link>
+          <router-link to="/home/signup" class="header-routerlink-decoration">
+            <span class="account-title">회원가입</span>
+          </router-link>
+        </div>
       </div>
     </div>
   </nav>
