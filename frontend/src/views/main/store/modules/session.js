@@ -7,21 +7,19 @@ export default {
   state: {
     interviewUser: "",
     interviewUserFixed: undefined,
-    mainStreamManager: undefined
+    posture: false
   },
   getters: {
     interviewUser: state => state.interviewUser,
     interviewUserFixed: state => state.interviewUserFixed,
-    mainStreamManager: state => state.mainStreamManager
+    posture: state => state.posture
   },
   mutations: {
     SET_INTERVIEW_USER: (state, interviewUser) =>
       (state.interviewUser = interviewUser),
     SET_INTERVIEW_USER_FIXED: (state, interviewUserFixed) =>
       (state.interviewUserFixed = interviewUserFixed),
-    SET_MAIN_STREAM_MANAGER: (state, mainStreamManager) => {
-      state.mainStreamManager = mainStreamManager;
-    }
+    SET_FIX_POSTURE: (state, posture) => (state.posture = posture)
   },
   actions: {
     changeInterviewUser({ commit }, interviewUser) {
@@ -30,9 +28,11 @@ export default {
     changeInterviewUserFixed({ commit }, interviewUserFixed) {
       commit("SET_INTERVIEW_USER_FIXED", interviewUserFixed);
     },
-    updateMainVideoStreamManager({ commit, getters }, stream) {
-      if (getters.mainStreamManager === stream) return;
-      commit("SET_MAIN_STREAM_MANAGER", stream);
+    needToFixPosture({ commit }, needInfo) {
+      commit("SET_FIX_POSTURE", needInfo);
+    },
+    stopToFixPosture({ commit }) {
+      commit("SET_FIX_POSTURE", false);
     }
   }
 };

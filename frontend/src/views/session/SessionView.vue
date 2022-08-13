@@ -419,15 +419,26 @@ export default {
       console.log("hi");
       this.webcam.update();
       await this.predict();
+      await this.inference();
       window.requestAnimationFrame(this.loop);
     },
     async predict() {
       const { posenetOutput } = await this.model.estimatePose(
         this.webcam.canvas
       );
-      console.log("check!!");
       this.predictions = await this.model.predict(posenetOutput);
-      console.log("prediction");
+    },
+    inference() {
+      for (const prediction of this.predictions) {
+        const className = prediction.className;
+        const pred = prediction.probability.toFixed(2);
+        if (className !== "center" && pred > 0.7) {
+          this.needToFixPosture(true);
+          console.log("자세교정 필요함");
+        } else {
+          this.needToFixPosture(false);
+        }
+      }
     },
 
     async findIndex(userId) {
