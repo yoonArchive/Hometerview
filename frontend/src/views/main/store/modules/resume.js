@@ -181,13 +181,18 @@ export default {
     async saveResumeChange({ dispatch, getters, commit }) {
       const originalNumberQuestion = getters.originalNumberQuestion;
       const currentResume = getters.currentResume;
+      var lastitemNo = 0;
       console.log(originalNumberQuestion);
+      console.log(currentResume);
       for (var i = 0; i < originalNumberQuestion; i++) {
         const detailNo = currentResume[i].detailNo;
         const data = {
           answer: currentResume[i].answer,
           item: currentResume[i].question
         };
+        if (lastitemNo < currentResume[i].itemNo) {
+          lastitemNo = currentResume[i].itemNo;
+        }
         await axios
           .put(api_url.resumes.getResumeInfo() + detailNo, data, {
             headers: getters.resumeHeader
@@ -201,13 +206,12 @@ export default {
       }
       for (var i = originalNumberQuestion; i < currentResume.length; i++) {
         var resumeIndex = getters.resumeIndex;
-        var numberOfQuestion = getters.numberOfQuestion[resumeIndex] + 1;
         var resumeNo = getters.resumeContents[resumeIndex].resumeNo;
 
         const data = {
           answer: currentResume[i].answer,
           item: currentResume[i].question,
-          itemNo: numberOfQuestion,
+          itemNo: ++lastitemNo,
           resumeNo: resumeNo
         };
         await axios
@@ -236,7 +240,7 @@ export default {
         .then(data => {
           var length = data.data.resumes.length;
           console.log(data.data.resumes);
-
+          console.log(data);
           commit("SET_RESUME_CONTENTS", data.data.resumes);
           commit("SET_NUMBER_RESUME", length);
           commit("SET_NUMBER_QUESTION", data.data.detailCounts);
@@ -268,9 +272,11 @@ export default {
             const res = {
               detailNo: result.data.detailNo,
               question: result.data.item,
-              answer: result.data.answer
+              answer: result.data.answer,
+              itemNo: result.data.itemNo
             };
             i++;
+
             commit("ADD_CURRENT_RESUME", res);
             commit("PLUS_ORIGINAL_NUMBER_QUESTION");
             console.log(getters.currentResume);

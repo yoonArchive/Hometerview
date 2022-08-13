@@ -22,7 +22,7 @@
     <div v-if="IsAdding" class="question-wrapper">
       <div class="row">
         <div class="col-8">
-          <textarea v-model="toaddtext"></textarea>
+          <textarea class="question-textarea" v-model="toaddtext"></textarea>
         </div>
         <div class="col">
           <div class="d-flex flex-row-reverse bd-highlight">
@@ -43,7 +43,10 @@
             <div class="row">
               <div class="col-8">
                 <div class="d-flex justify-content-between">
-                  <textarea v-model="item.contents"></textarea>
+                  <textarea
+                    class="question-textarea"
+                    v-model="item.contents"
+                  ></textarea>
                 </div>
               </div>
               <div class="col">
@@ -167,6 +170,11 @@ export default {
 </script>
 
 <style>
+.question-textarea {
+  border: none;
+  resize: none;
+  width: 100%;
+}
 .question-button {
   margin-left: 10%;
   border: 1px solid #653fd3;

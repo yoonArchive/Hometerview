@@ -176,7 +176,7 @@ function makeRoutesFromMenu() {
           path: "myinterview",
           name: "myinterview",
           component: MyInterviewView,
-          redirect: "myinterview/diary",
+          redirect: "/home/myinterview/diary",
           children: [
             {
               path: "diary",
