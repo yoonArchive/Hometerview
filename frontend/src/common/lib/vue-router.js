@@ -16,8 +16,6 @@ import MembersRecruitmentView from "@/views/membersrecruitment/MembersRecruitmen
 import MembersRecruitmentDetailView from "@/views/membersrecruitment/MembersRecruitmentDetailView";
 import MembersRecruitmentEditView from "@/views/membersrecruitment/MembersRecruitmentEditView";
 
-import StudyRecruitment from "@/views/home/components/study-recruitment";
-
 /* 스터디 스페이스 페이지ㅣ*/
 import StudySpaceDetailView from "@/views/studyspace/StudySpaceDetailView";
 import MemberCoverLetter from "@/views/studyspace/MemberCoverLetter";
@@ -78,13 +76,8 @@ function makeRoutesFromMenu() {
       path: "/home",
       name: "home",
       component: Home,
-      redirect: "/home/studyrecruitment",
+      redirect: "/home/membersrecruitment",
       children: [
-        {
-          path: "studyrecruitment",
-          name: "studyrecruitment",
-          component: StudyRecruitment
-        },
         {
           path: "login",
           name: "login",
