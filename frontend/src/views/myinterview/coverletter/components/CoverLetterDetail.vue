@@ -35,6 +35,7 @@
         >
           <div class="cover-letter-question">
             <textarea
+              placeholder="질문을 입력해주세요..."
               class="cover-letter-question-textarea"
               v-model="currentResume[selectedNum].question"
               id="cover-write"
@@ -46,6 +47,7 @@
           />
           <div class="cover-letter-answer">
             <textarea
+              placeholder="답변을 입력해주세요..."
               name=""
               id="cover-write"
               class="cover-letter-answer-textarea"

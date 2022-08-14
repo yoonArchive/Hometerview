@@ -38,20 +38,20 @@
             >님 오늘도 화이팅하세요
           </button>
           <ul class="dropdown-menu dropdown-menu-end" style="">
-            <li>
-              <button class="dropdown-item" type="button">
-                <router-link to="/home/mypage"
-                  ><span class="dropdown-title">마이페이지</span></router-link
-                >
-              </button>
-            </li>
-            <li>
-              <button class="dropdown-item" type="button">
-                <router-link to="/home/logout" id="signup"
-                  ><span class="dropdown-title">로그아웃</span></router-link
-                >
-              </button>
-            </li>
+            <router-link to="/home/mypage">
+              <li>
+                <button class="dropdown-item" type="button">
+                  <span class="dropdown-title">마이페이지</span>
+                </button>
+              </li>
+            </router-link>
+            <router-link to="/home/logout" id="signup">
+              <li>
+                <button class="dropdown-item" type="button">
+                  <span class="dropdown-title">로그아웃</span>
+                </button>
+              </li>
+            </router-link>
           </ul>
         </div>
         <div v-else>
