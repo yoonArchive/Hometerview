@@ -30,12 +30,12 @@ public class ResumeDetail {
     @Column(name = "item")
     private String item;
 
-    @Column(name = "answer")
+    @Column(name = "answer", length = 1000)
     private String answer;
 
     @JsonIgnore
     @Builder.Default
-    @OneToMany(mappedBy = "resumeDetail")
+    @OneToMany(mappedBy = "resumeDetail", orphanRemoval = true)
     private List<PersonalQuestion> personalQuestions = new ArrayList<>();
 
     public void createResumeDetail(Resume resume, Long itemNo, String item, String answer) {
