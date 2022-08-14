@@ -135,74 +135,89 @@
           <!-- 메시지, 자소서, 참가자 지정 -->
           <div class="side-panel">
             <div class="select-side-bottons">
-              <div class="d-flex justify-content-start">
-                <div>
-                  <img
-                    :src="require(`@/assets/images/session/chatOn.png`)"
-                    @click="changeContent('chatting')"
-                    style="height:6vh; margin-top:-5%;"
-                    v-if="chatting"
-                  />
-                  <img
-                    :src="require(`@/assets/images/session/chatOff.png`)"
-                    @click="changeContent('chatting')"
-                    style="height:6vh; margin-top:-5%;"
-                    v-else
-                  />
-                </div>
-                <div>
-                  <img
-                    :src="require(`@/assets/images/session/resumeOn.png`)"
-                    @click="changeContent('participant')"
-                    v-if="participant"
-                    style="margin-top:5%; height:4.8vh"
-                  />
-                  <img
-                    :src="require(`@/assets/images/session/resumeOff.png`)"
-                    @click="changeContent('participant')"
-                    v-else
-                    style="margin-top:5%; height:4.8vh"
-                  />
-                </div>
-                <div>
-                  <img
-                    :src="require(`@/assets/images/session/memberOn.png`)"
-                    @click="changeContent('selectinterviewee')"
-                    style="height:5.7vh; margin-top:5%"
-                    v-if="selectinterviewee"
-                  />
-                  <img
-                    :src="require(`@/assets/images/session/memberOff.png`)"
-                    @click="changeContent('selectinterviewee')"
-                    style="height:5.7vh; margin-top:5%"
-                    v-else
-                  />
-                </div>
-                <div class="row">
-                  <div class="col">
+              <div class="d-flex justify-content-between">
+                <div class="row" style="margin-left:1vh;">
+                  <div class="col" style="margin:0; padding:0;">
                     <img
-                      :src="require(`@/assets/images/session/videoOn.png`)"
-                      style="height:3vh; margin-top:%;"
-                      v-if="recordOnOff"
-                      @click="recordONOFF()"
+                      :src="require(`@/assets/images/session/chatOn.png`)"
+                      @click="changeContent('chatting')"
+                      style="height:6vh; margin-top:-5%;"
+                      v-if="chatting"
                     />
                     <img
-                      :src="require(`@/assets/images/session/videoOff.png`)"
-                      style="height:3vh; margin-top:%;"
-                      @click="recordONOFF()"
+                      :src="require(`@/assets/images/session/chatOff.png`)"
+                      @click="changeContent('chatting')"
+                      style="height:6vh; margin-top:-5%;"
                       v-else
                     />
                   </div>
-                  <div class="col">
+                  <div class="col" style="margin:0; padding:0;">
                     <img
-                      :src="require(`@/assets/images/session/stop.png`)"
-                      style="height:3vh; margin-top:;"
-                      @click="stop"
-                      v-if="true"
+                      :src="require(`@/assets/images/session/resumeOn.png`)"
+                      @click="changeContent('participant')"
+                      v-if="participant"
+                      style="margin-top:5%; height:4.8vh"
+                    />
+                    <img
+                      :src="require(`@/assets/images/session/resumeOff.png`)"
+                      @click="changeContent('participant')"
+                      v-else
+                      style="margin-top:5%; height:4.8vh"
+                    />
+                  </div>
+                  <div class="col" style="margin:0; padding:0;">
+                    <img
+                      :src="require(`@/assets/images/session/memberOn.png`)"
+                      @click="changeContent('selectinterviewee')"
+                      style="height:5.7vh; margin-top:5%"
+                      v-if="selectinterviewee"
+                    />
+                    <img
+                      :src="require(`@/assets/images/session/memberOff.png`)"
+                      @click="changeContent('selectinterviewee')"
+                      style="height:5.7vh; margin-top:5%"
+                      v-else
                     />
                   </div>
                 </div>
+                <div>
+                  <div
+                    class="row"
+                    style="margin-right:3.5vh; margin-top:0.7vh;"
+                  >
+                    <div
+                      class="col"
+                      style="margin:0; padding:0; margin-right:0.5vh;"
+                    >
+                      <img
+                        :src="require(`@/assets/images/session/videoOn.png`)"
+                        style="height:3vh; margin-top:%;"
+                        v-if="recordOnOff"
+                        @click="recordONOFF()"
+                      />
+                      <img
+                        :src="require(`@/assets/images/session/videoOff.png`)"
+                        style="height:3vh; margin-top:%;"
+                        @click="recordONOFF()"
+                        v-else
+                      />
+                    </div>
+                    <div
+                      class="col"
+                      style="margin:0; padding:0; margin-left:0.5vh;"
+                    >
+                      <img
+                        :src="require(`@/assets/images/session/stop.png`)"
+                        style="height:3vh; margin-top:;"
+                        @click="stop"
+                        v-if="true"
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
+
+              <div></div>
               <!-- 메시지 -->
               <div v-if="chatting">
                 <message-list
