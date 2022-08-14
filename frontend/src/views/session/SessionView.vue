@@ -2,6 +2,16 @@
   <div class="full-con">
     <div class="main-con">
       <!-- <div id="session-title">{{ mySessionId }}</div><br> -->
+      <div>자세 분석</div>
+      <div hidden="ture" ref="webcam"></div>
+      <button type="button" @click="init()">Start</button>
+      <button type="button" @click="tmStop()">Stop</button>
+      <button type="button" @click="start()">녹화시작</button>
+      <button type="button" @click="stop()">녹화중단</button>
+      <div v-if="recording" class="test">
+        {{ recording }} <br />
+        {{ recording.url }}
+      </div>
       <div class="con d-flex justify-content-between row">
         <div class="side-left col-md-8">
           <div class="center" style="margin-top:3vh;">
@@ -46,10 +56,6 @@
               </div>
             </div>
 
-            <div>자세 분석</div>
-            <div hidden="ture" ref="webcam"></div>
-            <button type="button" @click="init()">Start</button>
-            <button type="button" @click="tmStop()">Stop</button>
             <!-- <div
               v-for="prediction in predictions"
               :key="prediction.className"
@@ -321,6 +327,9 @@
   width: 6vh;
   border-radius: 100% 100% 100% 100%;
 }
+.test {
+  color: white;
+}
 </style>
 
 <script>
@@ -380,6 +389,10 @@ export default {
       pose: null,
       posenetOutput: null,
 
+      // record
+      recording: {},
+      recordingSessionId: "",
+
       // massege
       msgs: [],
       fromId: "",
@@ -407,7 +420,7 @@ export default {
   },
   computed: {
     // studySpaceDetail.joinTyped
-    ...mapGetters(["currentUser", "studySpaceDetail"])
+    ...mapGetters(["currentUser", "studySpaceDetail", "currentUser"])
   },
   methods: {
     ...mapActions([
@@ -416,6 +429,72 @@ export default {
       "needToFixPosture",
       "stopToFixPosture"
     ]),
+    async start() {
+      // const date = await new Date();
+      // const [month, day, year, hour, minutes, seconds] = await [
+      //   date.getMonth().toString(),
+      //   date.getDate().toString(),
+      //   date.getFullYear().toString(),
+      //   date.getHours().toString(),
+      //   date.getMinutes().toString(),
+      //   date.getSeconds().toString()
+      // ];
+      // this.recordingSessionId = await `${this.mySessionId}-${year}-${month}-${day}-${hour}-${minutes}-${seconds}`;
+      // const recordSessionId = this.mySessionId
+      return this.recordingStart(this.mySessionId);
+    },
+    stop() {
+      console.log(this.mySessionId);
+      return this.recordingStop(this.mySessionId);
+    },
+    recordingStart(sessionId) {
+      return new Promise(async (resolve, reject) => {
+        axios
+          .post(
+            `${OPENVIDU_SERVER_URL}/openvidu/api/recordings/start`,
+            JSON.stringify({
+              session: sessionId
+            }),
+            {
+              auth: {
+                username: "OPENVIDUAPP",
+                password: OPENVIDU_SERVER_SECRET
+              }
+            }
+          )
+          .then(response => {
+            this.recording = response.data;
+            console.log(this.recording);
+          })
+          .then(data => resolve(data.token))
+          .catch(error => reject(error.response));
+      });
+    },
+
+    recordingStop(sessionId) {
+      return new Promise(async (resolve, reject) => {
+        // const userId = await this.currentUser.userId;
+        // const recordingFileName = await `${userId}_${sessionId}.mp4`;
+        // this.recording.url = await `https://i7b105.p.ssafy.io:8443/openvidu/recordings/${this.recordingSessionId}/${recordingFileName}`;
+        axios
+          .post(
+            `${OPENVIDU_SERVER_URL}/openvidu/api/recordings/stop/${sessionId}`,
+            {},
+            {
+              auth: {
+                username: "OPENVIDUAPP",
+                password: OPENVIDU_SERVER_SECRET
+              }
+            }
+          )
+          .then(response => {
+            this.recording = response.data;
+            console.log(this.recording);
+          })
+          .then(data => resolve(data.token))
+          .catch(error => reject(error.response));
+      });
+    },
     async init() {
       const modelURL = `${this.url}model.json`;
       const metadataURL = `${this.url}metadata.json`;
