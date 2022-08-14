@@ -30,7 +30,7 @@ public class ResumeDetail {
     @Column(name = "item")
     private String item;
 
-    @Column(name = "answer")
+    @Column(name = "answer", length = 1000)
     private String answer;
 
     @JsonIgnore
