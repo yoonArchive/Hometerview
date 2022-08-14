@@ -59,7 +59,9 @@ export default {
       const studentindex = changeInfo[1];
 
       if (content === "coverletter") {
+        commit("SET_SELECTED_QUESTION_NUM", 0);
         await dispatch("getStudyResume", studentindex);
+        await dispatch("getQuestionList");
         commit("SET_LETTER_STATE", true);
         commit("SET_MEMBER_LSIT_STATE", false);
       } else if (content === "memberlist") {
@@ -216,6 +218,7 @@ export default {
         headers: getters.authHeader
       })
         .then(res => {
+          console.log("스터디 디테일");
           console.log(res.data);
           commit("SET_STUDYSPACE_DETAIL", res.data);
         })

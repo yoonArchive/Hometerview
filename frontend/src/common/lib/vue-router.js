@@ -16,8 +16,6 @@ import MembersRecruitmentView from "@/views/membersrecruitment/MembersRecruitmen
 import MembersRecruitmentDetailView from "@/views/membersrecruitment/MembersRecruitmentDetailView";
 import MembersRecruitmentEditView from "@/views/membersrecruitment/MembersRecruitmentEditView";
 
-import StudyRecruitment from "@/views/home/components/study-recruitment";
-
 /* 스터디 스페이스 페이지ㅣ*/
 import StudySpaceDetailView from "@/views/studyspace/StudySpaceDetailView";
 import MemberCoverLetter from "@/views/studyspace/MemberCoverLetter";
@@ -78,13 +76,8 @@ function makeRoutesFromMenu() {
       path: "/home",
       name: "home",
       component: Home,
-      redirect: "/home/studyrecruitment",
+      redirect: "/home/membersrecruitment",
       children: [
-        {
-          path: "studyrecruitment",
-          name: "studyrecruitment",
-          component: StudyRecruitment
-        },
         {
           path: "login",
           name: "login",
@@ -116,6 +109,7 @@ function makeRoutesFromMenu() {
           name: "mypage",
           component: MyPage,
           redirect: "/home/mypage/myaccount",
+          meta: { IsLogin: true },
           beforeEnter: (to, from, next) => {
             const isPasswordConfirm = store.getters["isPasswordConfirm"];
             if (!isPasswordConfirm) {
@@ -145,11 +139,13 @@ function makeRoutesFromMenu() {
         {
           path: "passwordconfirm",
           name: "passwordconfirm",
+          meta: { IsLogin: true },
           component: PasswordConfirm
         },
         {
           path: "createmembersrecruitment",
           name: "createmembersrecruitment",
+          meta: { IsLogin: true },
           component: CreateMembersRecruitmentView
         },
         {
@@ -165,18 +161,21 @@ function makeRoutesFromMenu() {
         {
           path: "membersrecruitment/:recruitNo/update",
           name: "membersrecruitmentedit",
+          meta: { IsLogin: true },
           component: MembersRecruitmentEditView
         },
         {
           path: "coverletter/:resumeindex",
           name: "coverletter",
+          meta: { IsLogin: true },
           component: CoverLetterView
         },
         {
           path: "myinterview",
           name: "myinterview",
           component: MyInterviewView,
-          redirect: "myinterview/diary",
+          meta: { IsLogin: true },
+          redirect: "/home/myinterview/diary",
           children: [
             {
               path: "diary",
@@ -193,16 +192,19 @@ function makeRoutesFromMenu() {
         {
           path: "review/:reviewNo",
           name: "review",
+          meta: { IsLogin: true },
           component: ReviewView
         },
         {
           path: "review/new",
           name: "reviewNew",
+          meta: { IsLogin: true },
           component: ReviewNew
         },
         {
           path: "review/:reviewNo/edit",
           name: "reviewEdit",
+          meta: { IsLogin: true },
           component: ReviewEdit
         },
         {
@@ -233,11 +235,13 @@ function makeRoutesFromMenu() {
         {
           path: "/study/:stdNo",
           name: "studydetail",
+          meta: { IsLogin: true },
           component: StudySpaceDetailView
         },
         {
           path: "membercoverletter/:studentindex",
           name: "membercoverletter",
+          meta: { IsLogin: true },
           component: MemberCoverLetter
         }
       ]
@@ -245,6 +249,7 @@ function makeRoutesFromMenu() {
     {
       path: "/home/session/:sessionNo",
       name: "session",
+      meta: { IsLogin: true },
       component: SessionView
     },
     {
@@ -264,7 +269,15 @@ const router = createRouter({
   linkActiveClass: "route-active",
   linkExactActiveClass: "route-active"
 });
-
+router.beforeEach((to, from, next) => {
+  console.log(store.getters.isLoggedIn);
+  if (to.meta.IsLogin && !store.getters.isLoggedIn) {
+    alert("로그인 후 이용할 수 있습니다.");
+    next("/home/login");
+    return;
+  }
+  next();
+});
 router.afterEach(to => {
   console.log(to);
 });

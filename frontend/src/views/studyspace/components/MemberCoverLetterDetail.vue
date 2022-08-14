@@ -3,12 +3,15 @@
     <div v-if="resumeQuestionList.length != 0">
       <div class="d-flex flex-row-reverse">
         <input
-          class="cover-letter-button"
+          class="cover-letter-button "
+          :class="{ clicked: item == resumeQuestionList.length - 1 }"
           type="button"
           v-for="(item, index) in resumeQuestionList.length"
           :key="index"
-          :value="item - 1"
-          @click="changeSelectedNum(item, $event)"
+          :value="resumeQuestionList.length - item + 1"
+          @click="
+            changeSelectedNum(resumeQuestionList.length - item + 1, $event)
+          "
         />
       </div>
       <div class="member-cover-letter-contents">
@@ -25,30 +28,31 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex";
+import { mapActions, mapGetters, mapMutations } from "vuex";
 export default {
   props: {
     studentindex: Number
   },
   computed: {
-    ...mapGetters(["resumeQuestionList", "selectedQuestionNum"])
+    ...mapGetters(["resumeQuestionList", "selectedQuestionNum", "selStdNo"])
   },
 
   methods: {
+    ...mapActions(["getQuestionList"]),
     ...mapMutations(["SET_SELECTED_QUESTION_NUM"]),
     changeSelectedNum(item, event) {
-      console.log(event.target.classList);
+      this.SET_SELECTED_QUESTION_NUM(item - 1);
+      this.getQuestionList();
+    },
+    settingvalue() {
       var buttons = document.getElementsByClassName("cover-letter-button");
       for (var i = 0; i < buttons.length; i++) {
         buttons[i].classList.remove("clicked");
       }
-      event.target.classList.add("clicked");
-      this.SET_SELECTED_QUESTION_NUM(item - 1);
-    },
-    settingvalue() {
-      var buttons = document.getElementsByClassName("cover-letter-button");
       if (buttons.length != 0) {
-        buttons[0].classList.add("clicked");
+        buttons[
+          this.resumeQuestionList.length - this.selectedQuestionNum - 1
+        ].classList.add("clicked");
       }
     }
   },
@@ -56,7 +60,13 @@ export default {
     selectedQuestionNum() {
       console.log("선택된 질문 : " + this.selectedQuestionNum);
       var buttons = document.getElementsByClassName("cover-letter-button");
-      buttons[this.selectedQuestionNum].classList.add("clicked");
+      console.log(buttons);
+      for (var i = 0; i < buttons.length; i++) {
+        buttons[i].classList.remove("clicked");
+      }
+      buttons[
+        this.resumeQuestionList.length - this.selectedQuestionNum - 1
+      ].classList.add("clicked");
     }
     // resumeQuestionList() {
     //   var buttons = document.getElementsByClassName("cover-letter-button");
@@ -72,8 +82,8 @@ export default {
     this.SET_SELECTED_QUESTION_NUM(0);
   },
   mounted() {
-    this.settingvalue();
     this.SET_SELECTED_QUESTION_NUM(0);
+    this.settingvalue();
   },
   unmounted() {
     this.SET_SELECTED_QUESTION_NUM(0);
@@ -107,5 +117,6 @@ export default {
 }
 .cover-letter-answer {
   font-size: 15px;
+  word-break: break-all;
 }
 </style>

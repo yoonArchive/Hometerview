@@ -1,66 +1,73 @@
 <template>
-  <div class="member-cover-letter-detail-wrapper">
-    <div>
-      <div class="d-flex flex-row-reverse">
-        <template v-if="currentResume.length != 0">
+  <div>
+    <div class="member-cover-letter-detail-wrapper">
+      <div>
+        <div class="d-flex flex-row-reverse">
+          <template v-if="currentResume.length != 0">
+            <input
+              class="cover-letter-button"
+              :class="{ clicked: currentResume.length - item + 1 == 1 }"
+              type="button"
+              v-for="(item, index) in currentResume.length"
+              :key="index"
+              :value="currentResume.length - item + 1"
+              @click="
+                returnnumbermethod(currentResume.length - item + 1, $event)
+              "
+            />
+          </template>
           <input
             class="cover-letter-button"
             type="button"
-            v-for="(item, index) in currentResume.length"
-            :key="index"
-            :value="item"
-            @click="returnnumbermethod(item, $event)"
+            @click="changeIsremove"
+            value="-"
           />
-        </template>
-        <input
-          class="cover-letter-button"
-          type="button"
-          @click="changeIsremove"
-          value="-"
-        />
-        <input
-          class="cover-letter-button"
-          type="button"
-          @click="addCurrentResume"
-          value="+"
-        />
-      </div>
-      <div
-        class="member-cover-letter-contents"
-        v-if="currentResume.length != 0"
-      >
-        <div class="cover-letter-question">
-          <textarea
-            class="cover-letter-question-textarea"
-            v-model="currentResume[selectedNum].question"
-            id="cover-write"
-          >
-          </textarea>
+          <input
+            class="cover-letter-button"
+            type="button"
+            @click="addCurrentResume"
+            value="+"
+          />
         </div>
-        <hr
-          style="border-top: 3px dashed #663399; margin:0; margin-top:1rem 0; margin-block-start:0"
-        />
-        <div class="cover-letter-answer">
-          <textarea
-            name=""
-            id="cover-write"
-            class="cover-letter-answer-textarea"
-            v-model="currentResume[selectedNum].answer"
-          ></textarea>
+        <div
+          class="member-cover-letter-contents"
+          v-if="currentResume.length != 0"
+        >
+          <div class="cover-letter-question">
+            <textarea
+              placeholder="질문을 입력해주세요..."
+              class="cover-letter-question-textarea"
+              v-model="currentResume[selectedNum].question"
+              id="cover-write"
+            >
+            </textarea>
+          </div>
+          <hr
+            style="border-top: 3px dashed #663399; margin:0; margin-top:1rem 0; margin-block-start:0"
+          />
+          <div class="cover-letter-answer">
+            <textarea
+              placeholder="답변을 입력해주세요..."
+              name=""
+              id="cover-write"
+              class="cover-letter-answer-textarea"
+              v-model="currentResume[selectedNum].answer"
+            ></textarea>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="d-flex flex-row-reverse bd-highlight">
-    <button
-      @click="saveResumeChange"
-      id="b-button"
-      type="button"
-      class="btn"
-      style="background-color:#653FD3; color: white;"
-    >
-      저장하기
-    </button>
+    <div class="d-flex flex-row-reverse bd-highlight">
+      <button
+        @click="saveResumeChange"
+        id="b-button"
+        type="button"
+        class="btn"
+        style="background-color:#653FD3; color: white;"
+      >
+        저장하기
+      </button>
+    </div>
   </div>
 </template>
 
@@ -75,6 +82,7 @@ export default {
   },
   mounted() {
     console.log(this.currentResume.length);
+    this.setting();
   },
   props: {
     resumeindex: Number
@@ -93,16 +101,21 @@ export default {
         buttons[i].classList.remove("clicked");
       }
       console.log(this.selectedNum);
-      buttons[this.selectedNum].classList.add("clicked");
-    },
-    currentResume() {
-      var buttons = document.getElementsByClassName("cover-letter-button");
-      for (var i = 0; i < buttons.length; i++) {
-        buttons[i].classList.remove("clicked");
-      }
-      console.log(this.selectedNum);
-      buttons[this.selectedNum].classList.add("clicked");
+      buttons[this.currentResume.length - this.selectedNum - 1].classList.add(
+        "clicked"
+      );
     }
+    // currentResume() {
+    //   console.log("선택된 질문 : " + this.selectedNum);
+    //   var buttons = document.getElementsByClassName("cover-letter-button");
+    //   for (var i = 0; i < buttons.length; i++) {
+    //     buttons[i].classList.remove("clicked");
+    //   }
+    //   console.log(this.selectedNum);
+    //   buttons[this.currentResume.length - this.selectedNum - 1].classList.add(
+    //     "clicked"
+    //   );
+    // }
   },
   methods: {
     ...mapActions([
@@ -112,6 +125,7 @@ export default {
     ]),
     addCurrentResume() {
       this.addItemCurrentResume();
+      this.selectedNum = 0;
     },
     changeIsremove() {
       this.isremove = !this.isremove;
@@ -131,13 +145,27 @@ export default {
       console.log("지우기 시작");
       await this.removeItemCueentResume(item - 1);
     },
+    setting() {
+      this.selectedNum = 0;
+      var buttons = document.getElementsByClassName("cover-letter-button");
+      for (var i = 0; i < buttons.length; i++) {
+        buttons[i].classList.remove("clicked");
+      }
+      if (buttons.length > 2) {
+        buttons[this.currentResume.length - this.selectedNum - 1].classList.add(
+          "clicked"
+        );
+      }
+    },
     changeSelectedNum(item) {
       this.selectedNum = item - 1;
       var buttons = document.getElementsByClassName("cover-letter-button");
       for (var i = 0; i < buttons.length; i++) {
         buttons[i].classList.remove("clicked");
       }
-      event.target.classList.add("clicked");
+      buttons[this.currentResume.length - this.selectedNum - 1].classList.add(
+        "clicked"
+      );
     }
   }
 };
