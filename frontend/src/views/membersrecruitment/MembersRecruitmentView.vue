@@ -42,14 +42,14 @@
             <div class="carousel carousel-inner">
               <h6 style="color:white; text-align:center; margin-top:70px">
                 <b>{{ currentUser.userName }}</b
-                >님이 속한 스터디가 등록됩니다.<br />
+                >님이 속한 스터디가 등록됩니다.<br /><br />
                 스터디 만들기에서 내 스터디를 만들거나 스터디에 가입하여
                 홈터뷰를 이용해보세요.
               </h6>
             </div>
           </div>
           <div v-else>
-            <div class="carousel-inner">
+            <div class="carousel carousel-inner">
               <div
                 class="carousel-item"
                 v-for="(studySpace, idx) in studySpaceList"
@@ -98,7 +98,7 @@
           <div class="carousel carousel-inner">
             <div>
               <h6 style="color:white; text-align:center; margin-top:70px">
-                스터디 승인이 완료되지 않은 스터디가 등록됩니다.<br />
+                스터디 승인이 완료되지 않은 스터디가 등록됩니다.<br /><br />
                 스터디 만들기에서 내 스터디를 만들거나 스터디에 가입하여
                 홈터뷰를 이용해보세요.
               </h6>
@@ -106,7 +106,7 @@
           </div>
         </div>
         <div v-else>
-          <div class="carousel-inner">
+          <div class="carousel carousel-inner">
             <div
               class="carousel-item"
               v-for="(applyingRecruit, idx) in applyingList"
@@ -493,7 +493,7 @@ input[type="text"] {
   font-size: 19px;
 }
 .carousel {
-  margin-bottom: 5em;
+  margin-bottom: 2.5em;
 }
 .carousel-inner {
   border-radius: 30px;
