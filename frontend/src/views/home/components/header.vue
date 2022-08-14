@@ -11,7 +11,7 @@
         />
       </router-link>
     </div>
-    <div class="col-md-8">
+    <div class="col-md-7">
       <ul class="navbar__menu">
         <router-link
           :to="item.path"

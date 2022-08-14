@@ -3,7 +3,8 @@
     <div v-if="resumeQuestionList.length != 0">
       <div class="d-flex flex-row-reverse">
         <input
-          class="cover-letter-button"
+          class="cover-letter-button "
+          :class="{ clicked: item == resumeQuestionList.length - 1 }"
           type="button"
           v-for="(item, index) in resumeQuestionList.length"
           :key="index"
@@ -27,19 +28,21 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex";
+import { mapActions, mapGetters, mapMutations } from "vuex";
 export default {
   props: {
     studentindex: Number
   },
   computed: {
-    ...mapGetters(["resumeQuestionList", "selectedQuestionNum"])
+    ...mapGetters(["resumeQuestionList", "selectedQuestionNum", "selStdNo"])
   },
 
   methods: {
+    ...mapActions(["getQuestionList"]),
     ...mapMutations(["SET_SELECTED_QUESTION_NUM"]),
     changeSelectedNum(item, event) {
       this.SET_SELECTED_QUESTION_NUM(item - 1);
+      this.getQuestionList();
     },
     settingvalue() {
       var buttons = document.getElementsByClassName("cover-letter-button");
@@ -114,5 +117,6 @@ export default {
 }
 .cover-letter-answer {
   font-size: 15px;
+  word-break: break-all;
 }
 </style>

@@ -6,6 +6,7 @@
           <template v-if="currentResume.length != 0">
             <input
               class="cover-letter-button"
+              :class="{ clicked: currentResume.length - item + 1 == 1 }"
               type="button"
               v-for="(item, index) in currentResume.length"
               :key="index"
@@ -102,6 +103,17 @@ export default {
         "clicked"
       );
     }
+    // currentResume() {
+    //   console.log("선택된 질문 : " + this.selectedNum);
+    //   var buttons = document.getElementsByClassName("cover-letter-button");
+    //   for (var i = 0; i < buttons.length; i++) {
+    //     buttons[i].classList.remove("clicked");
+    //   }
+    //   console.log(this.selectedNum);
+    //   buttons[this.currentResume.length - this.selectedNum - 1].classList.add(
+    //     "clicked"
+    //   );
+    // }
   },
   methods: {
     ...mapActions([

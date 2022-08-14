@@ -1,7 +1,10 @@
 <template>
   <!-- 자소서 보기 -->
   <div v-if="coverLetter" class="cover-letter-list">
-    <button @click="changeToCoverLetter(['memberlist', null])">닫기</button>
+    <div
+      class="cover-letter-exit-button"
+      @click="changeToCoverLetter(['memberlist', null])"
+    ></div>
     <member-cover-letter :studentindex="studentIndex"></member-cover-letter>
   </div>
   <!-- this.studySpaceDetail.joinType.user.userId -->
@@ -51,6 +54,21 @@ export default {
 </script>
 
 <style scoped>
+.cover-letter-exit-button {
+  position: relative;
+  float: right;
+  display: inline-block;
+  *display: inline;
+  width: 25px;
+  height: 25px;
+  text-align: center;
+  margin-right: 20px;
+}
+.cover-letter-exit-button:after {
+  content: "\00d7";
+  font-size: 25pt;
+  line-height: 45px;
+}
 .cover-letter-list {
   height: 85vh;
 }

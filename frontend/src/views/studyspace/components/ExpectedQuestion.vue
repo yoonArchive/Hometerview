@@ -133,8 +133,9 @@ export default {
     canceladding() {
       this.IsAdding = false;
     },
-    confirmadding() {
-      this.addQuestionList(this.toaddtext);
+    async confirmadding() {
+      await this.addQuestionList(this.toaddtext);
+      this.toaddtext = "";
       this.IsAdding = false;
     },
     changechangeindex(index) {
