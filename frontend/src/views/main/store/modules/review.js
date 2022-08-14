@@ -102,11 +102,16 @@ export default {
         commit("SET_CURRENT_REVIEW", res.data);
         console.log("회고 작성 성공" + res);
         dispatch("getReviewInfo");
-        router.push({ name: "diary" });
+        // router.push({ name: "diary" });
         // router.push({
         //   name: 'myinterview',
         //   // params: { reviewNo: getters.currentReview.reviewNo  }
         // })
+        router.push({
+          name: "diary"
+        });
+        window.location.reload();
+        window.location.reload();
       });
     },
     //달력에서 리뷰 생성하기
@@ -121,6 +126,11 @@ export default {
         commit("SET_CURRENT_REVIEW", res.data);
         console.log("공지사항 작성 성공" + res);
         dispatch("getReviewInfo");
+        router.push({
+          name: "diary"
+        });
+        window.location.reload();
+        window.location.reload();
       });
     },
     //회고 수정하기
@@ -155,8 +165,31 @@ export default {
           .then(() => {
             commit("SET_CURRENT_REVIEW", {});
             dispatch("getReviewInfo");
-            router.push({ name: "myinterview" });
+            router.push({
+              path: "/home/myinterview/diary"
+            });
           })
+          .catch(err => console.error(err.response));
+      }
+    },
+    //달력에서 회고 삭제하기
+    deleteReview1({ commit, getters, dispatch }, reviewNo) {
+      if (confirm("정말 삭제하시겠습니까?")) {
+        axios({
+          url: api_url.review.review(reviewNo),
+          method: "delete",
+          headers: getters.authHeader
+        })
+          .then(() => {
+            commit("SET_CURRENT_REVIEW", {});
+            dispatch("getReviewInfo");
+            router.push({
+              name: "diary"
+            });
+            window.location.reload();
+            window.location.reload();
+          })
+
           .catch(err => console.error(err.response));
       }
     },
@@ -172,7 +205,11 @@ export default {
           .then(() => {
             commit("SET_CURRENT_REVIEW", {});
             dispatch("getReviewInfo");
-            router.push({ name: "myinterview" });
+            router.push({
+              name: "diary"
+            });
+            window.location.reload();
+            window.location.reload();
           })
           .catch(err => console.error(err.response));
       }
@@ -231,6 +268,10 @@ export default {
         router.push({
           name: "diary"
         });
+        window.location.reload();
+        window.location.reload();
+        window.location.reload();
+        window.location.reload();
       });
     },
     //디데이 수정하기
@@ -252,6 +293,8 @@ export default {
         router.push({
           name: "diary"
         });
+        window.location.reload();
+        window.location.reload();
       });
     },
     //디데이 삭제하기

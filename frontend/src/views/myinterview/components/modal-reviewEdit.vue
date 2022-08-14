@@ -70,7 +70,7 @@
               </button>
               <button
                 id="button-review"
-                @click="$emit('close'), deleteReview(this.id)"
+                @click="$emit('close'), deleteReview1(this.id)"
               >
                 삭제하기
               </button>
@@ -129,7 +129,7 @@ export default {
       "createReview",
       "updateReview",
       "getReviewDetail",
-      "deleteReview"
+      "deleteReview1"
     ]),
     onSubmit() {
       if (this.action === "create") {
@@ -181,6 +181,7 @@ export default {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
   transition: all 0.3s ease;
   font-family: Helvetica, Arial, sans-serif;
+  border-radius: 20px;
 }
 
 .modal-header h3 {

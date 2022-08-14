@@ -33,6 +33,7 @@ export default {
   setup() {},
   created() {
     this.commonQuestions1(this.stdNo);
+    console.log(this.commonQuestions);
   },
   beforeUpdate() {
     // this.commonQuestions1(this.stdNo);

@@ -7,14 +7,17 @@ export default {
   state: {
     token: localStorage.getItem("token") || "",
 
-    commonQeustion: {},
+    commonQuestion: {},
     commonQuestions: []
   },
 
   getters: {
     commonQuestion: state => state.commonQuestion,
     commonQuestions: state => state.commonQuestions,
-    authHeader: state => ({ Authorization: `Bearer ${state.token}` })
+    authHeader: state => ({ Authorization: `Bearer ${state.token}` }),
+    isAuthor: (state, getters) => {
+      return state.article.user?.username === getters.currentUser.userName;
+    }
   },
 
   mutations: {

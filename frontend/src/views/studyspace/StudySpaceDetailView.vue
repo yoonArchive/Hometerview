@@ -26,7 +26,12 @@ export default {
     MemberCommonQuestions
   },
   computed: {
-    ...mapGetters(["commonQuestion", "commonQuestions"])
+    ...mapGetters([
+      "commonQuestion",
+      "commonQuestions",
+      "studentIndex",
+      "currentUser"
+    ])
   },
   methods: {
     ...mapActions(["getStd", "commonQuestions1", "setStudyNoAction"])
@@ -34,6 +39,7 @@ export default {
   created() {
     this.commonQuestions1(this.stdNo);
     console.log(this.stdNo);
+    console.log("스튜던트 인덱스" + this.studentIndex);
   },
   mounted() {
     this.setStudyNoAction(this.stdNo);

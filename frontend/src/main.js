@@ -23,7 +23,8 @@ import {
   faTape,
   faTrashCan,
   faPenToSquare,
-  faSquarePlus
+  faSquarePlus,
+  faXmark
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 library.add(
@@ -36,7 +37,8 @@ library.add(
   faTape,
   faTrashCan,
   faPenToSquare,
-  faSquarePlus
+  faSquarePlus,
+  faXmark
 );
 
 // import MyInterviewView from './views/myinterview/MyInterviewView;
