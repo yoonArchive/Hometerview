@@ -34,13 +34,8 @@
                   idnex) in expectedQuestionList.personalQuestions"
                   :key="idnex"
                 >
-                  <div class="row">
-                    <div class="col-8" style="font-size:20px">
-                      {{ item.contents }}
-                    </div>
-                    <div class="col" style="font-size:10px; color:#83859C">
-                      작성자<br />{{ item.writerName }}
-                    </div>
+                  <div class="row" style="font-size:20px">
+                    {{ item.contents }}
                   </div>
                 </div>
               </div>
