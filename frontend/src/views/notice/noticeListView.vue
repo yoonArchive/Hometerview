@@ -1,8 +1,6 @@
 <template>
     <!-- table -->
-
-    <h1 id="title">저희의 신규 <p id="aa">업데이트</p> 소식을 알려드릴께요!</h1>
-
+    <h2 id="title">저희의 신규 <p id="aa">업데이트</p> 소식을 알려드릴게요.</h2>
     <div class="table-cocover">
       <div class="table-cover">
         <table class="table table-hover">
@@ -19,11 +17,9 @@
               <!-- {{ notice[noticeTitle] }} -->
               <th >
                 <td>
-
                   <router-link style="text-decoration:none"
                     :to="{ name: 'notice', params: {noticeNo: notice.noticeNo} }">
                     {{ notice.noticeTitle }}
-
                     </router-link>
                 </td></th>
               <th>
@@ -36,16 +32,14 @@
           </tbody>
         </table>
         <div class="buttonbundle">
-          <button id="button-review">
-          <router-link class="routerlink" :to="{ name: 'noticeNew' }" >
-            <p id="a">작성하기</p>
-          </router-link>
-        </button>
+          <button class="createBtn">
+            <router-link class="routerlink" :to="{ name: 'noticeNew' }" >
+              작성하기
+            </router-link>
+          </button>
         </div>
       </div>
     </div>
-
-
 </template>
 
 <script>
@@ -95,7 +89,6 @@
 </script>
 
 <style scoped>
-
 .table-cocover{
   display : flex;
   justify-content: center;
@@ -104,48 +97,6 @@
 .table-cover{
   width : 80%;
   padding-top : 50px;
-  /* display : flex; */
-  /* justify-content: center;
-  align-content: center; */
-}
-/* .table{
-  color: rgb(194, 48, 51);
-  background-color: white !important;
-  margin : auto;
-  justify-content: center;
-  align-content: center;
-
-}
-
-.table-head{
-  background-color: rgb(236, 157, 56) !important;
-  color : rgb(241, 241, 241);
-  text-decoration-line: none;
-
-}
-.buttonbundle{
-  float: right;
-
-}
-.makenewbutton{
-  margin-top:15px;
-} */
-
-#a{
-  text-decoration-line: none;
-  color: white;
-  font-size: 15px;
-  font-family: "티머니 둥근바람";
-  margin: 2px;
-}
-#button-review{
-   background-color: #653FD3;
-   border-color : #653FD3;
-   border-radius: 10%;
-   margin: 15px;
-   width: 100px;
-   text-align: center;
-
 }
 #aa{
   display: inline;
@@ -156,5 +107,38 @@
   font-family: "티머니 둥근바람";
   text-align: center;
   margin-top: 10px;
+}
+.createBtn {
+  -moz-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+  -webkit-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+  -ms-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+  border-radius: 5px;
+  border: 0;
+  box-shadow: inset 0 0 0 2px #653fd3;
+  background-color: #ffffff;
+  color: #653fd3;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 0.8em;
+  font-weight: 600;
+  height: 3em;
+  width: 7em;
+  letter-spacing: 0.15em;
+  text-align: center;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.createBtn:hover {
+  background-color: rgba(161, 104, 253, 0.05);
+}
+.createBtn:active {
+  background-color: rgba(161, 104, 253, 0.15);
+}
+a{
+  text-decoration: none;
+  color: #653fd3;
 }
 </style>

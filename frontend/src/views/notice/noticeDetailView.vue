@@ -2,28 +2,30 @@
   <div class="container">
     <div class="inner-container">
       <p id="title">{{ notice.noticeTitle }}</p>
-      <p>작성자 : 관리자</p>
-      <p>작성시간 : {{ notice.writeDate }}</p>
-
+      <p id="notice-info">
+        <i class="input-icon uil uil-edit"></i>&nbsp;관리자<span
+          style="width:2em"
+        ></span
+        ><i class="input-icon uil uil-calendar-alt"></i> {{ notice.writeDate
+        }}<span style="float:right; margin-right:40px;"
+          ><span style="margin-right:3px;">
+            <router-link :to="{ name: 'noticeEdit', params: { noticeNo } }">
+              수정
+            </router-link>
+          </span>
+          <span class="deleteBtn" @click="deleteNotice(noticeNo)">
+            삭제
+          </span>
+          <span style="margin-right:3px;">
+            <router-link class="routerlink" :to="{ name: 'notices' }">
+              목록
+            </router-link>
+          </span>
+        </span>
+      </p>
       <hr />
     </div>
-    <h3>{{ notice.noticeContents }}</h3>
-    <!-- <div class="component1" v-if="isAuthor"> -->
-    <div class="buttonbundle">
-      <button id="button-review">
-        <router-link :to="{ name: 'noticeEdit', params: { noticeNo } }">
-          <p id="a">수정하기</p>
-        </router-link>
-      </button>
-      <button id="button-review" @click="deleteNotice(noticeNo)">
-        <p id="a">삭제하기</p>
-      </button>
-      <button id="button-review">
-        <router-link class="routerlink" :to="{ name: 'notices' }">
-          <p id="a">목록으로</p>
-        </router-link>
-      </button>
-    </div>
+    <span style="margin-top:20px">{{ notice.noticeContents }}</span>
   </div>
 </template>
 
@@ -58,27 +60,26 @@ export default {
 
 <style scoped>
 #title {
-  font-size: 50px;
+  font-size: 40px;
   text-align: left;
 }
-
-#a {
-  text-decoration-line: none;
-  color: white;
-  font-size: 15px;
-  font-family: "티머니 둥근바람";
-  margin-top: 1px;
+#notice-info {
+  font-size: 17px;
+  color: rgb(129, 129, 129);
 }
-#button-review {
-  background-color: #653fd3;
-  border-color: #653fd3;
-  border-radius: 10%;
-  margin: 15px;
-  width: 100px;
+a {
+  text-decoration: none;
+  color: rgb(129, 129, 129);
+}
+a:hover {
+  color: #653fd3;
+  font-weight: bold;
+}
+.deleteBtn:hover {
+  color: red;
+  font-weight: bold;
 }
 .buttonbundle {
-  /* display: flex; */
-  /* justify-content: flex-start; */
   flex-direction: row;
   margin: 20px;
   flex-basis: 150px;
@@ -88,26 +89,29 @@ export default {
   height: 100%;
   display: flex;
   align-items: flex-end;
-  /* justify-content: space-evenly; */
-  /* justify-content: space-between; */
 }
-
 .container {
   display: flex;
   flex-direction: column;
   margin-top: 5%;
-  justify-content: center;
+  /* justify-content: center; */
   /* text-align: center; */
-  width: 90%;
+  width: 80%;
   height: 500px;
   max-height: 100%;
   background-color: white;
-  margin: 10%;
+  /* margin: 10%; */
   border: 1px;
   border: solid;
+  border-radius: 20px;
+  border-color: rgb(207, 207, 207);
 }
-
 .inner-container {
   width: 50;
+  padding-left: 15px;
+  margin-top: 40px;
+}
+span {
+  padding-left: 15px;
 }
 </style>
