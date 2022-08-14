@@ -183,7 +183,7 @@
 <script>
 import router from "@/common/lib/vue-router";
 import VueScrollSnap from "vue-scroll-snap";
-import "animate.css";
+//import "animate.css";
 
 export default {
   name: "Main",
