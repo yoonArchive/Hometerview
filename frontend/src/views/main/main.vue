@@ -45,7 +45,10 @@
                 <img src="./features-1.svg" class="img-fluid" alt="" />
               </div>
               <div class="col-md-7 pt-4 pl-2">
-                <h3 id="main-text">
+                <h3
+                  class="animate__animated animate__fadeInLeft"
+                  id="main-text"
+                >
                   면접준비 더 이상 혼자하지 마세요.
                   <br />
                   홈터뷰에서 원하는 스터디에 참여하세요.
@@ -53,12 +56,13 @@
                 <p id="sub-text">
                   원하는 기업의 스터디가 없으신가요? 모집글을 직접 작성해보세요!
                 </p>
-                <a
-                  href=""
-                  class="btn-get-started animate__animated animate__fadeInUp"
+                <button
+                  type="button"
+                  class="btn btn-outline-primary"
                   @click="goRecruit()"
-                  >스터디 참여하기</a
                 >
+                  스터디 참여하기
+                </button>
               </div>
             </div>
           </div>
@@ -78,15 +82,16 @@
                   홈터뷰는 자세교정, 화면공유, 녹화 등 다양한 편의 서비스를
                   제공합니다.
                 </p>
-                <a
-                  href=""
-                  class="btn-get-started animate__animated animate__fadeInUp"
+                <button
+                  type="button"
+                  class="btn btn-outline-primary"
                   @click="goRecruit()"
-                  >스터디 참여하기</a
                 >
+                  스터디 참여하기
+                </button>
               </div>
               <div class="col-md-5">
-                <img src="./features-1.svg" class="img-fluid" alt="" />
+                <img :src="imagesrc" class="img-fluid" alt="" />
               </div>
             </div>
           </div>
@@ -97,21 +102,25 @@
           <div class="container">
             <div class="row" data-aos="fade-up">
               <div class="col-md-5">
-                <img src="./features-1.svg" class="img-fluid" alt="" />
+                <img src="./features-4.svg" class="img-fluid" alt="" />
               </div>
               <div class="col-md-7 pt-4">
                 <h3 id="main-text">
-                  스터디에 참여하세요
+                  스터디 스페이스에 자유롭게 공유하고
                   <br />
-                  예상 질문을 작성하세요.
+                  예상질문을 등록하세요.
                 </h3>
-                <p id="sub-text"></p>
-                <a
-                  href=""
-                  class="btn-get-started animate__animated animate__fadeInUp"
+                <p id="sub-text">
+                  홈터뷰는 자세교정, 화면공유, 녹화 등 다양한 편의 서비스를
+                  제공합니다.
+                </p>
+                <button
+                  type="button"
+                  class="btn btn-outline-primary"
                   @click="goRecruit()"
-                  >스터디 참여하기</a
                 >
+                  스터디 참여하기
+                </button>
               </div>
             </div>
           </div>
@@ -123,23 +132,24 @@
             <div class="row" data-aos="fade-up">
               <div class="col-md-7 pt-4">
                 <h3 id="main-text">
-                  나의 면접 관리를 통해
+                  면접 스터디부터 면접 관리까지
                   <br />
-                  편리하게
+                  홈터뷰에서 한번에!
                 </h3>
                 <p id="sub-text">
-                  자기소개서, 회고, 화상회의 다시보기 등 다양한 기능을
-                  활용하세요.
+                  일정관리, 회고작성, 화상회의 다시보기 등 다양한 기능을
+                  제공합니다.
                 </p>
-                <a
-                  href=""
-                  class="btn-get-started animate__animated animate__fadeInUp"
+                <button
+                  type="button"
+                  class="btn btn-outline-primary"
                   @click="goRecruit()"
-                  >스터디 참여하기</a
                 >
+                  스터디 참여하기
+                </button>
               </div>
               <div class="col-md-5">
-                <img src="./features-1.svg" class="img-fluid" alt="" />
+                <img :src="imagesrc1" class="img-fluid" alt="" />
               </div>
             </div>
           </div>
@@ -173,13 +183,18 @@
 <script>
 import router from "@/common/lib/vue-router";
 import VueScrollSnap from "vue-scroll-snap";
+import "animate.css";
 
 export default {
   name: "Main",
   components: { VueScrollSnap },
 
   data() {
-    return {};
+    return {
+      imagesrc: require("../../assets/images/main3.png"),
+      imagesrc1: require("../../assets/images/main4.png"),
+      imagesrc2: require("../../assets/images/myinterview2.png")
+    };
   },
 
   methods: {
