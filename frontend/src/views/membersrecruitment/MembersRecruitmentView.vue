@@ -270,6 +270,7 @@ export default {
     },
     searchByTitle(recruitSearchKeyword) {
       this.recruitType = "1";
+      this.recruitState = true;
       this.recruitingState = false;
       this.bringRecruitSearchList(recruitSearchKeyword);
     }
