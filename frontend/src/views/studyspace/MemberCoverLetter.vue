@@ -1,5 +1,20 @@
 <template>
   <div v-if="!isloading" style="background-color: #F3F4FF;">
+    <div style="margin-bottom: 20px;">
+      <router-link
+        :to="{
+          path: '/study/' + selStdNo
+        }"
+      >
+        <button
+          type="button"
+          class="btn"
+          style="background-color:#653FD3; color: white;"
+        >
+          &lt; 스터디 스페이스
+        </button>
+      </router-link>
+    </div>
     <div v-if="isMyInfo">
       <div v-if="studySpaceDetail.detailCounts[studentindex] == 0">
         <div class="no-cover-letter-me">
