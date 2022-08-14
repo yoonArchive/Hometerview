@@ -40,7 +40,7 @@ export default {
 <style scoped>
 .main {
   aspect-ratio: 4/3;
-  margin-top: 2vh;
+  margin-top: -0.9vh;
   max-height: calc(100vh - 6rem);
   max-width: 100%;
   width: fit-content;
