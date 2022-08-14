@@ -8,12 +8,12 @@
       />&nbsp;&nbsp;{{ sendname }}
     </div>
     <div class="count-chat">
-      <span id="msgs">{{ massage }}</span>
+      <span id="msgs">{{ message }}</span>
     </div>
   </div>
   <div class="my-chatbox">
     <div class="my-chat" v-if="ismy">
-      <span id="msgs">{{ massage }}</span>
+      <span id="msgs">{{ message }}</span>
     </div>
   </div>
 </template>
@@ -30,13 +30,13 @@ export default {
     return {
       ismy: this.equal(),
       sendname: "",
-      massage: ""
+      message: ""
     };
   },
   mounted() {
     // JSON확인
     this.sendname = JSON.parse(this.msg).userName;
-    this.massage = JSON.parse(this.msg).msg;
+    this.message = JSON.parse(this.msg).msg;
   },
   methods: {
     equal() {
@@ -93,10 +93,12 @@ export default {
 .my-chatbox {
   text-align: right;
   margin-top: 1.5vh;
+  word-break: break-all;
 }
 .chatbox {
   text-align: left;
   margin-top: 1.5vh;
+  word-break: break-all;
 }
 .conut {
   background-color: #c4c1c9;
