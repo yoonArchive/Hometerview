@@ -1,21 +1,4 @@
 <template>
-  <!-- <form @submit.prevent="onSubmit">
-    <div class="wrap">
-      <div class="notice">
-        <div class="notice-top">
-          <label class="col-sm-2" for="title">제목: </label>
-          <input class="col-sm-10" v-model="newnotice.noticeTitle" type="text" id="title" />
-        </div>
-        <div class="notice-content">
-          <textarea class="col-sm-12 notice-textarea" v-model="newnotice.noticeContents" type="text" id="content"></textarea>
-        </div>
-        <div class="form-button">
-           <button>{{ action }}</button>
-        </div>
-      </div>
-    </div>
-  </form> -->
-
   <div class="container">
     <div class="title">
       <h1>공지사항 작성</h1>

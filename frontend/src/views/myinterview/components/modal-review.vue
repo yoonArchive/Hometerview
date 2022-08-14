@@ -153,11 +153,13 @@ import { mapActions } from 'vuex'
                   type="text"
                   id="content"
                   rows="3"
+                  required
                 ></textarea>
               </div>
 
               <div>
                 <input
+                  class="form-control"
                   v-model="newreview.reviewDate"
                   type="date"
                   name="reviewDate"
@@ -184,27 +186,43 @@ import { mapActions } from 'vuex'
                 />
                 <label for="newreview.reviewType">연습</label>
               </div>
-              <button
-                id="button-review"
+              <!-- <button
+                class="btn btn-outline-primary"
                 v-if="action === 'create'"
                 @click="$emit('close'), createReview(this.newreview)"
               >
                 만들기
               </button>
               <button
-                id="button-review"
+                class="btn btn-outline-primary"
                 v-else
                 @click="$emit('close'), updateReview(this.newreview)"
               >
                 수정하기
               </button>
+              <button class="btn btn-outline-primary" @click="$emit('close')">
+                닫기
+              </button> -->
               <!-- </form> -->
             </slot>
           </div>
-
           <div class="modal-footer">
             <slot name="footer">
-              <button class="modal-default-button" @click="$emit('close')">
+              <button
+                class="btn btn-outline-primary"
+                v-if="action === 'create'"
+                @click="$emit('close'), createReview(this.newreview)"
+              >
+                만들기
+              </button>
+              <button
+                class="btn btn-outline-primary"
+                v-else
+                @click="$emit('close'), updateReview(this.newreview)"
+              >
+                수정하기
+              </button>
+              <button class="btn btn-outline-primary" @click="$emit('close')">
                 닫기
               </button>
             </slot>
@@ -292,6 +310,7 @@ export default {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
   transition: all 0.3s ease;
   font-family: Helvetica, Arial, sans-serif;
+  border-radius: 20px;
 }
 
 .modal-header h3 {

@@ -22,14 +22,11 @@
           <p id="a">삭제</p>
         </button>
         <button id="button-review">
-          <router-link class="routerlink" :to="{ name: 'myinterview' }">
+          <router-link class="routerlink" :to="{ name: 'diary' }">
             <p id="a">목록</p>
           </router-link>
         </button>
       </div>
-
-      <!-- <cover-letter-detail :questionNum="reviewContents.length"></cover-letter-detail> -->
-      <!-- <review-detail :reviewContents="reviewContents"></review-detail> -->
       <hr />
     </div>
   </div>
@@ -97,11 +94,11 @@ export default {
 }
 .container {
   display: flex;
-  margin-top: 100px;
+
   flex-direction: column;
   justify-content: center;
 
   width: 100%;
-  height: 70%;
+  height: 400px;
 }
 </style>

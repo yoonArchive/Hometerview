@@ -6,12 +6,12 @@
 
           <div class="card-list">
           <div v-for="(ddays, index) in currentDdays" :key="index">
-          <div class="card text-white bg-warning mb-2" style="max-width: 18rem;">
+          <div v-if="restday[index]>0" class="card text-white bg-warning mb-2" style="max-width: 18rem;">
             <div class="card-header" >{{ddays.ddayTitle}} </div>
-            <div class="card-body">
-
+            <div  class="card-body">
               <h6 class="card-title">
-              <span class="inner-dday1">D{{restday[index]}}</span>
+              <span class="inner-dday1">D-{{restday[index]}}</span>
+              <!-- <span v-else></span> -->
               <span class="inner-dday2">
               <span id="icon" @click="showModalE(ddays.ddayNo), getDdayDetail(ddays.ddayNo)">
                       <font-awesome-icon icon="fa-solid fa-pen-to-square" />
@@ -24,8 +24,30 @@
               </h6>
 
             </div>
+
+          </div>
+           <div v-else class="card text-white bg-danger mb-2" style="max-width: 18rem;">
+            <div class="card-header" >{{ddays.ddayTitle}} </div>
+            <div  class="card-body">
+              <h6 class="card-title">
+              <span class="inner-dday1">D-{{restday[index]}}</span>
+              <!-- <span v-else></span> -->
+              <span class="inner-dday2">
+              <span id="icon" @click="showModalE(ddays.ddayNo), getDdayDetail(ddays.ddayNo)">
+                      <font-awesome-icon icon="fa-solid fa-pen-to-square" />
+              </span>
+
+              <span id="icon" @click="deleteDDAY(ddays.ddayNo)">
+                      <font-awesome-icon icon="fa-solid fa-trash-can"  />
+                  </span>
+                </span>
+              </h6>
+
+            </div>
+
           </div>
           </div>
+
           </div>
 
       </div>
@@ -199,7 +221,6 @@ export default {
     this.findresumes();
     this.getReview();
     this.getDday();
-    console.log('김'+this.Editsum)
 
   },
 
@@ -322,6 +343,10 @@ export default {
    border-color : #653FD3;
    border-radius: 10%;
    margin: 5px;
+
+}
+#button-review:hover{
+   color: white;
 
 }
 #a {

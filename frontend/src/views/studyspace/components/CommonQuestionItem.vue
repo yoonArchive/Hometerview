@@ -1,23 +1,48 @@
 <template>
+  <section class="comments">
+    <article class="comment">
+      <a class="comment-img" href="#non">
+        <img :src="userImag" alt="" width="50" height="50" />
+        <p class="attribution" v-if="name">by {{ name }}</p>
+        <p class="attribution" v-else>
+          by 나간 회원입니다.
+        </p>
+      </a>
 
-
-  <div class="card" style="width: 18rem;">
-    <div class="card-body">
-      <h5 class="card-title">
-        {{ commonquestion.contents }}
-      </h5>
-      <p class="card-text">
-
-        <div v-if="commonquestion.questionType=='JOB'">
-         {{ commonquestion.questionNo }}. 기업 면접
+      <div class="comment-body">
+        <div class="text">
+          <div v-if="commonquestion.questionType == 'JOB'">
+            {{ commonquestion.questionNo }}. 직무 면접
+            <!-- <p class="attribution" v-if="name">by {{ name }}</p>
+            <p class="attribution" v-else>
+              by 나간 회원입니다.
+            </p>
+          </div>
+          <div v-else>
+            {{ commonquestion.questionNo }}. 인성 면접
+            <p class="attribution" v-if="name">by {{ name }}</p>
+            <p class="attribution" v-else>
+              by 나간 회원입니다.
+            </p> -->
+          </div>
+          <p>{{ commonquestion.contents }}</p>
         </div>
-        <div v-else>
-         {{ commonquestion.questionNo }}. 자율 면접
-        </div>
-         <span v-if="isEditing">
-          <input type="text" v-model="payload.contents" />
-          <button @click="onUpdate">Update</button> |
-          <button @click="switchIsEditing">Cancel</button>
+        <span v-if="isEditing">
+          <input
+            id="aa"
+            type="text"
+            v-model="payload.contents"
+            class="form-control"
+          />
+          <!-- <button @click="onUpdate">Update</button> -->
+          <span id="icon" @click="onUpdate">
+            <font-awesome-icon icon="fa-solid fa-pen-to-square" /> </span
+          >|
+          <!-- <button @click="switchIsEditing">Cancel</button> -->
+
+          <span id="icon" @click="switchIsEditing">
+            <font-awesome-icon icon="fa-solid fa-xmark" />
+          </span>
           <div>
             <input
               type="radio"
@@ -25,32 +50,45 @@
               value="JOB"
               v-model="payload.questionType"
             />
-            <label for="questionType">공통질문</label>
+            <label for="questionType">직무 면접</label>
             <input
               type="radio"
               name="reviewType"
               value="FREE"
               v-model="payload.questionType"
             />
-            <label for="questionType">자율질문</label>
+            <label for="questionType">인성 면접</label>
           </div>
         </span>
 
-        <span
-          v-if="
-            commonquestion.writerNo === commonquestion.writerNo && !isEditing
-          "
-        >
-          <button @click="switchIsEditing">Edit</button> |
-          <button
+        <span v-if="currentUser.userId === userId && !isEditing">
+          <!-- <button @click="switchIsEditing">Edit</button> | -->
+          <span id="icon" @click="switchIsEditing">
+            <font-awesome-icon icon="fa-solid fa-pen-to-square" /> </span
+          >|
+          <!-- <button
             @click="deletecommonQuestion([stdNo, commonquestion.questionNo])"
           >
             Delete
-          </button>
+          </button> -->
+
+          <span
+            id="icon"
+            @click="deletecommonQuestion([stdNo, commonquestion.questionNo])"
+          >
+            <font-awesome-icon icon="fa-solid fa-trash-can" />
+          </span>
         </span>
-      </p>
-    </div>
-  </div>
+        <!-- {{ commonquestion.writerNo }} -->
+        <!-- <p class="attribution" v-if="name">by {{ name }}</p>
+        <p class="attribution" v-else>
+          by 나간 회원입니다.
+        </p> -->
+        <!-- {{ studySpaceDetail.studyJoins }} -->
+        <!-- {{ currentUser }} -->
+      </div>
+    </article>
+  </section>
 </template>
 
 <script>
@@ -71,15 +109,28 @@ export default {
         // questionNo: this.commonquestion.questionNo,
         contents: this.commonquestion.contents,
         questionType: this.commonquestion.questionType
-      }
-      // questionNo: this.commonquestion.questionNo,
+      },
+      // questionNo: this.commonquestion.questionNo,,
+      name: "",
+      userImag: "",
+      userId: ""
     };
   },
   computed: {
-    ...mapGetters(["authHeader"])
+    ...mapGetters([
+      "authHeader",
+      "studentIndex",
+      "studySpaceDetail",
+      "currentUser",
+      "commonQuestions"
+    ])
   },
   methods: {
-    ...mapActions(["updatecommonQuestion", "deletecommonQuestion"]),
+    ...mapActions([
+      "updatecommonQuestion",
+      "deletecommonQuestion",
+      "bringStudySpaceDetail"
+    ]),
     switchIsEditing() {
       this.isEditing = !this.isEditing;
     },
@@ -90,9 +141,155 @@ export default {
         this.commonquestion.questionNo
       ]);
       this.isEditing = false;
+    },
+    checkUser() {
+      for (const study of this.studySpaceDetail.studyJoins) {
+        if (study.user.userNo === this.commonquestion.writerNo) {
+          this.name = study.user.userName;
+          this.userImag = study.user.userImg;
+          this.userId = study.user.userId;
+          console.log(study);
+        }
+      }
     }
+  },
+  mounted() {
+    this.checkUser();
+  },
+
+  created() {
+    this.bringStudySpaceDetail(this.stdNo);
+    this.checkUser();
   }
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+#icon {
+  cursor: pointer;
+}
+#icon:hover {
+  color: #653fd3;
+}
+body {
+  width: 500px;
+  margin: 20px auto;
+  font: 16px/1.4 Arial, sans-serif;
+  background: #f3eee9;
+}
+
+p {
+  margin: 0 0 1em;
+}
+
+.comment {
+  overflow: hidden;
+  padding: 0 0 1em;
+  border-bottom: 1px solid #ddd;
+  margin: 0 0 1em;
+  *zoom: 1;
+}
+
+.comment-img {
+  float: left;
+  margin-right: 33px;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.comment-img img {
+  display: block;
+}
+
+.comment-body {
+  overflow: hidden;
+}
+
+.comment .text {
+  padding: 10px;
+  border: 1px solid #e5e5e5;
+  border-radius: 5px;
+  background: #fff;
+}
+
+.comment .text p:last-child {
+  margin: 0;
+  text-decoration-line: none;
+}
+
+.comment .attribution {
+  margin: 0.5em 0 0;
+  font-size: 14px;
+  color: #666;
+  text-decoration-line: none;
+}
+
+/* Decoration */
+
+.comments,
+.comment {
+  position: relative;
+}
+
+.comments:before,
+.comment:before,
+.comment .text:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 65px;
+}
+
+.comments:before {
+  width: 3px;
+  top: -20px;
+  bottom: -20px;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.comment:before {
+  width: 9px;
+  height: 9px;
+  border: 3px solid #fff;
+  border-radius: 100px;
+  margin: 16px 0 0 -6px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), inset 0 1px 1px rgba(0, 0, 0, 0.1);
+  background: #ccc;
+}
+
+.comment:hover:before {
+  background: orange;
+}
+.aa {
+  border-color: #653fd3;
+  background-color: #653fd3;
+  margin: 10px;
+}
+.form-control {
+  width: 50%;
+}
+.text {
+  overflow: auto;
+  /* overflow-wrap: normal; */
+  /* overflow: auto; */
+  /* width: 500px; */
+  white-space: pre-wrap;
+  height: 100%;
+
+  /* height: 150px; */
+}
+.text::-webkit-scrollbar {
+  width: 10px;
+}
+.text::-webkit-scrollbar-thumb {
+  background-color: #653fd3;
+  border-radius: 10px;
+  background-clip: padding-box;
+  border: 1px solid transparent;
+}
+.text::-webkit-scrollbar-track {
+  background-color: grey;
+  border-radius: 10px;
+  box-shadow: inset 0px 0px 5px white;
+}
+</style>

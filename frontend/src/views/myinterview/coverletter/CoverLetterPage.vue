@@ -3,27 +3,13 @@
     <div class="my-top">
       <div class="my-left">
         <div class="review-1">
-          <div class="cover-letterL">
-            자소서 개수 {{ resumeContents.length }}
-          </div>
-          <button @click="addResume" id="cover-Pbutton">+</button>
-          <button id="cover-Mbutton">-</button>
-
-          <div class="list-group">
-            <div v-for="(item, index) in resumeContents.length" :key="index">
-              <router-link
-                :to="{
-                  name: 'coverletter',
-                  params: { resumeindex: item - 1 }
-                }"
-                id="cover-router"
-                class="list-group-item list-group-item-action"
-              >
-                <div>{{ resumeContents[item - 1].resumeTitle }}</div>
-              </router-link>
-            </div>
-          </div>
-          <div v-for="(item, index) in resumeContents.length" :key="index">
+          <h3>자소서 개수 {{ resumeContents.length }}</h3>
+          <h3 id="icon">
+            <span @click="this.addNewResume()">
+              <font-awesome-icon icon="fa-solid fa-square-plus" />
+            </span>
+          </h3>
+          <!-- <div v-for="(item, index) in resumeContents.length" :key="index">
             <ul>
               <li id="inner-table">
                 <router-link
@@ -37,8 +23,23 @@
                 </router-link>
               </li>
             </ul>
-          </div>
+          </div> -->
         </div>
+        <main>
+          <ol class="gradient-list">
+            <li v-for="(item, index) in resumeContents.length" :key="index">
+              <router-link
+                :to="{
+                  name: 'coverletter',
+                  params: { resumeindex: item - 1 }
+                }"
+                id="cover-router"
+              >
+                <div>{{ resumeContents[item - 1].resumeTitle }}</div>
+              </router-link>
+            </li>
+          </ol>
+        </main>
       </div>
     </div>
   </div>
@@ -94,49 +95,179 @@ export default {
       console.log(lengthOfObject);
     },
 
-    ...mapActions([
-      "getResumeInfo",
-      "getReviewInfo",
-      "addNewResume",
-      "getDdayInfo",
-      "deleteReview",
-      "deleteDDAY",
-      "getDdayDetail"
-    ]),
+    ...mapActions(["getResumeInfo", "getReviewInfo", "addNewResume"]),
     findresumes() {
       this.getResumeInfo();
     },
     addResume() {
       this.addNewResume();
-    },
-
-    getReview() {
-      this.getReviewInfo();
-    },
-
-    getDday() {
-      this.getDdayInfo();
-    },
-    refreshAll() {
-      // 새로고침
-      this.$router.go();
     }
   },
   mounted() {
     this.findresumes();
-    // this.getReview();
-    // this.getDday();
-    console.log("김" + this.Editsum);
-  },
-
-  beforeMount() {
-    this.getReview();
-    this.getDday();
   }
 };
 </script>
+<style lang="scss" scoped>
+// @import "compass/css3";
 
+// div {
+//   width: 200px;
+//   margin: 30px;
+// }
+
+// h3 {
+//   font: 400 40px/1.5 Helvetica, Verdana, sans-serif;
+//   margin: 0;
+//   padding: 0;
+// }
+
+// ul {
+//   list-style-type: none;
+//   margin: 0;
+//   padding: 0;
+// }
+
+// li {
+//   font: 200 20px/1.5 Helvetica, Verdana, sans-serif;
+//   border-bottom: 1px solid #ccc;
+// }
+
+// li:last-child {
+//   border: none;
+// }
+
+li a {
+  text-decoration: none;
+  color: #000;
+
+  -webkit-transition: font-size 0.3s ease, background-color 0.3s ease;
+  -moz-transition: font-size 0.3s ease, background-color 0.3s ease;
+  -o-transition: font-size 0.3s ease, background-color 0.3s ease;
+  -ms-transition: font-size 0.3s ease, background-color 0.3s ease;
+  transition: font-size 0.3s ease, background-color 0.3s ease;
+  display: block;
+  width: 900px;
+}
+li a:hover {
+  font-size: 30px;
+  background: #f6f6f6;
+  width: 100%;
+}
+/*** FONTS ***/
+
+/*** VARIABLES ***/
+/* Colors */
+$black: #1d1f20;
+$blue: #653fd3;
+$green: #7e61d4;
+$yellow: #83e4e2;
+$white: #fafafa;
+
+/*** EXTEND ***/
+/* box-shadow */
+%boxshadow {
+  box-shadow: 0.25rem 0.25rem 0.6rem rgba(0, 0, 0, 0.05),
+    0 0.5rem 1.125rem rgba(75, 0, 0, 0.05);
+}
+
+/*** STYLE ***/
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: $white;
+  color: $black;
+  font-family: "Raleway", sans-serif;
+}
+
+main {
+  display: block;
+  margin: 0 auto;
+  max-width: 40rem;
+  padding: 1rem;
+}
+
+ol.gradient-list {
+  // font-size: 15px;
+
+  counter-reset: gradient-counter;
+  list-style: none;
+  margin: 1.75rem 0;
+  padding-left: 1rem;
+  > li {
+    background: white;
+    border-radius: 0 0.5rem 0.5rem 0.5rem;
+    @extend %boxshadow;
+    counter-increment: gradient-counter;
+    margin-top: 1rem;
+    min-height: 3rem;
+    padding: 1rem 1rem 1rem 3rem;
+    position: relative;
+    &::before,
+    &::after {
+      background: linear-gradient(135deg, $blue 0%, $green 100%);
+      border-radius: 1rem 1rem 0 1rem;
+      content: "";
+      height: 3rem;
+      left: -1rem;
+      overflow: hidden;
+      position: absolute;
+      top: -1rem;
+      width: 3rem;
+    }
+    &::before {
+      align-items: flex-end;
+      @extend %boxshadow;
+      content: counter(gradient-counter);
+      color: $black;
+      display: flex;
+      font: 900 1.5em/1 "Montserrat";
+      justify-content: flex-end;
+      padding: 0.125em 0.25em;
+      z-index: 1;
+    }
+
+    @for $i from 1 through 5 {
+      &:nth-child(10n + #{$i}):before {
+        background: linear-gradient(
+          135deg,
+          rgba($green, $i * 0.2) 0%,
+          rgba($yellow, $i * 0.2) 100%
+        );
+      }
+    }
+    @for $i from 6 through 10 {
+      &:nth-child(10n + #{$i}):before {
+        background: linear-gradient(
+          135deg,
+          rgba($green, 1 - (($i - 5) * 0.2)) 0%,
+          rgba($yellow, 1 - (($i - 5) * 0.2)) 100%
+        );
+      }
+    }
+    + li {
+      margin-top: 2rem;
+    }
+  }
+}
+</style>
 <style scoped>
+#icon {
+  cursor: pointer;
+}
+#icon:hover {
+  color: #653fd3;
+}
 /*라우터 버튼디자인 */
 .router-view {
   height: 100%;
@@ -207,10 +338,10 @@ export default {
 #word {
   text-decoration-line: none;
 }
-span {
+/* span {
   font-size: 17px;
   letter-spacing: 0.04em;
-}
+} */
 
 @import "../main.css";
 /* @import './fullcalander/main.js'; */
@@ -218,6 +349,7 @@ span {
 .conatiner {
   display: flex;
   flex-direction: row;
+  /* width: 1000px; */
 }
 .my-top {
   display: flex;
@@ -353,5 +485,6 @@ b {
 
 #inner-table {
   border: #653fd3;
+  font-size: 20px;
 }
 </style>
