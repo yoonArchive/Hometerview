@@ -173,17 +173,16 @@
     </section>
     <div class="study-detail-information-wrapper">
       <div class="row">
-        <h4 class="stdNotice col-md-3">스터디 공지사항</h4>
-        <button
-          type="button"
-          class="col-md-1 small"
-          v-if="studySpaceDetail.joinType == 'LEADER'"
-          data-bs-toggle="modal"
-          data-bs-target="#exampleModal"
-          data-bs-whatever="@mdo"
-        >
-          수정
-        </button>
+        <h4 class="stdNotice col-md-3">
+          스터디 공지사항 &nbsp;<i
+            class="input-icon uil uil-edit"
+            v-if="studySpaceDetail.joinType == 'LEADER'"
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+            data-bs-whatever="@mdo"
+            style="font-size:20px;"
+          ></i>
+        </h4>
         <div
           class="modal fade"
           id="exampleModal"
@@ -247,7 +246,7 @@
           <span v-else>{{ studySpaceDetail.stdNotice }} </span>
         </div>
       </div>
-      <hr />
+      <div style="height:50px"></div>
       <h4 class="stdMembers">스터디원</h4>
       <div class="table-wrapper">
         <table>
@@ -710,5 +709,8 @@ table.alt thead {
 }
 table.alt tfoot {
   border-top: 0;
+}
+i:hover {
+  color: #653fd3;
 }
 </style>
