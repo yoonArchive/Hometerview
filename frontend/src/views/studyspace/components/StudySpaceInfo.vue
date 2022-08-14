@@ -24,7 +24,14 @@
             </span>
             <span class="title" v-else style="text-align: center;"
               >[ 자율 면접 스터디 ]</span
-            >
+            ><i
+              class="input-icon uil uil-edit"
+              v-if="studySpaceDetail.joinType == 'LEADER'"
+              data-bs-toggle="modal"
+              data-bs-target="#studyUpdateModal"
+              data-bs-whatever="@mdo"
+              style="font-size:20px;"
+            ></i>
           </div>
           <div class="info">
             <span class="detail">{{ studySpaceDetail.stdDetail }}</span>
@@ -46,7 +53,7 @@
         <button @click="moveToSession()" class="study-space-btn">
           스터디룸 입장
         </button>
-        <button
+        <!-- <button
           type="button"
           v-if="studySpaceDetail.joinType == 'LEADER'"
           data-bs-toggle="modal"
@@ -54,8 +61,11 @@
           data-bs-whatever="@mdo"
         >
           수정
-        </button>
-        <button v-else @click="leaveStudy(stdNo)">
+        </button> -->
+        <button
+          v-if="studySpaceDetail.joinType == 'NORMAL'"
+          @click="leaveStudy(stdNo)"
+        >
           스터디 탈퇴
         </button>
         <div
