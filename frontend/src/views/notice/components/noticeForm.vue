@@ -12,26 +12,30 @@
             class="form-control has-success col-sm-10"
             v-model="newnotice.noticeTitle"
             id="title"
+            placeholder="공지사항 제목을 입력하세요."
           />
         </div>
         <div class="mb-3">
-          <label for="exampleFormControlTextarea1" class="form-label"></label>
+          <label for="exampleFormControlTextarea1" class="form-label"
+            >내용:
+          </label>
           <textarea
             class="form-control col-sm-12"
             v-model="newnotice.noticeContents"
             type="text"
             id="content"
-            rows="3"
+            rows="6"
+            placeholder="공지사항 내용을 입력하세요."
           ></textarea>
         </div>
         <div class="buttonbundle">
           <button id="button-review" v-if="action === 'create'">
-            <p id="a">작성하기</p>
+            작성하기
           </button>
           <button id="button-review" v-else><p id="a">수정하기</p></button>
           <button id="button-review">
             <router-link class="routerlink" :to="{ name: 'notices' }">
-              <p id="a">목록</p>
+              목록
             </router-link>
           </button>
         </div>
@@ -52,8 +56,6 @@ export default {
   data() {
     return {
       newnotice: {
-        // title: this.notice.noticeTitle,
-        // content: this.notice.noticeContents,
         noticeNo: this.$route.params.noticeNo,
         noticeContents: this.notice.noticeContents,
         noticeTitle: this.notice.noticeTitle,
@@ -66,7 +68,6 @@ export default {
     ...mapActions(["createNotice", "updateNotice"]),
     onSubmit() {
       if (this.action === "create") {
-        // this.action = '작성하기'
         this.createNotice(this.newnotice);
       } else if (this.action === "update") {
         const payload = {
@@ -96,24 +97,50 @@ export default {
   justify-content: center;
   margin-top: 50px;
 }
-
-#a {
-  text-decoration-line: none;
-  color: white;
-  font-size: 15px;
-  font-family: "티머니 둥근바람";
-  margin: 2px;
-}
-#button-review {
-  background-color: #653fd3;
-  border-color: #653fd3;
-  border-radius: 10%;
-  margin: 15px;
-  width: 100px;
+.buttonbundle {
   text-align: center;
 }
-
-.form-control {
-  background-color: #653fd3;
+a {
+  text-decoration: none;
+  color: black;
+}
+input[type="button"],
+button,
+.button {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  -moz-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+  -webkit-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+  -ms-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+  background-color: transparent;
+  border-radius: 0.375em;
+  border: 0;
+  box-shadow: inset 0 0 0 2px #653fd3;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 0.8em;
+  font-weight: 700;
+  height: 3.5em;
+  letter-spacing: 0.075em;
+  line-height: 3.5em;
+  padding: 0 2.25em;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  white-space: nowrap;
+  margin: 0 0.5em 0 0;
+}
+input[type="button"]:hover,
+button:hover,
+.button:hover {
+  background-color: rgba(161, 104, 253, 0.05);
+}
+input[type="button"]:active,
+button:active,
+.button:active {
+  background-color: rgba(161, 104, 253, 0.15);
 }
 </style>

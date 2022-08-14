@@ -25,7 +25,7 @@
       </p>
       <hr />
     </div>
-    <span style="margin-top:20px">{{ notice.noticeContents }}</span>
+    <pre>{{ notice.noticeContents }}</pre>
   </div>
 </template>
 
@@ -112,6 +112,11 @@ a:hover {
   margin-top: 40px;
 }
 span {
+  padding-left: 15px;
+}
+pre {
+  font-family: "티머니 둥근바람";
+  margin-top: 20px;
   padding-left: 15px;
 }
 </style>
