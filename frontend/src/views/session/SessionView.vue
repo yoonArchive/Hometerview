@@ -2,9 +2,19 @@
   <div class="full-con">
     <div class="main-con">
       <!-- <div id="session-title">{{ mySessionId }}</div><br> -->
+      <div>자세 분석</div>
+      <div hidden="ture" ref="webcam"></div>
+      <button type="button" @click="init()">Start</button>
+      <button type="button" @click="tmStop()">Stop</button>
+      <button type="button" @click="start()">녹화시작</button>
+      <button type="button" @click="stop()">녹화중단</button>
+      <div v-if="recording" class="test">
+        {{ recording }} <br />
+        {{ recording.url }}
+      </div>
       <div class="con d-flex justify-content-between row">
         <div class="side-left col-md-8">
-          <div class="center">
+          <div class="center" style="margin-top:3vh;">
             <!-- 중앙 -->
             <!-- 메인 화면, 사이드 -->
 
@@ -16,12 +26,13 @@
                   class="large-video"
                   :stream-manager="mainStreamManager"
                   :mainStream="true"
+                  style="height:65vh;"
                 />
               </div>
 
               <!-- 비디오 그룹 -->
               <div
-                class="video-container row d-flex justify-content-center  mb-2"
+                class="video-container row d-flex justify-content-center mt-1"
               >
                 <!-- 자기화면 (작은) -->
                 <user-video
@@ -29,6 +40,7 @@
                   :stream-manager="publisher"
                   :mainStream="false"
                   @click="updateMainVideoStreamManager(publisher)"
+                  style="height:15vh;"
                 />
                 <!-- native : 상위 컴포넌트(즉 여기 있는 이벤트)를 하위 컴포넌트에서 작동시키고 싶을 때 사용한다. -->
                 <!-- vue3에서 native가 사라지고 그냥 click을 누르면 된다. -->
@@ -39,21 +51,19 @@
                   :stream-manager="sub"
                   :mainStream="false"
                   @click="updateMainVideoStreamManager(sub)"
+                  style="height:15vh;"
                 />
               </div>
             </div>
 
-            <div>자세 분석</div>
-            <div hidden="ture" ref="webcam"></div>
-            <button type="button" @click="init()">Start</button>
-            <div
+            <!-- <div
               v-for="prediction in predictions"
               :key="prediction.className"
               style="color:whitesmoke;"
             >
               {{ prediction.className }}:
               {{ prediction.probability.toFixed(2) }}
-            </div>
+            </div> -->
 
             <div class="bottom d-flex justify-content-evenly">
               <!-- 하단 -->
@@ -131,74 +141,89 @@
           <!-- 메시지, 자소서, 참가자 지정 -->
           <div class="side-panel">
             <div class="select-side-bottons">
-              <div class="d-flex justify-content-start">
-                <div>
-                  <img
-                    :src="require(`@/assets/images/session/chatOn.png`)"
-                    @click="changeContent('chatting')"
-                    style="height:6vh; margin-top:-5%;"
-                    v-if="chatting"
-                  />
-                  <img
-                    :src="require(`@/assets/images/session/chatOff.png`)"
-                    @click="changeContent('chatting')"
-                    style="height:6vh; margin-top:-5%;"
-                    v-else
-                  />
-                </div>
-                <div>
-                  <img
-                    :src="require(`@/assets/images/session/resumeOn.png`)"
-                    @click="changeContent('participant')"
-                    v-if="participant"
-                    style="margin-top:5%; height:4.8vh"
-                  />
-                  <img
-                    :src="require(`@/assets/images/session/resumeOff.png`)"
-                    @click="changeContent('participant')"
-                    v-else
-                    style="margin-top:5%; height:4.8vh"
-                  />
-                </div>
-                <div>
-                  <img
-                    :src="require(`@/assets/images/session/memberOn.png`)"
-                    @click="changeContent('selectinterviewee')"
-                    style="height:5.7vh; margin-top:5%"
-                    v-if="selectinterviewee"
-                  />
-                  <img
-                    :src="require(`@/assets/images/session/memberOff.png`)"
-                    @click="changeContent('selectinterviewee')"
-                    style="height:5.7vh; margin-top:5%"
-                    v-else
-                  />
-                </div>
-                <div class="row">
-                  <div class="col">
+              <div class="d-flex justify-content-between">
+                <div class="row" style="margin-left:1vh;">
+                  <div class="col" style="margin:0; padding:0;">
                     <img
-                      :src="require(`@/assets/images/session/videoOn.png`)"
-                      style="height:3vh; margin-top:%;"
-                      v-if="recordOnOff"
-                      @click="recordONOFF()"
+                      :src="require(`@/assets/images/session/chatOn.png`)"
+                      @click="changeContent('chatting')"
+                      style="height:6vh; margin-top:-5%;"
+                      v-if="chatting"
                     />
                     <img
-                      :src="require(`@/assets/images/session/videoOff.png`)"
-                      style="height:3vh; margin-top:%;"
-                      @click="recordONOFF()"
+                      :src="require(`@/assets/images/session/chatOff.png`)"
+                      @click="changeContent('chatting')"
+                      style="height:6vh; margin-top:-5%;"
                       v-else
                     />
                   </div>
-                  <div class="col">
+                  <div class="col" style="margin:0; padding:0;">
                     <img
-                      :src="require(`@/assets/images/session/stop.png`)"
-                      style="height:3vh; margin-top:;"
-                      @click="stop"
-                      v-if="true"
+                      :src="require(`@/assets/images/session/resumeOn.png`)"
+                      @click="changeContent('participant')"
+                      v-if="participant"
+                      style="margin-top:5%; height:4.8vh"
+                    />
+                    <img
+                      :src="require(`@/assets/images/session/resumeOff.png`)"
+                      @click="changeContent('participant')"
+                      v-else
+                      style="margin-top:5%; height:4.8vh"
+                    />
+                  </div>
+                  <div class="col" style="margin:0; padding:0;">
+                    <img
+                      :src="require(`@/assets/images/session/memberOn.png`)"
+                      @click="changeContent('selectinterviewee')"
+                      style="height:5.7vh; margin-top:5%"
+                      v-if="selectinterviewee"
+                    />
+                    <img
+                      :src="require(`@/assets/images/session/memberOff.png`)"
+                      @click="changeContent('selectinterviewee')"
+                      style="height:5.7vh; margin-top:5%"
+                      v-else
                     />
                   </div>
                 </div>
+                <div>
+                  <div
+                    class="row"
+                    style="margin-right:3.5vh; margin-top:0.7vh;"
+                  >
+                    <div
+                      class="col"
+                      style="margin:0; padding:0; margin-right:0.5vh;"
+                    >
+                      <img
+                        :src="require(`@/assets/images/session/videoOn.png`)"
+                        style="height:3vh; margin-top:%;"
+                        v-if="recordOnOff"
+                        @click="recordONOFF()"
+                      />
+                      <img
+                        :src="require(`@/assets/images/session/videoOff.png`)"
+                        style="height:3vh; margin-top:%;"
+                        @click="recordONOFF()"
+                        v-else
+                      />
+                    </div>
+                    <div
+                      class="col"
+                      style="margin:0; padding:0; margin-left:0.5vh;"
+                    >
+                      <img
+                        :src="require(`@/assets/images/session/stop.png`)"
+                        style="height:3vh; margin-top:;"
+                        @click="stop"
+                        v-if="true"
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
+
+              <div></div>
               <!-- 메시지 -->
               <div v-if="chatting">
                 <message-list
@@ -302,6 +327,9 @@
   width: 6vh;
   border-radius: 100% 100% 100% 100%;
 }
+.test {
+  color: white;
+}
 </style>
 
 <script>
@@ -361,6 +389,10 @@ export default {
       pose: null,
       posenetOutput: null,
 
+      // record
+      recording: {},
+      recordingSessionId: "",
+
       // massege
       msgs: [],
       fromId: "",
@@ -388,10 +420,81 @@ export default {
   },
   computed: {
     // studySpaceDetail.joinTyped
-    ...mapGetters(["currentUser", "studySpaceDetail"])
+    ...mapGetters(["currentUser", "studySpaceDetail", "currentUser"])
   },
   methods: {
-    ...mapActions(["bringStudySpaceDetail", "changeToCoverLetter"]),
+    ...mapActions([
+      "bringStudySpaceDetail",
+      "changeToCoverLetter",
+      "needToFixPosture",
+      "stopToFixPosture"
+    ]),
+    async start() {
+      // const date = await new Date();
+      // const [month, day, year, hour, minutes, seconds] = await [
+      //   date.getMonth().toString(),
+      //   date.getDate().toString(),
+      //   date.getFullYear().toString(),
+      //   date.getHours().toString(),
+      //   date.getMinutes().toString(),
+      //   date.getSeconds().toString()
+      // ];
+      // this.recordingSessionId = await `${this.mySessionId}-${year}-${month}-${day}-${hour}-${minutes}-${seconds}`;
+      // const recordSessionId = this.mySessionId
+      return this.recordingStart(this.mySessionId);
+    },
+    stop() {
+      console.log(this.mySessionId);
+      return this.recordingStop(this.mySessionId);
+    },
+    recordingStart(sessionId) {
+      return new Promise(async (resolve, reject) => {
+        axios
+          .post(
+            `${OPENVIDU_SERVER_URL}/openvidu/api/recordings/start`,
+            JSON.stringify({
+              session: sessionId
+            }),
+            {
+              auth: {
+                username: "OPENVIDUAPP",
+                password: OPENVIDU_SERVER_SECRET
+              }
+            }
+          )
+          .then(response => {
+            this.recording = response.data;
+            console.log(this.recording);
+          })
+          .then(data => resolve(data.token))
+          .catch(error => reject(error.response));
+      });
+    },
+
+    recordingStop(sessionId) {
+      return new Promise(async (resolve, reject) => {
+        // const userId = await this.currentUser.userId;
+        // const recordingFileName = await `${userId}_${sessionId}.mp4`;
+        // this.recording.url = await `https://i7b105.p.ssafy.io:8443/openvidu/recordings/${this.recordingSessionId}/${recordingFileName}`;
+        axios
+          .post(
+            `${OPENVIDU_SERVER_URL}/openvidu/api/recordings/stop/${sessionId}`,
+            {},
+            {
+              auth: {
+                username: "OPENVIDUAPP",
+                password: OPENVIDU_SERVER_SECRET
+              }
+            }
+          )
+          .then(response => {
+            this.recording = response.data;
+            console.log(this.recording);
+          })
+          .then(data => resolve(data.token))
+          .catch(error => reject(error.response));
+      });
+    },
     async init() {
       const modelURL = `${this.url}model.json`;
       const metadataURL = `${this.url}metadata.json`;
@@ -416,20 +519,44 @@ export default {
       window.requestAnimationFrame(this.loop);
     },
     async loop() {
-      console.log("hi");
-      this.webcam.update();
-      await this.predict();
-      window.requestAnimationFrame(this.loop);
+      if (this.webcam != null) {
+        console.log("hi");
+        this.webcam.update();
+        await this.predict();
+        await this.inference();
+        window.requestAnimationFrame(this.loop);
+      }
     },
     async predict() {
       const { posenetOutput } = await this.model.estimatePose(
         this.webcam.canvas
       );
-      console.log("check!!");
       this.predictions = await this.model.predict(posenetOutput);
-      console.log("prediction");
     },
+    async inference() {
+      for (const prediction of this.predictions) {
+        const className = await prediction.className;
+        const pred = await prediction.probability.toFixed(2);
 
+        if (className === "center") {
+          const postureColor = "";
+          await this.needToFixPosture(postureColor);
+          console.log("자세교정 필요함");
+        } else if (className === "left" && pred > 0.9) {
+          const postureColor = "#8c1d1d";
+          console.log("left");
+          await this.needToFixPosture(postureColor);
+        } else if (className === "right" && pred > 0.9) {
+          const postureColor = "#8c1d1d";
+          console.log("right");
+          await this.needToFixPosture(postureColor);
+        }
+      }
+    },
+    async tmStop() {
+      await this.stopToFixPosture();
+      this.webcam = null;
+    },
     async findIndex(userId) {
       const members = this.studySpaceDetail.studyJoins;
       let studentindex;

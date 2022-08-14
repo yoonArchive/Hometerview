@@ -1,10 +1,7 @@
 <template>
   <div v-if="streamManager">
     <ov-video :streamManager="streamManager" :mainStream="mainStream" />
-    <div class="video-name">
-      {{ clientData }}
-    </div>
-    <!-- <p style="margin:0px;">{{ clientData }}</p> -->
+    <div class="video-name">{{ clientData }}</div>
   </div>
 </template>
 
@@ -43,9 +40,20 @@ export default {
 };
 </script>
 <style scoped>
-.video-name {
+/* .video-name {
   position: relative;
   background-color: #272930;
   color: whitesmoke;
+} */
+.video-name {
+  /* display: inline-block; */
+  /* padding-left: 5px;
+  padding-right: 5px; */
+  color: whitesmoke;
+  font-weight: bold;
+  position: absolute;
+  z-index: 999;
+  padding: 5px;
+  font-weight: 700;
 }
 </style>

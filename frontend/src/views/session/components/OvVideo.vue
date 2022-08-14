@@ -2,27 +2,25 @@
   <!-- 가능한 빨리 재생을 시작하는 video속성 -->
   <video v-if="mainStream" class="main col-12" autoplay />
   <video v-else class="sub" autoplay />
-
-  <!-- <div class="video-name">{{ clientData }}</div> -->
 </template>
 
 <script>
+import { mapActions, mapGetters } from "vuex";
 export default {
   name: "OvVideo",
-
   props: {
     streamManager: Object,
     mainStream: Boolean
   },
+  data() {
+    return {};
+  },
   computed: {
+    ...mapGetters(["posture"]),
     clientData() {
       // 이름 띄우기
       const { clientData } = this.getConnectionData();
       return clientData;
-    },
-    clinentId() {
-      const { clientId } = this.getConnectionData();
-      return clientId;
     }
   },
   methods: {
@@ -41,15 +39,37 @@ export default {
 </script>
 <style scoped>
 .main {
-  /* width: 98%; */
-  height: 60vh;
-  border-radius: 2% 2% 2% 2%;
-  margin-top: 20px;
+  aspect-ratio: 4/3;
+  margin-top: 2vh;
+  max-height: calc(100vh - 6rem);
+  max-width: 100%;
+  width: fit-content;
+  height: 63vh;
+  display: block;
+  /* border-color: v-bind(color) */
+  border: solid v-bind(posture) 3px;
+  background-color: black;
+  border-radius: 1.2rem;
+  object-fit: cover;
+  align-self: center;
+  margin-left: auto;
+  margin-right: auto;
 }
 .sub {
   /* width: 320px; */
-  height: 20vh;
-  border-radius: 4% 4% 4% 4%;
+  /* height: 20vh; */
+  /* border-radius: 4% 4% 4% 4%; */
+  aspect-ratio: 4/3;
+  max-height: calc(100vh - 6rem);
+  max-width: 100%;
+  width: fit-content;
+  height: 23vh;
+  display: block;
+  /* border: solid #8c1d1d 3px; */
+  background-color: black;
+  border-radius: 1.2rem;
+  object-fit: cover;
+  align-self: center;
 }
 /* .main {
   height: 70%;
