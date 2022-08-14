@@ -10,7 +10,7 @@
       />
       <div>
         <div>{{ resumeQuestionList[selectedNum].detailNo }}</div>
-        <div>{{ resumeQuestionList[selectedNum].question }}</div>
+        <div>Q. {{ resumeQuestionList[selectedNum].question }}</div>
         <div>{{ resumeQuestionList[selectedNum].answer }}</div>
       </div>
     </div>
