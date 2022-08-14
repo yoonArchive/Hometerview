@@ -21,3 +21,15 @@ body {
   font-weight: 400;
   src: url("../../assets/fonts/TMONEYROUNDWINDREGULAR.TTF");
 }
+
+@font-face {
+  font-family: "맑은 고딕 볼드";
+  font-weight: 400;
+  src: url("../../assets/fonts/malgunbd.ttf");
+}
+
+@font-face {
+  font-family: "맑은 고딕";
+  font-weight: 400;
+  src: url("../../assets/fonts/malgun.ttf");
+}
