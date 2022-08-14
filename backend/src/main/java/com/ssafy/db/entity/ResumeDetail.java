@@ -35,7 +35,7 @@ public class ResumeDetail {
 
     @JsonIgnore
     @Builder.Default
-    @OneToMany(mappedBy = "resumeDetail")
+    @OneToMany(mappedBy = "resumeDetail", orphanRemoval = true)
     private List<PersonalQuestion> personalQuestions = new ArrayList<>();
 
     public void createResumeDetail(Resume resume, Long itemNo, String item, String answer) {
