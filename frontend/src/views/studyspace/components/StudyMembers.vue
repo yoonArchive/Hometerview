@@ -1,7 +1,12 @@
 <template>
   <tr>
     <td style="width:30px"></td>
-    <td style="font-weight:700">{{ member.user.userName }}</td>
+    <td style="font-weight:700">
+      {{ member.user.userName
+      }}<span v-if="member.joinType === 'LEADER'" style="font-size:17px"
+        >&nbsp;👑</span
+      >
+    </td>
     <td>{{ member.user.userEmail }}</td>
     <td style="width:100px"></td>
     <td>

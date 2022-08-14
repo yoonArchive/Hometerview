@@ -51,6 +51,24 @@
               <study-space-item :studySpace="studySpace"></study-space-item>
             </div>
           </div>
+          <button
+            class="carousel-control-prev"
+            type="button"
+            data-bs-target="#carouselExampleCaptions"
+            data-bs-slide="prev"
+          >
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button
+            class="carousel-control-next"
+            type="button"
+            data-bs-target="#carouselExampleCaptions"
+            data-bs-slide="next"
+          >
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
         </div>
       </div>
       <div v-else>
@@ -78,26 +96,26 @@
               ></applying-recruit-item>
             </div>
           </div>
+          <button
+            class="carousel-control-prev"
+            type="button"
+            data-bs-target="#carouselExampleCaptions"
+            data-bs-slide="prev"
+          >
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button
+            class="carousel-control-next"
+            type="button"
+            data-bs-target="#carouselExampleCaptions"
+            data-bs-slide="next"
+          >
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
         </div>
       </div>
-      <button
-        class="carousel-control-prev"
-        type="button"
-        data-bs-target="#carouselExampleCaptions"
-        data-bs-slide="prev"
-      >
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button
-        class="carousel-control-next"
-        type="button"
-        data-bs-target="#carouselExampleCaptions"
-        data-bs-slide="next"
-      >
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
     </div>
     <div class="row" style="margin-bottom:20px;">
       <div class="title col-md-3">
@@ -131,7 +149,7 @@
           type="checkbox"
           name="recruitType"
           id="recruiting"
-          v-model="recruiting"
+          v-model="recruitingState"
           @change="isRecruiting()"
         />
         <label class="form-check-label" for="recruiting">모집 중</label>
@@ -160,7 +178,7 @@
           class="recruitSearch"
           v-model="recruitSearchKeyword"
           placeholder="스터디 모집글 제목 검색"
-          @keyup.enter="bringRecruitSearchList(recruitSearchKeyword)"
+          @keyup.enter="searchByTitle(recruitSearchKeyword)"
         />
       </div>
     </div>
@@ -229,6 +247,7 @@ export default {
     //   await this.bringRecruitSearchList(recruitSearchKeyword)
     // },
     isRecruiting() {
+      this.recruitSearchKeyword = "";
       if (this.recruitState === true) {
         this.recruitState = false;
         this.recruitingState = true;
@@ -241,12 +260,19 @@ export default {
       }
     },
     getRecruitTypeList() {
+      this.recruitSearchKeyword = "";
       console.log(this.recruitType);
       if (this.recruitingState === true) {
         this.bringRecruitingList(this.recruitType);
       } else {
         this.bringRecruitTypeList(this.recruitType);
       }
+    },
+    searchByTitle(recruitSearchKeyword) {
+      this.recruitType = "1";
+      this.recruitState = true;
+      this.recruitingState = false;
+      this.bringRecruitSearchList(recruitSearchKeyword);
     }
   },
   mounted() {
@@ -283,31 +309,6 @@ export default {
 </script>
 
 <style scoped>
-/* .bunddle-option { */
-/* display: grid; */
-/* flex-direction: row; */
-/* justify-content: space-evenly; */
-/* grid-column: 5; */
-/* } */
-/*
-.new-create-button {
-  height: 40px;
-  background: #f3f0fb;
-  border: 1px solid #653fd3;
-  border-radius: 16px;
-  font-family: "티머니 둥근바람";
-}
-.container {
-  display: flex;
-  flex-direction: column;
-  font-family: "티머니 둥근바람";
-}
-.inner-container1 {
-  /* justify-content: center; */
-/* flex-direction: row;
-  border-radius: 40%;
-  font-family: "티머니 둥근바람";
-} */
 .title {
   font-family: "티머니 둥근바람 볼드";
 }
