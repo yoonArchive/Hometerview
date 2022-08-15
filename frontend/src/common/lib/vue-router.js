@@ -156,6 +156,7 @@ function makeRoutesFromMenu() {
         {
           path: "membersrecruitment/:recruitNo",
           name: "membersrecruitmentdetail",
+          meta: { IsLogin: true },
           component: MembersRecruitmentDetailView
         },
         {
