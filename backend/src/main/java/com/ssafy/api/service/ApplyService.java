@@ -16,6 +16,6 @@ public interface ApplyService {
 
     long getApplyCount(Recruit recruit);
 
-    ApplyType getApplyType(Long recruitNo, Long userNo);
+    ApplyType getApplyType(Recruit recruit, Long userNo);
 
 }

@@ -132,7 +132,7 @@ public class RecruitController {
         Recruit recruit = recruitService.getByRecruitNo(recruitNo);
         if (recruit == null) return ResponseEntity.status(401).body(BaseResponseBody.of(401, "해당하는 스터디 모집글이 없습니다."));
         long count = applyService.getApplyCount(recruit);
-        ApplyType applyType = applyService.getApplyType(recruitNo, userNo);
+        ApplyType applyType = applyService.getApplyType(recruit, userNo);
         return ResponseEntity.status(200).body(RecruitRes.of(recruit, count, applyType, 200, "스터디 모집글 상세조회를 성공하였습니다."));
     }
 
@@ -158,7 +158,7 @@ public class RecruitController {
         else if (result == 1) return ResponseEntity.status(402).body(BaseResponseBody.of(402, "썸네일 이미지 수정에 실패하였습니다."));
         Recruit updatedRecruit = recruitService.getByRecruitNo(recruitNo);
         long count = applyService.getApplyCount(recruit);
-        ApplyType applyType = applyService.getApplyType(recruitNo, userNo);
+        ApplyType applyType = applyService.getApplyType(recruit, userNo);
         return ResponseEntity.status(200).body(RecruitRes.of(updatedRecruit, count, applyType, 200, "스터디 모집글이 수정되었습니다."));
     }
 

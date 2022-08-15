@@ -4,10 +4,7 @@ import com.ssafy.db.entity.Apply;
 import com.ssafy.db.entity.ApplyType;
 import com.ssafy.db.entity.Recruit;
 import com.ssafy.db.entity.User;
-import com.ssafy.db.repository.ApplyRepository;
-import com.ssafy.db.repository.ApplyRepositorySupport;
-import com.ssafy.db.repository.RecruitRepository;
-import com.ssafy.db.repository.UserRepository;
+import com.ssafy.db.repository.*;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,6 +23,8 @@ public class ApplyServiceImpl implements ApplyService {
     private final ApplyRepository applyRepository;
 
     private final ApplyRepositorySupport applyRepositorySupport;
+
+    private final StudyJoinRepositorySupport studyJoinRepositorySupport;
 
     @Override
     public int applyRecruit(Long userNo, Long recruitNo, ApplyType applyType) {
@@ -74,8 +73,11 @@ public class ApplyServiceImpl implements ApplyService {
     }
 
     @Override
-    public ApplyType getApplyType(Long recruitNo, Long userNo) {
-        return applyRepositorySupport.findByRecruitNoAndUserNo(recruitNo, userNo);
+    public ApplyType getApplyType(Recruit recruit, Long userNo) {
+        if(recruit.getRecruitStatus().equals("RECRUITING")) {
+            return applyRepositorySupport.findByRecruitNoAndUserNo(recruit.getRecruitNo(), userNo);
+        }
+        else return studyJoinRepositorySupport.findStudyJoinByUserNoAndStdNo(userNo, recruit.getStdNo()).get().getJoinType();
     }
 
 }
