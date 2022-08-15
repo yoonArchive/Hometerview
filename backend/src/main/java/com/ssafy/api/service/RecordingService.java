@@ -9,7 +9,7 @@ public interface RecordingService {
 
     Recording writeRecord(Long stdNo, RecordingPostReq recordingPostReq);
 
-    List<Recording> getRecordList(Long userNo);
+    List<Recording> getRecordList(String userId);
 
     Recording getRecordByRecordNo(Long recordNo);
 

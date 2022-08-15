@@ -57,8 +57,8 @@ public class RecordingController {
     })
     public ResponseEntity<RecordingListRes > listRecording(@ApiIgnore Authentication authentication) throws Exception {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
-        Long userNo = userDetails.getUserNo();
-        List<Recording> recordings = recordingService.getRecordList(userNo);
+        String userId = userDetails.getUsername();
+        List<Recording> recordings = recordingService.getRecordList(userId);
         return ResponseEntity.status(200).body(RecordingListRes.of(recordings, 200, "녹화 목록 조회를 성공하였습니다."));
     }
 

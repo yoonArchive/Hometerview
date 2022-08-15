@@ -30,7 +30,7 @@ public class RecordingServiceImpl implements RecordingService{
         Date now = new Date();
         Recording recording = Recording.builder()
                 .study(study)
-                .userNo(recordingPostReq.getUserNo())
+                .userId(recordingPostReq.getUserId())
                 .saveDate(dataFormat.format(now))
                 .videoUrl(recordingPostReq.getVideoUrl())
                 .build();
@@ -38,8 +38,8 @@ public class RecordingServiceImpl implements RecordingService{
     }
 
     @Override
-    public List<Recording> getRecordList(Long userNo) {
-        return recordingRepositorySupport.findAllRecordingByUserNo(userNo);
+    public List<Recording> getRecordList(String userId) {
+        return recordingRepositorySupport.findAllRecordingByUserNo(userId);
     }
 
     @Override

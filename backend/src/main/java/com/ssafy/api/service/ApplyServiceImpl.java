@@ -1,9 +1,6 @@
 package com.ssafy.api.service;
 
-import com.ssafy.db.entity.Apply;
-import com.ssafy.db.entity.ApplyType;
-import com.ssafy.db.entity.Recruit;
-import com.ssafy.db.entity.User;
+import com.ssafy.db.entity.*;
 import com.ssafy.db.repository.*;
 
 import lombok.RequiredArgsConstructor;
@@ -74,7 +71,7 @@ public class ApplyServiceImpl implements ApplyService {
 
     @Override
     public ApplyType getApplyType(Recruit recruit, Long userNo) {
-        if(recruit.getRecruitStatus().equals("RECRUITING")) {
+        if(recruit.getRecruitStatus() == RecruitStatus.RECRUITING) {
             return applyRepositorySupport.findByRecruitNoAndUserNo(recruit.getRecruitNo(), userNo);
         }
         else return studyJoinRepositorySupport.findStudyJoinByUserNoAndStdNo(userNo, recruit.getStdNo()).get().getJoinType();

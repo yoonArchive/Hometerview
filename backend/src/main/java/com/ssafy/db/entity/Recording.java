@@ -24,7 +24,7 @@ public class Recording {
     private Study study;
 
     @Column(name = "user_id")
-    private Long userId;
+    private String userId;
 
     @Column(name = "save_date")
     private String saveDate;
