@@ -7,53 +7,55 @@
     </header>
     <section id="banner">
       <!-- <span class="image object"> -->
-      <div class="image object">
-        <img :src="imgsrc" alt="" class="stdImg" style="width:550px" />
-      </div>
-      <!-- </span> -->
-      <div class="content">
-        <blockquote>
-          <div class="info">
-            <span
-              class="title"
-              v-if="studySpaceDetail.stdType == 'COM'"
-              style="text-align: center; "
-            >
-              [ 기업 면접 스터디 ]
-              <span class="comName"> {{ studySpaceDetail.comName }}</span>
-            </span>
-            <span class="title" v-else style="text-align: center;"
-              >[ 자율 면접 스터디 ]</span
-            ><i
-              class="input-icon uil uil-edit"
-              v-if="studySpaceDetail.joinType == 'LEADER'"
-              data-bs-toggle="modal"
-              data-bs-target="#studyUpdateModal"
-              data-bs-whatever="@mdo"
-              style="font-size:20px;"
-            ></i>
-          </div>
-          <div class="info">
-            <span class="detail">{{ studySpaceDetail.stdDetail }}</span>
-          </div>
-        </blockquote>
-        <div class="box">
-          <div class="info">
-            <span class="detail">🗓️ &nbsp; 기간 : </span>
-            <span
-              >{{ studySpaceDetail.startDate }} ~
-              {{ studySpaceDetail.endDate }}</span
-            >
-          </div>
-          <div class="info">
-            <span class="detail">⏰ &nbsp; 진행 일자 : </span>
-            <span>{{ studySpaceDetail.stdDay }}</span>
-          </div>
+
+      <div class="row">
+        <div class="image object col-6">
+          <img :src="imgsrc" alt="" class="stdImg" />
         </div>
-        <button @click="moveToSession()" class="study-space-btn">
-          스터디룸 입장
-        </button>
-        <!-- <button
+        <!-- </span> -->
+        <div class="content col">
+          <blockquote>
+            <div class="info">
+              <span
+                class="title"
+                v-if="studySpaceDetail.stdType == 'COM'"
+                style="text-align: center; "
+              >
+                [ 기업 면접 스터디 ]
+                <span class="comName"> {{ studySpaceDetail.comName }}</span>
+              </span>
+              <span class="title" v-else style="text-align: center;"
+                >[ 자율 면접 스터디 ]</span
+              ><i
+                class="input-icon uil uil-edit"
+                v-if="studySpaceDetail.joinType == 'LEADER'"
+                data-bs-toggle="modal"
+                data-bs-target="#studyUpdateModal"
+                data-bs-whatever="@mdo"
+                style="font-size:20px;"
+              ></i>
+            </div>
+            <div class="info">
+              <span class="detail">{{ studySpaceDetail.stdDetail }}</span>
+            </div>
+          </blockquote>
+          <div class="box">
+            <div class="info">
+              <span class="detail">🗓️ &nbsp; 기간 : </span>
+              <span
+                >{{ studySpaceDetail.startDate }} ~
+                {{ studySpaceDetail.endDate }}</span
+              >
+            </div>
+            <div class="info">
+              <span class="detail">⏰ &nbsp; 진행 일자 : </span>
+              <span>{{ studySpaceDetail.stdDay }}</span>
+            </div>
+          </div>
+          <button @click="moveToSession()" class="study-space-btn">
+            스터디룸 입장
+          </button>
+          <!-- <button
           type="button"
           v-if="studySpaceDetail.joinType == 'LEADER'"
           data-bs-toggle="modal"
@@ -62,119 +64,120 @@
         >
           수정
         </button> -->
-        <button
-          v-if="studySpaceDetail.joinType == 'NORMAL'"
-          @click="leaveStudy(stdNo)"
-        >
-          스터디 탈퇴
-        </button>
-        <div
-          class="modal fade"
-          id="studyUpdateModal"
-          tabindex="-1"
-          aria-labelledby="studyUpdateModalLabel"
-          aria-hidden="true"
-          data-bs-backdrop="static"
-          data-bs-keyboard="false"
-        >
-          <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="studyUpdateModalLabel">
-                  스터디 정보 수정
-                </h5>
-              </div>
-              <div class="modal-body">
-                <form>
-                  <div class="mb-3">
+          <button
+            v-if="studySpaceDetail.joinType == 'NORMAL'"
+            @click="leaveStudy(stdNo)"
+          >
+            스터디 탈퇴
+          </button>
+          <div
+            class="modal fade"
+            id="studyUpdateModal"
+            tabindex="-1"
+            aria-labelledby="studyUpdateModalLabel"
+            aria-hidden="true"
+            data-bs-backdrop="static"
+            data-bs-keyboard="false"
+          >
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="studyUpdateModalLabel">
+                    스터디 정보 수정
+                  </h5>
+                </div>
+                <div class="modal-body">
+                  <form>
                     <div class="mb-3">
-                      <label for="recipient-name" class="col-form-label"
-                        >스터디명</label
-                      >
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="recipient-name"
-                        v-model="this.studyUpdateInfo.studyName"
-                      />
-                    </div>
-                    <label for="recipient-name" class="col-form-label"
-                      >스터디 설명</label
-                    >
-                    <textarea
-                      class="form-control autoTextarea"
-                      id="floatingTextarea"
-                      v-model="this.studyUpdateInfo.studyDetail"
-                      @keyup="autoResizeTextarea"
-                      @keydown="autoResizeTextarea"
-                    >
-                    </textarea>
-                    <div class="mb-3">
-                      <label for="recipient-name" class="col-form-label"
-                        >기간</label
-                      >
-                      <div class="row">
+                      <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label"
+                          >스터디명</label
+                        >
                         <input
-                          type="date"
+                          type="text"
                           class="form-control"
                           id="recipient-name"
-                          v-model="this.studyUpdateInfo.studyStartDate"
-                          style="width:40%; margin-left:15px"
+                          v-model="this.studyUpdateInfo.studyName"
                         />
-                        &nbsp;~&nbsp;
+                      </div>
+                      <label for="recipient-name" class="col-form-label"
+                        >스터디 설명</label
+                      >
+                      <textarea
+                        class="form-control autoTextarea"
+                        id="floatingTextarea"
+                        v-model="this.studyUpdateInfo.studyDetail"
+                        @keyup="autoResizeTextarea"
+                        @keydown="autoResizeTextarea"
+                      >
+                      </textarea>
+                      <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label"
+                          >기간</label
+                        >
+                        <div class="row">
+                          <input
+                            type="date"
+                            class="form-control"
+                            id="recipient-name"
+                            v-model="this.studyUpdateInfo.studyStartDate"
+                            style="width:40%; margin-left:15px"
+                          />
+                          &nbsp;~&nbsp;
+                          <input
+                            type="date"
+                            class="form-control"
+                            id="recipient-name"
+                            v-model="this.studyUpdateInfo.studyEndDate"
+                            style="width:40%"
+                          />
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label"
+                          >진행 일자</label
+                        >
                         <input
-                          type="date"
+                          type="text"
                           class="form-control"
                           id="recipient-name"
-                          v-model="this.studyUpdateInfo.studyEndDate"
-                          style="width:40%"
+                          v-model="this.studyUpdateInfo.studyDay"
+                        />
+                      </div>
+                      <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label"
+                          >대표 이미지</label
+                        >
+                        <input
+                          type="file"
+                          class="form-control"
+                          id="inputImage"
+                          ref="inputImage"
+                          @change="imageSelect()"
+                          multiple
                         />
                       </div>
                     </div>
-                    <div class="mb-3">
-                      <label for="recipient-name" class="col-form-label"
-                        >진행 일자</label
-                      >
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="recipient-name"
-                        v-model="this.studyUpdateInfo.studyDay"
-                      />
-                    </div>
-                    <div class="mb-3">
-                      <label for="recipient-name" class="col-form-label"
-                        >대표 이미지</label
-                      >
-                      <input
-                        type="file"
-                        class="form-control"
-                        id="inputImage"
-                        ref="inputImage"
-                        @change="imageSelect()"
-                        multiple
-                      />
-                    </div>
-                  </div>
-                </form>
-              </div>
-              <div class="modal-footer">
-                <button
-                  type="button"
-                  class="small"
-                  data-bs-dismiss="modal"
-                  @click="initStudy()"
-                >
-                  수정
-                </button>
-                <button
-                  type="button"
-                  class="small"
-                  data-bs-dismiss="modal"
-                  @click="bringStudyInfoBack()"
-                >
-                  취소
-                </button>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="small"
+                    data-bs-dismiss="modal"
+                    @click="initStudy()"
+                  >
+                    수정
+                  </button>
+                  <button
+                    type="button"
+                    class="small"
+                    data-bs-dismiss="modal"
+                    @click="bringStudyInfoBack()"
+                  >
+                    취소
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -445,7 +448,6 @@ blockquote {
   display: -moz-flex;
   display: -webkit-flex;
   display: -ms-flex;
-  display: flex;
 }
 #banner h1 {
   margin-top: -0.125em;
