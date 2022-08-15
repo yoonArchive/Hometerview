@@ -1,4 +1,5 @@
 <template>
+  pick : {{ interviewUser }}
   <label
     class="form-check-label"
     :for="member.user.userId"
@@ -38,22 +39,22 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["interviewUser"]),
+    // ...mapGetters(["interviewUser"]),
     clientData() {
       // 이름 띄우기
       const { clientData } = this.getConnectionData();
       return clientData;
+    }
+  },
+  methods: {
+    ...mapActions(["changeInterviewUser"]),
+    change() {
+      console.log(this.interviewUser);
+      this.changeInterviewUser(this.interviewUser);
     },
-    methods: {
-      ...mapActions(["changeInterviewUser"]),
-      change() {
-        console.log(this.interviewUser);
-        this.changeInterviewUser(this.interviewUser);
-      },
-      getConnectionData() {
-        const { connection } = this.sub.stream;
-        return JSON.parse(connection.data);
-      }
+    getConnectionData() {
+      const { connection } = this.sub.stream;
+      return JSON.parse(connection.data);
     }
   }
 };
