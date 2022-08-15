@@ -16,11 +16,15 @@ export default {
     selectedQuestionNum: 0,
     selStdNo: Number,
 
+    /** tts요청할 문장 */
+    ttsrequestcontext: "",
+
     /**예상 질문 리스트 */
     expectedQuestionList: []
   },
 
   getters: {
+    ttsrequestcontext: state => state.ttsrequestcontext,
     authHeader: state => ({ Authorization: `Bearer ${state.token}` }),
     studySpaceList: state => state.studySpaceList,
     studySpaceDetail: state => state.studySpaceDetail,
@@ -34,6 +38,7 @@ export default {
   },
 
   mutations: {
+    SET_TTS_REQUEST_CONTEXT: (state, data) => (state.ttsrequestcontext = data),
     SET_TOKEN: (state, token) => (state.token = token),
     SET_STUDYSPACE_LIST: (state, studySpaceList) =>
       (state.studySpaceList = studySpaceList),
@@ -54,6 +59,9 @@ export default {
       (state.expectedQuestionList = data)
   },
   actions: {
+    changettsrequest({ commit }, data) {
+      commit("SET_TTS_REQUEST_CONTEXT", data);
+    },
     async changeToCoverLetter({ commit, dispatch }, changeInfo) {
       const content = changeInfo[0];
       const studentindex = changeInfo[1];

@@ -34,6 +34,8 @@
                   <div class="row" style="font-size:20px">
                     {{ item.contents }}
                   </div>
+
+                  <button @click="childttsrequest(item.contents)">tts!!</button>
                 </div>
               </div>
             </div>
@@ -73,7 +75,10 @@ export default {
 
   methods: {
     ...mapMutations(["SET_SELECTED_QUESTION_NUM"]),
-    ...mapActions(["getQuestionList"]),
+    ...mapActions(["getQuestionList", "changettsrequest"]),
+    childttsrequest(data) {
+      this.changettsrequest(data);
+    },
     changeSelectedNum(item) {
       this.selectedNum = item - 1;
       console.log(this.selectedNum);
