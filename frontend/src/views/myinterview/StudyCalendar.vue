@@ -155,7 +155,7 @@ export default {
     },
 
     //내용 클릭했을 시
-    handleEventClick(clickInfo) {
+    async handleEventClick(clickInfo) {
       this.id = clickInfo.event.id;
       console.log("아이디" + this.id);
 
@@ -180,7 +180,7 @@ export default {
           }
         }
       } else {
-        this.getReviewDetail(clickInfo.event.id);
+        await this.getReviewDetail(clickInfo.event.id);
         this.fetchReview = {
           reviewNo: clickInfo.event.id,
           reviewContents: this.currentReview.reviewContents,
@@ -188,7 +188,9 @@ export default {
           reviewType: this.currentReview.reviewType,
           reviewDate: this.currentReview.reviewDate
         };
-
+        // setTimeout(function() {
+        //   console.log("Works!");
+        // }, 2000);
         this.reviewmodalE = true;
       }
       // else{
@@ -226,10 +228,11 @@ export default {
     }
   },
 
-  beforeMount() {
-    this.checkReview();
-  },
+  // updated() {
+  //   this.checkReview();
+  // },
   created() {
+    this.checkReview();
     // this.checkReview();
   }
   // watch: {

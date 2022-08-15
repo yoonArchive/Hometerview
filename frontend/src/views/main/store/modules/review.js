@@ -74,8 +74,8 @@ export default {
         });
     },
     //회고 상세가져오기
-    getReviewDetail({ commit, getters, dispatch }, reviewNo) {
-      axios
+    async getReviewDetail({ commit, getters, dispatch }, reviewNo) {
+      await axios
         .get(api_url.review.review(reviewNo), {
           headers: getters.authHeader
         })
@@ -129,6 +129,8 @@ export default {
         router.push({
           name: "diary"
         });
+        window.location.reload();
+        window.location.reload();
         window.location.reload();
         window.location.reload();
       });
@@ -270,8 +272,6 @@ export default {
         });
         window.location.reload();
         window.location.reload();
-        window.location.reload();
-        window.location.reload();
       });
     },
     //디데이 수정하기
@@ -309,10 +309,13 @@ export default {
             commit("SET_DDAYS", {});
             dispatch("getDdayInfo");
             console.log("디데이 삭제 성공" + res.data);
-            // router.push({
-            //   name: 'myinterview',
-            // })
+            router.push({
+              name: "diary"
+            });
+            window.location.reload();
+            window.location.reload();
           })
+
           .catch(err => console.error(err.response));
       }
     }

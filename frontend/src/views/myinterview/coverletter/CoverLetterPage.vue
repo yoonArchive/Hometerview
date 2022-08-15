@@ -204,6 +204,7 @@ ol.gradient-list {
   list-style: none;
   margin: 1.75rem 0;
   padding-left: 1rem;
+  width: 900px;
   > li {
     background: white;
     border-radius: 0 0.5rem 0.5rem 0.5rem;

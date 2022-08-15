@@ -26,7 +26,7 @@
             </div>
 
           </div>
-           <div v-else-if="0<=restday[index]<=5" class="card text-white bg-warning mb-2" style="max-width: 18rem;">
+           <div v-else-if="0<=restday[index]&& restday[index]<=5" class="card text-white bg-warning mb-2" style="max-width: 18rem;" id="dday-up">
             <div class="card-header" >{{ddays.ddayTitle}} </div>
             <div  class="card-body">
               <h6 class="card-title">
@@ -116,6 +116,9 @@
         </ReviewForm>
 
     </div>
+    <div class="layerPopup">
+  <div class="spinner"></div>
+</div>
   </div>
   </div>
 
@@ -231,13 +234,28 @@ export default {
 
 
 }
+  function showSpinner() {
+    document.getElementsByClassName('layerPopup')[0].style.display='block';
+}
+function hideSpinner() {
+    document.getElementsByClassName('layerPopup')[0].style.display='none';
+}
 </script>
+<style lang="scss" scoped>
 
+
+
+</style>
 <style scoped>
 
   @import '../main.css';
 
 /* @import './fullcalander/main.js'; */
+
+#dday-up{
+  border-color: red;
+  border-width:5px;
+}
 .card-list{
   display: flex;
   width: 900px;
@@ -443,4 +461,38 @@ b { /* used for event dates/times */
   border:#653FD3
 
 }
+
+.layerPopup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.8);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    margin: -30px 0 0 -30px;
+}
+.spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border: 8px solid #f3f3f3; /* Light grey */
+    border-top: 8px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spinner 2s linear infinite;
+}
+@keyframes spinner {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
 </style>
