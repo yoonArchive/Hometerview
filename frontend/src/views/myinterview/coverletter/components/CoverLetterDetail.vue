@@ -3,6 +3,18 @@
     <div class="member-cover-letter-detail-wrapper">
       <div>
         <div class="d-flex flex-row-reverse">
+          <input
+            class="cover-letter-button"
+            type="button"
+            @click="changeIsremove"
+            value="-"
+          />
+          <input
+            class="cover-letter-button"
+            type="button"
+            @click="addCurrentResume"
+            value="+"
+          />
           <template v-if="currentResume.length != 0">
             <input
               class="cover-letter-button"
@@ -16,18 +28,6 @@
               "
             />
           </template>
-          <input
-            class="cover-letter-button"
-            type="button"
-            @click="changeIsremove"
-            value="-"
-          />
-          <input
-            class="cover-letter-button"
-            type="button"
-            @click="addCurrentResume"
-            value="+"
-          />
         </div>
         <div
           class="member-cover-letter-contents"
@@ -59,7 +59,7 @@
     </div>
     <div class="d-flex flex-row-reverse bd-highlight">
       <button
-        @click="saveResumeChange"
+        @click="saveResumeChangeBtn"
         id="b-button"
         type="button"
         class="btn"
@@ -94,17 +94,17 @@ export default {
     }
   },
   watch: {
-    selectedNum() {
-      console.log("선택된 질문 : " + this.selectedNum);
-      var buttons = document.getElementsByClassName("cover-letter-button");
-      for (var i = 0; i < buttons.length; i++) {
-        buttons[i].classList.remove("clicked");
-      }
-      console.log(this.selectedNum);
-      buttons[this.currentResume.length - this.selectedNum - 1].classList.add(
-        "clicked"
-      );
-    }
+    // selectedNum() {
+    //   console.log("선택된 질문 : " + this.selectedNum);
+    //   var buttons = document.getElementsByClassName("cover-letter-button");
+    //   for (var i = 0; i < buttons.length; i++) {
+    //     buttons[i].classList.remove("clicked");
+    //   }
+    //   console.log(this.selectedNum);
+    //   buttons[this.currentResume.length - this.selectedNum + 1].classList.add(
+    //     "clicked"
+    //   );
+    // }
     // currentResume() {
     //   console.log("선택된 질문 : " + this.selectedNum);
     //   var buttons = document.getElementsByClassName("cover-letter-button");
@@ -123,9 +123,20 @@ export default {
       "addItemCurrentResume",
       "removeItemCueentResume"
     ]),
+    saveResumeChangeBtn() {
+      this.saveResumeChange();
+      this.selectedNum = 0;
+    },
     addCurrentResume() {
       this.addItemCurrentResume();
-      this.selectedNum = 0;
+      var buttons = document.getElementsByClassName("cover-letter-button");
+      for (var i = 0; i < buttons.length; i++) {
+        buttons[i].classList.remove("clicked");
+      }
+      console.log(this.selectedNum);
+      buttons[this.buttons.length - this.selectedNum - 1].classList.add(
+        "clicked"
+      );
     },
     changeIsremove() {
       this.isremove = !this.isremove;
@@ -152,7 +163,7 @@ export default {
         buttons[i].classList.remove("clicked");
       }
       if (buttons.length > 2) {
-        buttons[this.currentResume.length - this.selectedNum - 1].classList.add(
+        buttons[this.currentResume.length - this.selectedNum + 1].classList.add(
           "clicked"
         );
       }
@@ -163,7 +174,7 @@ export default {
       for (var i = 0; i < buttons.length; i++) {
         buttons[i].classList.remove("clicked");
       }
-      buttons[this.currentResume.length - this.selectedNum - 1].classList.add(
+      buttons[this.currentResume.length - this.selectedNum + 1].classList.add(
         "clicked"
       );
     }

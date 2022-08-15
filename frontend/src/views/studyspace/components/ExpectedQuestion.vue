@@ -2,7 +2,7 @@
   <div v-if="IsHavingCoverLetter" class="expected-question-wrapper">
     <div class="row">
       <div class="col-8">
-        <h2>예상 질문 리스트</h2>
+        <h4>예상 질문 리스트</h4>
       </div>
       <div class="col">
         <div class="d-flex flex-row-reverse bd-highlight">
@@ -22,7 +22,12 @@
     <div v-if="IsAdding" class="question-wrapper">
       <div class="row">
         <div class="col-8">
-          <textarea class="question-textarea" v-model="toaddtext"></textarea>
+          <textarea
+            @keydown="autoResizeTextarea"
+            @keyup="autoResizeTextarea"
+            class="question-textarea"
+            v-model="toaddtext"
+          ></textarea>
         </div>
         <div class="col">
           <div class="d-flex flex-row-reverse bd-highlight">
@@ -44,6 +49,8 @@
               <div class="col-8">
                 <div class="d-flex justify-content-between">
                   <textarea
+                    @keydown="autoResizeTextarea"
+                    @keyup="autoResizeTextarea"
                     class="question-textarea"
                     v-model="item.contents"
                   ></textarea>
@@ -130,6 +137,15 @@ export default {
       "changeQuestionList",
       "deleteQuestionList"
     ]),
+    autoResizeTextarea(e) {
+      let textarea = document.querySelector(".autoTextarea");
+      console.log(e.srcElement);
+      if (e.srcElement) {
+        e.srcElement.style.height = "auto";
+        let height = e.srcElement.scrollHeight; // 높이
+        e.srcElement.style.height = `${height + 8}px`;
+      }
+    },
     canceladding() {
       this.IsAdding = false;
     },
@@ -177,14 +193,16 @@ export default {
   width: 100%;
 }
 .question-button {
-  margin-left: 10%;
-  border: 1px solid #653fd3;
-  background-color: #f0ebff;
-  border-radius: 30px;
+  border: none;
+  color: #d9d9d9;
+  background-color: white;
   padding: 3% 5% 3% 5%;
 }
+.question-button:hover {
+  text-decoration: underline;
+  color: black;
+}
 .question-button-wrapper {
-  margin-top: 15%;
 }
 .question-wrapper {
   border: 1px black solid;
