@@ -9,7 +9,8 @@
         :key="commonquestion.questionNo"
       >
       </common-question-item>
-
+    </div>
+    <div class="comments-from">
       <common-question-form></common-question-form>
     </div>
   </div>
@@ -50,5 +51,28 @@ export default {
 <style>
 .commonQ {
   padding: 90px;
+  height: 800px;
+  overflow-y: auto;
+}
+.commonQ::-webkit-scrollbar {
+  width: 10px;
+}
+.commonQ::-webkit-scrollbar-thumb {
+  background-color: #653fd3;
+  border-radius: 10px;
+  background-clip: padding-box;
+  border: 2px solid transparent;
+}
+.commonQ::-webkit-scrollbar-track {
+  background-color: grey;
+  border-radius: 10px;
+  box-shadow: inset 0px 0px 5px white;
+}
+.container {
+  display: flex;
+}
+.comments-from {
+  padding: 90px;
+  width: 80%;
 }
 </style>

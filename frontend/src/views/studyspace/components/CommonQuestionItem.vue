@@ -2,17 +2,38 @@
   <section class="comments">
     <article class="comment">
       <a class="comment-img" href="#non">
-        <img :src="userImag" alt="" width="50" height="50" />
+        <img :src="currentUser.userImg" :alt="profile" width="50" height="50" />
         <p class="attribution" v-if="name">by {{ name }}</p>
         <p class="attribution" v-else>
           by 나간 회원입니다.
         </p>
       </a>
+      <!-- {{ currentUser.Img }} -->
 
       <div class="comment-body">
         <div class="text">
           <div v-if="commonquestion.questionType == 'JOB'">
             {{ commonquestion.questionNo }}. 직무 면접
+            <span v-if="currentUser.userId === userId && !isEditing">
+              <!-- <button @click="switchIsEditing">Edit</button> | -->
+              <span id="icon" @click="switchIsEditing">
+                <font-awesome-icon icon="fa-solid fa-pen-to-square" /> </span
+              >|
+              <!-- <button
+            @click="deletecommonQuestion([stdNo, commonquestion.questionNo])"
+          >
+            Delete
+          </button> -->
+
+              <span
+                id="icon"
+                @click="
+                  deletecommonQuestion([stdNo, commonquestion.questionNo])
+                "
+              >
+                <font-awesome-icon icon="fa-solid fa-trash-can" />
+              </span>
+            </span>
             <!-- <p class="attribution" v-if="name">by {{ name }}</p>
             <p class="attribution" v-else>
               by 나간 회원입니다.
@@ -60,32 +81,6 @@
             <label for="questionType">인성 면접</label>
           </div>
         </span>
-
-        <span v-if="currentUser.userId === userId && !isEditing">
-          <!-- <button @click="switchIsEditing">Edit</button> | -->
-          <span id="icon" @click="switchIsEditing">
-            <font-awesome-icon icon="fa-solid fa-pen-to-square" /> </span
-          >|
-          <!-- <button
-            @click="deletecommonQuestion([stdNo, commonquestion.questionNo])"
-          >
-            Delete
-          </button> -->
-
-          <span
-            id="icon"
-            @click="deletecommonQuestion([stdNo, commonquestion.questionNo])"
-          >
-            <font-awesome-icon icon="fa-solid fa-trash-can" />
-          </span>
-        </span>
-        <!-- {{ commonquestion.writerNo }} -->
-        <!-- <p class="attribution" v-if="name">by {{ name }}</p>
-        <p class="attribution" v-else>
-          by 나간 회원입니다.
-        </p> -->
-        <!-- {{ studySpaceDetail.studyJoins }} -->
-        <!-- {{ currentUser }} -->
       </div>
     </article>
   </section>
@@ -113,7 +108,8 @@ export default {
       // questionNo: this.commonquestion.questionNo,,
       name: "",
       userImag: "",
-      userId: ""
+      userId: "",
+      profile: require("../../../assets/images/profile.png")
     };
   },
   computed: {
@@ -214,7 +210,6 @@ p {
 
 .comment .text p:last-child {
   margin: 0;
-  text-decoration-line: none;
 }
 
 .comment .attribution {

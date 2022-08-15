@@ -14,7 +14,8 @@ export default {
     isDuplicatedId: true,
     isPasswordConfirm: false,
     isAuthorized: false,
-    comfirmEmail: ""
+    comfirmEmail: "",
+    isAdmin: false
   }),
 
   mutations: {
@@ -33,7 +34,8 @@ export default {
     SET_COMFIRM_EMAIL: (state, comfirmEmail) =>
       (state.comfirmEmail = comfirmEmail),
 
-    CLEER_CURRENT_USER: state => (state.currentUser = {})
+    CLEER_CURRENT_USER: state => (state.currentUser = {}),
+    SET_ADMIN: (state, isAdmin) => (state.idAdmin = isAdmin)
   },
   getters: {
     isValidedEmail: state => state.isValidedEmail,
@@ -45,7 +47,8 @@ export default {
     authHeader: state => ({ Authorization: `Bearer ${state.token}` }),
     isPasswordConfirm: state => state.isPasswordConfirm,
     isAuthorized: state => state.isAuthorized,
-    comfirmEmail: state => state.comfirmEmail
+    comfirmEmail: state => state.comfirmEmail,
+    isAdmin: state => state.isAdmin
   },
   actions: {
     saveToken({ commit }, token) {
@@ -120,6 +123,13 @@ export default {
         .then(res => {
           console.log(res);
           const token = res.data.accessToken;
+          const userType = res.data.userType;
+          if (userType === "ADMIN") {
+            commit("SET_ADMIN", true);
+            console.log("어드민입니다.");
+          } else {
+            console.log("어드민이 아닙니다.");
+          }
           console.log("로그인성공");
           dispatch("saveToken", token);
           dispatch("fetchCurrentUser");
