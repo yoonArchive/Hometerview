@@ -34,7 +34,7 @@ public class RecordingController {
     @PostMapping()
     @ApiOperation(value = "녹화 등록", notes = "녹화를 등록한다.")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "녹화 등록 성공", response = NoticeRes.class),
+            @ApiResponse(code = 200, message = "녹화 등록 성공", response = BaseResponseBody.class),
             @ApiResponse(code = 401, message = "녹화 등록 실패", response = BaseResponseBody.class),
             @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
     })
@@ -51,7 +51,7 @@ public class RecordingController {
     @GetMapping()
     @ApiOperation(value = "녹화 목록 조회", notes = "녹화 목록을 조회한다.")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "녹화 목록 조회 성공", response = NoticeListRes.class),
+            @ApiResponse(code = 200, message = "녹화 목록 조회 성공", response = RecordingListRes.class),
             @ApiResponse(code = 401, message = "녹화 목록 조회 실패", response = BaseResponseBody.class),
             @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
     })
@@ -65,7 +65,7 @@ public class RecordingController {
     @GetMapping("/{recordNo}")
     @ApiOperation(value = "녹화 상세조회", notes = "녹화 상세정보를 조회한다.")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "녹화 상세정보 조회 성공", response = NoticeRes.class),
+            @ApiResponse(code = 200, message = "녹화 상세정보 조회 성공", response = RecordingRes.class),
             @ApiResponse(code = 401, message = "녹화 상세정보 조회 실패", response = BaseResponseBody.class),
             @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)})
     public ResponseEntity<? extends BaseResponseBody> detailRecording(@PathVariable @ApiParam(value = "녹화 번호", required = true) Long recordNo) throws Exception {
