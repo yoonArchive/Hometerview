@@ -4,7 +4,7 @@
       <div class="row full-height justify-content-center">
         <div class="col-12 text-center align-self-center">
           <div class="section pb-5 pt-5 pt-sm-2 text-center">
-            <h6 class="mb-0 pb-3"><span>로그인 </span><span>회원가입</span></h6>
+            <h6 class="mb-0 pb-3"><span>로그인</span><span>회원가입</span></h6>
             <input
               class="checkbox"
               type="checkbox"
@@ -46,16 +46,19 @@
                         </div>
                         <button class="btn mt-4">로그인</button>
                       </form>
-                      <router-link to="/home/findid">
-                        <div class="find_id mb-0 mt-4 text-center">
-                          아이디 찾기
-                        </div>
-                      </router-link>
-                      <router-link to="/home/finduserpassword">
-                        <div class="find_pwd mb-0 mt-4 text-center">
-                          비밀번호 찾기
-                        </div>
-                      </router-link>
+                      <div style="margin-top:10px">
+                        <router-link to="/home/findid">
+                          <span class="find_id mb-0 mt-4 text-center">
+                            아이디 찾기
+                          </span>
+                        </router-link>
+                        &nbsp;|&nbsp;
+                        <router-link to="/home/finduserpassword">
+                          <span class="find_pwd mb-0 mt-4 text-center">
+                            비밀번호 찾기
+                          </span>
+                        </router-link>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -678,5 +681,13 @@ h6 span {
   height: 26px;
   width: auto;
   display: block;
+}
+a {
+  text-decoration: none;
+  color: black;
+  font-size: 18px;
+}
+a:hover {
+  font-weight: bold;
 }
 </style>

@@ -77,16 +77,6 @@
               </button>
             </div>
           </div>
-          <!-- <div
-            v-if="
-              applyType === 'LEADER' &&
-                recruitDetail.recruitStatus === '모집 완료'
-            "
-          >
-            <button @click="studyApplyCancel(recruitNo)">
-              스터디 신청 취소
-            </button>
-          </div> -->
         </div>
       </div>
     </section>
@@ -196,7 +186,6 @@ h3 {
 blockquote {
   quotes: none;
   border-left: solid 3px rgba(210, 215, 217, 0.75);
-  font-style: italic;
   margin: 0 0 1.7em 0;
   padding: 0.5em 0 0.5em 2em;
 }

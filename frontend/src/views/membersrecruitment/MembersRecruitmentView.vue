@@ -30,53 +30,75 @@
       data-bs-ride="carousel"
     >
       <div v-if="recruitStatus === 'completed'">
-        <div v-if="studySpaceList.length == 0">
+        <div v-if="!isLoggedIn">
           <div class="carousel carousel-inner">
-            <h6 style="color:white; text-align:center; margin-top:70px">
-              <b>{{ currentUser.userName }}</b
-              >님이 속한 스터디가 등록됩니다.<br />
-              스터디 만들기에서 내 스터디를 만들거나 스터디에 가입하여 홈터뷰를
-              이용해보세요.
+            <h6 style="color:white; text-align:center; margin-top:90px">
+              지금 바로 로그인하고 나만의 스터디를 만들어 보세요!
             </h6>
           </div>
         </div>
         <div v-else>
-          <div class="carousel-inner">
-            <div
-              class="carousel-item"
-              v-for="(studySpace, idx) in studySpaceList"
-              :key="idx"
-              :class="{ active: idx == 0 }"
-            >
-              <study-space-item :studySpace="studySpace"></study-space-item>
+          <div v-if="studySpaceList.length == 0">
+            <div class="carousel carousel-inner">
+              <h6 style="color:white; text-align:center; margin-top:70px">
+                <b>{{ currentUser.userName }}</b
+                >님이 속한 스터디가 등록됩니다.<br /><br />
+                스터디 만들기에서 내 스터디를 만들거나 스터디에 가입하여
+                홈터뷰를 이용해보세요.
+              </h6>
             </div>
           </div>
-          <button
-            class="carousel-control-prev"
-            type="button"
-            data-bs-target="#carouselExampleCaptions"
-            data-bs-slide="prev"
-          >
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-          </button>
-          <button
-            class="carousel-control-next"
-            type="button"
-            data-bs-target="#carouselExampleCaptions"
-            data-bs-slide="next"
-          >
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-          </button>
+          <div v-else>
+            <div class="carousel carousel-inner">
+              <div
+                class="carousel-item"
+                v-for="(studySpace, idx) in studySpaceList"
+                :key="idx"
+                :class="{ active: idx == 0 }"
+              >
+                <study-space-item :studySpace="studySpace"></study-space-item>
+              </div>
+            </div>
+            <button
+              class="carousel-control-prev"
+              type="button"
+              data-bs-target="#carouselExampleCaptions"
+              data-bs-slide="prev"
+            >
+              <span
+                class="carousel-control-prev-icon"
+                aria-hidden="true"
+              ></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button
+              class="carousel-control-next"
+              type="button"
+              data-bs-target="#carouselExampleCaptions"
+              data-bs-slide="next"
+            >
+              <span
+                class="carousel-control-next-icon"
+                aria-hidden="true"
+              ></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
         </div>
       </div>
       <div v-else>
-        <div v-if="applyingList.length == 0">
+        <div v-if="!isLoggedIn">
+          <div class="carousel carousel-inner">
+            <h6 style="color:white; text-align:center; margin-top:90px">
+              지금 바로 로그인하고 나만의 스터디를 만들어 보세요!
+            </h6>
+          </div>
+        </div>
+        <div v-else-if="applyingList.length == 0">
           <div class="carousel carousel-inner">
             <div>
               <h6 style="color:white; text-align:center; margin-top:70px">
-                스터디 승인이 완료되지 않은 스터디가 등록됩니다.<br />
+                스터디 승인이 완료되지 않은 스터디가 등록됩니다.<br /><br />
                 스터디 만들기에서 내 스터디를 만들거나 스터디에 가입하여
                 홈터뷰를 이용해보세요.
               </h6>
@@ -84,7 +106,7 @@
           </div>
         </div>
         <div v-else>
-          <div class="carousel-inner">
+          <div class="carousel carousel-inner">
             <div
               class="carousel-item"
               v-for="(applyingRecruit, idx) in applyingList"
@@ -234,7 +256,8 @@ export default {
       "bringRecruitingList",
       "bringRecruitmentList",
       "bringStudySpace",
-      "bringApplyingRecruit"
+      "bringApplyingRecruit",
+      "fetchCurrentUser"
     ]),
     async refreshsetting() {
       await this.fetchCurrentUser();
@@ -243,9 +266,6 @@ export default {
     moveToCreate() {
       router.push({ name: "createmembersrecruitment" });
     },
-    // async moveToRecruitSearch(recruitSearchKeyword){
-    //   await this.bringRecruitSearchList(recruitSearchKeyword)
-    // },
     isRecruiting() {
       this.recruitSearchKeyword = "";
       if (this.recruitState === true) {
@@ -302,9 +322,6 @@ export default {
       isLoggedIn: computed(() => store.getters.isLoggedIn)
     };
   }
-  // beforeUpdate() {
-  //   console.log(this.studySpaceList.length);
-  // }
 };
 </script>
 
@@ -476,7 +493,7 @@ input[type="text"] {
   font-size: 19px;
 }
 .carousel {
-  margin-bottom: 5em;
+  margin-bottom: 2.5em;
 }
 .carousel-inner {
   border-radius: 30px;
