@@ -102,6 +102,6 @@ export default {
       OPENVIDU_SERVER_URL + OPENVIDU + SESSIONS + `${sessionId}/` + "connection"
   },
   recording: {
-    saveRecorded: () => HOST + RECRDING
+    saveRecorded: () => HOST + RECORDING
   }
 };

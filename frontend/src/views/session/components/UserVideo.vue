@@ -1,6 +1,6 @@
 <template>
   <div v-if="streamManager">
-    <ov-video :streamManager="streamManager" :mainStream="mainStream" />
+    <ov-video :stream-manager="streamManager" :mainStream="mainStream" />
     <div class="video-name">{{ clientData }}</div>
   </div>
 </template>
@@ -10,7 +10,6 @@ import OvVideo from "./OvVideo";
 
 export default {
   name: "UserVideo",
-
   components: {
     OvVideo
   },
@@ -19,7 +18,7 @@ export default {
     streamManager: Object,
     mainStream: Boolean
   },
-
+  emits: [],
   computed: {
     clientData() {
       // 이름 띄우기
