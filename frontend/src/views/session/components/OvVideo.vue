@@ -57,8 +57,7 @@ export default {
 }
 .sub {
   /* width: 320px; */
-  /* height: 20vh; */
-  /* border-radius: 4% 4% 4% 4%; */
+
   aspect-ratio: 4/3;
   max-height: calc(100vh - 6rem);
   max-width: 100%;

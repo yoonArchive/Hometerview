@@ -694,6 +694,8 @@ export default {
 
             // --- Publish your stream ---
             this.session.publish(this.publisher);
+            console.log("session확인이요123");
+            console.log(this.session);
           })
           .catch(error => {
             console.log(
