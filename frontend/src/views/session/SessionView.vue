@@ -1,4 +1,5 @@
 <template>
+  <button @click="ttspublish">테스트 버튼2</button>
   <div class="full-con">
     <div class="main-con">
       <div hidden="ture" ref="webcam"></div>
@@ -321,7 +322,7 @@ import axios from "axios";
 import { OpenVidu } from "openvidu-browser";
 import router from "@/common/lib/vue-router";
 import { mapActions, mapGetters } from "vuex";
-
+import ttsrequest from "../../api/ttsrequest";
 // components
 import UserVideo from "./components/UserVideo";
 import MessageForm from "./components/MessageForm.vue";
@@ -637,6 +638,9 @@ export default {
         tmp.push(event.data);
         this.msgs = tmp;
       });
+      this.session.on("ttsshare", ttsdata => {
+        this.playtts(ttsdata);
+      });
 
       // update
       await this.session.on("signal:main-update", async event => {
@@ -813,7 +817,40 @@ export default {
           .catch(error => reject(error.response));
       });
     },
+    // tts
 
+    async playtts(ttsdata) {
+      AudioContext = window.AudioContext || window.webkitAudioContext;
+      const audioContext = new AudioContext();
+      const audioBuffer = await audioContext.decodeAudioData(ttsdata.data);
+      const audioSource = audioContext.createBufferSource();
+      audioSource.buffer = audioBuffer;
+      audioSource.connect(audioContext.destination);
+      audioSource.start();
+    },
+    async ttspublish() {
+      const url = "http://localhost:9002/ttsrequest";
+      const ttsdata = await axios.post(
+        url,
+        { text: "안녕하세요?" },
+        {
+          responseType: "arraybuffer"
+        }
+      );
+      console.log(ttsdata);
+      this.session.signal({
+        data: ttsdata,
+        to: [],
+        type: "ttsshare"
+      });
+      AudioContext = window.AudioContext || window.webkitAudioContext;
+      const audioContext = new AudioContext();
+      const audioBuffer = await audioContext.decodeAudioData(ttsdata.data);
+      const audioSource = audioContext.createBufferSource();
+      audioSource.buffer = audioBuffer;
+      audioSource.connect(audioContext.destination);
+      audioSource.start();
+    },
     // 화면 공유
     async ShareScreen() {
       if (this.screenPublisher) {

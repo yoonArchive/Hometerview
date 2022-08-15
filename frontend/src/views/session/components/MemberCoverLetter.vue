@@ -13,18 +13,15 @@
               class="accordion_tab {'active': index == 0}"
               @click="clicktabs(item, $event)"
             >
-              자소서 {{ index + 1 }}
+              {{ resumeQuestionList[index].question }}
               <div class="accordion_arrow">
                 <img src="https://i.imgur.com/PJRz0Fc.png" alt="arrow" />
               </div>
             </div>
             <div class="accordion_content">
               <div class="accordion_item">
-                <p class="item_title">
-                  {{ resumeQuestionList[selectedNum].question }}
-                </p>
-                <p>
-                  {{ resumeQuestionList[selectedNum].answer }}
+                <p style="font-size:15px">
+                  {{ resumeQuestionList[index].answer }}
                 </p>
               </div>
               <div class="accordion_item">
@@ -131,7 +128,7 @@ body {
 .accordion {
   word-break: break-all;
   width: auto;
-  height: 60px;
+  height: 80px;
   margin: 0 auto;
   background: #fff;
   border-radius: 3px;

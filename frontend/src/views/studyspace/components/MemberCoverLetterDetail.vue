@@ -4,7 +4,7 @@
       <div class="d-flex flex-row-reverse">
         <input
           class="cover-letter-button "
-          :class="{ clicked: item == resumeQuestionList.length - 1 }"
+          :class="{ clicked: item == resumeQuestionList.length }"
           type="button"
           v-for="(item, index) in resumeQuestionList.length"
           :key="index"
