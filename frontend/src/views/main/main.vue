@@ -42,7 +42,7 @@
           <div class="container">
             <div class="row" data-aos="fade-up">
               <div class="col-md-5">
-                <img src="./features-1.svg" class="img-fluid" alt="" />
+                <img :src="imagesrc1" class="img-fluid" alt="" />
               </div>
               <div class="col-md-7 pt-4 pl-2">
                 <h3
@@ -102,7 +102,7 @@
           <div class="container">
             <div class="row" data-aos="fade-up">
               <div class="col-md-5">
-                <img src="./features-4.svg" class="img-fluid" alt="" />
+                <img :src="imagesrc1" class="img-fluid" alt="" />
               </div>
               <div class="col-md-7 pt-4">
                 <h3 id="main-text">
@@ -190,9 +190,10 @@ export default {
 
   data() {
     return {
-      imagesrc: require("../../assets/images/main3.png"),
-      imagesrc1: require("../../assets/images/main4.png"),
-      imagesrc2: require("../../assets/images/myinterview2.png")
+      imagesrc1: require("../../assets/images/browser_stats.svg"),
+      imagesrc2: require("../../assets/images/main4.png"),
+      imagesrc3: require("../../assets/images/myinterview2.png"),
+      imagesrc4: require("../../assets/images/myinterview2.png")
     };
   },
 
