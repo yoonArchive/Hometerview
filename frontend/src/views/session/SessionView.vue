@@ -578,38 +578,6 @@ export default {
     async streamUpdate(interviewUserFixed) {
       // 자기 자신, 상대방 아이디들필요 ==> update
       await this.sendUpdate(interviewUserFixed);
-      const { clientId } = await JSON.parse(
-        this.publisher.stream.connection.data
-      );
-      console.log("확인해보자", this.updateMain, "이거랑", clientId);
-      if (clientId === this.updateMain) {
-        console.log("확인해보자22");
-        await this.updateMainVideoStreamManager(this.publisher);
-
-        console.log("확인해보자33");
-        const studentindex = await this.findIndex(interviewUserFixed);
-        this.chatting = false;
-        this.participant = true;
-        this.selectinterviewee = false;
-        console.log("확인44");
-        console.log(studentindex, "55");
-        this.changeToCoverLetter(["coverletter", studentindex]);
-        console.log("확인해보자66");
-      } else if (this.subscribers === true) {
-        this.subscribers.forEach(async sub => {
-          const { clientId } = JSON.parse(sub.stream.connection.data);
-          if (clientId === this.updateMain) {
-            const studentindex = await this.findIndex(interviewUserFixed);
-            await this.updateMainVideoStreamManager(sub);
-            this.chatting = false;
-            this.participant = true;
-            this.selectinterviewee = false;
-            console.log("확인");
-            console.log(studentindex);
-            this.changeToCoverLetter(["coverletter", studentindex]);
-          }
-        });
-      }
     },
 
     recordONOFF() {
@@ -671,8 +639,41 @@ export default {
       });
 
       // update
-      await this.session.on("signal:main-update", event => {
-        this.updateMain = event.data;
+      await this.session.on("signal:main-update", async event => {
+        this.updateMain = await event.data;
+        const { clientId } = await JSON.parse(
+          this.publisher.stream.connection.data
+        );
+        console.log("확인해보자", this.updateMain, "이거랑", clientId);
+        if (clientId === this.updateMain) {
+          console.log("확인해보자22");
+          await this.updateMainVideoStreamManager(this.publisher);
+
+          console.log("확인해보자33");
+          const studentindex = await this.findIndex(this.updateMain);
+          this.chatting = false;
+          this.participant = true;
+          this.selectinterviewee = false;
+          console.log("확인44");
+          console.log(studentindex, "55");
+          this.changeToCoverLetter(["coverletter", studentindex]);
+          console.log("확인해보자66");
+        } else if (this.subscribers === true) {
+          this.subscribers.forEach(async sub => {
+            const { clientId } = JSON.parse(sub.stream.connection.data);
+            if (clientId === this.updateMain) {
+              const studentindex = await this.findIndex(this.updateMain);
+              await this.updateMainVideoStreamManager(sub);
+              this.chatting = false;
+              this.participant = true;
+              this.selectinterviewee = false;
+              console.log("확인");
+              console.log(studentindex);
+              this.changeToCoverLetter(["coverletter", studentindex]);
+            }
+          });
+        }
+
         console.log("업데이트 확인입니다");
         console.log(event);
         console.log(this.updateMain);
