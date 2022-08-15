@@ -1,17 +1,11 @@
 <template>
   <div class="full-con">
     <div class="main-con">
-      <!-- <div id="session-title">{{ mySessionId }}</div><br> -->
-      <div>자세 분석</div>
       <div hidden="ture" ref="webcam"></div>
-      <button type="button" @click="init()">Start</button>
-      <button type="button" @click="tmStop()">Stop</button>
-      <button type="button" @click="start()">녹화시작</button>
-      <button type="button" @click="stop()">녹화중단</button>
-      <div v-if="recording" class="test">
-        {{ recording }} <br />
-        {{ recording.url }}
-      </div>
+      <!-- teachable machine -->
+      <!-- <button type="button" @click="init()">Start</button>
+      <button type="button" @click="tmStop()">Stop</button> -->
+
       <div class="con d-flex justify-content-between row">
         <div class="side-left col-md-8">
           <div class="center" style="margin-top:3vh;">
@@ -31,9 +25,7 @@
               </div>
 
               <!-- 비디오 그룹 -->
-              <div
-                class="video-container row d-flex justify-content-center mt-1"
-              >
+              <div class="video-container row d-flex justify-content-center">
                 <!-- 자기화면 (작은) -->
                 <user-video
                   class="small-video my-video col-md-3"
@@ -55,17 +47,10 @@
                 />
               </div>
             </div>
-
-            <!-- <div
-              v-for="prediction in predictions"
-              :key="prediction.className"
-              style="color:whitesmoke;"
+            <div
+              class="bottom d-flex justify-content-evenly"
+              style="margin-top: 9vh;"
             >
-              {{ prediction.className }}:
-              {{ prediction.probability.toFixed(2) }}
-            </div> -->
-
-            <div class="bottom d-flex justify-content-evenly">
               <!-- 하단 -->
               <!-- 비디오, 오디오, leave, 더보기 -->
               <!-- 장치 옵션 -->
@@ -187,26 +172,25 @@
                   </div>
                 </div>
                 <div>
-                  <div
-                    class="row"
-                    style="margin-right:3.5vh; margin-top:0.7vh;"
-                  >
+                  <div class="row" style="margin-right:3.5vh; margin-top:1vh;">
                     <div
                       class="col"
                       style="margin:0; padding:0; margin-right:0.5vh;"
                     >
                       <img
                         :src="require(`@/assets/images/session/videoOn.png`)"
-                        style="height:3vh; margin-top:%;"
+                        style="height:3vh;"
                         v-if="recordOnOff"
                         @click="recordONOFF()"
                       />
                       <img
                         :src="require(`@/assets/images/session/videoOff.png`)"
-                        style="height:3vh; margin-top:%;"
+                        style="height:3vh;"
                         @click="recordONOFF()"
                         v-else
                       />
+                      <!-- <button type="button" @click="start()">녹화시작</button>
+                      <button type="button" @click="stop()">녹화중단</button> -->
                     </div>
                     <div
                       class="col"
@@ -215,7 +199,7 @@
                       <img
                         :src="require(`@/assets/images/session/stop.png`)"
                         style="height:3vh; margin-top:;"
-                        @click="stop"
+                        @click="stop()"
                         v-if="true"
                       />
                     </div>
@@ -373,6 +357,8 @@ export default {
       userType: "",
       mySessionId: ``,
       myUserName: "",
+      myUserNo: "",
+      clientType: "",
       OV: undefined,
       session: undefined,
       mainStreamManager: undefined,
@@ -392,6 +378,10 @@ export default {
       // record
       recording: {},
       recordingSessionId: "",
+      recordingToSend: {
+        userNo: this.myUserNo,
+        videoUrl: ""
+      },
 
       // massege
       msgs: [],
@@ -419,33 +409,31 @@ export default {
     };
   },
   computed: {
-    // studySpaceDetail.joinTyped
-    ...mapGetters(["currentUser", "studySpaceDetail", "currentUser"])
+    ...mapGetters(["currentUser", "studySpaceDetail"])
   },
   methods: {
     ...mapActions([
       "bringStudySpaceDetail",
       "changeToCoverLetter",
       "needToFixPosture",
-      "stopToFixPosture"
+      "stopToFixPosture",
+      "saveRecordedFile"
     ]),
-    async start() {
-      // const date = await new Date();
-      // const [month, day, year, hour, minutes, seconds] = await [
-      //   date.getMonth().toString(),
-      //   date.getDate().toString(),
-      //   date.getFullYear().toString(),
-      //   date.getHours().toString(),
-      //   date.getMinutes().toString(),
-      //   date.getSeconds().toString()
-      // ];
-      // this.recordingSessionId = await `${this.mySessionId}-${year}-${month}-${day}-${hour}-${minutes}-${seconds}`;
-      // const recordSessionId = this.mySessionId
+    async recordingStartButton() {
+      const date = await new Date();
+      const [month, day, year, hour, minutes, seconds] = await [
+        date.getMonth().toString(),
+        date.getDate().toString(),
+        date.getFullYear().toString(),
+        date.getHours().toString(),
+        date.getMinutes().toString(),
+        date.getSeconds().toString()
+      ];
+      this.recordingSessionId = await `${this.mySessionId}-${year}-${month}-${day}-${hour}-${minutes}-${seconds}-${this.currentUser.userId}`;
       return this.recordingStart(this.mySessionId);
     },
-    stop() {
-      console.log(this.mySessionId);
-      return this.recordingStop(this.mySessionId);
+    recordingStopButton() {
+      return this.recordingStop(this.recording.id);
     },
     recordingStart(sessionId) {
       return new Promise(async (resolve, reject) => {
@@ -453,6 +441,7 @@ export default {
           .post(
             `${OPENVIDU_SERVER_URL}/openvidu/api/recordings/start`,
             JSON.stringify({
+              name: this.recordingSessionId,
               session: sessionId
             }),
             {
@@ -473,9 +462,6 @@ export default {
 
     recordingStop(sessionId) {
       return new Promise(async (resolve, reject) => {
-        // const userId = await this.currentUser.userId;
-        // const recordingFileName = await `${userId}_${sessionId}.mp4`;
-        // this.recording.url = await `https://i7b105.p.ssafy.io:8443/openvidu/recordings/${this.recordingSessionId}/${recordingFileName}`;
         axios
           .post(
             `${OPENVIDU_SERVER_URL}/openvidu/api/recordings/stop/${sessionId}`,
@@ -487,9 +473,12 @@ export default {
               }
             }
           )
-          .then(response => {
-            this.recording = response.data;
+          .then(async response => {
+            this.recording = await response.data;
             console.log(this.recording);
+            this.recordingToSend.videoUrl = await this.recording.url;
+            this.recordingToSend.userNo = await this.myUserNo;
+            await this.saveRecordedFile([this.recordingToSend, this.sessionNo]);
           })
           .then(data => resolve(data.token))
           .catch(error => reject(error.response));
@@ -603,7 +592,16 @@ export default {
       }
     },
     recordONOFF() {
-      this.recordOnOff = !this.recordOnOff;
+      if (this.recordOnOff) {
+        this.recordingStopButton();
+        this.recordOnOff = !this.recordOnOff;
+        console.log(this.recordOnOff);
+      } else {
+        this.recordingStartButton();
+
+        this.recordOnOff = !this.recordOnOff;
+        console.log(this.recordOnOff);
+      }
     },
     videoONOFF() {
       this.publisher.publishVideo(!this.videoOnOff);
@@ -671,7 +669,11 @@ export default {
         this.session
           .connect(token, {
             clientData: this.myUserName,
-            clientId: this.myUserId
+            clientId: this.myUserId,
+
+            // 면접자 지정된 것을 여기에다가 넣어주고 그것이 맞는지 본인과 일치하는지 판단을 해주면 됨
+            // 그때 update부분을 수정하면 가능 할듯
+            clientType: this.clientType
           })
           .then(() => {
             // 여기부터는 장치 정보
@@ -692,6 +694,8 @@ export default {
 
             // --- Publish your stream ---
             this.session.publish(this.publisher);
+            console.log("session확인이요123");
+            console.log(this.session);
           })
           .catch(error => {
             console.log(
@@ -949,19 +953,19 @@ export default {
       });
     }
   },
-  created() {
-    this.bringStudySpaceDetail(this.sessionNo);
+  async created() {
+    await this.bringStudySpaceDetail(this.sessionNo);
+    this.userType = this.studySpaceDetail.joinType;
+    console.log("확인!!!!");
+    console.log(this.studySpaceDetail);
   },
   async beforeMount() {
     this.myUserName = await this.currentUser.userName;
     this.myUserId = await this.currentUser.userId;
+    this.myUserNo = await this.currentUser.userNo;
     this.mySessionId = await this.changeSessionId(this.sessionNo);
-    console.log("확인!!!!");
-    console.log(this.myUserId);
     this.joinSession();
   },
-  mounted() {
-    this.userType = this.studySpaceDetail.joinType;
-  }
+  mounted() {}
 };
 </script>

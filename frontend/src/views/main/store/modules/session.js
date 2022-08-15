@@ -33,6 +33,25 @@ export default {
     },
     stopToFixPosture({ commit }) {
       commit("SET_FIX_POSTURE", "");
+    },
+    saveRecordedFile({ commit }, recordingInfo) {
+      const recordingPostReq = recordingInfo[0];
+      const stdNo = recordingInfo[1];
+      console.log("정상적으로 작동을 합니다.");
+      console.log(recordingPostReq);
+      console.log(stdNo);
+      axios({
+        url: api_url.recording.saveRecorded() + `?stdNo=${stdNo}`,
+        method: "post",
+        data: recordingPostReq
+      })
+        .then(res => {
+          console.log(res.data);
+          console.log("정상적으로 작동을 합니다.");
+        })
+        .catch(err => {
+          console.log(err.response);
+        });
     }
   }
 };

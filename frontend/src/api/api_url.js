@@ -15,6 +15,7 @@ const s = "i7b105.p.ssafy.io";
 const OPENVIDU_SERVER_URL = "https://" + s + ":8443";
 const DETAIL = "detail/";
 const QUESTION = "question/";
+const RECORDING = "recording";
 // https:// YOUR_OPENVIDUSERVER_IP/openvidu/api/sessions
 
 export default {
@@ -91,7 +92,7 @@ export default {
       STUDY +
       `${stdNo}/` +
       DETAIL +
-      `${detailNo}/` +
+      `${detaiOlNo}/` +
       QUESTION +
       `${questionNo}/`
   },
@@ -99,5 +100,8 @@ export default {
     createSession: () => OPENVIDU_SERVER_URL + OPENVIDU + SESSIONS,
     createToken: () =>
       OPENVIDU_SERVER_URL + OPENVIDU + SESSIONS + `${sessionId}/` + "connection"
+  },
+  recording: {
+    saveRecorded: () => HOST + RECRDING
   }
 };
