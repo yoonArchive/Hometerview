@@ -50,6 +50,7 @@ import SessionView from "@/views/session/SessionView";
 /* 내 면접관리 페이지 */
 import diary from "@/views/myinterview/diary/diary";
 import coverLetterPage from "@/views/myinterview/coverletter/CoverLetterPage";
+import recordingPage from "@/views/myinterview/recording/recordingPage";
 /* 마이스터디-공통질문 페이지 */
 // import CommonQuestionDetailView from '@/views/studyspace/components/CommonQuestionDetailView'
 // import CommonQuestionNewView from '@/views/studyspace/components/CommonQuestionNewView'
@@ -187,6 +188,11 @@ function makeRoutesFromMenu() {
               path: "coverPage",
               name: "coverPage",
               component: coverLetterPage
+            },
+            {
+              path: "recordingPage",
+              name: "recordingPage",
+              component: recordingPage
             }
           ]
         },

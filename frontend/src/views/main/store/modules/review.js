@@ -15,7 +15,8 @@ export default {
     restday: [],
     ddaylen: "",
 
-    dday: []
+    dday: [],
+    recordings: []
   },
 
   getters: {
@@ -27,7 +28,8 @@ export default {
     restday: state => state.restday,
     currentDdays: state => state.ddays,
     ddaylen: state => state.ddaylen,
-    dday: state => state.dday
+    dday: state => state.dday,
+    recordings: state => state.recordings
   },
 
   mutations: {
@@ -51,6 +53,9 @@ export default {
     },
     SET_DDAY(state, data) {
       state.dday = data;
+    },
+    SET_RECORDING(state, data) {
+      state.recordings = data;
     }
   },
 
@@ -318,6 +323,19 @@ export default {
 
           .catch(err => console.error(err.response));
       }
+    },
+    getRecordings({ commit, getters, dispatch }) {
+      axios({
+        url: api_url.recording.saveRecorded(),
+        method: "get",
+        headers: getters.authHeader
+      })
+        .then(res => {
+          commit("SET_RECORDING", res.data);
+          console.log("레코딩 리스트 가져오기 성공" + res.data);
+        })
+
+        .catch(err => console.error(err.response));
     }
   }
 };

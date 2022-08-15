@@ -8,7 +8,7 @@ import axios from "./common/lib/axios";
 import i18n from "./common/lib/i18n";
 import router from "./common/lib/vue-router";
 // import "@fortawesome/fontawesome-free/js/all.js";
-import "@fortawesome/fontawesome-free/css/all.css";
+// import "@fortawesome/fontawesome-free/css/all.css";
 
 import "./fontAwesomeIcon";
 
