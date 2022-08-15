@@ -48,10 +48,14 @@ export default {
   }
 };
 </script>
-<style>
+<style scoped>
+.container {
+  display: flex;
+}
 .commonQ {
   padding: 90px;
-  height: 800px;
+  height: 100%;
+  max-height: 600px;
   overflow-y: auto;
 }
 .commonQ::-webkit-scrollbar {
@@ -72,7 +76,8 @@ export default {
   display: flex;
 }
 .comments-from {
-  padding: 90px;
+  padding: 70px;
   width: 80%;
+  align-items: center;
 }
 </style>

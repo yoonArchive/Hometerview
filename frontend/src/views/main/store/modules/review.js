@@ -15,7 +15,8 @@ export default {
     restday: [],
     ddaylen: "",
 
-    dday: []
+    dday: [],
+    recordings: []
   },
 
   getters: {
@@ -27,7 +28,8 @@ export default {
     restday: state => state.restday,
     currentDdays: state => state.ddays,
     ddaylen: state => state.ddaylen,
-    dday: state => state.dday
+    dday: state => state.dday,
+    recordings: state => state.recordings
   },
 
   mutations: {
@@ -51,6 +53,9 @@ export default {
     },
     SET_DDAY(state, data) {
       state.dday = data;
+    },
+    SET_RECORDING(state, data) {
+      state.recordings = data;
     }
   },
 
@@ -74,8 +79,8 @@ export default {
         });
     },
     //회고 상세가져오기
-    getReviewDetail({ commit, getters, dispatch }, reviewNo) {
-      axios
+    async getReviewDetail({ commit, getters, dispatch }, reviewNo) {
+      await axios
         .get(api_url.review.review(reviewNo), {
           headers: getters.authHeader
         })
@@ -129,6 +134,8 @@ export default {
         router.push({
           name: "diary"
         });
+        window.location.reload();
+        window.location.reload();
         window.location.reload();
         window.location.reload();
       });
@@ -270,8 +277,6 @@ export default {
         });
         window.location.reload();
         window.location.reload();
-        window.location.reload();
-        window.location.reload();
       });
     },
     //디데이 수정하기
@@ -309,12 +314,28 @@ export default {
             commit("SET_DDAYS", {});
             dispatch("getDdayInfo");
             console.log("디데이 삭제 성공" + res.data);
-            // router.push({
-            //   name: 'myinterview',
-            // })
+            router.push({
+              name: "diary"
+            });
+            window.location.reload();
+            window.location.reload();
           })
+
           .catch(err => console.error(err.response));
       }
+    },
+    getRecordings({ commit, getters, dispatch }) {
+      axios({
+        url: api_url.recording.saveRecorded(),
+        method: "get",
+        headers: getters.authHeader
+      })
+        .then(res => {
+          commit("SET_RECORDING", res.data);
+          console.log("레코딩 리스트 가져오기 성공" + res.data);
+        })
+
+        .catch(err => console.error(err.response));
     }
   }
 };

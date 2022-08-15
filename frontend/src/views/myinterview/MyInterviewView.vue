@@ -14,7 +14,7 @@
           <span>자기소개서</span>
         </button>
       </router-link>
-      <router-link :to="{ name: 'coverPage' }" id="word">
+      <router-link :to="{ name: 'recordingPage' }" id="word">
         <button id="mypage-button">
           <!-- <i class="input-icon uil uil-exclamation-triangle"></i> -->
           <font-awesome-icon icon="fa-solid fa-tape" />&nbsp; &nbsp;

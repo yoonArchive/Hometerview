@@ -31,8 +31,8 @@
             </tr>
           </tbody>
         </table>
-        <div class="buttonbundle">
-          <button class="createBtn">
+        <div class="buttonbundle" v-if="isAdmin">
+          <button  class="createBtn" >
             <router-link class="routerlink" :to="{ name: 'noticeNew' }" >
               작성하기
             </router-link>
@@ -53,7 +53,7 @@
       }
     },
     computed: {
-      ...mapGetters(['notices', 'isLoggedIn'])
+      ...mapGetters(['notices', 'isLoggedIn','isAdmin'])
     },
     methods: {
       ...mapActions(['fetchNotices']),
