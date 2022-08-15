@@ -7,14 +7,16 @@
           style="width:2em"
         ></span
         ><i class="input-icon uil uil-calendar-alt"></i> {{ notice.writeDate
-        }}<span style="float:right; margin-right:40px;"
-          ><span style="margin-right:3px;">
-            <router-link :to="{ name: 'noticeEdit', params: { noticeNo } }">
-              수정
-            </router-link>
-          </span>
-          <span class="deleteBtn" @click="deleteNotice(noticeNo)">
-            삭제
+        }}<span style="float:right; margin-right:40px;">
+          <span v-if="isAdmin">
+            <span style="margin-right:3px;">
+              <router-link :to="{ name: 'noticeEdit', params: { noticeNo } }">
+                수정
+              </router-link>
+            </span>
+            <span class="deleteBtn" @click="deleteNotice(noticeNo)">
+              삭제
+            </span>
           </span>
           <span style="margin-right:3px;">
             <router-link class="routerlink" :to="{ name: 'notices' }">
@@ -43,7 +45,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["isAuthor", "notice"])
+    ...mapGetters(["isAuthor", "notice", "isAdmin"])
   },
   methods: {
     ...mapActions(["fetchNotice", "deleteNotice"]),
@@ -54,6 +56,7 @@ export default {
   },
   created() {
     this.fetchNotice(this.noticeNo);
+    console.log("이즈어드민" + this.isAdmin);
   }
 };
 </script>

@@ -6,7 +6,7 @@
 
           <div class="card-list">
           <div v-for="(ddays, index) in currentDdays" :key="index">
-          <div v-if="restday[index]>0" class="card text-white bg-warning mb-2" style="max-width: 18rem;">
+          <div v-if="restday[index]>5" class="card text-white bg-warning mb-2" style="max-width: 18rem;">
             <div class="card-header" >{{ddays.ddayTitle}} </div>
             <div  class="card-body">
               <h6 class="card-title">
@@ -26,7 +26,7 @@
             </div>
 
           </div>
-           <div v-else class="card text-white bg-danger mb-2" style="max-width: 18rem;">
+           <div v-else-if="0<=restday[index]<=5" class="card text-white bg-warning mb-2" style="max-width: 18rem;">
             <div class="card-header" >{{ddays.ddayTitle}} </div>
             <div  class="card-body">
               <h6 class="card-title">
