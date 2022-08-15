@@ -17,13 +17,13 @@ public class Feedback {
     @Column(name = "feedback_no")
     private Long feedbackNo;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "std_no")
-    private Study study;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "record_no")
-    private Recording recording;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "std_no")
+//    private Study study;
+//
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "record_no")
+//    private Recording recording;
 
     @Column(name = "user_no")
     private Long userNo;
