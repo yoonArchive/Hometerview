@@ -18,9 +18,9 @@ public class RecordingRepositorySupport {
 
     QRecording qRecording = QRecording.recording;
 
-    public List<Recording> findAllRecordingByUserNo(Long userNo) {
+    public List<Recording> findAllRecordingByUserNo(String userId) {
         List<Recording> recordings = jpaQueryFactory.select(qRecording).from(qRecording)
-                .where(qRecording.userNo.eq(userNo)).fetch();
+                .where(qRecording.userId.eq(userId)).fetch();
         if (recordings == null) return null;
         return recordings;
     }

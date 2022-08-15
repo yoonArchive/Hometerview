@@ -10,8 +10,8 @@ import lombok.Setter;
 @ApiModel("NoticeWritePostRequest")
 public class RecordingPostReq {
 
-    @ApiModelProperty(name = "회원번호", example = "회원 번호입니다.")
-    Long userNo;
+    @ApiModelProperty(name = "회원아이디", example = "회원아이디 입니다.")
+    String userId;
 
     @ApiModelProperty(name = "비디오 주소", example = "비디오 주소입니다.")
     String videoUrl;
