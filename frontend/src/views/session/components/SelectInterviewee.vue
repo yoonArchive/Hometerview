@@ -1,5 +1,5 @@
 <template>
-  {{ interviewUserFixed }}
+  fixed User :{{ interviewUserFixed }}
   <div class="container select-member">
     <div class="d-flex justify-content-center">
       <form @submit.prevent="intervieweeApply()">
@@ -49,13 +49,9 @@ export default {
   methods: {
     ...mapActions(["bringStudySpaceDetail", "changeInterviewUserFixed"]),
     async intervieweeApply() {
-      console.log("확인");
-      await this.changeInterviewUserFixed(this.interviewUser);
-      // emit을 보내서 update함수를 실행시켜야함 ==> 값은 아이디 값
-      // 바로 실행을 시키는 것이 아니라 for문을 돌려서 유효성 검사 진행후
-      this.$emit("streamUpdate", this.interviewUserFixed);
-
-      // this.updateMainVideoStreamManager(this.interviewUserFixed)
+      // await this.changeInterviewUserFixed(this.interviewUser);
+      console.log("픽스된 인터뷰어 : ", this.interviewUser);
+      this.$emit("streamUpdate", this.interviewUser);
     },
     intervieweeCancel() {
       console.log("check");

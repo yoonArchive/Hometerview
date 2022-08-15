@@ -357,7 +357,7 @@ export default {
       userType: "",
       mySessionId: ``,
       myUserName: "",
-      myUserNo: "",
+      myUserId: "",
       clientType: "",
       OV: undefined,
       session: undefined,
@@ -387,6 +387,11 @@ export default {
       msgs: [],
       fromId: "",
 
+      // update
+      updateMain: "",
+      fromMainId: "",
+      forUpdataList: [],
+
       //show
       chatting: true,
       participant: false,
@@ -409,7 +414,12 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["currentUser", "studySpaceDetail"])
+    ...mapGetters([
+      "currentUser",
+      "studySpaceDetail",
+      "interviewUserFixed",
+      "interviewUser"
+    ])
   },
   methods: {
     ...mapActions([
@@ -419,6 +429,8 @@ export default {
       "stopToFixPosture",
       "saveRecordedFile"
     ]),
+    makeUseMainStream() {},
+
     async recordingStartButton() {
       const date = await new Date();
       const [month, day, year, hour, minutes, seconds] = await [
@@ -475,9 +487,8 @@ export default {
           )
           .then(async response => {
             this.recording = await response.data;
-            console.log(this.recording);
             this.recordingToSend.videoUrl = await this.recording.url;
-            this.recordingToSend.userNo = await this.myUserNo;
+            this.recordingToSend.userId = await this.myUserId;
             await this.saveRecordedFile([this.recordingToSend, this.sessionNo]);
           })
           .then(data => resolve(data.token))
@@ -565,20 +576,29 @@ export default {
       }
     },
     async streamUpdate(interviewUserFixed) {
-      const { clientId } = JSON.parse(this.publisher.stream.connection.data);
-      if (clientId === interviewUserFixed) {
+      // 자기 자신, 상대방 아이디들필요 ==> update
+      await this.sendUpdate(interviewUserFixed);
+      const { clientId } = await JSON.parse(
+        this.publisher.stream.connection.data
+      );
+      console.log("확인해보자", this.updateMain, "이거랑", clientId);
+      if (clientId === this.updateMain) {
+        console.log("확인해보자22");
         await this.updateMainVideoStreamManager(this.publisher);
+
+        console.log("확인해보자33");
         const studentindex = await this.findIndex(interviewUserFixed);
         this.chatting = false;
         this.participant = true;
         this.selectinterviewee = false;
-        console.log("확인");
-        console.log(studentindex);
+        console.log("확인44");
+        console.log(studentindex, "55");
         this.changeToCoverLetter(["coverletter", studentindex]);
+        console.log("확인해보자66");
       } else if (this.subscribers === true) {
         this.subscribers.forEach(async sub => {
           const { clientId } = JSON.parse(sub.stream.connection.data);
-          if (clientId === interviewUserFixed) {
+          if (clientId === this.updateMain) {
             const studentindex = await this.findIndex(interviewUserFixed);
             await this.updateMainVideoStreamManager(sub);
             this.chatting = false;
@@ -591,6 +611,7 @@ export default {
         });
       }
     },
+
     recordONOFF() {
       if (this.recordOnOff) {
         this.recordingStopButton();
@@ -617,25 +638,15 @@ export default {
     // },
 
     // 기본 기능 (입장하기 퇴장하기)
-    joinSession() {
-      // --- OpenVidu Object 생성 ---
+    async joinSession() {
       this.OV = new OpenVidu();
-
-      // --- Init a session ---
       this.session = this.OV.initSession();
-
-      // --- Specify the actions when events take place in the session ---
-
-      // session.on은 언제 사용되는 것인지 확인 => 함수 실행 할때 쓰는 듯??
-      // On every new Stream received ==> 새로운거 시작할 때 실행 됨(누군가가 새로 들어 올 경우)
       this.session.on("streamCreated", ({ stream }) => {
-        //streamCreated 값 => user video에서 사용자의 닉네임을 자신의 비디오에 추가하는데 사용
         const subscriber = this.session.subscribe(stream);
         this.subscribers.push(subscriber);
       });
 
       // On every Stream destroyed...
-      //누군가 나갔을 때 실행됨
       this.session.on("streamDestroyed", ({ stream }) => {
         // 제일 앞에 있는 stream.streamManager의 인덱스 값을 저장
         const index = this.subscribers.indexOf(stream.streamManager, 0);
@@ -659,6 +670,14 @@ export default {
         this.msgs = tmp;
       });
 
+      // update
+      await this.session.on("signal:main-update", event => {
+        this.updateMain = event.data;
+        console.log("업데이트 확인입니다");
+        console.log(event);
+        console.log(this.updateMain);
+      });
+
       // --- Connect to the session with a valid user token ---
 
       // 'getToken' method is simulating what your server-side should do.
@@ -669,11 +688,11 @@ export default {
         this.session
           .connect(token, {
             clientData: this.myUserName,
-            clientId: this.myUserId,
+            clientId: this.myUserId
 
-            // 면접자 지정된 것을 여기에다가 넣어주고 그것이 맞는지 본인과 일치하는지 판단을 해주면 됨
-            // 그때 update부분을 수정하면 가능 할듯
-            clientType: this.clientType
+            // // 면접자 지정된 것을 여기에다가 넣어주고 그것이 맞는지 본인과 일치하는지 판단을 해주면 됨
+            // // 그때 update부분을 수정하면 가능 할듯
+            // clientType: this.clientType
           })
           .then(() => {
             // 여기부터는 장치 정보
@@ -694,8 +713,6 @@ export default {
 
             // --- Publish your stream ---
             this.session.publish(this.publisher);
-            console.log("session확인이요123");
-            console.log(this.session);
           })
           .catch(error => {
             console.log(
@@ -943,6 +960,22 @@ export default {
           console.error(error);
         });
     },
+    // update 함수
+    async sendUpdate(interviewUserFixed) {
+      await this.session
+        .signal({
+          data: interviewUserFixed,
+          to: [],
+          type: "main-update"
+        })
+        .then(() => {
+          console.log("update제대로 움직임");
+        })
+        .catch(err => {
+          console.log(err.response);
+        });
+    },
+
     changeSessionId(sessionNo) {
       return `Session${sessionNo}`;
     },
@@ -962,7 +995,7 @@ export default {
   async beforeMount() {
     this.myUserName = await this.currentUser.userName;
     this.myUserId = await this.currentUser.userId;
-    this.myUserNo = await this.currentUser.userNo;
+    console.log("this.myUserId : ", this.myUserId);
     this.mySessionId = await this.changeSessionId(this.sessionNo);
     this.joinSession();
   },
