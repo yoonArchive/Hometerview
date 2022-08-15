@@ -4,9 +4,9 @@
       <Message
         v-for="(msg, index) in msgs"
         :key="index"
-        :msg="msg"
+        :msg="msg.fromMessage"
         :myId="myId"
-        :fromId="fromId"
+        :fromId="msg.fromId"
       />
     </div>
   </div>
@@ -21,8 +21,8 @@ export default {
   },
   props: {
     msgs: Array,
-    myId: String,
-    fromId: String
+    myId: String
+    // fromId: String
   },
   data() {
     return {

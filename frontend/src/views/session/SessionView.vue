@@ -225,8 +225,12 @@
                 <message-list
                   :msgs="msgs"
                   :myId="publisher.stream.connection.connectionId"
-                  :fromId="fromId"
                 ></message-list>
+                <!-- <message-list
+                  :msgs="msgs"
+                  :myId="publisher.stream.connection.connectionId"
+                  :fromId="fromId"
+                ></message-list> -->
                 <message-form
                   @sendMsg="sendMsg"
                   :user-name="myUserName"
@@ -649,11 +653,21 @@ export default {
       });
 
       this.session.on("signal:my-chat", event => {
-        this.fromId = event.from.connectionId;
+        // this.fromId = event.from.connectionId;
         const tmp = this.msgs.slice();
-        tmp.push(event.data);
+        tmp.push({
+          fromId: event.from.connectionId,
+          fromMessage: event.data
+        });
         this.msgs = tmp;
       });
+
+      // this.session.on("signal:my-chat", event => {
+      //   this.fromId = event.from.connectionId;
+      //   const tmp = this.msgs.slice();
+      //   tmp.push(event.data);
+      //   this.msgs = tmp;
+      // });
 
       // update
       await this.session.on("signal:main-update", async event => {
