@@ -45,10 +45,10 @@ export default {
   },
   methods: {
     ...mapActions(["changeToCoverLetter"])
-  },
-  created() {
-    this.bringStudySpaceDetail(this.sessionNo);
   }
+  // created() {
+  //   this.bringStudySpaceDetail(this.sessionNo);
+  // }
 };
 </script>
 
