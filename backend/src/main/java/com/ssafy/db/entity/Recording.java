@@ -23,8 +23,8 @@ public class Recording {
     @JoinColumn(name = "std_no")
     private Study study;
 
-    @Column(name = "user_no")
-    private Long userNo;
+    @Column(name = "user_id")
+    private Long userId;
 
     @Column(name = "save_date")
     private String saveDate;
