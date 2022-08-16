@@ -450,6 +450,7 @@ export default {
       "needToFixPosture",
       "stopToFixPosture",
       "saveRecordedFile"
+      // "updateMainVideoStreamManager"
     ]),
     makeUseMainStream() {},
 
@@ -747,7 +748,7 @@ export default {
               insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
               mirror: true // Whether to mirror your local video or not
             });
-            // updateMainVideoStreamManager(publisher)
+            // updateMainVideoStreamManager(publisher);
             this.mainStreamManager = publisher;
             this.publisher = publisher;
 
@@ -773,7 +774,7 @@ export default {
       if (this.session) this.session.disconnect();
 
       this.session = undefined;
-      // updateMainVideoStreamManager(undefined)
+      // updateMainVideoStreamManager({});
       this.mainStreamManager = undefined;
       this.publisher = undefined;
       this.subscribers = [];

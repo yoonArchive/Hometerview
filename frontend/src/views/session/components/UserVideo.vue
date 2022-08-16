@@ -13,12 +13,11 @@ export default {
   components: {
     OvVideo
   },
-
+  emits: [],
   props: {
     streamManager: Object,
     mainStream: Boolean
   },
-  emits: [],
   computed: {
     clientData() {
       // 이름 띄우기

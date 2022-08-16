@@ -12,6 +12,7 @@ export default {
     streamManager: Object,
     mainStream: Boolean
   },
+  emits: [],
   data() {
     return {};
   },
@@ -28,6 +29,12 @@ export default {
       const { connection } = this.streamManager.stream;
       return JSON.parse(connection.data);
     }
+  },
+  updated() {
+    // 비디오 html에 화면 띄우기
+    // console.log('check')
+    // console.log(this.$el) // <video autoplay="" id="local-video-undefined"></video> 가 뜨게 된다.
+    this.streamManager.addVideoElement(this.$el);
   },
   mounted() {
     // 비디오 html에 화면 띄우기
