@@ -91,7 +91,7 @@ public class StudyServiceImpl implements StudyService {
     @Override
     @Transactional
     public int leaveStudy(Long userNo, Long stdNo) {
-        StudyJoin studyJoin = studyJoinRepositorySupport.findStudyJoinByUserNoAndStdNo(userNo, stdNo).orElse(null);
+        StudyJoin studyJoin = studyJoinRepositorySupport.findStudyJoinByUserNoAndStdNo(userNo, stdNo);
         if (studyJoin == null) return 0;
         else {
             studyJoinRepository.deleteByJoinNo(studyJoin.getJoinNo());
@@ -182,7 +182,7 @@ public class StudyServiceImpl implements StudyService {
 
     @Override
     public StudyJoin findStudyJoin(Long stdNo, Long userNo) {
-        return studyJoinRepositorySupport.findStudyJoinByUserNoAndStdNo(userNo, stdNo).get();
+        return studyJoinRepositorySupport.findStudyJoinByUserNoAndStdNo(userNo, stdNo);
     }
 
     @Override
@@ -204,7 +204,7 @@ public class StudyServiceImpl implements StudyService {
 
     @Override
     public ApplyType getJoinType(Long userNo, Long stdNo) {
-        return studyJoinRepositorySupport.findStudyJoinByUserNoAndStdNo(userNo, stdNo).get().getJoinType();
+        return studyJoinRepositorySupport.findStudyJoinByUserNoAndStdNo(userNo, stdNo).getJoinType();
     }
 
     @Override
