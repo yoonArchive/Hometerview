@@ -185,6 +185,7 @@
             v-for="(recruitment, index) in recruitmentList"
             :key="recruitment.recruitNo"
             :recruitment="recruitment"
+            :recruitmentImg="recruitment.stdImg"
             :index="index"
             :recruitState="recruitState"
           >
@@ -234,8 +235,8 @@ export default {
       isLoggedIn: computed(() => store.getters.isLoggedIn)
     };
   },
-  created() {
-    this.bringRecruitmentList();
+  async created() {
+    await this.bringRecruitmentList();
     this.bringStudySpace();
     this.bringApplyingRecruit();
     this.refreshsetting();

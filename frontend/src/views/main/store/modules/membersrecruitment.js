@@ -66,8 +66,8 @@ export default {
           console.log(err.response);
         });
     },
-    bringRecruitmentList({ commit }) {
-      axios({
+    async bringRecruitmentList({ commit }) {
+      await axios({
         url: api_url.membersrecruitment.membersrecruitments(),
         method: "get"
       })
@@ -96,8 +96,8 @@ export default {
           console.log(err.response);
         });
     },
-    bringRecruitmentDetail({ commit, getters }, recruitNo) {
-      axios({
+    async bringRecruitmentDetail({ commit, getters }, recruitNo) {
+      await axios({
         url: api_url.membersrecruitment.membersrecruitment(recruitNo),
         method: "get",
         headers: getters.authHeader

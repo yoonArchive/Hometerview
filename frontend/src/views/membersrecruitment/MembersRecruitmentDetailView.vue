@@ -103,7 +103,7 @@ export default {
   data() {
     return {
       recruitNo: this.$route.params.recruitNo,
-      image: require("../../assets/images/fighting.jpeg")
+      image: ""
     };
   },
   computed: {
@@ -153,7 +153,10 @@ export default {
     }
   },
   async created() {
-    this.bringRecruitmentDetail(this.recruitNo);
+    await this.bringRecruitmentDetail(this.recruitNo);
+    console.log(this.recruitDetail.stdImg);
+    this.image = this.recruitDetail.stdImg;
+    console.log(this.image);
   },
   mounted() {
     window.scrollTo(0, 0);

@@ -2,7 +2,7 @@
   <div class="col" @click="moveToDetail()">
     <div class="card">
       <!-- <img src="{{ recruitment.stdImg }}" class="card-img-top" alt="..." /> -->
-      <img class="card-img-top" :src="image" alt="beach" />
+      <img class="card-img-top" :src="recruitmentImg" alt="beach" />
       <div class="card-body">
         <div style="height:3.2em;">
           <h6 class="card-text">
@@ -47,14 +47,13 @@ export default {
   name: "MembersRecruitmentItem",
   props: {
     recruitment: Object,
+    recruitmentImg: String,
     index: Number,
     recruitState: Boolean
   },
 
   data() {
-    return {
-      image: require("../../../assets/images/fighting.jpeg")
-    };
+    return {};
   },
   computed: { ...mapGetters(["applyCounts"]) },
   methods: {
