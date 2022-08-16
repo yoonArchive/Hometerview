@@ -34,7 +34,8 @@ export default {
     applyType: state => state.applyType,
     recruitCount: state => state.recruitDetail.count,
     applyCounts: state => state.applyCounts,
-    applyingList: state => state.applyingList
+    applyingList: state => state.applyingList,
+    studySpaceNo: state => state.studySpaceNo
   },
   actions: {
     createRecruitment({ getters }, formData) {

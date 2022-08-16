@@ -55,31 +55,36 @@
           </div>
           <div>
             <div v-if="applyType === 'LEADER'">
-              <button @click="studyStart()">스터디 시작</button>
-              <button @click="moveToUpdate">수정</button>
-              <button @click="deleteRecruitmentDetail([recruitNo])">
-                삭제
-              </button>
-            </div>
-            <div
-              v-else-if="
-                applyType === 'NORMAL' &&
-                  recruitDetail.recruitStatus === '모집 중'
-              "
-            >
-              <button @click="studyApplyCancel(recruitNo)">
-                스터디 신청 취소
-              </button>
-            </div>
-            <div v-else-if="applyType === null">
               <div v-if="recruitDetail.recruitStatus === '모집 중'">
-                <button @click="studyApply(recruitNo)">스터디 신청하기</button>
+                <button @click="studyStart()">스터디 시작</button>
+                <button @click="moveToUpdate">수정</button>
+                <button @click="deleteRecruitmentDetail([recruitNo])">
+                  삭제
+                </button>
               </div>
               <div v-else>
                 <button @click="goStudySpace()">
                   스터디 스페이스 이동
                 </button>
               </div>
+            </div>
+            <div v-else-if="applyType === 'NORMAL'">
+              <div v-if="recruitDetail.recruitStatus === '모집 중'">
+                <button @click="studyApplyCancel(recruitNo)">
+                  스터디 신청 취소
+                </button>
+              </div>
+              <div v-else>
+                <button @click="goStudySpace()">
+                  스터디 스페이스 이동
+                </button>
+              </div>
+            </div>
+            <div v-else-if="applyType === null">
+              <div v-if="recruitDetail.recruitStatus === '모집 중'">
+                <button @click="studyApply(recruitNo)">스터디 신청하기</button>
+              </div>
+              <div v-else></div>
             </div>
           </div>
         </div>
