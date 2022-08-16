@@ -76,7 +76,7 @@ export default {
   data() {
     return {
       imagesrc: require("../../../assets/images/hometerview.png"),
-      profile: require("../../../assets/images/profile.png"),
+      profile: "",
       isLoggedIn: computed(() => store.getters.isLoggedIn)
     };
   },
@@ -87,14 +87,19 @@ export default {
     ...mapActions(["updateUser", "fetchCurrentUser"]),
     async refreshsetting() {
       await this.fetchCurrentUser();
-      await this.setting();
+      console.log(currentUser);
+      // await this.setting();
+
+      // this.profile = this.currentUser.userImg;
     }
   },
   mounted() {
     this.refreshsetting();
+    this.profile = this.currentUser.userImg;
   },
   created() {
     this.refreshsetting();
+    this.profile = this.currentUser.userImg;
   },
   setup() {
     const store = useStore();
