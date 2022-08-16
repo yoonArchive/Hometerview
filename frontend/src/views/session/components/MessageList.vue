@@ -70,10 +70,13 @@ export default {
   border-radius: 10px 10px 10px 10px;
   height: 85vh;
 }
-#rctmsg {
-  height: 0px;
-  background: #ffffffbe;
-  position: relative;
-  top: -30px;
+.container::-webkit-scrollbar {
+  width: 10px;
+}
+.container::-webkit-scrollbar-track {
+  background-color: grey;
+}
+.container::-webkit-scrollbar-thumb {
+  background-color: #2f3542;
 }
 </style>
