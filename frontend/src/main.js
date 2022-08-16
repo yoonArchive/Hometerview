@@ -11,7 +11,7 @@ import router from "./common/lib/vue-router";
 // import "@fortawesome/fontawesome-free/css/all.css";
 
 import "./fontAwesomeIcon";
-
+//비디오 관련
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faUserSecret,
@@ -69,14 +69,5 @@ app.use(VueAxios, axios);
 app.use(store);
 app.use(i18n);
 app.use(router);
-// app.use(VCalendar, {})
-
-// components.forEach(component => {
-//   app.component(component.name, component);
-// });
-
-// plugins.forEach(plugin => {
-//   app.use(plugin);
-// });
 
 app.mount("#app");
