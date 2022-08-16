@@ -1,5 +1,4 @@
 <template>
-  pick : {{ interviewUser }}
   <label
     class="form-check-label"
     :for="member.user.userId"
@@ -15,7 +14,7 @@
       v-model="interviewUser"
       style="margin-top:1.5vh; color:#653FD3"
     />
-    &nbsp;&nbsp;&nbsp;{{ member.user.userName }}
+    &nbsp;&nbsp;&nbsp;{{ member.user.userName }} <br />
     <img
       class="profile-photo"
       :src="require(`@/assets/images/session/profile.png`)"

@@ -1,6 +1,6 @@
 <template>
-  fixed User :{{ interviewUserFixed }}
   <div class="container select-member">
+    <!-- interviewee :{{ interviewUser }} <br /> -->
     <div class="d-flex justify-content-center">
       <form @submit.prevent="intervieweeApply()">
         <div>
@@ -12,16 +12,13 @@
           ></select-interviewee-detail>
           <div class="buttons">
             <div>
-              <button>면접자 초기화</button>
-            </div>
-            <div>
               <button>Apply</button>
             </div>
           </div>
         </div>
       </form>
     </div>
-    <!-- <button @click="intervieweeCancel()"> 면접자 없애기 </button> -->
+    <button @click="intervieweeCancel()">인터뷰모드 해제</button>
   </div>
 </template>
 
@@ -44,18 +41,17 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["studySpaceDetail", "interviewUser", "interviewUserFixed"])
+    ...mapGetters(["studySpaceDetail", "interviewUser"])
   },
   methods: {
-    ...mapActions(["bringStudySpaceDetail", "changeInterviewUserFixed"]),
+    ...mapActions(["bringStudySpaceDetail"]),
     async intervieweeApply() {
-      // await this.changeInterviewUserFixed(this.interviewUser);
       console.log("픽스된 인터뷰어 : ", this.interviewUser);
       this.$emit("streamUpdate", this.interviewUser);
     },
-    intervieweeCancel() {
+    async intervieweeCancel() {
       console.log("check");
-      this.changeInterviewUserFixed("");
+      this.$emit("streamUpdate", "");
     }
   }
 

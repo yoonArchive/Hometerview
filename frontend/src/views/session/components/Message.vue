@@ -4,7 +4,7 @@
       <img
         class="profile-photo"
         :src="require(`@/assets/images/session/profile.png`)"
-        style="box-shadow: 0px 0px 7px 1px rgba(0, 0, 0, 0.6);"
+        style="box-shadow: 0px 0px 7px 1px rgba(0, 0, 0, 0.2);"
       />&nbsp;&nbsp;{{ sendname }}
     </div>
     <div class="count-chat">
@@ -75,7 +75,7 @@ export default {
   margin-left: 5vh;
   margin-top: 1.5vh;
   margin-bottom: 1vh;
-  box-shadow: 0px 0px 7px 1px rgba(0, 0, 0, 0.6);
+  box-shadow: 0px 0px 7px 1px rgba(0, 0, 0, 0.2);
 }
 .my-chat {
   background-color: #b3a2e3;
@@ -88,7 +88,7 @@ export default {
   margin-left: 1vh;
   margin-top: 1.5vh;
   margin-bottom: 1vh;
-  box-shadow: 0px 0px 7px 1px rgba(0, 0, 0, 0.6);
+  box-shadow: 0px 0px 7px 1px rgba(0, 0, 0, 0.2);
 }
 .my-chatbox {
   text-align: right;

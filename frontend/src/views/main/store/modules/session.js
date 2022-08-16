@@ -7,13 +7,13 @@ export default {
     interviewUser: "",
     interviewUserFixed: "",
     posture: "",
-    mainStreamManager: {}
+    interviewMode: false
   },
   getters: {
     interviewUser: state => state.interviewUser,
     interviewUserFixed: state => state.interviewUserFixed,
     posture: state => state.posture,
-    mainStreamManager: state => state.mainStreamManager
+    interviewMode: state => state.interviewMode
   },
   mutations: {
     SET_INTERVIEW_USER: (state, interviewUser) =>
@@ -21,8 +21,8 @@ export default {
     SET_INTERVIEW_USER_FIXED: (state, interviewUserFixed) =>
       (state.interviewUserFixed = interviewUserFixed),
     SET_FIX_POSTURE: (state, posture) => (state.posture = posture),
-    SET_UPDATE_MAIN_VIDEO: (state, mainStreamManager) =>
-      (state.mainStreamManager = mainStreamManager)
+    SET_INTERVIEW_MODE: (state, interviewMode) =>
+      (state.interviewMode = interviewMode)
   },
   actions: {
     changeInterviewUser({ commit }, interviewUser) {
@@ -55,10 +55,8 @@ export default {
           console.log(err.response);
         });
     },
-    updateMainVideoStreamManager({ getters }, stream) {
-      if (getters.mainStreamManager === stream) return;
-      console.log("들어가니?");
-      getters.mainStreamManager = stream;
+    changeInterviewMode({ commit }, interviewMode) {
+      commit("SET_INTERVIEW_MODE", interviewMode);
     }
   }
 };

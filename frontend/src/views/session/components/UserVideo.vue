@@ -1,7 +1,12 @@
 <template>
-  <div v-if="streamManager">
-    <ov-video :stream-manager="streamManager" :mainStream="mainStream" />
-    <div class="video-name">{{ clientData }}</div>
+  <div v-if="streamManager" style="position: relative;">
+    <div class="large-video-name" v-if="mainStream">{{ clientData }}</div>
+    <div class="small-video-name" v-else>{{ clientData }}</div>
+    <ov-video
+      :stream-manager="streamManager"
+      :mainStream="mainStream"
+      :interviewMode="interviewMode"
+    />
   </div>
 </template>
 
@@ -16,7 +21,8 @@ export default {
   emits: [],
   props: {
     streamManager: Object,
-    mainStream: Boolean
+    mainStream: Boolean,
+    interviewMode: Boolean
   },
   computed: {
     clientData() {
@@ -43,7 +49,7 @@ export default {
   background-color: #272930;
   color: whitesmoke;
 } */
-.video-name {
+.large-video-name {
   /* display: inline-block; */
   /* padding-left: 5px;
   padding-right: 5px; */
@@ -53,5 +59,17 @@ export default {
   z-index: 999;
   padding: 5px;
   font-weight: 700;
+}
+.small-video-name {
+  /* display: inline-block; */
+  /* padding-left: 5px;
+  padding-right: 5px; */
+  color: whitesmoke;
+  font-weight: bold;
+  position: absolute;
+  z-index: 999;
+  padding: 5px;
+  font-weight: 700;
+  padding-left: 2vh;
 }
 </style>

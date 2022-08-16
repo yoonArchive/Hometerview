@@ -1,7 +1,8 @@
 <template>
   <!-- 가능한 빨리 재생을 시작하는 video속성 -->
-  <video v-if="mainStream" class="main col-12" autoplay />
-  <video v-else class="sub" autoplay />
+  <video v-if="mainStream && interviewMode" class="main col-12" autoplay />
+  <video v-else-if="!mainStream && interviewMode" class="sub" autoplay />
+  <video v-else-if="!interviewMode" class="not-interview-mode" autoplay />
 </template>
 
 <script>
@@ -10,7 +11,8 @@ export default {
   name: "OvVideo",
   props: {
     streamManager: Object,
-    mainStream: Boolean
+    mainStream: Boolean,
+    interviewMode: Boolean
   },
   emits: [],
   data() {
@@ -31,15 +33,9 @@ export default {
     }
   },
   updated() {
-    // 비디오 html에 화면 띄우기
-    // console.log('check')
-    // console.log(this.$el) // <video autoplay="" id="local-video-undefined"></video> 가 뜨게 된다.
     this.streamManager.addVideoElement(this.$el);
   },
   mounted() {
-    // 비디오 html에 화면 띄우기
-    // console.log('check')
-    // console.log(this.$el) // <video autoplay="" id="local-video-undefined"></video> 가 뜨게 된다.
     this.streamManager.addVideoElement(this.$el);
   }
 };
@@ -65,6 +61,19 @@ export default {
 .sub {
   /* width: 320px; */
 
+  aspect-ratio: 4/3;
+  max-height: calc(100vh - 6rem);
+  max-width: 100%;
+  width: fit-content;
+  height: 23vh;
+  display: block;
+  /* border: solid #8c1d1d 3px; */
+  background-color: black;
+  border-radius: 1.2rem;
+  object-fit: cover;
+  align-self: center;
+}
+.not-interview-mode {
   aspect-ratio: 4/3;
   max-height: calc(100vh - 6rem);
   max-width: 100%;
