@@ -61,9 +61,9 @@
           data-bs-toggle="modal"
           data-bs-target="#studyUpdateModal"
           data-bs-whatever="@mdo"
-        >
+          >
           수정
-        </button> -->
+          </button> -->
           <button
             v-if="studySpaceDetail.joinType == 'NORMAL'"
             @click="leaveStudy(stdNo)"

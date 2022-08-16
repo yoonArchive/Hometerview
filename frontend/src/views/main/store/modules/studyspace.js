@@ -59,17 +59,20 @@ export default {
       (state.expectedQuestionList = data)
   },
   actions: {
-    changettsrequest({ commit }, data) {
+    changettsrequest({ commit, getters }, data) {
       commit("SET_TTS_REQUEST_CONTEXT", data);
     },
-    async changeToCoverLetter({ commit, dispatch }, changeInfo) {
+    async changeToCoverLetter({ commit, dispatch, getters }, changeInfo) {
       const content = changeInfo[0];
       const studentindex = changeInfo[1];
 
       if (content === "coverletter") {
         commit("SET_SELECTED_QUESTION_NUM", 0);
         await dispatch("getStudyResume", studentindex);
-        await dispatch("getQuestionList");
+        console.log(getters.resumeQuestionList);
+        if (getters.resumeQuestionList.length != 0) {
+          await dispatch("getQuestionList");
+        }
         commit("SET_LETTER_STATE", true);
         commit("SET_MEMBER_LSIT_STATE", false);
       } else if (content === "memberlist") {
