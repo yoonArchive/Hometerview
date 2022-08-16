@@ -172,15 +172,20 @@
                     />
                   </div>
                   <div class="col" style="margin:0; padding:0;">
-                    <button
+                    <img
+                      :src="
+                        require(`@/assets/images/session/questionAnswerOn.png`)
+                      "
                       @click="changeContent('commonquestion')"
                       v-if="commonquestion"
-                    >
-                      공통질문on
-                    </button>
-                    <button @click="changeContent('commonquestion')" v-else>
-                      공통질문off
-                    </button>
+                    />
+                    <img
+                      :src="
+                        require(`@/assets/images/session/questionAnswerOff.png`)
+                      "
+                      @click="changeContent('commonquestion')"
+                      v-else
+                    />
                   </div>
                 </div>
                 <div>
