@@ -201,10 +201,6 @@ blockquote {
 }
 #banner {
   padding: 3em 0 2em 0;
-  display: -moz-flex;
-  display: -webkit-flex;
-  display: -ms-flex;
-  display: flex;
 }
 #banner h1 {
   margin-top: -0.125em;
