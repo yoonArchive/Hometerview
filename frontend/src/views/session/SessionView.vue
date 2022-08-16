@@ -25,10 +25,19 @@
               </div>
 
               <!-- 비디오 그룹 -->
-              <div class="video-container row d-flex justify-content-center">
+              <div
+                class="video-container col d-flex justify-content-center"
+                @load="showDivs(slideIndex)"
+              >
+                <img
+                  :src="require(`@/assets/images/session/left.png`)"
+                  class="slider-button-left"
+                  @click="plusDivs(-1)"
+                  style="height:4vh; margin-top:9vh;"
+                />
                 <!-- 자기화면 (작은) -->
                 <user-video
-                  class="small-video my-video col-md-3"
+                  class="small-video slider my-video row-md-3"
                   :stream-manager="publisher"
                   :mainStream="false"
                   @click="updateMainVideoStreamManager(publisher)"
@@ -37,7 +46,7 @@
                 <!-- native : 상위 컴포넌트(즉 여기 있는 이벤트)를 하위 컴포넌트에서 작동시키고 싶을 때 사용한다. -->
                 <!-- vue3에서 native가 사라지고 그냥 click을 누르면 된다. -->
                 <user-video
-                  class="user-video col-md-3"
+                  class="user-video slider row-md-3"
                   v-for="sub in subscribers"
                   :key="sub.stream.connection.connectionId"
                   :stream-manager="sub"
@@ -45,6 +54,21 @@
                   @click="updateMainVideoStreamManager(sub)"
                   style="height:15vh;"
                 />
+                <img
+                  :src="require(`@/assets/images/session/right.png`)"
+                  class="slider-button-right"
+                  @click="plusDivs(1)"
+                  style="height:4vh; margin-top:9vh;"
+                />
+
+                <!-- <button
+                  class="slider-button-left"
+                  @click="plusDivs(-1)"
+                ></button>
+                <button
+                  class="slider-button-right"
+                  @click="plusDivs(1)"
+                ></button> -->
               </div>
             </div>
             <div
@@ -204,17 +228,6 @@
                       <!-- <button type="button" @click="start()">녹화시작</button>
                       <button type="button" @click="stop()">녹화중단</button> -->
                     </div>
-                    <div
-                      class="col"
-                      style="margin:0; padding:0; margin-left:0.5vh;"
-                    >
-                      <img
-                        :src="require(`@/assets/images/session/stop.png`)"
-                        style="height:3vh; margin-top:;"
-                        @click="stop()"
-                        v-if="true"
-                      />
-                    </div>
                   </div>
                 </div>
               </div>
@@ -329,9 +342,6 @@
   width: 6vh;
   border-radius: 100% 100% 100% 100%;
 }
-.test {
-  color: white;
-}
 </style>
 
 <script>
@@ -431,7 +441,10 @@ export default {
       screenPublisher: undefined,
       screenSubscribers: [],
       screenOvToken: null,
-      isSharingMode: false
+      isSharingMode: false,
+
+      //slider
+      slideIndex: 1
     };
   },
   computed: {
@@ -452,7 +465,27 @@ export default {
       "saveRecordedFile"
       // "updateMainVideoStreamManager"
     ]),
-    makeUseMainStream() {},
+    plusDivs(n) {
+      this.showDivs((this.slideIndex += n));
+    },
+
+    async showDivs(n) {
+      let i;
+      let x = await document.getElementsByClassName("slider");
+      console.log(x);
+      if (n > x.length) {
+        this.slideIndex = 1;
+      }
+      if (n < 1) {
+        this.slideIndex = x.length;
+      }
+      for (i = 0; i < x.length; i++) {
+        x[i].style.display = "none";
+      }
+      x[this.slideIndex - 1].style.display = await "block";
+      x[this.slideIndex].style.display = await "block";
+      x[this.slideIndex + 1].style.display = await "block";
+    },
 
     async recordingStartButton() {
       const date = await new Date();
@@ -1009,9 +1042,9 @@ export default {
       // Sender of the message (after 'session.connect')
       this.session
         .signal({
-          data: msg, // Any string (optional)
-          to: [], // Array of Connection objects (optional. Broadcast to everyone if empty)
-          type: "my-chat" // The type of message (optional)
+          data: msg,
+          to: [],
+          type: "my-chat"
         })
         .then(() => {
           console.log("Message successfully sent");
@@ -1054,7 +1087,6 @@ export default {
   async created() {
     await this.bringStudySpaceDetail(this.sessionNo);
     this.userType = this.studySpaceDetail.joinType;
-    console.log("확인!!!!");
     console.log(this.studySpaceDetail);
   },
   async beforeMount() {
@@ -1062,8 +1094,13 @@ export default {
     this.myUserId = await this.currentUser.userId;
     console.log("this.myUserId : ", this.myUserId);
     this.mySessionId = await this.changeSessionId(this.sessionNo);
-    this.joinSession();
-  },
-  mounted() {}
+    await this.joinSession();
+    // await this.showDivs(1);
+  }
+  // async mounted() {
+  //   console.log("걸리나?");
+  //   await this.showDivs(1);
+  //   console.log("걸렸다");
+  // }
 };
 </script>
