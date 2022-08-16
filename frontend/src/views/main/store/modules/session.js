@@ -36,7 +36,6 @@ export default {
     saveRecordedFile({ commit }, recordingInfo) {
       const recordingPostReq = recordingInfo[0];
       const stdNo = recordingInfo[1];
-      console.log("정상적으로 작동을 합니다.");
       console.log(recordingPostReq);
       console.log(stdNo);
       axios({

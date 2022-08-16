@@ -1,15 +1,26 @@
 <template>
   <div>
-    <div id="app_chat_list" class="container" v-on:scroll.passive="scrolled">
+    <div id="app_chat_list" class="container" style="overflow-x: hidden">
       <Message
         v-for="(msg, index) in msgs"
         :key="index"
-        :msg="msg"
+        :msg="msg.fromMessage"
         :myId="myId"
-        :fromId="fromId"
+        :fromId="msg.fromId"
       />
     </div>
   </div>
+  <!-- <div>
+    <div id="app_chat_list" class="container" @scroll.passive="scrolled()">
+      <Message
+        v-for="(msg, index) in msgs"
+        :key="index"
+        :msg="msg.fromMessage"
+        :myId="myId"
+        :fromId="msg.fromId"
+      />
+    </div>
+  </div> -->
 </template>
 
 <script>
@@ -21,8 +32,7 @@ export default {
   },
   props: {
     msgs: Array,
-    myId: String,
-    fromId: String
+    myId: String
   },
   data() {
     return {
@@ -31,26 +41,24 @@ export default {
   },
   updated() {
     if (!this.isScrolled) {
-      var objDiv = document.getElementById("app_chat_list");
-      objDiv.scrollTop = objDiv.scrollHeight + 500;
+      const objDiv = document.getElementById("app_chat_list");
+      objDiv.scrollTop = objDiv.scrollHeight;
     }
   },
   methods: {
-    scrolled() {
-      var objDiv = document.getElementById("app_chat_list");
-      if (objDiv.scrollTop >= objDiv.scrollHeight - 500) {
-        this.isScrolled = false;
-        this.recentmsg = 0;
-      } else {
-        this.isScrolled = true;
-      }
-    },
-    scrolldown() {
-      var objDiv = document.getElementById("app_chat_list");
-      objDiv.scrollTop = objDiv.scrollHeight;
-      this.isScrolled = false;
-      this.recentmsg = 0;
-    }
+    // scrolled() {
+    //   const objDiv = document.getElementById("app_chat_list");
+    //   if (objDiv.scrollTop >= objDiv.scrollHeight - 500) {
+    //     this.isScrolled = false;
+    //   } else {
+    //     this.isScrolled = true;
+    //   }
+    // },
+    // scrolldown() {
+    //   const objDiv = document.getElementById("app_chat_list");
+    //   objDiv.scrollTop = objDiv.scrollHeight;
+    //   this.isScrolled = false;
+    // }
   }
 };
 </script>
