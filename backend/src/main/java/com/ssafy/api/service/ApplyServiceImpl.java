@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -31,7 +32,7 @@ public class ApplyServiceImpl implements ApplyService {
             User user = userRepository.findByUserNo(userNo).get();
             Recruit recruit = recruitRepository.findByRecruitNo(recruitNo).get();
             long applyCount = applyRepositorySupport.CountByRecruitNo(recruitNo);
-            if(applyCount >= recruit.getStdLimit()) return 1;
+            if (applyCount >= recruit.getStdLimit()) return 1;
             Apply apply = new Apply();
             apply.createApply(user, recruit, applyType);
             applyRepository.save(apply);
@@ -71,10 +72,13 @@ public class ApplyServiceImpl implements ApplyService {
 
     @Override
     public ApplyType getApplyType(Recruit recruit, Long userNo) {
-        if(recruit.getRecruitStatus() == RecruitStatus.RECRUITING) {
+        if (recruit.getRecruitStatus() == RecruitStatus.RECRUITING) {
             return applyRepositorySupport.findByRecruitNoAndUserNo(recruit.getRecruitNo(), userNo);
+        } else {
+            StudyJoin studyJoin = studyJoinRepositorySupport.findStudyJoinByUserNoAndStdNo(userNo, recruit.getStdNo());
+            if (studyJoin == null) return null;
+            else return studyJoin.getJoinType();
         }
-        else return studyJoinRepositorySupport.findStudyJoinByUserNoAndStdNo(userNo, recruit.getStdNo()).get().getJoinType();
     }
 
 }
