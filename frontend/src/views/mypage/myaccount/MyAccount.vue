@@ -51,7 +51,13 @@
       <div class="wrap">
         <div class="form-item">
           <label class="content">프로필 사진</label>
-          <input type="file" placeholder="파일을 선택해주세요." />
+          <input
+            type="file"
+            ref="inputImage"
+            @change="imageSelect()"
+            multiple
+            placeholder="파일을 선택해주세요."
+          />
         </div>
         <div id="name" class="form-item">
           <label class="content">이름</label>
@@ -109,6 +115,9 @@ export default {
   },
   methods: {
     ...mapActions(["updateUser", "fetchCurrentUser"]),
+    imageSelect() {
+      this.userdata.userImg = this.$refs.inputImage.files[0];
+    },
     inFileChange(e) {
       console.log(e);
       var file = e.target.files || e.dataTranfer.files;
