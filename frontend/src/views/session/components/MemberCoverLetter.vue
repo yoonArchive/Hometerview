@@ -77,6 +77,9 @@ export default {
     ...mapMutations(["SET_SELECTED_QUESTION_NUM"]),
     ...mapActions(["getQuestionList", "changettsrequest"]),
     childttsrequest(data) {
+      console.log("tts 데이터");
+      console.log(data);
+      console.log("tts 데이터");
       this.changettsrequest(data);
     },
     changeSelectedNum(item) {
@@ -86,6 +89,7 @@ export default {
     clicktabs(item, event) {
       this.selectedNum = item - 1;
       this.SET_SELECTED_QUESTION_NUM(this.selectedNum);
+      console.log(this.resumeQuestionList);
       this.getQuestionList();
       var tabs = document.getElementsByClassName("accordion_tab");
       console.log(tabs);
@@ -174,7 +178,7 @@ body {
 }
 
 .accordion.active {
-  height: 320px;
+  height: auto;
 }
 
 .accordion .accordion_content {

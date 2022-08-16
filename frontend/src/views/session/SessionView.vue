@@ -449,7 +449,8 @@ export default {
       "changeToCoverLetter",
       "needToFixPosture",
       "stopToFixPosture",
-      "saveRecordedFile"
+      "saveRecordedFile",
+      "changettsrequest"
     ]),
     makeUseMainStream() {},
 
@@ -872,6 +873,7 @@ export default {
       audioSource.buffer = audioBuffer;
       audioSource.connect(audioContext.destination);
       audioSource.start();
+      this.changettsrequest("");
     },
 
     //tts 기능 추가
@@ -1047,6 +1049,7 @@ export default {
   },
   watch: {
     ttsrequestcontext() {
+      console.log("이게 많이 실행되나?");
       this.ttspublish(this.ttsrequestcontext);
     }
   },
