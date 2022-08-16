@@ -331,7 +331,7 @@ export default {
         headers: getters.authHeader
       })
         .then(res => {
-          commit("SET_RECORDING", res.data);
+          commit("SET_RECORDING", res.data.recordings);
           console.log("레코딩 리스트 가져오기 성공" + res.data);
         })
 

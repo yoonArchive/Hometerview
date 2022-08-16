@@ -185,7 +185,7 @@ export default {
     getLengthOfObject(obj){
       let lengthOfObject = Object.keys(obj).length;
       console.log(lengthOfObject);
-},
+    },
 
     ...mapActions([
       "getResumeInfo",
@@ -211,14 +211,6 @@ export default {
     getDday(){
       this.getDdayInfo()
     },
-    refreshAll() {
-            // 새로고침
-            this.$router.go();
-        }
-
-
-
-
   },
   mounted(){
     this.findresumes();
