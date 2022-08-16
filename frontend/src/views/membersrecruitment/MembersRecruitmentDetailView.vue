@@ -19,62 +19,72 @@
       <h5 v-else style="text-align: center;">[ 자율 면접 스터디 ]</h5>
     </header>
     <section id="banner">
-      <span class="image object">
-        <img :src="image" alt="" class="stdImg" style="width:550px" />
-      </span>
-      <div class="content">
-        <blockquote>
-          <div class="info">
-            <span class="title">스터디명 : </span
-            ><span class="title">{{ recruitDetail.stdName }}</span>
-          </div>
-          <div class="info">
-            <span class="detail">{{ recruitDetail.stdDetail }}</span>
-          </div>
-        </blockquote>
-
-        <div class="box">
-          <div class="info">
-            <span class="detail">🗓️ &nbsp; 기간 : </span>
-            <span
-              >{{ recruitDetail.startDate }} ~ {{ recruitDetail.endDate }}</span
-            >
-          </div>
-          <div class="info">
-            <span class="detail">⏰ &nbsp; 진행 일자 : </span>
-            <span>{{ recruitDetail.stdDay }}</span>
-          </div>
-          <div v-if="recruitDetail.recruitStatus === '모집 중'" class="info">
-            <span class="detail">🤝 &nbsp; 모집인원 : </span>
-            <span>{{ recruitDetail.count }}/{{ recruitDetail.stdLimit }}</span>
-          </div>
-        </div>
-        <div>
-          <div v-if="applyType === 'LEADER'">
-            <button @click="studyStart()">스터디 시작</button>
-            <button @click="moveToUpdate">수정</button>
-            <button @click="deleteRecruitmentDetail([recruitNo])">
-              삭제
-            </button>
-          </div>
-          <div
-            v-else-if="
-              applyType === 'NORMAL' &&
-                recruitDetail.recruitStatus === '모집 중'
-            "
-          >
-            <button @click="studyApplyCancel(recruitNo)">
-              스터디 신청 취소
-            </button>
-          </div>
-          <div v-else-if="applyType === null">
-            <div v-if="recruitDetail.recruitStatus === '모집 중'">
-              <button @click="studyApply(recruitNo)">스터디 신청하기</button>
+      <div class="row">
+        <span class="image object col-6">
+          <img :src="image" alt="" class="stdImg" />
+        </span>
+        <div class="content col">
+          <blockquote>
+            <div class="info">
+              <span class="title">스터디명 : </span
+              ><span class="title">{{ recruitDetail.stdName }}</span>
             </div>
-            <div v-else>
-              <button @click="goStudySpace()">
-                스터디 스페이스 이동
-              </button>
+            <div class="info">
+              <span class="detail">{{ recruitDetail.stdDetail }}</span>
+            </div>
+          </blockquote>
+
+          <div class="box">
+            <div class="info">
+              <span class="detail">🗓️ &nbsp; 기간 : </span>
+              <span
+                >{{ recruitDetail.startDate }} ~
+                {{ recruitDetail.endDate }}</span
+              >
+            </div>
+            <div class="info">
+              <span class="detail">⏰ &nbsp; 진행 일자 : </span>
+              <span>{{ recruitDetail.stdDay }}</span>
+            </div>
+            <div v-if="recruitDetail.recruitStatus === '모집 중'" class="info">
+              <span class="detail">🤝 &nbsp; 모집인원 : </span>
+              <span
+                >{{ recruitDetail.count }}/{{ recruitDetail.stdLimit }}</span
+              >
+            </div>
+          </div>
+          <div>
+            <div v-if="applyType === 'LEADER'">
+              <div v-if="recruitDetail.recruitStatus === '모집 중'">
+                <button @click="studyStart()">스터디 시작</button>
+                <button @click="moveToUpdate">수정</button>
+                <button @click="deleteRecruitmentDetail([recruitNo])">
+                  삭제
+                </button>
+              </div>
+              <div v-else>
+                <button @click="goStudySpace()">
+                  스터디 스페이스 이동
+                </button>
+              </div>
+            </div>
+            <div v-else-if="applyType === 'NORMAL'">
+              <div v-if="recruitDetail.recruitStatus === '모집 중'">
+                <button @click="studyApplyCancel(recruitNo)">
+                  스터디 신청 취소
+                </button>
+              </div>
+              <div v-else>
+                <button @click="goStudySpace()">
+                  스터디 스페이스 이동
+                </button>
+              </div>
+            </div>
+            <div v-else-if="applyType === null">
+              <div v-if="recruitDetail.recruitStatus === '모집 중'">
+                <button @click="studyApply(recruitNo)">스터디 신청하기</button>
+              </div>
+              <div v-else></div>
             </div>
           </div>
         </div>
@@ -93,7 +103,7 @@ export default {
   data() {
     return {
       recruitNo: this.$route.params.recruitNo,
-      image: require("../../assets/images/fighting.jpeg")
+      image: ""
     };
   },
   computed: {
@@ -143,7 +153,10 @@ export default {
     }
   },
   async created() {
-    this.bringRecruitmentDetail(this.recruitNo);
+    await this.bringRecruitmentDetail(this.recruitNo);
+    console.log(this.recruitDetail.stdImg);
+    this.image = this.recruitDetail.stdImg;
+    console.log(this.image);
   },
   mounted() {
     window.scrollTo(0, 0);
@@ -191,10 +204,6 @@ blockquote {
 }
 #banner {
   padding: 3em 0 2em 0;
-  display: -moz-flex;
-  display: -webkit-flex;
-  display: -ms-flex;
-  display: flex;
 }
 #banner h1 {
   margin-top: -0.125em;

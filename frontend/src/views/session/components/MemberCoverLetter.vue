@@ -13,18 +13,15 @@
               class="accordion_tab {'active': index == 0}"
               @click="clicktabs(item, $event)"
             >
-              자소서 {{ index + 1 }}
+              {{ resumeQuestionList[index].question }}
               <div class="accordion_arrow">
                 <img src="https://i.imgur.com/PJRz0Fc.png" alt="arrow" />
               </div>
             </div>
             <div class="accordion_content">
               <div class="accordion_item">
-                <p class="item_title">
-                  {{ resumeQuestionList[selectedNum].question }}
-                </p>
-                <p>
-                  {{ resumeQuestionList[selectedNum].answer }}
+                <p style="font-size:15px">
+                  {{ resumeQuestionList[index].answer }}
                 </p>
               </div>
               <div class="accordion_item">
@@ -37,6 +34,8 @@
                   <div class="row" style="font-size:20px">
                     {{ item.contents }}
                   </div>
+
+                  <button @click="childttsrequest(item.contents)">tts!!</button>
                 </div>
               </div>
             </div>
@@ -76,7 +75,10 @@ export default {
 
   methods: {
     ...mapMutations(["SET_SELECTED_QUESTION_NUM"]),
-    ...mapActions(["getQuestionList"]),
+    ...mapActions(["getQuestionList", "changettsrequest"]),
+    childttsrequest(data) {
+      this.changettsrequest(data);
+    },
     changeSelectedNum(item) {
       this.selectedNum = item - 1;
       console.log(this.selectedNum);
@@ -131,7 +133,7 @@ body {
 .accordion {
   word-break: break-all;
   width: auto;
-  height: 60px;
+  height: 80px;
   margin: 0 auto;
   background: #fff;
   border-radius: 3px;

@@ -26,12 +26,21 @@
                 <p id="sub-text" class="animate__animated animate__fadeInUp">
                   홈터뷰와 함께 편리하게 면접을 준비해보세요.
                 </p>
-                <a
+                <button
+                  id="enter-btn"
+                  type="button"
+                  class="btn btn-primary"
+                  style="background-color: #6C63FF; border-color: #6C63FF"
+                  @click="goRecruit()"
+                >
+                  스터디 참여하기
+                </button>
+                <!-- <a
                   href=""
                   class="btn-get-started animate__animated animate__fadeInUp"
                   @click="goRecruit()"
                   >스터디 참여하기</a
-                >
+                > -->
               </div>
             </div>
           </div>
@@ -42,7 +51,7 @@
           <div class="container">
             <div class="row" data-aos="fade-up">
               <div class="col-md-5">
-                <img src="./features-1.svg" class="img-fluid" alt="" />
+                <img :src="imagesrc1" class="img-fluid" alt="" />
               </div>
               <div class="col-md-7 pt-4 pl-2">
                 <h3
@@ -57,8 +66,10 @@
                   원하는 기업의 스터디가 없으신가요? 모집글을 직접 작성해보세요!
                 </p>
                 <button
+                  id="enter-btn"
                   type="button"
-                  class="btn btn-outline-primary"
+                  class="btn btn-primary"
+                  style="background-color: #6C63FF; border-color: #6C63FF; "
                   @click="goRecruit()"
                 >
                   스터디 참여하기
@@ -83,15 +94,17 @@
                   제공합니다.
                 </p>
                 <button
+                  id="enter-btn"
                   type="button"
-                  class="btn btn-outline-primary"
+                  class="btn btn-primary"
+                  style="background-color: #6C63FF; border-color: #6C63FF"
                   @click="goRecruit()"
                 >
                   스터디 참여하기
                 </button>
               </div>
               <div class="col-md-5">
-                <img :src="imagesrc" class="img-fluid" alt="" />
+                <img :src="imagesrc2" class="img-fluid" alt="" />
               </div>
             </div>
           </div>
@@ -102,7 +115,7 @@
           <div class="container">
             <div class="row" data-aos="fade-up">
               <div class="col-md-5">
-                <img src="./features-4.svg" class="img-fluid" alt="" />
+                <img :src="imagesrc3" class="img-fluid" alt="" />
               </div>
               <div class="col-md-7 pt-4">
                 <h3 id="main-text">
@@ -115,8 +128,10 @@
                   제공합니다.
                 </p>
                 <button
+                  id="enter-btn"
                   type="button"
-                  class="btn btn-outline-primary"
+                  class="btn btn-primary"
+                  style="background-color: #6C63FF; border-color: #6C63FF"
                   @click="goRecruit()"
                 >
                   스터디 참여하기
@@ -141,15 +156,17 @@
                   제공합니다.
                 </p>
                 <button
+                  id="enter-btn"
                   type="button"
-                  class="btn btn-outline-primary"
+                  class="btn btn-primary"
+                  style="background-color: #6C63FF; border-color: #6C63FF"
                   @click="goRecruit()"
                 >
                   스터디 참여하기
                 </button>
               </div>
               <div class="col-md-5">
-                <img :src="imagesrc1" class="img-fluid" alt="" />
+                <img :src="imagesrc4" class="img-fluid" alt="" />
               </div>
             </div>
           </div>
@@ -190,9 +207,10 @@ export default {
 
   data() {
     return {
-      imagesrc: require("../../assets/images/main3.png"),
-      imagesrc1: require("../../assets/images/main4.png"),
-      imagesrc2: require("../../assets/images/myinterview2.png")
+      imagesrc1: require("../../assets/images/browser_stats.svg"),
+      imagesrc2: require("../../assets/images/group_video.svg"),
+      imagesrc3: require("../../assets/images/learning.svg"),
+      imagesrc4: require("../../assets/images/online_organizer.svg")
     };
   },
 
@@ -204,6 +222,10 @@ export default {
 };
 </script>
 <style scoped>
+#enter-btn {
+  font-family: "맑은 고딕 볼드";
+  font-size: 20px;
+}
 #main-text {
   font-family: "맑은 고딕 볼드";
   font-size: 40px;
@@ -224,7 +246,7 @@ body {
 }
 
 a {
-  color: #4fa6d5;
+  color: #1998dc;
   text-decoration: none;
 }
 
@@ -308,8 +330,8 @@ a:hover {
   top: 0;
   width: 130%;
   height: 96%;
-  background: #9281a8;
-  opacity: 0.3;
+  background: #6c63ff;
+  opacity: 0.9;
   z-index: 0;
   border-radius: 0 0 50% 50%;
   transform: translateX(-50%) translateY(18px) rotate(2deg);

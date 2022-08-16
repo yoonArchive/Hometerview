@@ -17,12 +17,12 @@ public class StudyJoinRepositorySupport {
 
     QStudyJoin qStudyJoin = QStudyJoin.studyJoin;
 
-    public Optional<StudyJoin> findStudyJoinByUserNoAndStdNo(Long userNo, Long stdNo) {
+    public StudyJoin findStudyJoinByUserNoAndStdNo(Long userNo, Long stdNo) {
         StudyJoin studyJoin = jpaQueryFactory.select(qStudyJoin).from(qStudyJoin)
                 .where(qStudyJoin.user.userNo.eq(userNo))
                 .where(qStudyJoin.study.stdNo.eq(stdNo)).fetchOne();
-        if (studyJoin == null) return Optional.empty();
-        return Optional.ofNullable(studyJoin);
+        if (studyJoin == null) return null;
+        return studyJoin;
     }
 
     public List<StudyJoin> findByStdNo(Long stdNo) {

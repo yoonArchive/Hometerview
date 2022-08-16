@@ -1,5 +1,5 @@
 {
-  "name": "ssafy-vue",
+  "name": "HOMETERVIEW",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -39,6 +39,7 @@
     "node-sass": "^6.0.0",
     "openvidu-browser": "^2.22.0",
     "roboto-fontface": "*",
+    "sass": "^1.54.4",
     "sass-loader": "^10.2.0",
     "stylus-loader": "^3.0.2",
     "vue": "^3.2.37",

@@ -1,6 +1,6 @@
 // import _Space from "element-plus/lib/el-space"
 
-const HOST = "http://localhost:8080/api/v1/";
+const HOST = "https://i7b105.p.ssafy.io/api/v1/";
 const USERS = "users/";
 const AUTH = "auth/";
 const NOTICE = "notice/";
@@ -102,6 +102,6 @@ export default {
       OPENVIDU_SERVER_URL + OPENVIDU + SESSIONS + `${sessionId}/` + "connection"
   },
   recording: {
-    saveRecorded: () => HOST + RECRDING
+    saveRecorded: () => HOST + RECORDING
   }
 };

@@ -26,18 +26,13 @@ public class RecruitServiceImpl implements RecruitService {
 
     private final ApplyRepositorySupport applyRepositorySupport;
 
-    String uploadPath = "C:\\intervenience";
+//    String uploadPath = "C:\\intervenience";
+//
+//    String uploadFolder = "stdImg";
 
-    String uploadFolder = "stdImg";
+    String uploadFolder = "studyImg";
 
-    /*String uploadFolder = "upload";
-
-    String uploadPath = "/home" + File.separator + "ubuntu" + File.separator + "S05P13A204"
-            + File.separator + "backend"
-            + File.separator + "src"
-            + File.separator + "main"
-            + File.separator + "resources"
-            + File.separator + "static";*/
+    String uploadPath = "/home" + File.separator + "ubuntu" + File.separator + "HOMETERVIEW" +  File.separator + "Image";
 
     @Override
     public Recruit writeRecruit(RecruitReq recruitReq) {
@@ -164,8 +159,8 @@ public class RecruitServiceImpl implements RecruitService {
                 File destFile = new File(uploadPath + File.separator + uploadFolder + File.separator + destFileName);
                 destFile.getParentFile().mkdirs();
                 multipartFile.transferTo(destFile);
-                // String fileUrl = "https://i7b105.p.ssafy.io:8080/static/" + uploadFolder + "/" + destFileName;
-                String fileUrl = uploadPath + "/" + uploadFolder + "/" + destFileName;
+                String fileUrl = "https://i7b105.p.ssafy.io/HOMETERVIEW/Image/" + uploadFolder + "/" + destFileName;
+                // String fileUrl = uploadPath + "/" + uploadFolder + "/" + destFileName;
                 recruit.updateStdImg(fileUrl);
                 return 1;
             }

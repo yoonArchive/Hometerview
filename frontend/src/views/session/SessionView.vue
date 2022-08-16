@@ -124,6 +124,7 @@
         <div class="side-right col-md-4">
           <!-- 사이드 -->
           <!-- 메시지, 자소서, 참가자 지정 -->
+
           <div class="side-panel">
             <div class="select-side-bottons">
               <div class="d-flex justify-content-between">
@@ -170,6 +171,17 @@
                       v-else
                     />
                   </div>
+                  <div class="col" style="margin:0; padding:0;">
+                    <button
+                      @click="changeContent('commonquestion')"
+                      v-if="commonquestion"
+                    >
+                      공통질문on
+                    </button>
+                    <button @click="changeContent('commonquestion')" v-else>
+                      공통질문off
+                    </button>
+                  </div>
                 </div>
                 <div>
                   <div class="row" style="margin-right:3.5vh; margin-top:1vh;">
@@ -213,8 +225,12 @@
                 <message-list
                   :msgs="msgs"
                   :myId="publisher.stream.connection.connectionId"
-                  :fromId="fromId"
                 ></message-list>
+                <!-- <message-list
+                  :msgs="msgs"
+                  :myId="publisher.stream.connection.connectionId"
+                  :fromId="fromId"
+                ></message-list> -->
                 <message-form
                   @sendMsg="sendMsg"
                   :user-name="myUserName"
@@ -231,8 +247,10 @@
               ></select-interviewee>
               <!-- usertype==='LEADERS' && 리더만 보이게 하기 =   -->
             </div>
+            <div v-if="commonquestion">
+              <common-qusetion-list></common-qusetion-list>
+            </div>
           </div>
-          <!-- 멤버 리스트 -->
         </div>
       </div>
     </div>
@@ -328,6 +346,7 @@ import MessageForm from "./components/MessageForm.vue";
 import MessageList from "./components/MessageList.vue";
 import StudyMemberList from "./components/StudyMemberList.vue";
 import SelectInterviewee from "./components/SelectInterviewee.vue";
+import CommonQusetionList from "./components/CommonQusetionList.vue";
 
 // teacherable
 import "@tensorflow/tfjs";
@@ -347,7 +366,8 @@ export default {
     MessageForm,
     MessageList,
     StudyMemberList,
-    SelectInterviewee
+    SelectInterviewee,
+    CommonQusetionList
   },
 
   data() {
@@ -379,7 +399,7 @@ export default {
       recording: {},
       recordingSessionId: "",
       recordingToSend: {
-        userNo: this.myUserNo,
+        userId: "",
         videoUrl: ""
       },
 
@@ -396,6 +416,7 @@ export default {
       chatting: true,
       participant: false,
       selectinterviewee: false,
+      commonquestion: false,
 
       // function
       videoOnOff: true,
@@ -418,7 +439,8 @@ export default {
       "currentUser",
       "studySpaceDetail",
       "interviewUserFixed",
-      "interviewUser"
+      "interviewUser",
+      "ttsrequestcontext"
     ])
   },
   methods: {
@@ -428,6 +450,7 @@ export default {
       "needToFixPosture",
       "stopToFixPosture",
       "saveRecordedFile"
+      // "updateMainVideoStreamManager"
     ]),
     makeUseMainStream() {},
 
@@ -632,11 +655,24 @@ export default {
       });
 
       this.session.on("signal:my-chat", event => {
-        this.fromId = event.from.connectionId;
+        // this.fromId = event.from.connectionId;
         const tmp = this.msgs.slice();
-        tmp.push(event.data);
+        tmp.push({
+          fromId: event.from.connectionId,
+          fromMessage: event.data
+        });
         this.msgs = tmp;
       });
+      this.session.on("signal:ttsshare", ttsdata => {
+        this.playtts(ttsdata.data);
+      });
+
+      // this.session.on("signal:my-chat", event => {
+      //   this.fromId = event.from.connectionId;
+      //   const tmp = this.msgs.slice();
+      //   tmp.push(event.data);
+      //   this.msgs = tmp;
+      // });
 
       // update
       await this.session.on("signal:main-update", async event => {
@@ -645,28 +681,32 @@ export default {
           this.publisher.stream.connection.data
         );
         console.log("확인해보자", this.updateMain, "이거랑", clientId);
-        if (clientId === this.updateMain) {
-          console.log("확인해보자22");
-          await this.updateMainVideoStreamManager(this.publisher);
 
-          console.log("확인해보자33");
+        if (clientId === this.updateMain) {
+          await this.updateMainVideoStreamManager(this.publisher);
           const studentindex = await this.findIndex(this.updateMain);
           this.chatting = false;
           this.participant = true;
           this.selectinterviewee = false;
-          console.log("확인44");
+          this.commonquestion = false;
           console.log(studentindex, "55");
           this.changeToCoverLetter(["coverletter", studentindex]);
-          console.log("확인해보자66");
-        } else if (this.subscribers === true) {
+        } else if (this.subscribers) {
           this.subscribers.forEach(async sub => {
             const { clientId } = JSON.parse(sub.stream.connection.data);
+            console.log("확인111", clientId);
+
             if (clientId === this.updateMain) {
-              const studentindex = await this.findIndex(this.updateMain);
+              console.log("확인222", sub);
               await this.updateMainVideoStreamManager(sub);
+
+              console.log("확인333", this.updateMain);
+              const studentindex = await this.findIndex(this.updateMain);
+              console.log("확인해보자4444");
               this.chatting = false;
               this.participant = true;
               this.selectinterviewee = false;
+              this.commonquestion = false;
               console.log("확인");
               console.log(studentindex);
               this.changeToCoverLetter(["coverletter", studentindex]);
@@ -708,7 +748,7 @@ export default {
               insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
               mirror: true // Whether to mirror your local video or not
             });
-            // updateMainVideoStreamManager(publisher)
+            // updateMainVideoStreamManager(publisher);
             this.mainStreamManager = publisher;
             this.publisher = publisher;
 
@@ -734,7 +774,7 @@ export default {
       if (this.session) this.session.disconnect();
 
       this.session = undefined;
-      // updateMainVideoStreamManager(undefined)
+      // updateMainVideoStreamManager({});
       this.mainStreamManager = undefined;
       this.publisher = undefined;
       this.subscribers = [];
@@ -813,7 +853,37 @@ export default {
           .catch(error => reject(error.response));
       });
     },
+    // tts
 
+    async playtts(context) {
+      const url = "http://localhost:9002/ttsrequest";
+      const ttsdata = await axios.post(
+        url,
+        { text: context },
+        {
+          responseType: "arraybuffer"
+        }
+      );
+      console.log("playtts");
+      console.log(context);
+      AudioContext = window.AudioContext || window.webkitAudioContext;
+      const audioContext = new AudioContext();
+      const audioBuffer = await audioContext.decodeAudioData(ttsdata.data);
+      const audioSource = audioContext.createBufferSource();
+      audioSource.buffer = audioBuffer;
+      audioSource.connect(audioContext.destination);
+      audioSource.start();
+    },
+
+    //tts 기능 추가
+    async ttspublish(context) {
+      console.log(context);
+      this.session.signal({
+        data: context,
+        to: [],
+        type: "ttsshare"
+      });
+    },
     // 화면 공유
     async ShareScreen() {
       if (this.screenPublisher) {
@@ -821,10 +891,10 @@ export default {
         this.stopShareScreen();
       } else {
         await alert("화면공유를 시작합니다");
-        this.startShareScree();
+        this.startShareScreen();
       }
     },
-    startShareScree() {
+    startShareScreen() {
       if (this.isSharingMode) {
         return;
       }
@@ -915,34 +985,23 @@ export default {
         this.chatting = true;
         this.participant = false;
         this.selectinterviewee = false;
+        this.commonquestion = false;
       } else if (content === "participant") {
         this.chatting = false;
         this.participant = true;
         this.selectinterviewee = false;
+        this.commonquestion = false;
       } else if (content === "selectinterviewee") {
         this.chatting = false;
         this.participant = false;
         this.selectinterviewee = true;
-      }
-    },
-
-    // 사이드 패널
-    changeContent(content) {
-      console.log(content);
-      if (content === "chatting") {
-        this.chatting = true;
-        this.participant = false;
-        this.selectinterviewee = false;
-      } else if (content === "participant") {
-        this.chatting = false;
-        this.participant = true;
-        this.selectinterviewee = false;
-      } else if (content === "selectinterviewee") {
+        this.commonquestion = false;
+      } else if (content === "commonquestion") {
         this.chatting = false;
         this.participant = false;
-        this.selectinterviewee = true;
+        this.selectinterviewee = false;
+        this.commonquestion = true;
       }
-      console.log(this.selectinterviewee);
     },
 
     //메시지
@@ -985,6 +1044,11 @@ export default {
         name: "studydetail",
         params: { stdNo: this.sessionNo }
       });
+    }
+  },
+  watch: {
+    ttsrequestcontext() {
+      this.ttspublish(this.ttsrequestcontext);
     }
   },
   async created() {

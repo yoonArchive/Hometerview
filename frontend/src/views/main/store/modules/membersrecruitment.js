@@ -34,7 +34,8 @@ export default {
     applyType: state => state.applyType,
     recruitCount: state => state.recruitDetail.count,
     applyCounts: state => state.applyCounts,
-    applyingList: state => state.applyingList
+    applyingList: state => state.applyingList,
+    studySpaceNo: state => state.studySpaceNo
   },
   actions: {
     createRecruitment({ getters }, formData) {
@@ -65,8 +66,8 @@ export default {
           console.log(err.response);
         });
     },
-    bringRecruitmentList({ commit }) {
-      axios({
+    async bringRecruitmentList({ commit }) {
+      await axios({
         url: api_url.membersrecruitment.membersrecruitments(),
         method: "get"
       })
@@ -95,8 +96,8 @@ export default {
           console.log(err.response);
         });
     },
-    bringRecruitmentDetail({ commit, getters }, recruitNo) {
-      axios({
+    async bringRecruitmentDetail({ commit, getters }, recruitNo) {
+      await axios({
         url: api_url.membersrecruitment.membersrecruitment(recruitNo),
         method: "get",
         headers: getters.authHeader
