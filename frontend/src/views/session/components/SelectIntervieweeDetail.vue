@@ -14,12 +14,13 @@
       v-model="interviewUser"
       style="margin-top:1.5vh; color:#653FD3"
     />
-    &nbsp;&nbsp;&nbsp;{{ member.user.userName }} <br />
+    &nbsp;&nbsp;&nbsp;
     <img
       class="profile-photo"
       :src="require(`@/assets/images/session/profile.png`)"
-      style="box-shadow: 0px 0px 7px 1px rgba(0, 0, 0, 0.6); margin-left:4vh;"
+      style="box-shadow: 0px 0px 7px 1px rgba(0, 0, 0, 0.6); margin-left:4vh; margin-right: 10px;"
     />
+    {{ member.user.userName }}
   </label>
 </template>
 
