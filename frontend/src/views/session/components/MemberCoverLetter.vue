@@ -32,13 +32,17 @@
                   :key="idnex"
                 >
                   <div class="row" style="font-size:20px">
-                    {{ item.contents }}
-                    <img
-                      :src="
-                        require(`@/assets/images/session/exprectedQuestionTTSImg.png`)
-                      "
-                      @click="childttsrequest(item.contents)"
-                    />
+                    <div class="col-8">
+                      {{ item.contents }}
+                    </div>
+                    <div class="col">
+                      <img
+                        :src="
+                          require(`@/assets/images/session/exprectedQuestionTTSImg.png`)
+                        "
+                        @click="childttsrequest(item.contents)"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>

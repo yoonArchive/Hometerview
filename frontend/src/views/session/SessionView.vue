@@ -177,6 +177,7 @@
                         require(`@/assets/images/session/questionAnswerOn.png`)
                       "
                       @click="changeContent('commonquestion')"
+                      style="margin-top: 5%;"
                       v-if="commonquestion"
                     />
                     <img
@@ -184,6 +185,7 @@
                         require(`@/assets/images/session/questionAnswerOff.png`)
                       "
                       @click="changeContent('commonquestion')"
+                      style="margin-top: 5%;"
                       v-else
                     />
                   </div>
