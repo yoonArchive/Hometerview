@@ -12,7 +12,7 @@
           <div
             class="center interview-mode"
             style="margin-top:3vh;"
-            v-if="interviewMode"
+            v-if="screenMode === 'interview'"
           >
             <!-- 중앙 -->
             <!-- 메인 화면, 사이드 -->
@@ -114,6 +114,22 @@
                   />
                 </div>
               </div>
+              <div>
+                <div v-if="teachOnOff" class="teachable-button-on">
+                  <img
+                    :src="require(`@/assets/images/session/teach.png`)"
+                    @click="teachONOFF()"
+                    style="height:3.8vh; margin-left: 1vh; margin-top: 1.1vh;"
+                  />
+                </div>
+                <div v-else class="teachable-button-off">
+                  <img
+                    :src="require(`@/assets/images/session/teach.png`)"
+                    @click="teachONOFF()"
+                    style="height:3.8vh; margin-left:1vh; margin-top: 1.1vh;"
+                  />
+                </div>
+              </div>
               <!-- 나가기 -->
               <div>
                 <div class="leave-button">
@@ -128,20 +144,15 @@
               <!-- <div>
                 <button @click="ShareScreen()">화면 공유</button>
               </div> -->
-              <!-- 더보기 -->
-              <div>
-                <div class="add-button">
-                  <img
-                    :src="require(`@/assets/images/session/add.png`)"
-                    style="height:3.8vh; margin-left: 1vh; margin-top: 1.1vh;"
-                  />
-                </div>
-              </div>
             </div>
           </div>
 
-          <!-- 면접자 모드 헤제 또는 시작!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-          <div class="center not-interview-mode" style="margin-top:3vh;" v-else>
+          <!-- 노말 보드!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+          <div
+            class="center not-interview-mode"
+            style="margin-top:3vh;"
+            v-else-if="screenMode === 'normal'"
+          >
             <!-- 중앙 -->
             <!-- 메인 화면, 사이드 -->
 
@@ -244,8 +255,144 @@
               </div> -->
             </div>
           </div>
+
+          <!-- tts 모드 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+          <div
+            class="center interview-mode"
+            style="margin-top:3vh;"
+            v-else-if="screenMode === 'tts'"
+          >
+            <!-- 중앙 -->
+            <!-- 메인 화면, 사이드 -->
+
+            <!-- session -->
+            <!-- 면접관 사진 -->
+            <div class="video-group">
+              <div id="main-video" class="col">
+                <img
+                  :src="require('@/assets/images/session/interviewer.png')"
+                  style="height:65vh;"
+                />
+              </div>
+
+              <!-- 비디오 그룹 -->
+              <div
+                class="video-container col d-flex justify-content-center"
+                @load="showDivs(slideIndex)"
+              >
+                <img
+                  :src="require(`@/assets/images/session/left.png`)"
+                  class="slider-button-left"
+                  @click="plusDivs(-1)"
+                  style="height:4vh; margin-top:9vh;"
+                />
+                <!-- 자기화면 (작은) -->
+                <user-video
+                  class="small-video slider my-video row-md-3"
+                  :stream-manager="publisher"
+                  :mainStream="false"
+                  :interviewMode="true"
+                  @click="updateMainVideoStreamManager(publisher)"
+                  style="height:15vh;"
+                />
+                <!-- native : 상위 컴포넌트(즉 여기 있는 이벤트)를 하위 컴포넌트에서 작동시키고 싶을 때 사용한다. -->
+                <!-- vue3에서 native가 사라지고 그냥 click을 누르면 된다. -->
+                <user-video
+                  class="user-video slider row-md-3"
+                  v-for="sub in subscribers"
+                  :key="sub.stream.connection.connectionId"
+                  :stream-manager="sub"
+                  :interviewMode="true"
+                  :mainStream="false"
+                  @click="updateMainVideoStreamManager(sub)"
+                  style="height:15vh;"
+                />
+                <img
+                  :src="require(`@/assets/images/session/right.png`)"
+                  class="slider-button-right"
+                  @click="plusDivs(1)"
+                  style="height:4vh; margin-top:9vh;"
+                />
+              </div>
+            </div>
+            <div
+              class="bottom d-flex justify-content-evenly"
+              style="margin-top: 9vh;"
+            >
+              <!-- 하단 -->
+              <!-- 비디오, 오디오, leave, 더보기 -->
+              <!-- 장치 옵션 -->
+
+              <!-- 마이크 ONOFF-->
+              <div>
+                <!-- <div class="video-button"></div> -->
+                <div v-if="audioOnOff" class="mic-button-on">
+                  <img
+                    @click="audioONOFF()"
+                    :src="require(`@/assets/images/session/micOn.png`)"
+                    style="height:4vh; margin-left:1.5vh; margin-top:1vh;"
+                  />
+                </div>
+                <div v-else class="mic-button-off">
+                  <img
+                    @click="audioONOFF()"
+                    :src="require(`@/assets/images/session/micOn.png`)"
+                    style="height:4vh; margin-left:1.5vh; margin-top:1vh;"
+                  />
+                </div>
+              </div>
+
+              <!-- 비디오 ONOFF -->
+              <div>
+                <div v-if="videoOnOff" class="video-button-on">
+                  <img
+                    @click="videoONOFF()"
+                    :src="require(`@/assets/images/session/video.png`)"
+                    style="height:2.4vh; margin-left: 1.2vh; margin-top: 1.8vh;"
+                  />
+                </div>
+                <div v-else class="video-button-off">
+                  <img
+                    @click="videoONOFF()"
+                    :src="require(`@/assets/images/session/video.png`)"
+                    style="height:2.4vh; margin-left: 1.2vh; margin-top: 1.8vh;"
+                  />
+                </div>
+              </div>
+              <div>
+                <div v-if="teachOnOff" class="teachable-button-on">
+                  <img
+                    :src="require(`@/assets/images/session/teach.png`)"
+                    @click="teachONOFF()"
+                    style="height:3.8vh; margin-left: 1vh; margin-top: 1.1vh;"
+                  />
+                </div>
+                <div v-else class="teachable-button-off">
+                  <img
+                    :src="require(`@/assets/images/session/teach.png`)"
+                    @click="teachONOFF()"
+                    style="height:3.8vh; margin-left:1vh; margin-top: 1.1vh;"
+                  />
+                </div>
+              </div>
+              <!-- 나가기 -->
+              <div>
+                <div class="leave-button">
+                  <img
+                    @click="leaveSession"
+                    :src="require(`@/assets/images/session/leave.png`)"
+                    style="height:3.5vh; margin-left: 1.3vh; margin-top: 1.2vh;"
+                  />
+                </div>
+              </div>
+              <!-- 화면 공유 -->
+              <!-- <div>
+                <button @click="ShareScreen()">화면 공유</button>
+              </div> -->
+            </div>
+          </div>
         </div>
-        <div class="side-right col-md-4">
+        <div class=" side-right col-md-4">
           <!-- 사이드 -->
           <!-- 메시지, 자소서, 참가자 지정 -->
 
@@ -351,11 +498,6 @@
                   :msgs="msgs"
                   :myId="publisher.stream.connection.connectionId"
                 ></message-list>
-                <!-- <message-list
-                  :msgs="msgs"
-                  :myId="publisher.stream.connection.connectionId"
-                  :fromId="fromId"
-                ></message-list> -->
                 <message-form
                   @sendMsg="sendMsg"
                   :user-name="myUserName"
@@ -577,10 +719,9 @@ export default {
       "interviewUserFixed",
       "interviewUser",
       "ttsrequestcontext",
-
       "interviewMode",
-
-      "isTTSMode"
+      "isTTSMode",
+      "screenMode"
     ])
   },
   methods: {
@@ -592,7 +733,8 @@ export default {
       "saveRecordedFile",
       "changettsrequest",
       "changeInterviewMode",
-      "changeInterviewUser"
+      "changeInterviewUser",
+      "changeScreenMode"
     ]),
     plusDivs(n) {
       this.showDivs((this.slideIndex += n));
@@ -851,12 +993,14 @@ export default {
 
         console.log("확인해보자", this.updateMain, "이거랑", clientId);
         if (!this.updateMain) {
-          await this.changeInterviewMode(false);
+          await this.changeScreenMode("normal");
+          // await this.changeInterviewMode(false);
           await this.changeInterviewUser("");
           await this.changeContent("chatting");
           // await this.tmStop()
         } else {
-          this.changeInterviewMode(true);
+          await this.changeScreenMode("interview");
+          // this.changeInterviewMode(true);
           if (clientId === this.updateMain) {
             await this.updateMainVideoStreamManager(this.publisher);
             const studentindex = await this.findIndex(this.updateMain);
@@ -888,6 +1032,11 @@ export default {
         console.log("업데이트 확인입니다");
         console.log(event);
         console.log(this.updateMain);
+      });
+
+      // change TTS mode
+      this.session.on("signal:tts-mode", event => {
+        await this.changeScreenMode("tts");
       });
 
       // --- Connect to the session with a valid user token ---
@@ -1206,6 +1355,13 @@ export default {
         .catch(err => {
           console.log(err.response);
         });
+    },
+
+    async sendTTS() {
+      await this.session.signal({
+        to: [],
+        type: "tts-mode"
+      });
     },
 
     changeSessionId(sessionNo) {

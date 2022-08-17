@@ -7,13 +7,15 @@ export default {
     interviewUser: "",
     interviewUserFixed: "",
     posture: "",
-    interviewMode: false
+    interviewMode: false,
+    screenMode: "normal"
   },
   getters: {
     interviewUser: state => state.interviewUser,
     interviewUserFixed: state => state.interviewUserFixed,
     posture: state => state.posture,
-    interviewMode: state => state.interviewMode
+    interviewMode: state => state.interviewMode,
+    screenMode: state => state.screenMode
   },
   mutations: {
     SET_INTERVIEW_USER: (state, interviewUser) =>
@@ -22,7 +24,8 @@ export default {
       (state.interviewUserFixed = interviewUserFixed),
     SET_FIX_POSTURE: (state, posture) => (state.posture = posture),
     SET_INTERVIEW_MODE: (state, interviewMode) =>
-      (state.interviewMode = interviewMode)
+      (state.interviewMode = interviewMode),
+    SET_SCREEN_MODE: (state, screenMode) => (state.screenMode = screenMode)
   },
   actions: {
     changeInterviewUser({ commit }, interviewUser) {
@@ -57,6 +60,9 @@ export default {
     },
     changeInterviewMode({ commit }, interviewMode) {
       commit("SET_INTERVIEW_MODE", interviewMode);
+    },
+    changeScreenMode({ commit }, screenMode) {
+      commit("SET_SCREEN_MODE", screenMode);
     }
   }
 };
