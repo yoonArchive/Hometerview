@@ -211,6 +211,23 @@
                   />
                 </div>
               </div>
+              <!-- teachable button -->
+              <div>
+                <div v-if="teachOnOff" class="teachable-button-on">
+                  <img
+                    :src="require(`@/assets/images/session/teach.png`)"
+                    @click="teachONOFF()"
+                    style="height:3.8vh; margin-left: 1vh; margin-top: 1.1vh;"
+                  />
+                </div>
+                <div v-else class="teachable-button-off">
+                  <img
+                    :src="require(`@/assets/images/session/teach.png`)"
+                    @click="teachONOFF()"
+                    style="height:3.8vh; margin-left:1vh; margin-top: 1.1vh;"
+                  />
+                </div>
+              </div>
               <!-- 나가기 -->
               <div>
                 <div class="leave-button">
@@ -225,15 +242,6 @@
               <!-- <div>
                 <button @click="ShareScreen()">화면 공유</button>
               </div> -->
-              <!-- 더보기 -->
-              <div>
-                <div class="add-button">
-                  <img
-                    :src="require(`@/assets/images/session/add.png`)"
-                    style="height:3.8vh; margin-left: 1vh; margin-top: 1.1vh;"
-                  />
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -433,7 +441,13 @@
   width: 6vh;
   border-radius: 100% 100% 100% 100%;
 }
-.add-button {
+.teachable-button-on {
+  background-color: #baaaea;
+  height: 6vh;
+  width: 6vh;
+  border-radius: 100% 100% 100% 100%;
+}
+.teachable-button-off {
   background-color: #d9d9d9;
   height: 6vh;
   width: 6vh;
@@ -531,6 +545,7 @@ export default {
       audioOnOff: true,
       mirrorOnOff: true,
       recordOnOff: false,
+      teachOnOff: false,
 
       //scree share
       screenOV: undefined,
@@ -760,6 +775,19 @@ export default {
       this.publisher.publishAudio(!this.audioOnOff);
       this.audioOnOff = !this.audioOnOff;
     },
+    teachONOFF() {
+      if (this.teachOnOff) {
+        //stop
+        this.tmStop();
+        this.teachOnOff = !this.teachOnOff;
+        console.log(this.teachOnOff);
+      } else {
+        //start
+        this.init();
+        this.teachOnOff = !this.teachOnOff;
+        console.log(this.teachOnOff);
+      }
+    },
     // mirrorONOFF(){
     // 	this.publisher.publishVideo(!this.mirrorOnOff);
     // 	this.mirrorOnOff = !this.mirrorOnOff;
@@ -793,7 +821,6 @@ export default {
       });
 
       this.session.on("signal:my-chat", event => {
-        // this.fromId = event.from.connectionId;
         const tmp = this.msgs.slice();
         tmp.push({
           fromId: event.from.connectionId,
@@ -805,22 +832,12 @@ export default {
         this.playtts(ttsdata.data);
       });
 
-      // this.session.on("signal:my-chat", event => {
-      //   this.fromId = event.from.connectionId;
-      //   const tmp = this.msgs.slice();
-      //   tmp.push(event.data);
-      //   this.msgs = tmp;
-      // });
-
       // update
       await this.session.on("signal:main-update", async event => {
         this.updateMain = await event.data;
         const { clientId } = await JSON.parse(
           this.publisher.stream.connection.data
         );
-        //      <!-- teachable machine -->
-        // <button type="button" @click="init()">Start</button> ==> 해당 담당자에게
-        // <button type="button" @click="tmStop()">Stop</button>
 
         console.log("확인해보자", this.updateMain, "이거랑", clientId);
         if (!this.updateMain) {
