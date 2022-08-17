@@ -38,7 +38,8 @@ export default {
     };
   },
   props: {
-    userName: String
+    userName: String,
+    userImg: String
   },
   methods: {
     submitForm() {
@@ -46,6 +47,7 @@ export default {
       if (msg != "") {
         const string = JSON.stringify({
           userName: this.userName,
+          userImg: this.userImg,
           msg: msg
         });
         this.$emit("sendMsg", string);

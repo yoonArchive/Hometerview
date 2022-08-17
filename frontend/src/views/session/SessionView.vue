@@ -504,6 +504,7 @@
                 <message-form
                   @sendMsg="sendMsg"
                   :user-name="myUserName"
+                  :user-img="myUserImg"
                 ></message-form>
               </div>
             </div>
@@ -650,6 +651,7 @@ export default {
       userType: "",
       mySessionId: ``,
       myUserName: "",
+      myUserImg: "",
       myUserId: "",
       myJoinType: "",
       clientType: "",
@@ -1412,6 +1414,7 @@ export default {
   async beforeMount() {
     this.myUserName = await this.currentUser.userName;
     this.myUserId = await this.currentUser.userId;
+    this.myUserImg = await this.currentUser.userImg;
     this.myJoinType = await this.studySpaceDetail.joinType;
     console.log("this.myUserId : ", this.myUserId);
     this.mySessionId = await this.changeSessionId(this.sessionNo);
