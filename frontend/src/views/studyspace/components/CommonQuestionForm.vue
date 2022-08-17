@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container" style="margin-top:1vh;">
     <form @submit.prevent="onSubmit" class="comment-list-form">
       <!-- <input class="comment-input" type="textarea"  v-model="content" required> -->
       <div id="check">
@@ -98,12 +98,23 @@ export default {
   display: flex;
   flex-direction: row;
 }
+.form-control {
+  border-radius: 0.6vh;
+}
 .bubbly-button {
   width: 100px;
-  border-radius: 10px;
+  border-radius: 0.6vh;
+  background-color: #f6f2ff;
+  color: #383561;
+  box-shadow: 0px 0px 7px 1px rgb(0 0 0 / 20%);
+  border: 0.3vh solid #9c7bfd;
 }
 .container {
   display: flex;
   justify-content: center;
+}
+.form-check-input:checked {
+  background-color: #6a46d1;
+  border-color: #6a46d1;
 }
 </style>
