@@ -1,5 +1,11 @@
 <template>
-  <div class="box sb2" @click="playttsquestion(question.contents)">
+  <div
+    class="bubble-empty-box border-blue"
+    style="margin-top: 20px"
+    @click="playttsquestion(question.contents)"
+  >
+    <template v-if="question.questionType == 'JOB'">[직무]</template>
+    <template v-else>[인성]</template>
     {{ question.contents }}
   </div>
 </template>
@@ -33,11 +39,51 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+.bubble-empty-box {
+  position: relative;
+
+  border: 2px solid #f90;
+  border-radius: 5px;
+  width: 80%;
+  height: auto;
+  line-height: 46px;
+  text-align: center;
+  font-size: 20px;
+  color: #f90;
+  &::before {
+    position: absolute;
+    left: 0%;
+    top: 50%;
+    margin: -5px 0 0 -12px;
+    border: 5px solid transparent;
+    border-right-color: #f90;
+    content: "";
+  }
+  &::after {
+    position: absolute;
+    left: 0%;
+    top: 50%;
+    margin-top: -4px;
+    margin-left: -8px;
+    border: 4px solid transparent;
+    border-right-color: #fff;
+    content: "";
+  }
+}
+
+.border-blue {
+  border-color: #653fd3;
+  color: #653fd3;
+  &::before {
+    border-right-color: #653fd3;
+  }
+}
 .box {
   width: 80%;
   margin: 20px auto;
-  background: #653fd3;
+  background: #f0ebff;
+  border: #653fd3 1.5px solid;
   padding: 20px;
   text-align: center;
   font-weight: 900;

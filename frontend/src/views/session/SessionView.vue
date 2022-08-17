@@ -47,7 +47,6 @@
                   :stream-manager="publisher"
                   :mainStream="false"
                   :interviewMode="true"
-                  :checkId="myUserId"
                   @click="updateMainVideoStreamManager(publisher)"
                   style="height:15vh;"
                 />
@@ -295,7 +294,6 @@
                   :stream-manager="publisher"
                   :mainStream="false"
                   :interviewMode="true"
-                  :checkId="myUserId"
                   @click="updateMainVideoStreamManager(publisher)"
                   style="height:15vh;"
                 />
@@ -1048,6 +1046,7 @@ export default {
       });
 
       // change TTS mode
+
       this.session.on("signal:tts-mode", async event => {
         console.log("tts-mode 확인!!!!!!");
         console.log(event.data);
