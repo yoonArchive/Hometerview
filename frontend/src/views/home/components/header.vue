@@ -222,6 +222,8 @@ a {
 .profile-img {
   height: 40px;
   margin-left: 30px;
+  border-radius: 70%;
+  overflow: hidden;
 }
 .route-active #title {
   color: #653fd3;
