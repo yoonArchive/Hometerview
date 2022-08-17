@@ -2,13 +2,18 @@
   <!-- 가능한 빨리 재생을 시작하는 video속성 -->
   <video v-if="mainStream && interviewMode" class="main col-12" autoplay />
   <video
-    v-else-if="!mainStream && checkId === clientId"
+    v-else-if="!mainStream && interviewMode && checkId === clientId"
     class="sub-me"
     autoplay
   />
   <video
     v-else-if="!mainStream && interviewMode && checkId !== clientId"
     class="sub"
+    autoplay
+  />
+  <video
+    v-else-if="!nterviewMode && checkId === clientId"
+    class="not-interview-mode"
     autoplay
   />
   <video v-else-if="!interviewMode" class="not-interview-mode" autoplay />
@@ -100,7 +105,7 @@ export default {
   max-height: calc(100vh - 6rem);
   max-width: 100%;
   width: fit-content;
-  height: 23vh;
+  height: 25vh;
   display: block;
   /* border: solid #8c1d1d 3px; */
   background-color: black;
