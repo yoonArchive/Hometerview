@@ -18,12 +18,16 @@ export default {
     return {};
   },
   computed: {
-    ...mapGetters([])
+    ...mapGetters(["isTTSMode"])
   },
   methods: {
     ...mapActions(["changettsrequest"]),
     playttsquestion(data) {
-      this.changettsrequest(data);
+      if (this.isTTSMode) {
+        this.changettsrequest(data);
+      } else {
+        alert("TTS 모드를 켜주세요!");
+      }
     }
   }
 };
