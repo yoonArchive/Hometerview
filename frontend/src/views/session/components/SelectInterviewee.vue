@@ -10,12 +10,8 @@
             :member="member"
             :studentindex="index"
           ></select-interviewee-detail>
-          <div class="buttons">
-            <div>
-              <button>Apply</button>
-            </div>
-          </div>
         </div>
+        <button>Apply</button>
       </form>
     </div>
     <button @click="intervieweeCancel()">인터뷰모드 해제</button>
