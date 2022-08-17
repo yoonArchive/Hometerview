@@ -1,6 +1,7 @@
 <template>
   <div class="container">
-    <button class="TTS-mode-btn" @click="changeTTSModevue">TTS 모드</button>
+    <button class="TTS-mode-btn" @click="changeTTSModevue()">TTS 모드</button>
+
     <common-question-item
       v-for="(question, index) in commonQuestions.commonQuestions"
       :key="index"
@@ -25,12 +26,13 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["commonQuestions"])
+    ...mapGetters(["commonQuestions", "isTTSMode"])
   },
   methods: {
     ...mapActions(["getStd", "changeTTSMode"]),
     changeTTSModevue() {
       this.changeTTSMode();
+      this.$emit("sendTTS");
     }
   },
   created() {
