@@ -33,9 +33,16 @@
                 >
                   <div class="row" style="font-size:20px">
                     {{ item.contents }}
-                  </div>
 
-                  <button @click="childttsrequest(item.contents)">tts!!</button>
+                    <!-- <div class="col">
+                      <img
+                        :src="
+                          require(`@/assets/images/session/exprectedQuestionTTSImg.png`)
+                        "
+                        @click="childttsrequest(item.contents)"
+                      />
+                    </div> -->
+                  </div>
                 </div>
               </div>
             </div>

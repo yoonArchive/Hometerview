@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <button class="TTS-mode-btn" @click="changeTTSModevue">TTS 모드</button>
     <common-question-item
       v-for="(question, index) in commonQuestions.commonQuestions"
       :key="index"
@@ -27,7 +28,10 @@ export default {
     ...mapGetters(["commonQuestions"])
   },
   methods: {
-    ...mapActions(["getStd"])
+    ...mapActions(["getStd", "changeTTSMode"]),
+    changeTTSModevue() {
+      this.changeTTSMode();
+    }
   },
   created() {
     this.getStd;
@@ -36,6 +40,11 @@ export default {
 </script>
 
 <style scoped>
+.TTS-mode-btn {
+  border: 1px #653fd3 solid;
+  background-color: #f0ebff;
+  border-radius: 5px;
+}
 .container {
   background: #ffff;
   overflow: scroll;

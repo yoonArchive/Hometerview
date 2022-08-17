@@ -292,15 +292,22 @@
                     />
                   </div>
                   <div class="col" style="margin:0; padding:0;">
-                    <button
+                    <img
+                      :src="
+                        require(`@/assets/images/session/questionAnswerOn.png`)
+                      "
                       @click="changeContent('commonquestion')"
+                      style="margin-top: 5%;"
                       v-if="commonquestion"
-                    >
-                      공통질문on
-                    </button>
-                    <button @click="changeContent('commonquestion')" v-else>
-                      공통질문off
-                    </button>
+                    />
+                    <img
+                      :src="
+                        require(`@/assets/images/session/questionAnswerOff.png`)
+                      "
+                      @click="changeContent('commonquestion')"
+                      style="margin-top: 5%;"
+                      v-else
+                    />
                   </div>
                 </div>
                 <div>
@@ -555,7 +562,10 @@ export default {
       "interviewUserFixed",
       "interviewUser",
       "ttsrequestcontext",
-      "interviewMode"
+
+      "interviewMode",
+
+      "isTTSMode"
     ])
   },
   methods: {
@@ -1195,6 +1205,9 @@ export default {
     ttsrequestcontext() {
       console.log("이게 많이 실행되나?");
       this.ttspublish(this.ttsrequestcontext);
+    },
+    isTTSMode() {
+      /** tts모드 바뀔때 실행되는 메소드 */
     }
   },
   async created() {
