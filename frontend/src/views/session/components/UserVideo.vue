@@ -6,6 +6,7 @@
       :stream-manager="streamManager"
       :mainStream="mainStream"
       :interviewMode="interviewMode"
+      :checkId="checkId"
     />
   </div>
 </template>
@@ -22,7 +23,8 @@ export default {
   props: {
     streamManager: Object,
     mainStream: Boolean,
-    interviewMode: Boolean
+    interviewMode: Boolean,
+    checkId: String
   },
   computed: {
     clientData() {

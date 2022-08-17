@@ -1,7 +1,16 @@
 <template>
   <!-- 가능한 빨리 재생을 시작하는 video속성 -->
   <video v-if="mainStream && interviewMode" class="main col-12" autoplay />
-  <video v-else-if="!mainStream && interviewMode" class="sub" autoplay />
+  <video
+    v-else-if="!mainStream && checkId === clientId"
+    class="sub-me"
+    autoplay
+  />
+  <video
+    v-else-if="!mainStream && interviewMode && checkId !== clientId"
+    class="sub"
+    autoplay
+  />
   <video v-else-if="!interviewMode" class="not-interview-mode" autoplay />
 </template>
 
@@ -12,7 +21,8 @@ export default {
   props: {
     streamManager: Object,
     mainStream: Boolean,
-    interviewMode: Boolean
+    interviewMode: Boolean,
+    checkId: String
   },
   emits: [],
   data() {
@@ -20,10 +30,10 @@ export default {
   },
   computed: {
     ...mapGetters(["posture"]),
-    clientData() {
+    clientId() {
       // 이름 띄우기
-      const { clientData } = this.getConnectionData();
-      return clientData;
+      const { clientId } = this.getConnectionData();
+      return clientId;
     }
   },
   methods: {
@@ -59,14 +69,26 @@ export default {
   margin-right: auto;
 }
 .sub {
-  /* width: 320px; */
-
   aspect-ratio: 4/3;
   max-height: calc(100vh - 6rem);
   max-width: 100%;
   width: fit-content;
   height: 23vh;
   display: block;
+  /* border: solid #8c1d1d 3px; */
+  background-color: black;
+  border-radius: 1.2rem;
+  object-fit: cover;
+  align-self: center;
+}
+.sub-me {
+  aspect-ratio: 4/3;
+  max-height: calc(100vh - 6rem);
+  max-width: 100%;
+  width: fit-content;
+  height: 23vh;
+  display: block;
+  border: solid v-bind(posture) 3px;
   /* border: solid #8c1d1d 3px; */
   background-color: black;
   border-radius: 1.2rem;
