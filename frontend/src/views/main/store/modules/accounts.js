@@ -87,7 +87,7 @@ export default {
           console.log(err);
         });
     },
-    updateUser({ dispatch, getters }, credentials) {
+    async updateUser({ dispatch, getters }, credentials) {
       console.log(credentials);
       const formData = new FormData();
       formData.append("multipartFile", credentials.userImg);
@@ -99,7 +99,7 @@ export default {
       for (let value of formData.values()) {
         console.log(value);
       }
-      axios
+      await axios
         .put(api_url.accounts.updateUser(), formData, {
           headers: {
             Authorization: getters.authHeader.Authorization,
@@ -108,7 +108,10 @@ export default {
         })
         .then(data => {
           console.log(data);
-          dispatch("logout");
+          dispatch("fetchCurrentUser");
+          window.location.reload();
+          window.location.reload();
+          window.location.reload();
         })
         .catch(err => {
           console.log(err);

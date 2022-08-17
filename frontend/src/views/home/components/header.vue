@@ -76,7 +76,7 @@ export default {
   data() {
     return {
       imagesrc: require("../../../assets/images/hometerview.png"),
-      profile: require("../../../assets/images/profile.png"),
+      profile: "",
       isLoggedIn: computed(() => store.getters.isLoggedIn)
     };
   },
@@ -87,14 +87,28 @@ export default {
     ...mapActions(["updateUser", "fetchCurrentUser"]),
     async refreshsetting() {
       await this.fetchCurrentUser();
-      await this.setting();
+      console.log(currentUser);
+      // await this.setting();
+
+      // this.profile = this.currentUser.userImg;
     }
   },
   mounted() {
-    this.refreshsetting();
+    // this.refreshsetting();
+    // this.fetchCurrentUser();
+    // if (this.currentUser.userImg == null) {
+    //   this.profile = require("../../../assets/images/profile.png");
+    // } else {
+    //   this.profile = this.currentUser.userImg;
+    // }
   },
-  created() {
-    this.refreshsetting();
+  async created() {
+    // await this.refreshsetting();
+    if (this.currentUser.userImg == null) {
+      this.profile = require("../../../assets/images/profile.png");
+    } else {
+      this.profile = this.currentUser.userImg;
+    }
   },
   setup() {
     const store = useStore();
@@ -209,6 +223,8 @@ a {
 .profile-img {
   height: 40px;
   margin-left: 30px;
+  border-radius: 70%;
+  overflow: hidden;
 }
 .route-active #title {
   color: #653fd3;

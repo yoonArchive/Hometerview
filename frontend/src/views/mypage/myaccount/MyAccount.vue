@@ -51,7 +51,19 @@
       <div class="wrap">
         <div class="form-item">
           <label class="content">프로필 사진</label>
-          <input type="file" placeholder="파일을 선택해주세요." />
+        </div>
+        <div>
+          <img class="profile-img mb-3" :src="profile" alt="" />
+          <input
+            type="file"
+            ref="inputImage"
+            id="imgUpload"
+            @change="imageSelect()"
+            multiple
+            style="display:none;"
+            placeholder="파일을 선택해주세요."
+          />
+          <label id="change-img" for="imgUpload">이미지 변경</label>
         </div>
         <div id="name" class="form-item">
           <label class="content">이름</label>
@@ -91,8 +103,10 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
+import diary from "../../myinterview/diary/diary.vue";
 
 export default {
+  components: { diary },
   data() {
     return {
       userdata: {
@@ -100,7 +114,8 @@ export default {
         userName: "",
         userEmail: "",
         userImg: File
-      }
+      },
+      profile: ""
     };
   },
 
@@ -109,6 +124,9 @@ export default {
   },
   methods: {
     ...mapActions(["updateUser", "fetchCurrentUser"]),
+    imageSelect() {
+      this.userdata.userImg = this.$refs.inputImage.files[0];
+    },
     inFileChange(e) {
       console.log(e);
       var file = e.target.files || e.dataTranfer.files;
@@ -145,6 +163,11 @@ export default {
     async refreshsetting() {
       await this.fetchCurrentUser();
       await this.setting();
+      if (this.currentUser.userImg == null) {
+        this.profile = require("../../../assets/images/profile.png");
+      } else {
+        this.profile = this.currentUser.userImg;
+      }
     }
   },
   mounted() {
@@ -157,6 +180,15 @@ export default {
 </script>
 
 <style scoped>
+.change-img {
+  border-color: #444;
+}
+.profile-img {
+  height: 120px;
+  margin-left: 5px;
+  border-radius: 70%;
+  overflow: hidden;
+}
 .wrap {
   display: flex;
   flex-direction: column;

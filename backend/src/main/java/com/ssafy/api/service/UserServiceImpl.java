@@ -27,18 +27,14 @@ public class UserServiceImpl implements UserService {
     @Autowired
     PasswordEncoder passwordEncoder;
 
-    String uploadPath = "C:\\intervenience";
+//    String uploadPath = "C:\\intervenience";
+//
+//    String uploadFolder = "userProfile";
 
-    String uploadFolder = "userProfile";
+    String uploadFolder = "profileImg";
 
-    /*String uploadFolder = "upload";
+    String uploadPath = "/home" + File.separator + "ubuntu" + File.separator + "HOMETERVIEW" +  File.separator + "Image";
 
-    String uploadPath = "/home" + File.separator + "ubuntu" + File.separator + "S05P13A204"
-            + File.separator + "backend"
-            + File.separator + "src"
-            + File.separator + "main"
-            + File.separator + "resources"
-            + File.separator + "static";*/
 
     @Override
     public void createUser(UserRegisterPostReq userRegisterInfo) {
@@ -124,8 +120,8 @@ public class UserServiceImpl implements UserService {
                 File destFile = new File(uploadPath + File.separator + uploadFolder + File.separator + destFileName);
                 destFile.getParentFile().mkdirs();
                 multipartFile.transferTo(destFile);
-                // String fileUrl = "https://i7b105.p.ssafy.io:8080/static/" + uploadFolder + "/" + destFileName;
-                String fileUrl = uploadPath + "/" + uploadFolder + "/" + destFileName;
+                String fileUrl = "https://i7b105.p.ssafy.io/HOMETERVIEW/Image/" + uploadFolder + "/" + destFileName;
+                //String fileUrl = uploadPath + "/" + uploadFolder + "/" + destFileName;
                 user.updateUserImg(fileUrl);
                 return 1;
             }
