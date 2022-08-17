@@ -54,9 +54,11 @@ export default {
 }
 .commonQ {
   padding: 90px;
+  height: 10px;
   height: 100%;
-  max-height: 600px;
+  max-height: 650px;
   overflow-y: auto;
+  width: 1200px;
 }
 .commonQ::-webkit-scrollbar {
   width: 10px;
@@ -74,6 +76,8 @@ export default {
 }
 .container {
   display: flex;
+  text-align: center;
+  align-items: center;
 }
 .comments-from {
   padding: 70px;
