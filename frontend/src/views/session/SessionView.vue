@@ -1180,7 +1180,7 @@ export default {
     // tts
 
     async playtts(context) {
-      const url = "http://localhost:9002/ttsrequest";
+      const url = "https://i7b105.p.ssafy.io/tts/ttsrequest";
       const ttsdata = await axios.post(
         url,
         { text: context },
