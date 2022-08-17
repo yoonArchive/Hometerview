@@ -8,7 +8,12 @@
 
       <div class="con d-flex justify-content-between row">
         <div class="side-left col-md-8">
-          <div class="center" style="margin-top:3vh;">
+          <!-- 면접자 모드!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+          <div
+            class="center interview-mode"
+            style="margin-top:3vh;"
+            v-if="interviewMode"
+          >
             <!-- 중앙 -->
             <!-- 메인 화면, 사이드 -->
 
@@ -19,6 +24,7 @@
                 <user-video
                   class="large-video"
                   :stream-manager="mainStreamManager"
+                  :interviewMode="true"
                   :mainStream="true"
                   style="height:65vh;"
                 />
@@ -40,6 +46,7 @@
                   class="small-video slider my-video row-md-3"
                   :stream-manager="publisher"
                   :mainStream="false"
+                  :interviewMode="true"
                   @click="updateMainVideoStreamManager(publisher)"
                   style="height:15vh;"
                 />
@@ -50,6 +57,7 @@
                   v-for="sub in subscribers"
                   :key="sub.stream.connection.connectionId"
                   :stream-manager="sub"
+                  :interviewMode="true"
                   :mainStream="false"
                   @click="updateMainVideoStreamManager(sub)"
                   style="height:15vh;"
@@ -60,15 +68,6 @@
                   @click="plusDivs(1)"
                   style="height:4vh; margin-top:9vh;"
                 />
-
-                <!-- <button
-                  class="slider-button-left"
-                  @click="plusDivs(-1)"
-                ></button>
-                <button
-                  class="slider-button-right"
-                  @click="plusDivs(1)"
-                ></button> -->
               </div>
             </div>
             <div
@@ -96,8 +95,6 @@
                     style="height:4vh; margin-left:1.5vh; margin-top:1vh;"
                   />
                 </div>
-                <!-- <button v-if="audioOnOff" @click="audioONOFF()">오디오ON</button>
-                <button v-else @click="audioONOFF()">오디오OFF</button> -->
               </div>
 
               <!-- 비디오 ONOFF -->
@@ -116,8 +113,103 @@
                     style="height:2.4vh; margin-left: 1.2vh; margin-top: 1.8vh;"
                   />
                 </div>
-                <!-- <button v-if="videoOnOff" @click="videoONOFF()">비디오ON</button>
-                <button v-else @click="videoONOFF()">비디오OFF</button> -->
+              </div>
+              <!-- 나가기 -->
+              <div>
+                <div class="leave-button">
+                  <img
+                    @click="leaveSession"
+                    :src="require(`@/assets/images/session/leave.png`)"
+                    style="height:3.5vh; margin-left: 1.3vh; margin-top: 1.2vh;"
+                  />
+                </div>
+              </div>
+              <!-- 화면 공유 -->
+              <!-- <div>
+                <button @click="ShareScreen()">화면 공유</button>
+              </div> -->
+              <!-- 더보기 -->
+              <div>
+                <div class="add-button">
+                  <img
+                    :src="require(`@/assets/images/session/add.png`)"
+                    style="height:3.8vh; margin-left: 1vh; margin-top: 1.1vh;"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 면접자 모드 헤제 또는 시작!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+          <div class="center not-interview-mode" style="margin-top:3vh;" v-else>
+            <!-- 중앙 -->
+            <!-- 메인 화면, 사이드 -->
+
+            <!-- session -->
+            <div class="video-group">
+              <!-- 비디오 그룹 -->
+              <div class="video-container row d-flex justify-content-center">
+                <!-- 자기화면 (작은) -->
+                <user-video
+                  class="small-video my-video col-3"
+                  :stream-manager="publisher"
+                  :mainStream="false"
+                  :interviewMode="false"
+                  style="height:24vh;"
+                />
+                <user-video
+                  class="user-video col-3"
+                  v-for="sub in subscribers"
+                  :key="sub.stream.connection.connectionId"
+                  :stream-manager="sub"
+                  :mainStream="false"
+                  :interviewMode="false"
+                  style="height:24vh;"
+                />
+              </div>
+            </div>
+            <div
+              class="bottom d-flex justify-content-evenly"
+              style="margin-top: 9vh;"
+            >
+              <!-- 하단 -->
+              <!-- 비디오, 오디오, leave, 더보기 -->
+              <!-- 장치 옵션 -->
+
+              <!-- 마이크 ONOFF-->
+              <div>
+                <!-- <div class="video-button"></div> -->
+                <div v-if="audioOnOff" class="mic-button-on">
+                  <img
+                    @click="audioONOFF()"
+                    :src="require(`@/assets/images/session/micOn.png`)"
+                    style="height:4vh; margin-left:1.5vh; margin-top:1vh;"
+                  />
+                </div>
+                <div v-else class="mic-button-off">
+                  <img
+                    @click="audioONOFF()"
+                    :src="require(`@/assets/images/session/micOn.png`)"
+                    style="height:4vh; margin-left:1.5vh; margin-top:1vh;"
+                  />
+                </div>
+              </div>
+              <!-- 비디오 ONOFF -->
+              <div>
+                <div v-if="videoOnOff" class="video-button-on">
+                  <img
+                    @click="videoONOFF()"
+                    :src="require(`@/assets/images/session/video.png`)"
+                    style="height:2.4vh; margin-left: 1.2vh; margin-top: 1.8vh;"
+                  />
+                </div>
+                <div v-else class="video-button-off">
+                  <img
+                    @click="videoONOFF()"
+                    :src="require(`@/assets/images/session/video.png`)"
+                    style="height:2.4vh; margin-left: 1.2vh; margin-top: 1.8vh;"
+                  />
+                </div>
               </div>
               <!-- 나가기 -->
               <div>
@@ -181,7 +273,11 @@
                       style="margin-top:5%; height:4.8vh"
                     />
                   </div>
-                  <div class="col" style="margin:0; padding:0;">
+                  <div
+                    class="col"
+                    style="margin:0; padding:0;"
+                    v-if="myJoinType === 'LEADER'"
+                  >
                     <img
                       :src="require(`@/assets/images/session/memberOn.png`)"
                       @click="changeContent('selectinterviewee')"
@@ -212,6 +308,7 @@
                     <div
                       class="col"
                       style="margin:0; padding:0; margin-right:0.5vh;"
+                      v-if="myJoinType === 'LEADER'"
                     >
                       <img
                         :src="require(`@/assets/images/session/videoOn.png`)"
@@ -388,6 +485,7 @@ export default {
       mySessionId: ``,
       myUserName: "",
       myUserId: "",
+      myJoinType: "",
       clientType: "",
       OV: undefined,
       session: undefined,
@@ -443,8 +541,11 @@ export default {
       screenOvToken: null,
       isSharingMode: false,
 
-      //slider
+      // slider
       slideIndex: 1
+
+      // interview mode
+      // interviewMode: false
     };
   },
   computed: {
@@ -453,7 +554,8 @@ export default {
       "studySpaceDetail",
       "interviewUserFixed",
       "interviewUser",
-      "ttsrequestcontext"
+      "ttsrequestcontext",
+      "interviewMode"
     ])
   },
   methods: {
@@ -462,9 +564,10 @@ export default {
       "changeToCoverLetter",
       "needToFixPosture",
       "stopToFixPosture",
-
       "saveRecordedFile",
-      "changettsrequest"
+      "changettsrequest",
+      "changeInterviewMode",
+      "changeInterviewUser"
     ]),
     plusDivs(n) {
       this.showDivs((this.slideIndex += n));
@@ -669,6 +772,7 @@ export default {
       this.session.on("streamCreated", ({ stream }) => {
         const subscriber = this.session.subscribe(stream);
         this.subscribers.push(subscriber);
+        this.plusDivs(0);
       });
 
       // On every Stream destroyed...
@@ -714,38 +818,44 @@ export default {
         const { clientId } = await JSON.parse(
           this.publisher.stream.connection.data
         );
+        //      <!-- teachable machine -->
+        // <button type="button" @click="init()">Start</button> ==> 해당 담당자에게
+        // <button type="button" @click="tmStop()">Stop</button>
+
         console.log("확인해보자", this.updateMain, "이거랑", clientId);
+        if (!this.updateMain) {
+          await this.changeInterviewMode(false);
+          await this.changeInterviewUser("");
+          await this.changeContent("chatting");
+          // await this.tmStop()
+        } else {
+          this.changeInterviewMode(true);
+          if (clientId === this.updateMain) {
+            await this.updateMainVideoStreamManager(this.publisher);
+            const studentindex = await this.findIndex(this.updateMain);
+            await this.changeContent("participant");
+            await this.changeToCoverLetter(["coverletter", studentindex]);
+            await this.plusDivs(0);
+            // await this.init()
 
-        if (clientId === this.updateMain) {
-          await this.updateMainVideoStreamManager(this.publisher);
-          const studentindex = await this.findIndex(this.updateMain);
-          this.chatting = false;
-          this.participant = true;
-          this.selectinterviewee = false;
-          this.commonquestion = false;
-          console.log(studentindex, "55");
-          this.changeToCoverLetter(["coverletter", studentindex]);
-        } else if (this.subscribers) {
-          this.subscribers.forEach(async sub => {
-            const { clientId } = JSON.parse(sub.stream.connection.data);
-            console.log("확인111", clientId);
-
-            if (clientId === this.updateMain) {
-              console.log("확인222", sub);
-              await this.updateMainVideoStreamManager(sub);
-
-              console.log("확인333", this.updateMain);
-              const studentindex = await this.findIndex(this.updateMain);
-              console.log("확인해보자4444");
-              this.chatting = false;
-              this.participant = true;
-              this.selectinterviewee = false;
-              this.commonquestion = false;
-              console.log("확인");
-              console.log(studentindex);
-              this.changeToCoverLetter(["coverletter", studentindex]);
-            }
-          });
+            // this.chatting = false;
+            // this.participant = true;
+            // this.selectinterviewee = false;
+            // this.commonquestion = false;
+          } else if (this.subscribers) {
+            this.subscribers.forEach(async sub => {
+              const { clientId } = JSON.parse(sub.stream.connection.data);
+              if (clientId === this.updateMain) {
+                await this.updateMainVideoStreamManager(sub);
+                const studentindex = await this.findIndex(this.updateMain);
+                await this.changeContent("participant");
+                await this.changeToCoverLetter(["coverletter", studentindex]);
+                await this.plusDivs(0);
+                // send함수를 하나 더 만들어서 그 사람한테만 signal이 갈 수 있게끔 만들어주면 될듯?
+                // 즉 다른 on 함수를 만드는게 좋을듯 => 이때 apply버튼을 누르면 실행되게끔 select view에서 로직 구현
+              }
+            });
+          }
         }
 
         console.log("업데이트 확인입니다");
@@ -1095,6 +1205,7 @@ export default {
   async beforeMount() {
     this.myUserName = await this.currentUser.userName;
     this.myUserId = await this.currentUser.userId;
+    this.myJoinType = await this.studySpaceDetail.joinType;
     console.log("this.myUserId : ", this.myUserId);
     this.mySessionId = await this.changeSessionId(this.sessionNo);
     await this.joinSession();

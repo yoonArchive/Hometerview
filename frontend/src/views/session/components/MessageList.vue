@@ -71,12 +71,16 @@ export default {
   height: 85vh;
 }
 .container::-webkit-scrollbar {
-  width: 10px;
+  width: 1vh;
 }
 .container::-webkit-scrollbar-track {
-  background-color: grey;
+  background-color: #e5e5e5;
+  border-radius: 1vh;
 }
 .container::-webkit-scrollbar-thumb {
-  background-color: #2f3542;
+  background-color: #afa8ba;
+  border-radius: 1vh;
+  background-clip: padding-box;
+  border: 0.3vh solid transparent;
 }
 </style>
