@@ -454,7 +454,7 @@
                         require(`@/assets/images/session/questionAnswerOn.png`)
                       "
                       @click="changeContent('commonquestion')"
-                      style="margin-top: 5%;"
+                      style="margin-top: 0.8vh; height:4.5vh;"
                       v-if="commonquestion"
                     />
                     <img
@@ -462,13 +462,16 @@
                         require(`@/assets/images/session/questionAnswerOff.png`)
                       "
                       @click="changeContent('commonquestion')"
-                      style="margin-top: 5%;"
+                      style="margin-top: 0.8vh; margin-left:0.3vh; height:4.5vh;"
                       v-else
                     />
                   </div>
                 </div>
                 <div>
-                  <div class="row" style="margin-right:3.5vh; margin-top:1vh;">
+                  <div
+                    class="row"
+                    style="margin-right:3.5vh; margin-top:1.2vh;"
+                  >
                     <div
                       class="col"
                       style="margin:0; padding:0; margin-right:0.5vh;"
@@ -486,8 +489,6 @@
                         @click="recordONOFF()"
                         v-else
                       />
-                      <!-- <button type="button" @click="start()">녹화시작</button>
-                      <button type="button" @click="stop()">녹화중단</button> -->
                     </div>
                   </div>
                 </div>

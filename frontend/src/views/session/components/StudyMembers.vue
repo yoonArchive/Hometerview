@@ -57,17 +57,6 @@ export default {
   },
   methods: {
     ...mapActions(["getStudyResume", "changeToCoverLetter"])
-    // async changeToCoverLetter(content){
-    //   if(content==="coverletter"){
-    //     await this.getStudyResume(this.studentindex)
-    //     this.coverletter = true
-    //     this.memberlist = false
-    //   }
-    //   else if(content==="memberlist"){
-    //     this.coverletter = false
-    //     this.memberlist = true
-    //   }
-    // }
   }
 };
 </script>
@@ -77,14 +66,18 @@ export default {
   border-radius: 100%;
   background-color: #c4c1c9;
   margin-left: 4vh;
+  height: 6vh;
 }
 .resume {
   margin-right: 4.5vh;
   margin-top: 3.5vh;
   border-radius: 1vh;
+  height: 5.5;
 }
 .memeber {
   margin-top: 3vh;
   margin-bottom: 3vh;
+  font-weight: 600;
+  color: #39344a;
 }
 </style>

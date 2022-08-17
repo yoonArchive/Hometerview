@@ -1,7 +1,6 @@
 <template>
   <div class="container select-member">
     <!-- interviewee :{{ interviewUser }} <br /> -->
-
     <div>
       <div
         v-for="(member, index) in studySpaceDetail.studyJoins"
@@ -23,7 +22,21 @@
           </button>
         </div>
       </div>
-    </div>
+
+    <!-- <div class="d-flex justify-content-center">
+      <form @submit.prevent="intervieweeApply()">
+        <div>
+          <select-interviewee-detail
+            v-for="(member, index) in studySpaceDetail.studyJoins"
+            :key="member.joinNo"
+            :member="member"
+            :studentindex="index"
+          ></select-interviewee-detail>
+        </div>
+        <button>Apply</button>
+      </form>
+
+    </div> -->
   </div>
 </template>
 
