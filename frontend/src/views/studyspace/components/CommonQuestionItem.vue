@@ -12,29 +12,24 @@
 
       <div class="comment-body">
         <div class="text">
-          <div v-if="commonquestion.questionType == 'JOB'">
+          <p v-if="commonquestion.questionType == 'JOB'">
             {{ commonquestion.questionNo }}. 직무 면접
-            <span v-if="currentUser.userId === userId && !isEditing">
-              <!-- <button @click="switchIsEditing">Edit</button> | -->
-              <span id="icon" @click="switchIsEditing">
-                <font-awesome-icon icon="fa-solid fa-pen-to-square" /> </span
-              >|
-              <!-- <button
-            @click="deletecommonQuestion([stdNo, commonquestion.questionNo])"
+          </p>
+          <p v-else>{{ commonquestion.questionNo }}. 자율 면접</p>
+          <span
+            v-if="currentUser.userId === commonquestion.userId && !isEditing"
           >
-            Delete
-          </button> -->
-
-              <span
-                id="icon"
-                @click="
-                  deletecommonQuestion([stdNo, commonquestion.questionNo])
-                "
-              >
-                <font-awesome-icon icon="fa-solid fa-trash-can" />
-              </span>
+            <span id="icon" @click="switchIsEditing">
+              <font-awesome-icon icon="fa-solid fa-pen-to-square" /> </span
+            >|
+            <span
+              id="icon"
+              @click="deletecommonQuestion([stdNo, commonquestion.questionNo])"
+            >
+              <font-awesome-icon icon="fa-solid fa-trash-can" />
             </span>
-            <!-- <p class="attribution" v-if="name">by {{ name }}</p>
+          </span>
+          <!-- <p class="attribution" v-if="name">by {{ name }}</p>
             <p class="attribution" v-else>
               by 나간 회원입니다.
             </p>
@@ -45,26 +40,18 @@
             <p class="attribution" v-else>
               by 나간 회원입니다.
             </p> -->
-          </div>
+
           <p>{{ commonquestion.contents }}</p>
         </div>
-        <span v-if="isEditing">
+        <span v-if="isEditing" id="edit">
           <input
             id="aa"
             type="text"
             v-model="payload.contents"
             class="form-control"
           />
-          <!-- <button @click="onUpdate">Update</button> -->
-          <span id="icon" @click="onUpdate">
-            <font-awesome-icon icon="fa-solid fa-pen-to-square" /> </span
-          >|
-          <!-- <button @click="switchIsEditing">Cancel</button> -->
 
-          <span id="icon" @click="switchIsEditing">
-            <font-awesome-icon icon="fa-solid fa-xmark" />
-          </span>
-          <div>
+          <div id="edit-bottom">
             <input
               type="radio"
               name="reviewType"
@@ -79,6 +66,14 @@
               v-model="payload.questionType"
             />
             <label for="questionType">인성 면접</label>
+          </div>
+          <div id="edit-bottom">
+            <span id="icon" @click="onUpdate">
+              <font-awesome-icon icon="fa-solid fa-pen-to-square" /> </span
+            >|
+            <span id="icon" @click="switchIsEditing">
+              <font-awesome-icon icon="fa-solid fa-xmark" />
+            </span>
           </div>
         </span>
       </div>
@@ -161,6 +156,15 @@ export default {
 </script>
 
 <style scoped>
+#edit-bottom {
+  display: flex;
+  flex-direction: row;
+}
+#edit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 #icon {
   cursor: pointer;
 }
