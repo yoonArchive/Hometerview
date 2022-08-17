@@ -1,13 +1,19 @@
 <template>
   <section class="comments">
     <article class="comment">
-      <a class="comment-img" href="#non">
-        <img :src="currentUser.userImg" :alt="profile" width="50" height="50" />
+      <div class="comment-img" href="#non">
+        <img
+          class="profile-img"
+          :src="userImg"
+          alt="유저이미지"
+          width="50"
+          height="50"
+        />
         <p class="attribution" v-if="name">by {{ name }}</p>
         <p class="attribution" v-else>
           by 나간 회원입니다.
         </p>
-      </a>
+      </div>
       <!-- {{ currentUser.Img }} -->
 
       <div class="comment-body">
@@ -107,9 +113,9 @@ export default {
       },
       // questionNo: this.commonquestion.questionNo,,
       name: "",
-      userImag: "",
-      userId: "",
-      profile: require("../../../assets/images/profile.png")
+      userImg: "",
+      userId: ""
+      //profile: require("../../../assets/images/profile.png")
     };
   },
   computed: {
@@ -151,6 +157,11 @@ export default {
   },
   mounted() {
     this.checkUser();
+    if (this.currentUser.userImg == null) {
+      this.userImg = require("../../../assets/images/profile.png");
+    } else {
+      this.userImg = this.currentUser.userImg;
+    }
   },
 
   created() {
@@ -161,6 +172,10 @@ export default {
 </script>
 
 <style scoped>
+.profile-img {
+  border-radius: 70%;
+  overflow: hidden;
+}
 #icon {
   cursor: pointer;
 }
@@ -189,8 +204,6 @@ p {
 .comment-img {
   float: left;
   margin-right: 33px;
-  border-radius: 5px;
-  overflow: hidden;
 }
 
 .comment-img img {

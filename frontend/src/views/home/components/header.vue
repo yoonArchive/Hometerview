@@ -94,15 +94,16 @@ export default {
     }
   },
   mounted() {
-    this.refreshsetting();
-    if (this.currentUser.userImg == null) {
-      this.profile = require("../../../assets/images/profile.png");
-    } else {
-      this.profile = this.currentUser.userImg;
-    }
+    // this.refreshsetting();
+    // this.fetchCurrentUser();
+    // if (this.currentUser.userImg == null) {
+    //   this.profile = require("../../../assets/images/profile.png");
+    // } else {
+    //   this.profile = this.currentUser.userImg;
+    // }
   },
-  created() {
-    this.refreshsetting();
+  async created() {
+    // await this.refreshsetting();
     if (this.currentUser.userImg == null) {
       this.profile = require("../../../assets/images/profile.png");
     } else {
