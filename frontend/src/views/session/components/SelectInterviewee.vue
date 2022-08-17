@@ -1,24 +1,29 @@
 <template>
   <div class="container select-member">
     <!-- interviewee :{{ interviewUser }} <br /> -->
-    <div class="d-flex justify-content-center">
-      <form @submit.prevent="intervieweeApply()">
-        <div>
-          <select-interviewee-detail
-            v-for="(member, index) in studySpaceDetail.studyJoins"
-            :key="member.joinNo"
-            :member="member"
-            :studentindex="index"
-          ></select-interviewee-detail>
-          <div class="buttons">
-            <div>
-              <button>Apply</button>
-            </div>
-          </div>
+
+    <div>
+      <div
+        v-for="(member, index) in studySpaceDetail.studyJoins"
+        :key="member.joinNo"
+        class="row"
+      >
+        <select-interviewee-detail
+          :member="member"
+          :studentindex="index"
+        ></select-interviewee-detail>
+      </div>
+      <div class="buttons">
+        <div class="d-flex justify-content-end">
+          <button class="select-interviewee-btn" @click="intervieweeApply">
+            인터뷰 지정
+          </button>
+          <button class="select-interviewee-btn" @click="intervieweeCancel()">
+            인터뷰모드 해제
+          </button>
         </div>
-      </form>
+      </div>
     </div>
-    <button @click="intervieweeCancel()">인터뷰모드 해제</button>
   </div>
 </template>
 
@@ -64,5 +69,10 @@ export default {
 <style scoped>
 .select-member {
   height: 85vh;
+}
+.select-interviewee-btn {
+  border: 1px solid #653fd3;
+  background-color: #f0ebff;
+  margin-left: 3px;
 }
 </style>

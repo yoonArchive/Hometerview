@@ -47,7 +47,6 @@
                   :stream-manager="publisher"
                   :mainStream="false"
                   :interviewMode="true"
-                  :checkId="myUserId"
                   @click="updateMainVideoStreamManager(publisher)"
                   style="height:15vh;"
                 />
@@ -167,7 +166,6 @@
                   :stream-manager="publisher"
                   :mainStream="false"
                   :interviewMode="false"
-                  :checkId="myUserId"
                   style="height:24vh;"
                 />
                 <user-video
@@ -294,7 +292,6 @@
                   :stream-manager="publisher"
                   :mainStream="false"
                   :interviewMode="true"
-                  :checkId="myUserId"
                   @click="updateMainVideoStreamManager(publisher)"
                   style="height:15vh;"
                 />
@@ -1038,9 +1035,8 @@ export default {
       });
 
       // change TTS mode
-      this.session.on("signal:tts-mode", async event => {
-        await this.changeScreenMode("tts");
-        await this.plusDivs(0);
+      this.session.on("signal:tts-mode", event => {
+        this.changeScreenMode("tts");
       });
 
       // --- Connect to the session with a valid user token ---
