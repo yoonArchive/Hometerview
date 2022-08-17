@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const https = require('https');
 const http = require('http');
 const cors = require('cors');
 var bodyParser = require('body-parser');
@@ -13,7 +14,7 @@ app.post('/test', (req, res) => {
   // res.send(req.body.text + "인가요?");
 });
 
-app.post('/ttsrequest', async (req, res) => {
+app.post('/tts/ttsrequest', async (req, res) => {
   const textToSpeech = require('@google-cloud/text-to-speech');
   console.log(req.body);
   // dot env
