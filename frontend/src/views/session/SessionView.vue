@@ -818,11 +818,16 @@ export default {
         const { clientId } = await JSON.parse(
           this.publisher.stream.connection.data
         );
+        //      <!-- teachable machine -->
+        // <button type="button" @click="init()">Start</button> ==> 해당 담당자에게
+        // <button type="button" @click="tmStop()">Stop</button>
+
         console.log("확인해보자", this.updateMain, "이거랑", clientId);
         if (!this.updateMain) {
           await this.changeInterviewMode(false);
           await this.changeInterviewUser("");
           await this.changeContent("chatting");
+          // await this.tmStop()
         } else {
           this.changeInterviewMode(true);
           if (clientId === this.updateMain) {
@@ -831,6 +836,8 @@ export default {
             await this.changeContent("participant");
             await this.changeToCoverLetter(["coverletter", studentindex]);
             await this.plusDivs(0);
+            // await this.init()
+
             // this.chatting = false;
             // this.participant = true;
             // this.selectinterviewee = false;
@@ -844,6 +851,8 @@ export default {
                 await this.changeContent("participant");
                 await this.changeToCoverLetter(["coverletter", studentindex]);
                 await this.plusDivs(0);
+                // send함수를 하나 더 만들어서 그 사람한테만 signal이 갈 수 있게끔 만들어주면 될듯?
+                // 즉 다른 on 함수를 만드는게 좋을듯 => 이때 apply버튼을 누르면 실행되게끔 select view에서 로직 구현
               }
             });
           }
