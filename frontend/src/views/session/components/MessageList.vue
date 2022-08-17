@@ -10,17 +10,6 @@
       />
     </div>
   </div>
-  <!-- <div>
-    <div id="app_chat_list" class="container" @scroll.passive="scrolled()">
-      <Message
-        v-for="(msg, index) in msgs"
-        :key="index"
-        :msg="msg.fromMessage"
-        :myId="myId"
-        :fromId="msg.fromId"
-      />
-    </div>
-  </div> -->
 </template>
 
 <script>
@@ -35,9 +24,7 @@ export default {
     myId: String
   },
   data() {
-    return {
-      isScrolled: false
-    };
+    return {};
   },
   updated() {
     if (!this.isScrolled) {
@@ -45,21 +32,7 @@ export default {
       objDiv.scrollTop = objDiv.scrollHeight;
     }
   },
-  methods: {
-    // scrolled() {
-    //   const objDiv = document.getElementById("app_chat_list");
-    //   if (objDiv.scrollTop >= objDiv.scrollHeight - 500) {
-    //     this.isScrolled = false;
-    //   } else {
-    //     this.isScrolled = true;
-    //   }
-    // },
-    // scrolldown() {
-    //   const objDiv = document.getElementById("app_chat_list");
-    //   objDiv.scrollTop = objDiv.scrollHeight;
-    //   this.isScrolled = false;
-    // }
-  }
+  methods: {}
 };
 </script>
 
@@ -71,7 +44,7 @@ export default {
   height: 85vh;
 }
 .container::-webkit-scrollbar {
-  width: 1vh;
+  width: 1.35vh;
 }
 .container::-webkit-scrollbar-track {
   background-color: #e5e5e5;

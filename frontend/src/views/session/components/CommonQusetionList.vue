@@ -37,9 +37,9 @@ export default {
   },
   methods: {
     ...mapActions(["getStd", "changeTTSMode"]),
-    changeTTSModevue() {
-      this.changeTTSMode();
-      this.$emit("sendTTS");
+    async changeTTSModevue() {
+      await this.changeTTSMode();
+      await this.$emit("sendTTS", this.isTTSMode);
     }
   },
   created() {
