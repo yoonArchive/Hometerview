@@ -5,7 +5,7 @@
       <div
         v-for="(member, index) in studySpaceDetail.studyJoins"
         :key="member.joinNo"
-        class="row"
+        class="member-list row"
       >
         <select-interviewee-detail
           :member="member"
@@ -81,12 +81,16 @@ export default {
 </script>
 
 <style scoped>
+.member-list {
+  height: 70vh;
+}
 .select-member {
   height: 85vh;
 }
 .select-interviewee-btn {
-  border: 1px solid #653fd3;
-  background-color: #f0ebff;
-  margin-left: 3px;
+  border: 1px solid #c4c1c9;
+  background-color: #baaaea;
+  margin-left: 0.5vh;
+  color: #272930;
 }
 </style>

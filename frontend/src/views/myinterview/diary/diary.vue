@@ -6,7 +6,7 @@
 
           <div class="card-list">
           <div v-for="(ddays, index) in currentDdays" :key="index">
-          <div v-if="restday[index]>5" class="card text-white bg-warning mb-2" style="max-width: 18rem;">
+          <div v-if="restday[index]>5" class="card mb-2" style="max-width: 18rem;">
             <div class="card-header" >{{ddays.ddayTitle}} </div>
             <div  class="card-body">
               <h6 class="card-title">
@@ -26,7 +26,7 @@
             </div>
 
           </div>
-           <div v-else-if="0<=restday[index]&& restday[index]<=5" class="card text-white bg-warning mb-2" style="max-width: 18rem;" id="dday-up">
+           <div v-else-if="0<=restday[index]&& restday[index]<=5" class="card mb-2" style="max-width: 18rem;" id="dday-up">
             <div class="card-header" >{{ddays.ddayTitle}} </div>
             <div  class="card-body">
               <h6 class="card-title">
@@ -245,9 +245,15 @@ function hideSpinner() {
 /* @import './fullcalander/main.js'; */
 
 #dday-up{
-  border-color: red;
-  border-width:5px;
+  border : 0.3vh solid #9c7bfd;
+
 }
+.card{
+  background-color: #f6f2ff;
+  color: #383561;
+  box-shadow: 0px 0px 7px 1px rgb(0 0 0 / 25%);
+}
+
 .card-list{
   display: flex;
   width: 900px;
@@ -349,10 +355,11 @@ function hideSpinner() {
 #button-review{
    width: 100px;
    height: 50px;
-   background-color: #653FD3;
-   border-color : #653FD3;
-   border-radius: 10%;
+   background-color: #9c7bfd;
+   border-color : #5b5a60;
+   border-radius: 0.9vh;
    margin: 5px;
+   color:#383561;
 
 }
 #button-review:hover{

@@ -124,6 +124,7 @@ export default {
   text-align: center;
   padding: 20px;
   margin-top: 20px;
+  font-family: "티머니 둥근바람";
 }
 @import url("https://fonts.googleapis.com/css?family=Josefin+Sans:400,600,700&display=swap");
 
