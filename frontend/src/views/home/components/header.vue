@@ -95,11 +95,19 @@ export default {
   },
   mounted() {
     this.refreshsetting();
-    this.profile = this.currentUser.userImg;
+    if (this.currentUser.userImg == null) {
+      this.profile = require("../../../assets/images/profile.png");
+    } else {
+      this.profile = this.currentUser.userImg;
+    }
   },
   created() {
     this.refreshsetting();
-    this.profile = this.currentUser.userImg;
+    if (this.currentUser.userImg == null) {
+      this.profile = require("../../../assets/images/profile.png");
+    } else {
+      this.profile = this.currentUser.userImg;
+    }
   },
   setup() {
     const store = useStore();
