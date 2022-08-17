@@ -3,7 +3,7 @@
     <div>
       <img
         class="profile-photo"
-        :src="require(`@/assets/images/session/profile.png`)"
+        :src="sendImage"
         style="box-shadow: 0px 0px 7px 1px rgba(0, 0, 0, 0.2);"
       />&nbsp;&nbsp;{{ sendname }}
     </div>
@@ -30,13 +30,18 @@ export default {
     return {
       ismy: this.equal(),
       sendname: "",
-      message: ""
+      message: "",
+      sendImage: ""
     };
   },
   mounted() {
     // JSON확인
     this.sendname = JSON.parse(this.msg).userName;
+    this.sendImage = JSON.parse(this.msg).userImg;
     this.message = JSON.parse(this.msg).msg;
+    if (this.sendImage == null) {
+      this.sendImage = require("../../../assets/images/profile.png");
+    }
   },
   methods: {
     equal() {
