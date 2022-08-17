@@ -515,7 +515,7 @@
               <!-- usertype==='LEADERS' && 리더만 보이게 하기 =   -->
             </div>
             <div v-if="commonquestion">
-              <common-qusetion-list></common-qusetion-list>
+              <common-qusetion-list @sendTTS="sendTTS"></common-qusetion-list>
             </div>
           </div>
         </div>
@@ -1036,7 +1036,7 @@ export default {
 
       // change TTS mode
       this.session.on("signal:tts-mode", event => {
-        await this.changeScreenMode("tts");
+        this.changeScreenMode("tts");
       });
 
       // --- Connect to the session with a valid user token ---
