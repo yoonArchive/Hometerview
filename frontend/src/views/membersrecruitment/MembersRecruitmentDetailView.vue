@@ -363,9 +363,9 @@ button,
   -ms-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
   transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
   background-color: transparent;
-  border-radius: 0.375em;
-  border: 0;
-  box-shadow: inset 0 0 0 2px #653fd3;
+  border-radius: 0.7vh;
+  border: 0.3vh solid #9c7bfd;
+  box-shadow: 0px 0px 7px 1px rgb(0 0 0 / 18%);
   color: #653fd3 !important;
   cursor: pointer;
   display: inline-block;

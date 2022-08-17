@@ -447,10 +447,10 @@ button.small,
   -ms-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
   transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
   border-radius: 5px;
-  border: 0;
-  box-shadow: inset 0 0 0 2px #653fd3;
+  border: 0.3vh solid #9c7bfd;
+  box-shadow: 0px 0px 7px 1px rgb(0 0 0 / 13%);
   background-color: #ffffff;
-  color: #653fd3;
+  color: #383561;
   cursor: pointer;
   display: inline-block;
   font-size: 0.8em;
