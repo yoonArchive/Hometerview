@@ -18,15 +18,22 @@
 
       <div class="comment-body">
         <div class="text">
+
+          <div>
           <p v-if="commonquestion.questionType == 'JOB'">
-            {{ commonquestion.questionNo }}. 직무 면접
+            <p id="a1">[직무]</p> {{ commonquestion.contents }}
+
+
           </p>
-          <p v-else>{{ commonquestion.questionNo }}. 자율 면접</p>
-          <span
-            v-if="currentUser.userId === commonquestion.userId && !isEditing"
-          >
+
+          <p v-else><p id="a2">[자율]</p> {{ commonquestion.contents }}</p>
+          </div>
+
+          <div>
+          <span v-if="currentUser.userId === userId && !isEditing" id="incons">
             <span id="icon" @click="switchIsEditing">
-              <font-awesome-icon icon="fa-solid fa-pen-to-square" /> </span
+              <font-awesome-icon icon="fa-solid fa-pen-to-square" />
+              </span
             >|
             <span
               id="icon"
@@ -35,6 +42,7 @@
               <font-awesome-icon icon="fa-solid fa-trash-can" />
             </span>
           </span>
+          </div>
           <!-- <p class="attribution" v-if="name">by {{ name }}</p>
             <p class="attribution" v-else>
               by 나간 회원입니다.
@@ -46,18 +54,19 @@
             <p class="attribution" v-else>
               by 나간 회원입니다.
             </p> -->
-
-          <p>{{ commonquestion.contents }}</p>
         </div>
-        <span v-if="isEditing" id="edit">
+          <span v-if="isEditing" id="edit">
+        <div class="edit">
+          <div>
           <input
             id="aa"
             type="text"
             v-model="payload.contents"
             class="form-control"
           />
-
-          <div id="edit-bottom">
+        </div>
+          <!-- <div id="edit-bottom"> -->
+            <div>
             <input
               type="radio"
               name="reviewType"
@@ -65,22 +74,27 @@
               v-model="payload.questionType"
             />
             <label for="questionType">직무 면접</label>
+             &nbsp;
             <input
               type="radio"
               name="reviewType"
               value="FREE"
               v-model="payload.questionType"
             />
+
             <label for="questionType">인성 면접</label>
-          </div>
-          <div id="edit-bottom">
+             &nbsp;
+          <!-- <div id="edit-bottom"> -->
             <span id="icon" @click="onUpdate">
               <font-awesome-icon icon="fa-solid fa-pen-to-square" /> </span
             >|
             <span id="icon" @click="switchIsEditing">
               <font-awesome-icon icon="fa-solid fa-xmark" />
             </span>
-          </div>
+            </div>
+          <!-- </div> -->
+
+        </div>
         </span>
       </div>
     </article>
@@ -167,18 +181,32 @@ export default {
 </script>
 
 <style scoped>
+#incons{
+
+}
+#a1{
+  color: #653fd3;
+  display: inline;
+}
+#a2{
+  color: red;
+  display: inline;
+}
 .profile-img {
   border-radius: 70%;
   overflow: hidden;
 }
 #edit-bottom {
+
+  /* display: inline; */
+}
+.edit {
+  /* display: flex;
+  flex-direction: column;
+  align-items: center; */
   display: flex;
   flex-direction: row;
-}
-#edit {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  justify-content: space-between;
 }
 #icon {
   cursor: pointer;
@@ -208,6 +236,7 @@ p {
 .comment-img {
   float: left;
   margin-right: 33px;
+
 }
 
 .comment-img img {
@@ -223,6 +252,12 @@ p {
   border: 1px solid #e5e5e5;
   border-radius: 5px;
   background: #fff;
+
+}
+.text{
+  display: flex;
+  justify-content: space-between;
+
 }
 
 .comment .text p:last-child {
@@ -249,13 +284,14 @@ p {
   content: "";
   position: absolute;
   top: 0;
-  left: 65px;
+  left: 85px;
 }
 
 .comments:before {
   width: 3px;
   top: -20px;
   bottom: -20px;
+  height: 150px;
   background: rgba(0, 0, 0, 0.1);
 }
 
@@ -276,9 +312,10 @@ p {
   border-color: #653fd3;
   background-color: #653fd3;
   margin: 10px;
+  width: 700px;
 }
 .form-control {
-  width: 50%;
+  width: 700px
 }
 .text {
   overflow: auto;

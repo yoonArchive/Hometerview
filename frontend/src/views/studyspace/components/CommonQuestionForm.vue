@@ -11,7 +11,7 @@
           v-model="questionType"
         />
         <label for="questionType">직무 면접</label>
-        <br />
+        &nbsp;&nbsp;
         <input
           class="form-check-input"
           type="radio"
@@ -103,5 +103,7 @@ export default {
   border-radius: 10px;
 }
 .container {
+  display: flex;
+  justify-content: center;
 }
 </style>
