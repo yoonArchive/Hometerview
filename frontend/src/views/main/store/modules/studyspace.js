@@ -16,6 +16,9 @@ export default {
     selectedQuestionNum: 0,
     selStdNo: Number,
 
+    /** tts 모드 여부 */
+    isTTSMode: false,
+
     /** tts요청할 문장 */
     ttsrequestcontext: "",
 
@@ -24,6 +27,7 @@ export default {
   },
 
   getters: {
+    isTTSMode: state => state.isTTSMode,
     ttsrequestcontext: state => state.ttsrequestcontext,
     authHeader: state => ({ Authorization: `Bearer ${state.token}` }),
     studySpaceList: state => state.studySpaceList,
@@ -38,6 +42,7 @@ export default {
   },
 
   mutations: {
+    CHANGE_IS_TTS_MODE: state => (state.isTTSMode = !state.isTTSMode),
     SET_TTS_REQUEST_CONTEXT: (state, data) => (state.ttsrequestcontext = data),
     SET_TOKEN: (state, token) => (state.token = token),
     SET_STUDYSPACE_LIST: (state, studySpaceList) =>
@@ -59,6 +64,9 @@ export default {
       (state.expectedQuestionList = data)
   },
   actions: {
+    changeTTSMode({ commit }) {
+      commit("CHANGE_IS_TTS_MODE");
+    },
     changettsrequest({ commit, getters }, data) {
       commit("SET_TTS_REQUEST_CONTEXT", data);
     },

@@ -447,7 +447,8 @@ export default {
       "studySpaceDetail",
       "interviewUserFixed",
       "interviewUser",
-      "ttsrequestcontext"
+      "ttsrequestcontext",
+      "isTTSMode"
     ])
   },
   methods: {
@@ -1059,6 +1060,9 @@ export default {
     ttsrequestcontext() {
       console.log("이게 많이 실행되나?");
       this.ttspublish(this.ttsrequestcontext);
+    },
+    isTTSMode() {
+      /** tts모드 바뀔때 실행되는 메소드 */
     }
   },
   async created() {
