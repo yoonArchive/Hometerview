@@ -19,6 +19,7 @@
       :key="index"
       :question="question"
       :questionIndex="index"
+      :myJoinType="myJoinType"
     ></common-question-item>
   </div>
 </template>
