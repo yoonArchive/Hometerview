@@ -71,5 +71,19 @@ export default {
   overflow: scroll;
   border-radius: 10px 10px 10px 10px;
   height: 90vh;
+  overflow-x: hidden;
+}
+.container::-webkit-scrollbar {
+  width: 1.35vh;
+}
+.container::-webkit-scrollbar-track {
+  background-color: #e5e5e5;
+  border-radius: 1vh;
+}
+.container::-webkit-scrollbar-thumb {
+  background-color: #afa8ba;
+  border-radius: 1vh;
+  background-clip: padding-box;
+  border: 0.3vh solid transparent;
 }
 </style>
