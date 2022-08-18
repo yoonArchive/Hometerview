@@ -329,6 +329,7 @@ body.light .progress-wrap svg.progress-circle path {
   max-height: calc(100% - 35px);
 }
 .full-container {
+  padding-bottom: 100px;
   min-height: 100%;
   background-color: white;
 }
