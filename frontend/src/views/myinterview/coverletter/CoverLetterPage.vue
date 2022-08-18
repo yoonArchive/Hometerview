@@ -3,7 +3,7 @@
     <div class="my-top">
       <div class="my-left">
         <div class="review-1">
-          <h3>자기소개서 개수 : {{ resumeContents.length }}</h3>
+          <!-- <h3>자기소개서 개수 : {{ resumeContents.length }}</h3> -->
           <div class="row">
             <h3 id="icon" class="col" style="width:30vh;">
               <span @click="this.addNewResume()">
