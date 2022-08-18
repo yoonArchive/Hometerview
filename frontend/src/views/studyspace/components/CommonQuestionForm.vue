@@ -1,39 +1,39 @@
 <template>
   <div class="container" style="margin-top:1vh;">
-    <form @submit.prevent="onSubmit" class="comment-list-form">
-      <!-- <input class="comment-input" type="textarea"  v-model="content" required> -->
-      <div id="check" style="margin-bottom: 0.6vh;">
-        <input
-          class="form-check-input"
-          type="radio"
-          name="reviewType"
-          value="JOB"
-          v-model="questionType"
-        />
-        <label for="questionType">직무 면접</label>
-        &nbsp;&nbsp;
-        <input
-          class="form-check-input"
-          type="radio"
-          name="reviewType"
-          value="FREE"
-          v-model="questionType"
-        />
-        <label for="questionType">인성 면접</label>
-      </div>
-      <div class="form-bottom">
-        <input
-          class="form-control"
-          type="text"
-          v-model="content"
-          required
-          cols="30"
-          rows="10"
-          placeholder="공유할 질문을 작성해 보세요"
-        />
-        <button class="bubbly-button">작성</button>
-      </div>
-    </form>
+    <div>
+      <form @submit.prevent="onSubmit" class="comment-list-form">
+        <!-- <input class="comment-input" type="textarea"  v-model="content" required> -->
+        <div id="check" style="margin-bottom: 0.6vh;">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="reviewType"
+            value="JOB"
+            v-model="questionType"
+          />
+          <label for="questionType">직무 면접</label>
+          &nbsp;&nbsp;
+          <input
+            class="form-check-input"
+            type="radio"
+            name="reviewType"
+            value="FREE"
+            v-model="questionType"
+          />
+          <label for="questionType">인성 면접</label>
+        </div>
+        <div class="form-bottom">
+          <input
+            class="form-control"
+            type="text"
+            v-model="content"
+            required
+            placeholder="공유할 질문을 작성해 보세요"
+          />
+          <button class="bubbly-button">작성</button>
+        </div>
+      </form>
+    </div>
   </div>
 </template>
 
@@ -79,7 +79,7 @@ export default {
 .comment-list-form {
   border: 2px solid white;
 
-  width: 800px;
+  width: 100%;
 }
 .comment-input {
   width: 100%;

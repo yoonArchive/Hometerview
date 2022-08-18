@@ -32,9 +32,9 @@
           :key="commonquestion.questionNo"
         >
         </common-question-item>
-        <div class="comments-from" v-show="showModal">
-          <common-question-form></common-question-form>
-        </div>
+      </div>
+      <div class="comments-from" v-show="showModal">
+        <common-question-form></common-question-form>
       </div>
     </div>
   </div>
@@ -74,6 +74,13 @@ export default {
 };
 </script>
 <style scoped>
+.comments-from {
+  margin-top: 40px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+}
 .study-detail-information-wrapper {
   margin-left: 3.5em;
 }

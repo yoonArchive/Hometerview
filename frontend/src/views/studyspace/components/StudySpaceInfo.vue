@@ -8,7 +8,7 @@
     <section id="banner">
       <!-- <span class="image object"> -->
       <div class="row">
-        <div class="image object col-6">
+        <div class="image object col-4">
           <img :src="studySpaceDetail.stdImg" alt="" class="stdImg" />
         </div>
         <!-- </span> -->
@@ -315,6 +315,7 @@ export default {
     },
     autoResizeTextarea(e) {
       let textarea = document.querySelector(".autoTextarea");
+      textarea = textarea.replaceAll(/(\n|\r\n)/g, "<br>");
       console.log(e + " : " + textarea);
       if (textarea) {
         textarea.style.height = "auto";
@@ -463,7 +464,7 @@ blockquote {
   flex-shrink: 0;
   display: block;
   margin: 0 0 2em 4em;
-  width: 50%;
+  /* width: 30%; */
 }
 #banner .image img {
   height: 100%;
