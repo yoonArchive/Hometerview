@@ -31,11 +31,13 @@
                   type="text"
                   id="content"
                   rows="3"
+                  required
                 ></textarea>
               </div>
 
               <div>
                 <input
+                  class="form-control"
                   v-model="newreview.reviewDate"
                   type="date"
                   name="reviewDate"
@@ -49,6 +51,7 @@
                   name="reviewType"
                   value="REAL"
                   v-model="newreview.reviewType"
+                  class="form-check-input"
                   required
                 />
 
@@ -58,29 +61,55 @@
                   name="reviewType"
                   value="FAKE"
                   v-model="newreview.reviewType"
+                  class="form-check-input"
                   required
                 />
                 <label for="newreview.reviewType">모의</label>
               </div>
+              <!-- <button
+                class="btn btn-outline-primary"
+                v-if="action === 'create'"
+                @click="$emit('close'), createReview(this.newreview)"
+              >
+                만들기
+              </button>
               <button
-                id="button-review"
+                class="btn btn-outline-primary"
+                v-else
+                @click="$emit('close'), updateReview(this.newreview)"
+              >
+                수정하기
+              </button>
+              <button class="btn btn-outline-primary" @click="$emit('close')">
+                닫기
+              </button> -->
+              <!-- </form> -->
+            </slot>
+          </div>
+          <div class="modal-footer">
+            <slot name="footer">
+              <button
+                class="btn btn-outline-primary"
+                v-if="action === 'create'"
+                @click="$emit('close'), createReview(this.newreview)"
+              >
+                만들기
+              </button>
+              <button
+                class="btn btn-outline-primary"
+                v-else
                 @click="$emit('close'), updateReview(this.newreview)"
               >
                 수정하기
               </button>
               <button
                 id="button-review"
+                class="btn btn-outline-primary"
                 @click="$emit('close'), deleteReview1(this.id)"
               >
                 삭제하기
               </button>
-              <!-- </form> -->
-            </slot>
-          </div>
-
-          <div class="modal-footer">
-            <slot name="footer">
-              <button class="modal-default-button" @click="$emit('close')">
+              <button class="btn btn-outline-primary" @click="$emit('close')">
                 닫기
               </button>
             </slot>
