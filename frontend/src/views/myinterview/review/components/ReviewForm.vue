@@ -120,6 +120,101 @@ import { mapActions } from 'vuex'
 }
 </style> -->
 
+<!-- <template>
+  <transition name="modal">
+    <div class="modal-mask">
+      <div class="modal-wrapper">
+        <div class="modal-container">
+          <div class="modal-header">
+            <slot name="header">
+              회고록을 작성해 보세요
+            </slot>
+          </div>
+
+          <div class="modal-body">
+            <slot name="body">
+
+              <div class="mb-3">
+                <label for="title" class="form-label">제목: </label>
+                <input
+                  type="text"
+                  class="form-control"
+                  v-model="newreview.reviewTitle"
+                  id="title"
+                />
+              </div>
+              <div class="mb">
+                <label for="exampleFormControlTextarea1" class="form-label"
+                  >내용:
+                </label>
+                <textarea
+                  class="form-control"
+                  v-model="newreview.reviewContents"
+                  type="text"
+                  id="content"
+                  rows="3"
+                ></textarea>
+              </div>
+
+              <div>
+                <input
+                  class="form-control"
+                  v-model="newreview.reviewDate"
+                  type="date"
+                  name="reviewDate"
+                  required
+                />
+              </div>
+
+              <div>
+                <input
+                  type="radio"
+                  name="reviewType"
+                  value="REAL"
+                  v-model="newreview.reviewType"
+                  required
+                />
+
+                <label for="newreview.reviewType">실제</label>
+                <input
+                  type="radio"
+                  name="reviewType"
+                  value="FAKE"
+                  v-model="newreview.reviewType"
+                  required
+                />
+                <label for="newreview.reviewType">모의</label>
+              </div>
+              <button
+                id="button-review"
+                v-if="action === 'create'"
+                @click="$emit('close'), createReview(this.newreview)"
+              >
+                만들기
+              </button>
+              <button
+                id="button-review"
+                v-else
+                @click="$emit('close'), updateReview(this.newreview)"
+              >
+                수정하기
+              </button>
+
+            </slot>
+          </div>
+
+          <div class="modal-footer">
+            <slot name="footer">
+              <button class="modal-default-button" @click="$emit('close')">
+                닫기
+              </button>
+            </slot>
+          </div>
+        </div>
+      </div>
+    </div>
+  </transition>
+</template> -->
 <template>
   <transition name="modal">
     <div class="modal-mask">
@@ -153,11 +248,13 @@ import { mapActions } from 'vuex'
                   type="text"
                   id="content"
                   rows="3"
+                  required
                 ></textarea>
               </div>
 
               <div>
                 <input
+                  class="form-control"
                   v-model="newreview.reviewDate"
                   type="date"
                   name="reviewDate"
@@ -167,6 +264,7 @@ import { mapActions } from 'vuex'
 
               <div>
                 <input
+                  class="form-check-input"
                   type="radio"
                   name="reviewType"
                   value="REAL"
@@ -174,37 +272,54 @@ import { mapActions } from 'vuex'
                   required
                 />
 
-                <label for="newreview.reviewType">REAL</label>
+                <label for="newreview.reviewType">실제</label>
                 <input
+                  class="form-check-input"
                   type="radio"
                   name="reviewType"
                   value="FAKE"
                   v-model="newreview.reviewType"
                   required
                 />
-                <label for="newreview.reviewType">FAKE</label>
+                <label for="newreview.reviewType">모의</label>
               </div>
-              <button
-                id="button-review"
+              <!-- <button
+                class="btn btn-outline-primary"
                 v-if="action === 'create'"
                 @click="$emit('close'), createReview(this.newreview)"
               >
                 만들기
               </button>
               <button
-                id="button-review"
+                class="btn btn-outline-primary"
                 v-else
                 @click="$emit('close'), updateReview(this.newreview)"
               >
                 수정하기
               </button>
+              <button class="btn btn-outline-primary" @click="$emit('close')">
+                닫기
+              </button> -->
               <!-- </form> -->
             </slot>
           </div>
-
           <div class="modal-footer">
             <slot name="footer">
-              <button class="modal-default-button" @click="$emit('close')">
+              <button
+                class="btn btn-outline-primary"
+                v-if="action === 'create'"
+                @click="$emit('close'), createReview(this.newreview)"
+              >
+                만들기
+              </button>
+              <button
+                class="btn btn-outline-primary"
+                v-else
+                @click="$emit('close'), updateReview(this.newreview)"
+              >
+                수정하기
+              </button>
+              <button class="btn btn-outline-primary" @click="$emit('close')">
                 닫기
               </button>
             </slot>
@@ -214,7 +329,6 @@ import { mapActions } from 'vuex'
     </div>
   </transition>
 </template>
-
 <script>
 import { mapActions, mapGetters } from "vuex";
 export default {
@@ -291,6 +405,7 @@ export default {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
   transition: all 0.3s ease;
   font-family: Helvetica, Arial, sans-serif;
+  border-radius: 20px;
 }
 
 .modal-header h3 {
@@ -327,5 +442,28 @@ export default {
 .modal-leave-active .modal-container {
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
+}
+
+.btn-outline-primary {
+  --bs-btn-color: #9c7bfd;
+  --bs-btn-border-color: #9c7bfd;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: #9c7bfd;
+  --bs-btn-hover-border-color: #9c7bfd;
+  --bs-btn-focus-shadow-rgb: 13, 110, 253;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: #9c7bfd;
+  --bs-btn-active-border-color: #9c7bfd;
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  --bs-btn-disabled-color: #9c7bfd;
+  --bs-btn-disabled-bg: transparent;
+  --bs-btn-disabled-border-color: #9c7bfd;
+  --bs-gradient: none;
+  border-width: 0.23vh;
+}
+
+.form-check-input:checked {
+  background-color: #6a46d1;
+  border-color: #6a46d1;
 }
 </style>

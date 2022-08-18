@@ -9,7 +9,7 @@
               <font-awesome-icon icon="fa-solid fa-square-plus" style="height:4.3vh; color:#7a5fc9;"/>
             </span>
           </h1>
-          <div class="align-self-center col" 
+          <div class="align-self-center col"
               style="font-family: '티머니 둥근바람'; font-size: 2.1vh;font-weight: 500; margin-left:2vh; margin-top: 0.01vh;">
             디데이를 추가해 보세요
           </div>
@@ -116,7 +116,7 @@
         </table>
         <div class="buttonbundle">
 
-      <button id="button-review" @click="showReviewForm = true">작성하기</button>
+      <button class="btn btn-outline-primary" @click="showReviewForm = true">작성하기</button>
 
        <ReviewForm v-if="showReviewForm" @close="showReviewForm = false" :review="reviewContents" action="create">
         </ReviewForm>
@@ -499,5 +499,22 @@ b { /* used for event dates/times */
         transform: rotate(360deg);
     }
 }
-
+.btn-outline-primary {
+  --bs-btn-color: #9c7bfd;
+  --bs-btn-border-color: #9c7bfd;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: #9c7bfd;
+  --bs-btn-hover-border-color: #9c7bfd;
+  --bs-btn-focus-shadow-rgb: 13, 110, 253;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: #9c7bfd;
+  --bs-btn-active-border-color: #9c7bfd;
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  --bs-btn-disabled-color: #9c7bfd;
+  --bs-btn-disabled-bg: transparent;
+  --bs-btn-disabled-border-color: #9c7bfd;
+  --bs-gradient: none;
+  border-width: 0.23vh;
+  width: 120px;
+}
 </style>
