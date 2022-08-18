@@ -1,8 +1,5 @@
 <template>
   <div class="container">
-
-
-
      <div class="table-cocover">
       <div class="table-cover">
         <table class="table table-hover">
@@ -14,7 +11,7 @@
           <tbody>
             <tr v-for="(a, index) in recordings" >
               <th scope="row" >
-                <td>{{ a.recordNo }}</td></th>
+                <td>{{ index+1 }}</td></th>
 
               <th >
                 <td>
@@ -24,7 +21,7 @@
                 <td>{{ a.study.stdDetail }}</td>
               </th>
               <th>
-                <td>{{ timeForToday(a.saveDate) }}</td>
+                <td>{{ (a.saveDate) }}</td>
               </th>
               <th>
                 <td><a
@@ -58,7 +55,7 @@
                 ></button>
               </div>
               <div class="modal-body">
-                <video autoplay controls height="400" :src="a.videoUrl"></video>
+                <video controls height="400" :src="a.videoUrl"></video>
               </div>
             </div>
           </div>
