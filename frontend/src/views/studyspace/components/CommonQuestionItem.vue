@@ -26,7 +26,7 @@
 
           </p>
 
-          <p v-else><p id="a2">[자율]</p> {{ commonquestion.contents }}</p>
+          <p v-else><p id="a2">[인성]</p> {{ commonquestion.contents }}</p>
           </div>
 
           <div>
