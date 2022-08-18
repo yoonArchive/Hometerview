@@ -11,12 +11,12 @@
                   icon="fa-solid fa-square-plus"
                   style="height:4.3vh; color:#7a5fc9;"
                 />
-                <div
+                <span
                   class="col"
                   style="font-family: '티머니 둥근바람'; font-size: 2.1vh;font-weight: 500; margin-top: 0.01vh;"
                 >
                   자기소개서를 추가해보세요.
-                </div>
+                </span>
               </span>
             </h3>
           </div>
