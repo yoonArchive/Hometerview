@@ -2,8 +2,20 @@
 <div class="container">
   <div class="my-top">
     <div class="my-left">
+      <div class="d-flex justify-content-start">
+        <div class="dday-button row">
+          <h1 id="icon col" style="width:1vh;">
+            <span @click="showModal = true">
+              <font-awesome-icon icon="fa-solid fa-square-plus" style="height:4.3vh; color:#7a5fc9;"/>
+            </span>
+          </h1>
+          <div class="align-self-center col" 
+              style="font-family: '티머니 둥근바람'; font-size: 2.1vh;font-weight: 500; margin-left:2vh; margin-top: 0.01vh;">
+            디데이를 추가해 보세요
+          </div>
+        </div>
+      </div>
       <div class="review-3 ">
-
           <div class="card-list">
           <div v-for="(ddays, index) in currentDdays" :key="index">
           <div v-if="restday[index]>5" class="card mb-2" style="max-width: 18rem;">
@@ -51,13 +63,7 @@
           </div>
 
       </div>
-      <div class="dday-button">
-       <!-- <button id="button-review" @click="showModal = true"><p id="a">DDAY작성</p></button> -->
 
-       <h1 id="icon"><span @click="showModal = true">
-                       <font-awesome-icon icon="fa-solid fa-square-plus" />
-              </span></h1>
-      </div>
       <hr/>
     </div>
      <div class="calendar">
@@ -277,7 +283,7 @@ export default {
   cursor: pointer;
 }
 #icon:hover{
-  color: #653FD3;
+  color: #ffffff;
 }
 #icon:active{
 

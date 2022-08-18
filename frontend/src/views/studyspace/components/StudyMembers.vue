@@ -15,6 +15,7 @@
           name: 'membercoverletter',
           params: { studentindex: studentindex }
         }"
+        style="color:#6c4bcb; font-size:3.4vh;"
       >
         <i class="input-icon uil uil-file-alt" style="font-size:30px"></i>
       </router-link>

@@ -517,9 +517,10 @@
                 @streamUpdate="streamUpdate"
               ></select-interviewee>
               <!-- usertype==='LEADERS' && 리더만 보이게 하기 =   -->
+              <!-- v-if="myJoinType === 'LEADER'" -->
             </div>
             <div v-if="commonquestion">
-              <common-qusetion-list @sendTTS="sendTTS"></common-qusetion-list>
+              <common-qusetion-list @sendTTS="sendTTS" :myJoinType="myJoinType"></common-qusetion-list>
             </div>
           </div>
         </div>
@@ -896,7 +897,9 @@ export default {
     },
     async tmStop() {
       await this.stopToFixPosture();
+      await this.needToFixPosture("");
       this.webcam = null;
+
     },
     async findIndex(userId) {
       const members = this.studySpaceDetail.studyJoins;

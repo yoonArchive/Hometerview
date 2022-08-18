@@ -2,7 +2,7 @@
   <label
     class="form-check-label"
     :for="member.user.userId"
-    style="margin-bottom:4vh; margin-top:4vh;"
+    style="margin-bottom:1.3vh; margin-top:1.3vh; margin-left:2,3vh;"
   >
     <input
       class="form-check-input"
@@ -18,7 +18,7 @@
     <img
       class="profile-photo"
       :src="require(`@/assets/images/session/profile.png`)"
-      style="box-shadow: 0px 0px 7px 1px rgba(0, 0, 0, 0.6); margin-left:4vh; margin-right: 10px;"
+      style="box-shadow: 0px 0px 7px 1px rgba(0, 0, 0, 0.6); margin-left:3vh; margin-right: 2vh;"
     />
     {{ member.user.userName }}
   </label>
@@ -64,10 +64,14 @@ export default {
 .profile-photo {
   border-radius: 100%;
   background-color: #c4c1c9;
-  margin-left: 4vh;
+  margin-left: 3vh;
   height: 5.4vh;
 }
 .form-check-input {
   color: #653fd3;
+}
+.form-check-input:checked {
+  background-color: #917fc7;
+  border-color: #917fc7;
 }
 </style>
