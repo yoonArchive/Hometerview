@@ -211,7 +211,8 @@ export default {
           id: review.reviewNo,
           title: review.reviewTitle,
           start: review.reviewDate,
-          color: "purple"
+          color: "#99CCFF"
+          // backgroundColor: "#99CCFF"
         });
 
         console.log("콘솔 로그 리뷰 " + review.reviewTitle);
@@ -221,7 +222,7 @@ export default {
           id: 999,
           title: dday.ddayTitle,
           start: dday.ddayDate,
-          color: "orange"
+          color: "#9c7bfd "
         });
         console.log("콘솔 로그 리뷰 " + dday.ddayTitle);
       }
@@ -233,18 +234,7 @@ export default {
   // },
   created() {
     this.checkReview();
-    // this.checkReview();
   }
-  // watch: {
-  //   currentReview(a, b) {
-  //     this.calendarOptions.events = [];
-  //     this.checkReview();
-  //   },
-  //   currentDdays(a, b) {
-  //     this.calendarOptions.events = [];
-  //     this.checkReview();
-  //   }
-  // }
 };
 </script>
 
@@ -292,14 +282,14 @@ export default {
   </div>
 
   <!--모달-->
-  <!-- <button id="button-review" @click="reviewmodal = true">작성하기</button> -->
+
   <ReviewForm
     v-if="reviewmodal"
     @close="reviewmodal = false"
     :currentday="this.currentday"
     action="create"
   >
-    <!-- <h3 slot="header">회고록작성 폼</h3> -->
+    <!--회고록작성 폼 -->
   </ReviewForm>
 
   <ReviewFormEdit
@@ -309,7 +299,7 @@ export default {
     :currentday="this.currentday"
     :id="this.id"
   >
-    <!-- <h3 slot="header">회고록수정 폼</h3> -->
+    <!--회고록수정 폼 -->
   </ReviewFormEdit>
 </template>
 
