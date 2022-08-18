@@ -141,6 +141,7 @@ body {
   background: #f4f4f6;
 }
 .sesstion-member-list-wrapper {
+  overflow-y: scroll;
   margin-top: 30px;
 }
 .accordion {

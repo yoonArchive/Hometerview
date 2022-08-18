@@ -86,48 +86,46 @@
                   class="mic-button-on tooltip-image
 "
                 >
+                  <img
+                    @click="audioONOFF()"
+                    :src="require(`@/assets/images/session/micOn.png`)"
+                    style="height:4vh; margin-left:1.5vh; margin-top:1vh;"
+                  />
                   <span class="tooltip-text">
                     마이크 끄기
                   </span>
+                </div>
+                <div v-else class="mic-button-off tooltip-image">
                   <img
                     @click="audioONOFF()"
                     :src="require(`@/assets/images/session/micOn.png`)"
                     style="height:4vh; margin-left:1.5vh; margin-top:1vh;"
                   />
-                </div>
-                <div v-else class="mic-button-off tooltip-image">
                   <span class="tooltip-text">
                     마이크 켜기
                   </span>
-                  <img
-                    @click="audioONOFF()"
-                    :src="require(`@/assets/images/session/micOn.png`)"
-                    style="height:4vh; margin-left:1.5vh; margin-top:1vh;"
-                  />
                 </div>
               </div>
 
               <!-- 비디오 ONOFF -->
               <div>
                 <div v-if="videoOnOff" class="video-button-on tooltip-image">
-                  <span class="tooltip-text">
+                  <img
+                    @click="videoONOFF()"
+                    :src="require(`@/assets/images/session/video.png`)"
+                    style="height:2.4vh; margin-left: 1.2vh; margin-top: 1.8vh;"
+                  /><span class="tooltip-text">
                     카메라 끄기
                   </span>
-                  <img
-                    @click="videoONOFF()"
-                    :src="require(`@/assets/images/session/video.png`)"
-                    style="height:2.4vh; margin-left: 1.2vh; margin-top: 1.8vh;"
-                  />
                 </div>
                 <div v-else class="video-button-off tooltip-image">
-                  <span class="tooltip-text">
-                    카메라 켜기
-                  </span>
                   <img
                     @click="videoONOFF()"
                     :src="require(`@/assets/images/session/video.png`)"
                     style="height:2.4vh; margin-left: 1.2vh; margin-top: 1.8vh;"
-                  />
+                  /><span class="tooltip-text">
+                    카메라 켜기
+                  </span>
                 </div>
               </div>
               <!-- teachable -->
@@ -136,24 +134,22 @@
                   v-if="teachOnOff"
                   class="teachable-button-on tooltip-image"
                 >
-                  <span class="tooltip-text">
-                    자세교정 끄기
-                  </span>
                   <img
                     :src="require(`@/assets/images/session/teach.png`)"
                     @click="teachONOFF()"
                     style="height:3.8vh; margin-left: 1vh; margin-top: 1.1vh;"
-                  />
+                  /><span class="tooltip-text">
+                    자세교정 끄기
+                  </span>
                 </div>
                 <div v-else class="teachable-button-off tooltip-image">
-                  <span class="tooltip-text">
-                    자세교정 켜기
-                  </span>
                   <img
                     :src="require(`@/assets/images/session/teach.png`)"
                     @click="teachONOFF()"
                     style="height:3.8vh; margin-left:1vh; margin-top: 1.1vh;"
-                  />
+                  /><span class="tooltip-text">
+                    자세교정 켜기
+                  </span>
                 </div>
               </div>
               <!-- 나가기 -->
@@ -218,47 +214,43 @@
                 <div>
                   <!-- <div class="video-button"></div> -->
                   <div v-if="audioOnOff" class="mic-button-on tooltip-image">
-                    <span class="tooltip-text">
+                    <img
+                      @click="audioONOFF()"
+                      :src="require(`@/assets/images/session/micOn.png`)"
+                      style="height:4vh; margin-left:1.5vh; margin-top:1vh;"
+                    /><span class="tooltip-text">
                       마이크 끄기
                     </span>
-                    <img
-                      @click="audioONOFF()"
-                      :src="require(`@/assets/images/session/micOn.png`)"
-                      style="height:4vh; margin-left:1.5vh; margin-top:1vh;"
-                    />
                   </div>
                   <div v-else class="mic-button-off">
-                    <span class="tooltip-text">
-                      마이크 켜기
-                    </span>
                     <img
                       @click="audioONOFF()"
                       :src="require(`@/assets/images/session/micOn.png`)"
                       style="height:4vh; margin-left:1.5vh; margin-top:1vh;"
-                    />
+                    /><span class="tooltip-text">
+                      마이크 켜기
+                    </span>
                   </div>
                 </div>
                 <!-- 비디오 ONOFF -->
                 <div>
                   <div v-if="videoOnOff" class="video-button-on tooltip-image">
-                    <span class="tooltip-text">
+                    <img
+                      @click="videoONOFF()"
+                      :src="require(`@/assets/images/session/video.png`)"
+                      style="height:2.4vh; margin-left: 1.2vh; margin-top: 1.8vh;"
+                    /><span class="tooltip-text">
                       카메라 끄기
                     </span>
-                    <img
-                      @click="videoONOFF()"
-                      :src="require(`@/assets/images/session/video.png`)"
-                      style="height:2.4vh; margin-left: 1.2vh; margin-top: 1.8vh;"
-                    />
                   </div>
                   <div v-else class="video-button-off tooltip-image">
-                    <span class="tooltip-text">
-                      카메라 켜기
-                    </span>
                     <img
                       @click="videoONOFF()"
                       :src="require(`@/assets/images/session/video.png`)"
                       style="height:2.4vh; margin-left: 1.2vh; margin-top: 1.8vh;"
-                    />
+                    /><span class="tooltip-text">
+                      카메라 켜기
+                    </span>
                   </div>
                 </div>
                 <!-- teachable button -->
@@ -267,24 +259,22 @@
                     v-if="teachOnOff"
                     class="teachable-button-on tooltip-image"
                   >
-                    <span class="tooltip-text">
-                      자세교정 끄기
-                    </span>
                     <img
                       :src="require(`@/assets/images/session/teach.png`)"
                       @click="teachONOFF()"
                       style="height:3.8vh; margin-left: 1vh; margin-top: 1.1vh;"
-                    />
+                    /><span class="tooltip-text">
+                      자세교정 끄기
+                    </span>
                   </div>
                   <div v-else class="teachable-button-off tooltip-image">
-                    <span class="tooltip-text">
-                      자세교정 켜기
-                    </span>
                     <img
                       :src="require(`@/assets/images/session/teach.png`)"
                       @click="teachONOFF()"
                       style="height:3.8vh; margin-left:1vh; margin-top: 1.1vh;"
-                    />
+                    /><span class="tooltip-text">
+                      자세교정 켜기
+                    </span>
                   </div>
                 </div>
                 <!-- 나가기 -->
@@ -377,70 +367,68 @@
               <div>
                 <!-- <div class="video-button"></div> -->
                 <div v-if="audioOnOff" class="mic-button-on tooltip-image">
-                  <span class="tooltip-text">
+                  <img
+                    @click="audioONOFF()"
+                    :src="require(`@/assets/images/session/micOn.png`)"
+                    style="height:4vh; margin-left:1.5vh; margin-top:1vh;"
+                  /><span class="tooltip-text">
                     마이크 끄기
                   </span>
-                  <img
-                    @click="audioONOFF()"
-                    :src="require(`@/assets/images/session/micOn.png`)"
-                    style="height:4vh; margin-left:1.5vh; margin-top:1vh;"
-                  />
                 </div>
                 <div v-else class="mic-button-off">
-                  <span class="tooltip-text">
-                    마이크 켜기
-                  </span>
                   <img
                     @click="audioONOFF()"
                     :src="require(`@/assets/images/session/micOn.png`)"
                     style="height:4vh; margin-left:1.5vh; margin-top:1vh;"
-                  />
+                  /><span class="tooltip-text">
+                    마이크 켜기
+                  </span>
                 </div>
               </div>
 
               <!-- 비디오 ONOFF -->
               <div>
                 <div v-if="videoOnOff" class="video-button-on tooltip-image">
-                  <span class="tooltip-text">
+                  <img
+                    @click="videoONOFF()"
+                    :src="require(`@/assets/images/session/video.png`)"
+                    style="height:2.4vh; margin-left: 1.2vh; margin-top: 1.8vh;"
+                  /><span class="tooltip-text">
                     카메라 끄기
                   </span>
-                  <img
-                    @click="videoONOFF()"
-                    :src="require(`@/assets/images/session/video.png`)"
-                    style="height:2.4vh; margin-left: 1.2vh; margin-top: 1.8vh;"
-                  />
                 </div>
                 <div v-else class="video-button-off tooltip-image">
-                  <span class="tooltip-text">
-                    카메라 켜기
-                  </span>
                   <img
                     @click="videoONOFF()"
                     :src="require(`@/assets/images/session/video.png`)"
                     style="height:2.4vh; margin-left: 1.2vh; margin-top: 1.8vh;"
-                  />
+                  /><span class="tooltip-text">
+                    카메라 켜기
+                  </span>
                 </div>
               </div>
               <div>
-                <div v-if="teachOnOff" class="teachable-button-on tooltip-image">
-                  <span class="tooltip-text">
-                    자세교정 끄기
-                  </span>
+                <div
+                  v-if="teachOnOff"
+                  class="teachable-button-on tooltip-image"
+                >
                   <img
                     :src="require(`@/assets/images/session/teach.png`)"
                     @click="teachONOFF()"
                     style="height:3.8vh; margin-left: 1vh; margin-top: 1.1vh;"
                   />
+                  <span class="tooltip-text">
+                    자세교정 끄기
+                  </span>
                 </div>
                 <div v-else class="teachable-button-off tooltip-image">
-                  <span class="tooltip-text">
-                    자세교정 켜기
-                  </span>
                   <img
                     :src="require(`@/assets/images/session/teach.png`)"
                     @click="teachONOFF()"
                     style="height:3.8vh; margin-left:1vh; margin-top: 1.1vh;"
-                  />
+                  /><span class="tooltip-text">
+                    자세교정 켜기
+                  </span>
                 </div>
               </div>
               <!-- 나가기 -->
@@ -679,11 +667,14 @@
 .tooltip-text {
   display: none;
   position: absolute;
-  max-width: 200px;
+  bottom: 150%;
+  left: 50%;
+  margin-left: -60px;
+  width: 120px;
   border: 1px solid;
   border-radius: 5px;
   padding: 5px;
-  font-size: 20px;
+  font-size: 16px;
   color: white;
   background: black;
   z-index: 10;
