@@ -1,6 +1,6 @@
 <template>
   <div v-if="streamManager" style="position: relative;">
-    <div class="large-video-name" v-if="mainStream">{{ clientData }}</div>
+    <div class="large-video-name" v-if="mainStream"></div>
     <div class="small-video-name" v-else>{{ clientData }}</div>
     <ov-video
       :stream-manager="streamManager"

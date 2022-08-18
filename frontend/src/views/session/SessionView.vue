@@ -114,6 +114,7 @@
                   />
                 </div>
               </div>
+              <!-- teachable -->
               <div>
                 <div v-if="teachOnOff" class="teachable-button-on">
                   <img
@@ -294,6 +295,7 @@
                   :stream-manager="publisher"
                   :mainStream="false"
                   :interviewMode="true"
+                  :checkId="myUserId"
                   @click="updateMainVideoStreamManager(publisher)"
                   style="height:15vh;"
                 />
@@ -470,7 +472,7 @@
                 <div>
                   <div
                     class="row"
-                    style="margin-right:3.5vh; margin-top:1.2vh;"
+                    style="margin-right:3.5vh; margin-top:0.7vh;"
                   >
                     <div
                       class="col"
@@ -887,20 +889,21 @@ export default {
           const postureColor = "";
           await this.needToFixPosture(postureColor);
         } else if (className === "left" && pred > 0.9) {
-          const postureColor = "#8c1d1d";
+          const postureColor = "#b93131";
           console.log("left");
           await this.needToFixPosture(postureColor);
         } else if (className === "right" && pred > 0.9) {
-          const postureColor = "#8c1d1d";
+          const postureColor = "#b93131";
           console.log("right");
           await this.needToFixPosture(postureColor);
         }
       }
     },
     async tmStop() {
-      await this.needToFixPosture("");
-      await this.stopToFixPosture();
-      this.webcam = null;
+      this.webcam = await null;
+      setTimeout(() => {
+        this.stopToFixPosture();
+      }, 500);
     },
     async findIndex(userId) {
       const members = this.studySpaceDetail.studyJoins;
@@ -925,14 +928,14 @@ export default {
       await this.sendUpdate(interviewUserFixed);
     },
 
-    recordONOFF() {
+    async recordONOFF() {
       if (this.recordOnOff) {
         this.recordingStopButton();
         this.recordOnOff = !this.recordOnOff;
         console.log(this.recordOnOff);
       } else {
+        await alert("녹화를 시작하겠습니다.");
         this.recordingStartButton();
-
         this.recordOnOff = !this.recordOnOff;
         console.log(this.recordOnOff);
       }
@@ -945,7 +948,7 @@ export default {
       this.publisher.publishAudio(!this.audioOnOff);
       this.audioOnOff = !this.audioOnOff;
     },
-    teachONOFF() {
+    async teachONOFF() {
       if (this.teachOnOff) {
         //stop
         this.tmStop();
@@ -953,6 +956,7 @@ export default {
         console.log(this.teachOnOff);
       } else {
         //start
+        await alert("자세교정 모드를 실행하겠습니다.");
         this.init();
         this.teachOnOff = !this.teachOnOff;
         console.log(this.teachOnOff);
