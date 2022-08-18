@@ -1,6 +1,11 @@
 <template>
   <div class="container">
-    <button class="TTS-mode-btn" @click="changeTTSModevue">
+    <button
+      v-if="myJoinType === 'LEADER'"
+      class="TTS-mode-btn"
+      @click="changeTTSModevue"
+    >
+      <!-- v-if="myJoinType === 'LEADER'" -->
       <template v-if="!isTTSMode">
         TTS 모드 켜기
       </template>
@@ -24,6 +29,9 @@ import CommonQuestionItem from "./CommonQuestionItem.vue";
 
 export default {
   name: "StudyMemberList",
+  props: {
+    myJoinType: String
+  },
   components: {
     CommonQuestionItem
   },
