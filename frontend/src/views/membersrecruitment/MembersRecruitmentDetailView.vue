@@ -20,7 +20,7 @@
     </header>
     <section id="banner">
       <div class="row">
-        <span class="image object col-6">
+        <span class="image object col-4">
           <img :src="image" alt="" class="stdImg" />
         </span>
         <div class="content col">
@@ -230,7 +230,7 @@ blockquote {
   flex-shrink: 0;
   display: block;
   margin: 0 0 2em 4em;
-  width: 50%;
+  /* width: 50%; */
 }
 #banner .image img {
   height: 100%;

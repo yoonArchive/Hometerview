@@ -24,14 +24,13 @@
                 <td>{{ (a.saveDate) }}</td>
               </th>
               <th>
-                <td><a
-          class="btn btn-primary"
+                <td>
+        <button class="id"
           data-bs-toggle="modal"
           href="#exampleModalToggle"
           role="button"
-
-          >보기</a
-        ></td>
+          id="see">보기</button>
+        </td>
               </th>
 
 
@@ -104,6 +103,9 @@ export default {
 
 
 <style scoped>
+.id{
+  height: 100%;
+}
 .container {
   display: flex;
   height: 100%;
@@ -117,19 +119,10 @@ export default {
   text-align: center;
 }
 .table{
-  /* text-align: center; */
-  /* align-items: center; */
+
   width: 1000px;
 }
-th td{
-  /* text-align: center; */
-  /* padding: 30px; */
 
-  /* margin-left: auto;
-  margin-right: auto; */
-  /* margin-top: 40px; */
-
-}
 .table-cocover{
   display : flex;
   justify-content: center;
