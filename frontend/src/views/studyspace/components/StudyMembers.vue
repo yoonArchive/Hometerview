@@ -17,7 +17,12 @@
         }"
         style="color:#6c4bcb; font-size:3.4vh;"
       >
-        <i class="input-icon uil uil-file-alt" style="font-size:3.7vh;"></i>
+        <i
+          class="input-icon uil uil-file-alt coverletter-icon"
+          style="font-size:3.7vh;"
+        >
+          <span class="tooltip-text">자소서를 등록, 확인 할 수 있습니다.</span>
+        </i>
       </router-link>
     </td>
     <td>
@@ -75,5 +80,21 @@ td {
 }
 tr:hover {
   background-color: rgba(161, 104, 253, 0.05) !important;
+}
+.tooltip-text {
+  display: none;
+  position: absolute;
+  max-width: 200px;
+  border: 1px solid;
+  border-radius: 5px;
+  padding: 5px;
+  font-size: 20px;
+  color: white;
+  background: deeppink;
+  z-index: 10;
+}
+
+.coverletter-icon:hover .tooltip-text {
+  display: block;
 }
 </style>

@@ -18,7 +18,8 @@ export default {
 
   props: {
     question: Object,
-    questionIndex: Number
+    questionIndex: Number,
+    myJoinType: String
   },
   data() {
     return {};
@@ -29,7 +30,9 @@ export default {
   methods: {
     ...mapActions(["changettsrequest"]),
     playttsquestion(data) {
-      if (this.isTTSMode) {
+      if (this.myJoinType != "LEADER") {
+        alert("팀장만 TTS 기능을 사용가능합니다.");
+      } else if (this.isTTSMode) {
         this.changettsrequest(data);
       } else {
         alert("TTS 모드를 켜주세요!");
