@@ -32,7 +32,9 @@
                 data-bs-target="#studyUpdateModal"
                 data-bs-whatever="@mdo"
                 style="font-size:20px;"
-              ></i>
+              >
+                <span class="tooltip-text">스터디 정보 수정</span>
+              </i>
             </div>
             <div class="info">
               <pre class="detail">{{ studySpaceDetail.stdDetail }}</pre>
@@ -158,7 +160,7 @@
                     data-bs-dismiss="modal"
                     @click="initStudy()"
                   >
-                    수정
+                    스터디 공지사항 수정
                   </button>
                   <button
                     type="button"
@@ -185,7 +187,9 @@
             data-bs-target="#exampleModal"
             data-bs-whatever="@mdo"
             style="font-size:20px;"
-          ></i>
+          >
+            <span class="tooltip-text">스터디 공지사항 수정</span>
+          </i>
         </h4>
         <div
           class="modal fade"
@@ -715,5 +719,23 @@ table.alt tfoot {
 }
 i:hover {
   color: #653fd3;
+}
+
+.tooltip-text {
+  display: none;
+  position: absolute;
+  max-width: 200px;
+  border: 1px solid;
+  border-radius: 5px;
+  padding: 5px;
+  font-size: 20px;
+  color: black;
+  background: #f6f2ff;
+  z-index: 10;
+  border-color: #653fd3;
+}
+
+.uil-edit:hover .tooltip-text {
+  display: inline;
 }
 </style>
