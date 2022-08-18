@@ -538,4 +538,8 @@ input[type="text"] {
   font-size: 0.8rem;
   margin-right: 15px;
 }
+.form-check-input:checked {
+  background-color: #9c7bfd;
+  border-color: #9c7bfd;
+}
 </style>
