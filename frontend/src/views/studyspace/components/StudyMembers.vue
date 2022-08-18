@@ -17,7 +17,7 @@
         }"
         style="color:#6c4bcb; font-size:3.4vh;"
       >
-        <i class="input-icon uil uil-file-alt" style="font-size:30px"></i>
+        <i class="input-icon uil uil-file-alt" style="font-size:3.7vh;"></i>
       </router-link>
     </td>
     <td>
