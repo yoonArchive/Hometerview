@@ -244,7 +244,7 @@ export default {
     logout({ getters, commit, dispatch }) {
       if (getters.isLoggedIn) {
         dispatch("removeToken");
-        alert("성공적으로 logout!");
+        alert("성공적으로 로그아웃 되었습니다.");
         commit("CLEER_CURRENT_USER");
         commit("SET_PASSWORD_CONFIRM", false);
         router.push({ name: "login" });
@@ -393,6 +393,7 @@ export default {
       const emailId = splitedEmail[0];
       const emailaddress = splitedEmail[1];
       const emailForSubmit = `?userEmail=${emailId}%40${emailaddress}`;
+      alert("이메일 검증 중입니다. 잠시만 기다려주세요");
       axios({
         url: api_url.accounts.emailDuplicateCheck() + emailForSubmit,
         method: "get"

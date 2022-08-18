@@ -29,6 +29,7 @@
           data-bs-toggle="modal"
           href="#exampleModalToggle"
           role="button"
+
           >보기</a
         ></td>
               </th>
@@ -40,6 +41,7 @@
           aria-hidden="true"
           aria-labelledby="exampleModalToggleLabel"
           tabindex="-1"
+
         >
           <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
@@ -52,10 +54,12 @@
                   class="btn-close"
                   data-bs-dismiss="modal"
                   aria-label="Close"
+                 @click="isActive==false"
                 ></button>
               </div>
               <div class="modal-body">
-                <video controls height="400" :src="a.videoUrl"></video>
+
+                <video v-if="isActive" controls height="400" :src="a.videoUrl"></video>
               </div>
             </div>
           </div>
@@ -76,7 +80,8 @@ export default {
   components: {},
   data() {
     return {
-      headers:['번호','스터디 이름','스터디 내용','녹화 날짜','영상']
+      headers: ['번호', '스터디 이름', '스터디 내용', '녹화 날짜', '영상'],
+      isActive: true
     };
   },
 
@@ -85,28 +90,10 @@ export default {
   },
   methods: {
     ...mapActions(["getRecordings"]),
-    timeForToday(value) {
-        const today = new Date();
-        const timeValue = new Date(value);
+    kim() {
+      console.log('이즈액티브'+this.isActive)
+    }
 
-        const betweenTime = Math.floor((today.getTime() - timeValue.getTime()) / 1000 / 60);
-        if (betweenTime < 1) return '방금 전';
-        if (betweenTime < 60) {
-            return `${betweenTime}분 전`;
-        }
-
-        const betweenTimeHour = Math.floor(betweenTime / 60);
-        if (betweenTimeHour < 24) {
-            return `${betweenTimeHour}시간 전`;
-        }
-
-        const betweenTimeDay = Math.floor(betweenTime / 60 / 24);
-        if (betweenTimeDay < 365) {
-            return `${betweenTimeDay}일 전`;
-        }
-
-        return `${Math.floor(betweenTimeDay / 365)}년 전`;
- }
   },
   created() {
     this.getRecordings();
@@ -134,12 +121,13 @@ export default {
   /* align-items: center; */
   width: 1000px;
 }
-th{
+th td{
   /* text-align: center; */
   /* padding: 30px; */
 
   /* margin-left: auto;
   margin-right: auto; */
+  /* margin-top: 40px; */
 
 }
 .table-cocover{
@@ -148,7 +136,8 @@ th{
   align-items: center;
 }
 .table-cover{
-  width : 80%;
+  width : 100%;
   padding-top : 50px;
 }
+
 </style>
