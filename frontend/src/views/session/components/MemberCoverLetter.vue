@@ -117,6 +117,7 @@ export default {
 <style scoped>
 .session-cover-letter-title {
   margin-top: 10px;
+  text-align: center;
 }
 .no-cover-letter-wrapper {
   border: 1px solid #653fd3;
@@ -141,8 +142,7 @@ body {
   background: #f4f4f6;
 }
 .sesstion-member-list-wrapper {
-  overflow-y: scroll;
-  margin-top: 30px;
+  margin-top: 40px;
 }
 .accordion {
   word-break: break-all;
@@ -161,7 +161,7 @@ body {
   padding: 20px;
   cursor: pointer;
   user-select: none;
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 2px;
