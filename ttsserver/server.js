@@ -26,7 +26,11 @@ app.post('/tts/ttsrequest', async (req, res) => {
   const text = req.body.text;
   const request = {
     input: { text: text },
-    voice: { languageCode: 'ko-KR', ssmlGender: 'NEUTRAL' },
+    voice: {
+      languageCode: 'ko-KR',
+      ssmlGender: 'MALE',
+      name: 'ko-KR-Wavenet-D',
+    },
     audioConfig: { audioEncoding: 'MP3' },
   };
   const [response] = await client.synthesizeSpeech(request);
