@@ -200,6 +200,8 @@ export default {
     async saveStudyCoverLetterV(selresume) {
       this.SET_SELECTED_QUESTION_NUM(0);
       const realindex = parseInt(this.studentindex);
+      console.log(selresume);
+      console.log(this.resumeContents);
       if (selresume != 0) {
         const data = {
           resumeNo: selresume,
