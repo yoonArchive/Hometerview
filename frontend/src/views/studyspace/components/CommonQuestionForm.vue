@@ -2,7 +2,7 @@
   <div class="container" style="margin-top:1vh;">
     <form @submit.prevent="onSubmit" class="comment-list-form">
       <!-- <input class="comment-input" type="textarea"  v-model="content" required> -->
-      <div id="check">
+      <div id="check" style="margin-bottom: 0.6vh;">
         <input
           class="form-check-input"
           type="radio"
