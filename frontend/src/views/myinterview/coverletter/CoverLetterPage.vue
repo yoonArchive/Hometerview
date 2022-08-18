@@ -3,27 +3,23 @@
     <div class="my-top">
       <div class="my-left">
         <div class="review-1">
-          <h3>자소서 개수 {{ resumeContents.length }}</h3>
-          <h3 id="icon">
-            <span @click="this.addNewResume()">
-              <font-awesome-icon icon="fa-solid fa-square-plus" />
-            </span>
-          </h3>
-          <!-- <div v-for="(item, index) in resumeContents.length" :key="index">
-            <ul>
-              <li id="inner-table">
-                <router-link
-                  :to="{
-                    name: 'coverletter',
-                    params: { resumeindex: item - 1 }
-                  }"
-                  id="cover-router"
+          <h3>자기소개서 개수 : {{ resumeContents.length }}</h3>
+          <div class="row">
+            <h3 id="icon" class="col" style="width:30vh;">
+              <span @click="this.addNewResume()">
+                <font-awesome-icon
+                  icon="fa-solid fa-square-plus"
+                  style="height:4.3vh; color:#7a5fc9;"
+                />
+                <div
+                  class="col"
+                  style="font-family: '티머니 둥근바람'; font-size: 2.1vh;font-weight: 500; margin-top: 0.01vh;"
                 >
-                  <div>{{ resumeContents[item - 1].resumeTitle }}</div>
-                </router-link>
-              </li>
-            </ul>
-          </div> -->
+                  자기소개서를 추가해보세요.
+                </div>
+              </span>
+            </h3>
+          </div>
         </div>
         <main>
           <ol class="gradient-list">
@@ -281,7 +277,7 @@ ol.gradient-list {
   display: flex;
   flex-direction: row;
   /* align-items: center; */
-  margin-left: 170px;
+  /* margin-left: 170px; */
   /* margin-right: 50px; */
 }
 .mypage-banner {
