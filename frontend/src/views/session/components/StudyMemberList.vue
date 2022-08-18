@@ -72,6 +72,7 @@ export default {
   line-height: 45px;
 }
 .cover-letter-list {
+  overflow-y: auto;
   height: 80vh;
 }
 .study-member-list {
