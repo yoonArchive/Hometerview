@@ -51,12 +51,15 @@
           <div class="col-8">
             <div
               class="member-cover-letter-comname"
-              v-if="studySpaceDetail.comName != null"
+              v-if="
+                studySpaceDetail.comName != null &&
+                  studySpaceDetail.comName != ''
+              "
             >
               [{{ studySpaceDetail.comName }}]
             </div>
             <div class="member-cover-letter-stdname">
-              {{ studySpaceDetail.stdName }} 자소서
+              {{ studySpaceDetail.stdName }}
             </div>
           </div>
           <div class="col" v-if="isMyInfo">

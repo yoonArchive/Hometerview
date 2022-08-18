@@ -3,7 +3,7 @@
     <div class="row" v-if="!isChange">
       <div class="row">
         <div class="member-cover-letter-stdname">
-          {{ resumeContents[resumeindex].resumeTitle }} 자소서
+          {{ resumeContents[resumeindex].resumeTitle }}
         </div>
       </div>
       <div class="row">

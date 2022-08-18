@@ -16,7 +16,7 @@
           params: { studentindex: studentindex }
         }"
       >
-        <i class="input-icon uil uil-file-alt"></i>
+        <i class="input-icon uil uil-file-alt" style="font-size:30px"></i>
       </router-link>
     </td>
     <td>
