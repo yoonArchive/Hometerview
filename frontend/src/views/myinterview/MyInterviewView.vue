@@ -9,14 +9,12 @@
       </router-link>
       <router-link :to="{ name: 'coverPage' }" id="word">
         <button id="mypage-button">
-          <!-- <i class="input-icon uil uil-shield-check"></i> -->
           <font-awesome-icon icon="fa-solid fa-file" />&nbsp; &nbsp;
           <span>자기소개서</span>
         </button>
       </router-link>
       <router-link :to="{ name: 'recordingPage' }" id="word">
         <button id="mypage-button">
-          <!-- <i class="input-icon uil uil-exclamation-triangle"></i> -->
           <font-awesome-icon icon="fa-solid fa-tape" />&nbsp; &nbsp;
           <span>녹화</span>
         </button>
@@ -26,115 +24,6 @@
       <router-view></router-view>
     </div>
   </div>
-  <!--
-<div class="container">
-  <div class="my-top">
-
-
-
-    <div class="my-left">
-      <div class="review-1">
-        <div class="cover-letterL">자소서 개수 {{resumeContents.length}}</div>
-        <button @click="addResume" id="cover-Pbutton">+</button>
-        <button id="cover-Mbutton">-</button>
-        <div v-for="(item, index) in resumeContents.length" :key="index">
-          <ul>
-          <li id="inner-table"><router-link :to="{name : 'coverletter', params : {'resumeindex' : item - 1}}" id="cover-router">
-            <div>{{resumeContents[item-1].resumeTitle}}</div>
-          </router-link>
-          </li>
-        </ul>
-        </div>
-      </div>
-
-
-
-
-      <div class="review-3 ">
-        <button id="button-review" @click="showModal = true"><p id="a">DDAY 작성하기</p></button>
-          <div class="card " style="width: 10rem;" v-for="(ddays, index) in currentDdays" :key="index">
-            <div class="card-body">
-              <h5 class="card-title">{{ddays.ddayTitle}}</h5>
-              <h6 class="card-subtitle mb-2 text-muted">{{ddays.ddayDate}}</h6>
-              <p  v-if="(restday[index] < 0)" class="card-text-1">D-DAY {{restday[index]}} </p>
-              <p  v-else class="card-text-2">D-DAY {{restday[index]}} </p>
-              <button @click="showModalE(ddays.ddayNo), getDdayDetail(ddays.ddayNo)">수정</button>
-              <button @click="deleteDDAY(ddays.ddayNo)">삭제</button>
-            </div>
-          </div>
-
-
-          <div v-for="(ddays, index) in currentDdays" :key="index">
-          <ul>
-          <li id="inner-table">
-            {{ddays.ddayTitle}} {{restday[index]}}
-             <button @click="showModalE(ddays.ddayNo), getDdayDetail(ddays.ddayNo)">수정</button>
-              <button @click="deleteDDAY(ddays.ddayNo)">삭제</button>
-          </li>
-        </ul>
-        </div>
-      </div>
-    </div>
-     <div class="calendar">
-    <StudyCalendar :reviews="reviewContents" :dday="currentDdays"></StudyCalendar>
-  </div>
-
-    <ModalEdit v-if="openedModal !== null" @close="openedModal = null" :dday="this.dday" :key="this.openedModal" >
-     <h3 slot="header">dday 수정</h3>
-    </ModalEdit>
-
-
-
-     <Modaldday v-if="showModal" @close="showModal = false" :dday="currentDdays">
-
-      <h3 slot="header">dday 생성</h3>
-     </Modaldday>
-  </div>
-  <hr>
-  <div class="review-2">
-    <h1>회고록</h1>
-
-      <table class="table">
-          <thead class="table-head">
-            <tr>
-              <th scope="col" v-for="(header,idx) in headers" :key="idx"> {{ header }}</th>
-            </tr>
-          </thead>
-          <tbody class="t-body">
-            <tr v-for="(reviews, index) in reviewContents" :key="index" >
-              <th scope="row" >
-                <td>{{ reviews.reviewNo }}</td>
-              </th>
-              <th>
-                <td>
-                   <router-link :to="{name : 'review', params : {'reviewNo' : reviews.reviewNo}}">
-                      {{reviews.reviewTitle}}
-                  </router-link>
-                </td>
-              </th>
-              <th>
-                <td>{{ reviews.reviewDate}}</td>
-              </th>
-              <th>
-                <td><p v-if="reviews.reviewType==='FAKE'">혼자</p>
-                    <p v-else>단체</p>
-                </td>
-              </th>
-            </tr>
-          </tbody>
-        </table>
-        <div class="buttonbundle">
-
-      <button id="button-review" @click="showReviewForm = true">작성하기</button>
-
-       <ReviewForm v-if="showReviewForm" @close="showReviewForm = false" :review="reviewContents" action="create">
-        </ReviewForm>
-
-    </div>
-  </div>
-  </div>
-
--->
 </template>
 
 <script>
@@ -251,7 +140,6 @@ export default {
   display: flex;
   flex-direction: row;
   /* align-items: center; */
-  margin-left: 170px;
   /* margin-right: 50px; */
 }
 .mypage-banner {

@@ -371,7 +371,7 @@ h6 span {
   padding: 0;
   margin: 10px auto;
   cursor: pointer;
-  background-color: #3b2677;
+  background-color: #1d1d21;
 }
 .checkbox:checked + label:before,
 .checkbox:not(:checked) + label:before {
@@ -381,7 +381,7 @@ h6 span {
   height: 36px;
   border-radius: 50%;
   color: #ffffff;
-  background-color: #3b2677;
+  background-color: #7a5fc9;
   font-family: "unicons";
   content: "\eb4f";
   z-index: 20;
@@ -420,7 +420,7 @@ h6 span {
 .card-back {
   width: 100%;
   height: 100%;
-  background-color: #ececec;
+  background-color: #e5e5e7;
   /* background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/1462889/pat.svg"); */
   background-position: bottom center;
   background-repeat: no-repeat;
@@ -471,7 +471,7 @@ h6 span {
   letter-spacing: 0.5px;
   outline: none;
   color: #ffffff;
-  background-color: #1f2029;
+  background-color: #1d1d21;
   border: none;
   -webkit-transition: all 200ms linear;
   transition: all 200ms linear;
@@ -541,7 +541,7 @@ h6 span {
   font-size: 24px;
   line-height: 48px;
   text-align: left;
-  color: #d76d77;
+  color: #7a5fc9;
   -webkit-transition: all 200ms linear;
   transition: all 200ms linear;
 }
@@ -615,7 +615,7 @@ h6 span {
   -ms-flex-pack: center;
   text-align: center;
   border: none;
-  background-color: #653fd3;
+  background-color: #7a5fc9;
   color: #ffffff;
   box-shadow: 0 8px 24px 0 rgba(255, 235, 167, 0.2);
 }

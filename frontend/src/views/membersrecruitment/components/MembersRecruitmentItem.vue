@@ -92,11 +92,12 @@ export default {
 .completed {
   background: #4b4b4b;
   color: white;
-  border-radius: 15px;
+  border-radius: 1.8vh;
   width: 7em;
   margin-top: 8px;
   padding: 6px;
   font-size: 16px;
+  border-radius: 0.9vh;
 }
 .ing {
   background: #5fc971;
@@ -106,6 +107,7 @@ export default {
   margin-top: 8px;
   padding: 6px;
   font-size: 16px;
+  border-radius: 0.9vh;
 }
 .text-muted {
   font-size: 15px;

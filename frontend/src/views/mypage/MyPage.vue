@@ -43,9 +43,6 @@ export default {
 .mypage {
   display: flex;
   flex-direction: row;
-  /* align-items: center; */
-  margin-left: 170px;
-  /* margin-right: 50px; */
 }
 .mypage-banner {
   display: flex;

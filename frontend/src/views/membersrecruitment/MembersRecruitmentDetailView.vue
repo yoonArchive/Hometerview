@@ -5,9 +5,10 @@
         <span
           v-if="recruitDetail.recruitStatus === '모집 중'"
           class="status ing"
+          style="border-radius: 1.5vh"
           >{{ recruitDetail.recruitStatus }}</span
         >
-        <span v-else class="status completed">{{
+        <span v-else class="status completed" style="border-radius: 1.5vh">{{
           recruitDetail.recruitStatus
         }}</span>
         {{ recruitDetail.recruitTitle }}
@@ -30,7 +31,8 @@
               ><span class="title">{{ recruitDetail.stdName }}</span>
             </div>
             <div class="info">
-              <span class="detail">{{ recruitDetail.stdDetail }}</span>
+              <pre class="detail">{{ recruitDetail.stdDetail }}</pre>
+              <!-- <span class="detail">{{ recruitDetail.stdDetail }}</span> -->
             </div>
           </blockquote>
 
@@ -46,7 +48,11 @@
               <span class="detail">⏰ &nbsp; 진행 일자 : </span>
               <span>{{ recruitDetail.stdDay }}</span>
             </div>
-            <div v-if="recruitDetail.recruitStatus === '모집 중'" class="info">
+            <div
+              v-if="recruitDetail.recruitStatus === '모집 중'"
+              class="info"
+              style="border-radius: 1.5vh;"
+            >
               <span class="detail">🤝 &nbsp; 모집인원 : </span>
               <span
                 >{{ recruitDetail.count }}/{{ recruitDetail.stdLimit }}</span
@@ -55,7 +61,10 @@
           </div>
           <div>
             <div v-if="applyType === 'LEADER'">
-              <div v-if="recruitDetail.recruitStatus === '모집 중'">
+              <div
+                v-if="recruitDetail.recruitStatus === '모집 중'"
+                style="border-radius: 1.5vh;"
+              >
                 <button @click="studyStart()">스터디 시작</button>
                 <button @click="moveToUpdate">수정</button>
                 <button @click="deleteRecruitmentDetail([recruitNo])">
