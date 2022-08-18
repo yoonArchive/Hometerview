@@ -346,7 +346,7 @@ export default {
   text-align: center;
   font-weight: bold;
   font-size: 18px;
-  border-radius: 0.6vh;
+  border-radius: 0.5vh;
 }
 .select input[type="radio"] + label {
   background-color: #fff;
