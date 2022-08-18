@@ -74,6 +74,10 @@ export default {
 };
 </script>
 <style scoped>
+.container {
+  max-height: 700px;
+  overflow-y: scroll;
+}
 .comments-from {
   margin-top: 40px;
   display: flex;
