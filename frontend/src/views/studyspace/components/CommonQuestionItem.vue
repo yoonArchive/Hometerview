@@ -11,24 +11,17 @@
         />
         <p class="attribution" v-if="name">by {{ name }}</p>
         <p class="attribution" v-else>
-          by 나간 회원입니다.
+          탈퇴 회원
         </p>
       </div>
-      <!-- {{ currentUser.Img }} -->
-
       <div class="comment-body">
         <div class="text">
-
           <div>
           <p v-if="commonquestion.questionType == 'JOB'">
             <p id="a1">[직무]</p> {{ commonquestion.contents }}
-
-
           </p>
-
           <p v-else><p id="a2">[인성]</p> {{ commonquestion.contents }}</p>
           </div>
-
           <div>
           <span v-if="currentUser.userId === userId && !isEditing" id="incons">
             <span id="icon" @click="switchIsEditing">
@@ -43,17 +36,6 @@
             </span>
           </span>
           </div>
-          <!-- <p class="attribution" v-if="name">by {{ name }}</p>
-            <p class="attribution" v-else>
-              by 나간 회원입니다.
-            </p>
-          </div>
-          <div v-else>
-            {{ commonquestion.questionNo }}. 인성 면접
-            <p class="attribution" v-if="name">by {{ name }}</p>
-            <p class="attribution" v-else>
-              by 나간 회원입니다.
-            </p> -->
         </div>
           <span v-if="isEditing" id="edit">
         <div class="edit">
@@ -81,7 +63,6 @@
               value="FREE"
               v-model="payload.questionType"
             />
-
             <label for="questionType">인성 면접</label>
              &nbsp;
           <!-- <div id="edit-bottom"> -->
@@ -93,7 +74,6 @@
             </span>
             </div>
           <!-- </div> -->
-
         </div>
         </span>
       </div>
@@ -122,9 +102,8 @@ export default {
       },
       // questionNo: this.commonquestion.questionNo,,
       name: "",
-      userImg: "",
+      userImg: require("../../../assets/images/profile.png"),
       userId: ""
-      //profile: require("../../../assets/images/profile.png")
     };
   },
   computed: {
@@ -157,7 +136,7 @@ export default {
       for (const study of this.studySpaceDetail.studyJoins) {
         if (study.user.userNo === this.commonquestion.writerNo) {
           this.name = study.user.userName;
-          this.userImag = study.user.userImg;
+          this.userImg = study.user.userImg;
           this.userId = study.user.userId;
           console.log(study);
         }
@@ -166,11 +145,7 @@ export default {
   },
   mounted() {
     this.checkUser();
-    if (this.currentUser.userImg == null) {
-      this.userImg = require("../../../assets/images/profile.png");
-    } else {
-      this.userImg = this.currentUser.userImg;
-    }
+    if (this.userImg == null) this.userImg = require("../../../assets/images/profile.png");
   },
 
   created() {
