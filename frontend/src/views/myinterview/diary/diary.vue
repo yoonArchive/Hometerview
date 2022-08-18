@@ -288,7 +288,7 @@ function hideSpinner() {
   cursor: pointer;
 }
 #icon:hover{
-  color: #653FD3;
+  color: #ffffff;
 }
 #icon:active{
 

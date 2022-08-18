@@ -2,6 +2,9 @@
   <div class="container select-member">
     <!-- interviewee :{{ interviewUser }} <br /> -->
     <div>
+      <div style="margin: 1.5vh; font-size: 2vh; font-weight: 500;">
+        면접자를 지정해주세요
+      </div>
       <div
         v-for="(member, index) in studySpaceDetail.studyJoins"
         :key="member.joinNo"
@@ -22,21 +25,6 @@
           </button>
         </div>
       </div>
-
-      <!-- <div class="d-flex justify-content-center">
-            <form @submit.prevent="intervieweeApply()">
-              <div>
-                <select-interviewee-detail
-                  v-for="(member, index) in studySpaceDetail.studyJoins"
-                  :key="member.joinNo"
-                  :member="member"
-                  :studentindex="index"
-                ></select-interviewee-detail>
-              </div>
-              <button>Apply</button>
-            </form>
-
-          </div> -->
     </div>
   </div>
 </template>
