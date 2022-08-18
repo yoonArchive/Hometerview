@@ -2,7 +2,7 @@
   <div>
     <div
       class="d-flex justify-content-between"
-      style="margin-top:10vh; margin-bottom:10vh;"
+      style="margin-top:5vh; margin-bottom:5vh;"
     >
       <div class="memeber">
         <img

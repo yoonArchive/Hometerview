@@ -62,8 +62,8 @@ export default {
   background-color: #c4c1c9;
 }
 #msgs {
-  font-size: 15px;
-  margin: 2px;
+  font-size: 1.53vh;
+  margin: 0.4vh;
   padding-left: 5px;
   padding-right: 5px;
 }
@@ -78,8 +78,8 @@ export default {
   text-align: left;
   display: inline-block;
   margin-left: 5vh;
-  margin-top: 1.5vh;
-  margin-bottom: 1vh;
+  margin-top: 1vh;
+  margin-bottom: 0.5vh;
   box-shadow: 0px 0px 7px 1px rgba(0, 0, 0, 0.2);
 }
 .my-chat {
@@ -90,9 +90,9 @@ export default {
   width: fit-content;
   text-align: left;
   display: inline-block;
-  margin-left: 1vh;
+  margin-left: 0.5vh;
   margin-top: 1.5vh;
-  margin-bottom: 1vh;
+  margin-bottom: 0.5vh;
   box-shadow: 0px 0px 7px 1px rgba(0, 0, 0, 0.2);
 }
 .my-chatbox {
