@@ -15,13 +15,13 @@
         />
       </div>
       <div class="member-cover-letter-contents">
-        <div class="cover-letter-question">
+        <pre class="cover-letter-question">
           {{ resumeQuestionList[selectedQuestionNum].question }}
-        </div>
+        </pre>
         <hr style="border-top: 3px dashed #663399;" />
-        <div class="cover-letter-answer">
+        <pre class="cover-letter-answer">
           {{ resumeQuestionList[selectedQuestionNum].answer }}
-        </div>
+        </pre>
       </div>
     </div>
   </div>
@@ -113,10 +113,14 @@ export default {
   background-color: white;
 }
 .cover-letter-question {
-  font-size: 15px;
+  font-family: "티머니 둥근바람";
+  font-size: 20px;
+  white-space: pre-line;
 }
 .cover-letter-answer {
-  font-size: 15px;
+  font-family: "티머니 둥근바람";
+  font-size: 20px;
   word-break: break-all;
+  white-space: pre-line;
 }
 </style>

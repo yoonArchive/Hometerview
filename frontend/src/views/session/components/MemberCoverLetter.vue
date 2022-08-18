@@ -9,20 +9,21 @@
       <div class="wrapper" style="margin-top:20px">
         <div v-for="(item, index) in resumeQuestionList.length" :key="index">
           <div class="accordion {'active': index == 0}">
-            <div
+            <pre
               class="accordion_tab {'active': index == 0}"
               @click="clicktabs(item, $event)"
+              style="white-space: pre-line;"
             >
               {{ resumeQuestionList[index].question }}
               <div class="accordion_arrow">
                 <img src="https://i.imgur.com/PJRz0Fc.png" alt="arrow" />
               </div>
-            </div>
+            </pre>
             <div class="accordion_content">
               <div class="accordion_item">
-                <p style="font-size:15px">
+                <pre style="font-size:15px; white-space: pre-line;">
                   {{ resumeQuestionList[index].answer }}
-                </p>
+                </pre>
               </div>
               <div class="accordion_item">
                 <p class="item_title">예상 질문 리스트</p>

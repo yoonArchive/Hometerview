@@ -85,12 +85,12 @@ tr:hover {
   display: none;
   position: absolute;
   max-width: 200px;
-  border: 1px solid;
+  border: 1px solid #653fd3;
   border-radius: 5px;
   padding: 5px;
   font-size: 20px;
-  color: white;
-  background: deeppink;
+  color: black;
+  background: #f6f2ff;
   z-index: 10;
 }
 
