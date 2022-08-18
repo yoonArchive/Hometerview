@@ -288,11 +288,11 @@ export default {
 }
 /* #mypage-button:hover, */
 .route-active #mypage-button {
-  background-color: #653fd3;
+  background-color: #7a5fc9;
   border-radius: 10px;
   color: white;
   padding: 10px;
-  border: #653fd3;
+  border: #7a5fc9;
   /* cursor: pointer; */
 }
 /* #mypage-button:active {
