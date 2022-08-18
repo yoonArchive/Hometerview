@@ -69,7 +69,7 @@ export default {
         select: this.handleDateSelect,
         eventClick: this.handleEventClick,
         eventsSet: this.handleEvents,
-        locale: "ko",
+        // locale: "ko",
 
         buttonText: {
           today: "오늘",
