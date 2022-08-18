@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <h6>스터디 그룹을 만들어 보세요!</h6>
-    <form @submit.prevent="submitType(action)" enctype="">
+    <form id="createForm" @submit.prevent="submitType(action)" enctype="">
       <div class="py-2 row">
         <label class="title" for="recruitTitle">모집글 제목</label>
         <input
@@ -90,13 +90,24 @@
       </div>
       <div class="py-2 row">
         <label class="title" for="stdDetail"> 스터디 설명 </label>
-        <input
+        <textarea
+          name="box2"
+          class="box2"
+          form="createForm"
+          cols="30"
+          rows="10"
+          placeholder="스터디 설명을 작성하세요."
+          v-model="newrecruitmentInfo.stdDetail"
+          id="stdDetail"
+          wrap="on"
+        ></textarea>
+        <!-- <input
           class="box2"
           v-model="newrecruitmentInfo.stdDetail"
           type="text"
           id="stdDetail"
           placeholder="스터디 설명을 작성하세요."
-        />
+        /> -->
       </div>
       <div>
         <div class="py-2 row">
@@ -282,7 +293,7 @@ input[type="text"]:focus {
 }
 .box2 {
   width: 250px;
-  line-height: 100px;
+  line-height: 3vh;
   font-size: 15px;
   background: #ffffff;
   border: 1px solid #ced4da;

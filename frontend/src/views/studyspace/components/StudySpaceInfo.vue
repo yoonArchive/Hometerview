@@ -35,7 +35,8 @@
               ></i>
             </div>
             <div class="info">
-              <span class="detail">{{ studySpaceDetail.stdDetail }}</span>
+              <pre class="detail">{{ studySpaceDetail.stdDetail }}</pre>
+              <!-- <span class="detail">{{ studySpaceDetail.stdDetail }}</span> -->
             </div>
           </blockquote>
           <div class="box">

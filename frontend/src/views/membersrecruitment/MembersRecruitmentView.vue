@@ -346,6 +346,7 @@ export default {
   text-align: center;
   font-weight: bold;
   font-size: 18px;
+  border-radius: 0.6vh;
 }
 .select input[type="radio"] + label {
   background-color: #fff;
@@ -358,7 +359,7 @@ export default {
 .selectBar {
   background-color: #333;
   color: #fff;
-  border-radius: 10px;
+  border-radius: 0.9vh;
   font-size: 18px;
   float: right;
   height: 35px;
@@ -489,6 +490,7 @@ input[type="text"] {
   text-decoration: none;
   width: 100%;
   height: 2em;
+  border-radius: 0.7vh;
 }
 .recruitSearch {
   font-size: 19px;
@@ -497,7 +499,7 @@ input[type="text"] {
   margin-bottom: 2.5em;
 }
 .carousel-inner {
-  border-radius: 30px;
+  border-radius: 1.8vh;
   height: 200px;
   background-color: #282a30;
 }
