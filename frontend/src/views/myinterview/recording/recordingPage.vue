@@ -25,11 +25,14 @@
               </th>
               <th>
                 <td>
-        <button class="id"
+        <button class="btn btn-outline-primary"
           data-bs-toggle="modal"
           href="#exampleModalToggle"
           role="button"
-          id="see">보기</button>
+
+          id="see"
+          @click="getNo(a.videoUrl, a.study.stdName)"
+          >보기</button>
         </td>
               </th>
 
@@ -46,7 +49,7 @@
             <div class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalToggleLabel">
-                  <p>스터디 이름 : {{ a.study.stdName }}</p>
+                  <p>스터디 이름 : {{ name }} </p>
                 </h5>
                 <button
                   type="button"
@@ -54,11 +57,12 @@
                   data-bs-dismiss="modal"
                   aria-label="Close"
                  @click="isActive==false"
+
                 ></button>
               </div>
               <div class="modal-body">
 
-                <video v-if="isActive" controls height="400" :src="a.videoUrl"></video>
+                <video v-if="isActive" controls height="400" :src="url"></video>
               </div>
             </div>
           </div>
@@ -80,7 +84,9 @@ export default {
   data() {
     return {
       headers: ['번호', '스터디 이름', '스터디 내용', '녹화 날짜', '영상'],
-      isActive: true
+      isActive: true,
+      url: '',
+      name:''
     };
   },
 
@@ -91,6 +97,10 @@ export default {
     ...mapActions(["getRecordings"]),
     kim() {
       console.log('이즈액티브'+this.isActive)
+    },
+    getNo(res,name) {
+      this.url = res
+      this.name = name
     }
 
   },
@@ -132,5 +142,22 @@ export default {
   width : 100%;
   padding-top : 50px;
 }
-
+.btn-outline-primary {
+  --bs-btn-color: #9c7bfd;
+  --bs-btn-border-color: #9c7bfd;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: #9c7bfd;
+  --bs-btn-hover-border-color: #9c7bfd;
+  --bs-btn-focus-shadow-rgb: 13, 110, 253;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: #9c7bfd;
+  --bs-btn-active-border-color: #9c7bfd;
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  --bs-btn-disabled-color: #9c7bfd;
+  --bs-btn-disabled-bg: transparent;
+  --bs-btn-disabled-border-color: #9c7bfd;
+  --bs-gradient: none;
+  border-width: 0.23vh;
+  width: 80px;
+}
 </style>
