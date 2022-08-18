@@ -70,15 +70,15 @@ export default {
 
 <style scoped>
 .member-list {
-  height: 70vh;
 }
 .select-member {
-  height: 85vh;
+  height: 90vh;
 }
 .select-interviewee-btn {
   border: 1px solid #c4c1c9;
   background-color: #baaaea;
   margin-left: 0.5vh;
   color: #272930;
+  border-radius: 0.5vh;
 }
 </style>

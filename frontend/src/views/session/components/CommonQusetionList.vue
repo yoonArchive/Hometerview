@@ -1,5 +1,8 @@
 <template>
   <div class="container">
+    <div style="margin: 1.5vh; font-size: 2vh; font-weight: 500;">
+      TTS 모드를 켜고 말풍선을 눌러주세요.
+    </div>
     <button
       v-if="myJoinType === 'LEADER'"
       class="TTS-mode-btn"
@@ -67,6 +70,6 @@ export default {
   background: #ffff;
   overflow: scroll;
   border-radius: 10px 10px 10px 10px;
-  height: 85vh;
+  height: 90vh;
 }
 </style>

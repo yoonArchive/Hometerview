@@ -2,7 +2,7 @@
   <div>
     <div
       class="d-flex justify-content-between"
-      style="margin-top:5vh; margin-bottom:5vh;"
+      style="margin-top:2.5vh; margin-bottom:2.5vh;"
     >
       <div class="memeber">
         <img
@@ -72,7 +72,7 @@ export default {
   margin-right: 4.5vh;
   margin-top: 3.5vh;
   border-radius: 1vh;
-  height: 5.5;
+  height: 5.5vh;
 }
 .memeber {
   margin-top: 3vh;

@@ -1,4 +1,7 @@
 <template>
+  <div style="margin: 1.5vh; font-size: 2vh; font-weight: 500;">
+    아이콘을 눌러 팀원의 자기소개서를 확인해보세요
+  </div>
   <!-- 자소서 보기 -->
   <div v-if="coverLetter" class="cover-letter-list">
     <div
@@ -69,9 +72,9 @@ export default {
   line-height: 45px;
 }
 .cover-letter-list {
-  height: 85vh;
+  height: 80vh;
 }
 .study-member-list {
-  height: 85vh;
+  height: 80vh;
 }
 </style>
