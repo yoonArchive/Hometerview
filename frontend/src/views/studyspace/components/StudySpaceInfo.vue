@@ -7,10 +7,9 @@
     </header>
     <section id="banner">
       <!-- <span class="image object"> -->
-
       <div class="row">
         <div class="image object col-6">
-          <img :src="imgsrc" alt="" class="stdImg" />
+          <img :src="studySpaceDetail.stdImg" alt="" class="stdImg" />
         </div>
         <!-- </span> -->
         <div class="content col">
@@ -55,15 +54,6 @@
           <button @click="moveToSession()" class="study-space-btn">
             스터디룸 입장
           </button>
-          <!-- <button
-          type="button"
-          v-if="studySpaceDetail.joinType == 'LEADER'"
-          data-bs-toggle="modal"
-          data-bs-target="#studyUpdateModal"
-          data-bs-whatever="@mdo"
-          >
-          수정
-          </button> -->
           <button
             v-if="studySpaceDetail.joinType == 'NORMAL'"
             @click="leaveStudy(stdNo)"
@@ -297,8 +287,7 @@ export default {
         studyDay: null,
         studyImage: null
       },
-      noticeContent: null,
-      imgsrc: require("@/assets/images/fighting.jpeg")
+      noticeContent: null
     };
   },
   computed: {
