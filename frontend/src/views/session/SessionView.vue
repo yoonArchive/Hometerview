@@ -520,7 +520,10 @@
               <!-- v-if="myJoinType === 'LEADER'" -->
             </div>
             <div v-if="commonquestion">
-              <common-qusetion-list @sendTTS="sendTTS" :myJoinType="myJoinType"></common-qusetion-list>
+              <common-qusetion-list
+                @sendTTS="sendTTS"
+                :myJoinType="myJoinType"
+              ></common-qusetion-list>
             </div>
           </div>
         </div>
@@ -883,7 +886,6 @@ export default {
         if (className === "center") {
           const postureColor = "";
           await this.needToFixPosture(postureColor);
-          console.log("자세교정 필요함");
         } else if (className === "left" && pred > 0.9) {
           const postureColor = "#8c1d1d";
           console.log("left");
@@ -896,10 +898,9 @@ export default {
       }
     },
     async tmStop() {
-      await this.stopToFixPosture();
       await this.needToFixPosture("");
+      await this.stopToFixPosture();
       this.webcam = null;
-
     },
     async findIndex(userId) {
       const members = this.studySpaceDetail.studyJoins;

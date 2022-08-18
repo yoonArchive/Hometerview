@@ -2,7 +2,7 @@
   <label
     class="form-check-label"
     :for="member.user.userId"
-    style="margin-bottom:1.3vh; margin-top:1.3vh; margin-left:2,3vh;"
+    style="margin-bottom:1.3vh; margin-top:1.3vh; margin-left:2,3vh; height: fit-content;"
   >
     <input
       class="form-check-input"
