@@ -6,8 +6,8 @@
       <p>제목 : {{ currentReview.reviewTitle }}</p>
       <p>내용 : {{ currentReview.reviewContents }}</p>
       <p>날짜 : {{ currentReview.reviewDate }}</p>
-      <p v-if="currentReview.reviewType === 'FAKE'">유형 : 혼자</p>
-      <p v-else>유형 : 단체</p>
+      <p v-if="currentReview.reviewType === 'FAKE'">유형 : 모의</p>
+      <p v-else>유형 : 실제</p>
 
       <div class="buttonbundle">
         <button id="button-review">

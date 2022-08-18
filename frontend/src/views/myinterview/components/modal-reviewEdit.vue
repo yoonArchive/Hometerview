@@ -52,7 +52,7 @@
                   required
                 />
 
-                <label for="newreview.reviewType">실전</label>
+                <label for="newreview.reviewType">실제</label>
                 <input
                   type="radio"
                   name="reviewType"
@@ -60,7 +60,7 @@
                   v-model="newreview.reviewType"
                   required
                 />
-                <label for="newreview.reviewType">연습</label>
+                <label for="newreview.reviewType">모의</label>
               </div>
               <button
                 id="button-review"
@@ -218,5 +218,26 @@ export default {
 .modal-leave-active .modal-container {
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
+}
+.btn-outline-primary {
+  --bs-btn-color: #9c7bfd;
+  --bs-btn-border-color: #9c7bfd;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: #9c7bfd;
+  --bs-btn-hover-border-color: #9c7bfd;
+  --bs-btn-focus-shadow-rgb: 13, 110, 253;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: #9c7bfd;
+  --bs-btn-active-border-color: #9c7bfd;
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  --bs-btn-disabled-color: #9c7bfd;
+  --bs-btn-disabled-bg: transparent;
+  --bs-btn-disabled-border-color: #9c7bfd;
+  --bs-gradient: none;
+  border-width: 0.23vh;
+}
+.form-check-input:checked {
+  background-color: #6a46d1;
+  border-color: #6a46d1;
 }
 </style>
