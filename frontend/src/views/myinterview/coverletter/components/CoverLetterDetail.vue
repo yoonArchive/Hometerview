@@ -4,29 +4,43 @@
       <div>
         <div class="d-flex flex-row-reverse">
           <input
-            class="cover-letter-button"
+            class="cover-letter-button plus-min-btn"
             type="button"
             @click="changeIsremove"
             value="-"
           />
           <input
-            class="cover-letter-button"
+            class="cover-letter-button plus-min-btn"
             type="button"
             @click="addCurrentResume"
             value="+"
           />
           <template v-if="currentResume.length != 0">
-            <input
-              class="cover-letter-button"
-              :class="{ clicked: currentResume.length - item + 1 == 1 }"
-              type="button"
+            <div
               v-for="(item, index) in currentResume.length"
               :key="index"
-              :value="currentResume.length - item + 1"
-              @click="
-                returnnumbermethod(currentResume.length - item + 1, $event)
-              "
-            />
+              class="cover-letter-button-wrapper"
+            >
+              <img
+                :src="require(`@/assets/images/coverletter-delete.png`)"
+                class="remove-btn-img"
+                :class="{ 'non-visible': !this.isremove }"
+                alt=""
+              />
+              <input
+                type="button"
+                :value="currentResume.length - item + 1"
+                :class="{
+                  clicked:
+                    currentResume.length - item + 1 == this.selectedNum + 1
+                }"
+                @click="
+                  returnnumbermethod(currentResume.length - item + 1, $event)
+                "
+                class="cover-letter-button"
+                style="border: none; width:100%; height:100%"
+              />
+            </div>
           </template>
         </div>
         <div
@@ -129,17 +143,20 @@ export default {
     },
     addCurrentResume() {
       this.addItemCurrentResume();
-      var buttons = document.getElementsByClassName("cover-letter-button");
-      for (var i = 0; i < buttons.length; i++) {
-        buttons[i].classList.remove("clicked");
-      }
-      console.log(this.selectedNum);
-      buttons[this.buttons.length - this.selectedNum - 1].classList.add(
-        "clicked"
-      );
     },
     changeIsremove() {
       this.isremove = !this.isremove;
+      if (this.isremove) {
+        var ximages = document.getElementsByClassName("remove-btn-img");
+        for (var i = 0; i < ximages.length; i++) {
+          ximages[i].classList.remove("non-visible");
+        }
+      } else {
+        var ximages = document.getElementsByClassName("remove-btn-img");
+        for (var i = 0; i < ximages.length; i++) {
+          ximages[i].classList.add("non-visible");
+        }
+      }
     },
     returnnumbermethod(item, event) {
       if (this.isremove) {
@@ -170,13 +187,14 @@ export default {
     },
     changeSelectedNum(item) {
       this.selectedNum = item - 1;
-      var buttons = document.getElementsByClassName("cover-letter-button");
-      for (var i = 0; i < buttons.length; i++) {
-        buttons[i].classList.remove("clicked");
-      }
-      buttons[this.currentResume.length - this.selectedNum + 1].classList.add(
-        "clicked"
-      );
+      console.log(this.selectedNum);
+      // var buttons = document.getElementsByClassName("cover-letter-button");
+      // for (var i = 0; i < buttons.length; i++) {
+      //   buttons[i].classList.remove("clicked");
+      // }
+      // buttons[this.currentResume.length - this.selectedNum + 1].classList.add(
+      //   "clicked"
+      // );
     }
   }
 };
@@ -186,6 +204,14 @@ export default {
 /* input[type=text]:focus {
   border: 3px solid #653FD3;
 } */
+.remove-btn-img {
+  position: absolute;
+  left: 10%;
+  top: 10%;
+}
+.non-visible {
+  display: none;
+}
 .cover-letter-answer-textarea {
   width: 100%;
   height: 350px;
@@ -257,12 +283,18 @@ export default {
   color: white;
   background-color: #653fd3;
 }
-.cover-letter-button {
+.cover-letter-button-wrapper {
   width: 30px;
   height: 45px;
-  border: none;
   filter: drop-shadow(2px 0px 4px rgba(0, 0, 0, 0.25));
   margin-right: 1%;
+}
+.plus-min-btn {
+  margin-right: 1%;
+  border: none;
+  filter: drop-shadow(2px 0px 4px rgba(0, 0, 0, 0.25));
+  width: 30px;
+  height: 45px;
 }
 .member-cover-letter-detail-wrapper {
   margin-top: 10%;
