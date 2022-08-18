@@ -222,7 +222,7 @@
                       마이크 끄기
                     </span>
                   </div>
-                  <div v-else class="mic-button-off">
+                  <div v-else class="mic-button-off tooltip-image">
                     <img
                       @click="audioONOFF()"
                       :src="require(`@/assets/images/session/micOn.png`)"
@@ -375,7 +375,7 @@
                     마이크 끄기
                   </span>
                 </div>
-                <div v-else class="mic-button-off">
+                <div v-else class="mic-button-off tooltip-image">
                   <img
                     @click="audioONOFF()"
                     :src="require(`@/assets/images/session/micOn.png`)"
@@ -667,7 +667,7 @@
 .tooltip-text {
   display: none;
   position: absolute;
-  bottom: 150%;
+  bottom: 120%;
   left: 50%;
   margin-left: -60px;
   width: 120px;
@@ -679,7 +679,10 @@
   background: black;
   z-index: 10;
 }
-
+.tooltip-image {
+  position: relative;
+  display: block;
+}
 .tooltip-image:hover .tooltip-text {
   display: block;
 }
