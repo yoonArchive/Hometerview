@@ -3,17 +3,20 @@ package com.ssafy.db.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 유저 모델 정의.
  */
 @Entity
 @Getter
-@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "user")
 public class User {
 
@@ -22,7 +25,7 @@ public class User {
     @Column(name = "user_no")
     private Long userNo;
 
-    @Column(name = "user_id")
+    @Column(name = "user_id", unique = true)
     private String userId;
 
     @JsonIgnore
@@ -39,8 +42,36 @@ public class User {
     @Column(name = "user_img")
     private String userImg;
 
-    @Column(name = "user_type")
     @Enumerated(EnumType.STRING)
+    @Column(name = "user_type")
     private UserType userType;
+
+    @JsonIgnore
+    @Builder.Default
+    @OneToMany(mappedBy = "user")
+    private List<Resume> resumes = new ArrayList<>();
+
+    @Builder.Default
+    @JsonIgnore
+    @OneToMany(mappedBy = "user")
+    private List<Apply> applies = new ArrayList<>();
+
+    @Builder.Default
+    @JsonIgnore
+    @OneToMany(mappedBy = "user")
+    private List<StudyJoin> studyJoins = new ArrayList<>();
+
+    public void updatePw(String newPw) {
+        this.userPw = newPw;
+    }
+
+    public void updateUser(String userName, String userEmail) {
+        this.userName = userName;
+        this.userEmail = userEmail;
+    }
+
+    public void updateUserImg(String fileUrl) {
+        this.userImg = fileUrl;
+    }
 
 }

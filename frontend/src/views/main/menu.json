@@ -1,16 +1,15 @@
 {
-  "home" : {
-    "name" : "홈",       
-    "hidden" : false,
-    "path" : "/",
-    "icon" : "el-icon-s-home",
-    "children" : []
+  "findstudy": {
+    "name": "스터디 찾기",
+    "hidden": false,
+    "path": "/home/membersrecruitment",
+    "icon": "el-icon-s-order",
+    "children": []
   },
-  "history" : {
-    "name" : "지난 회의 이력",
-    "hidden" : false,
-    "path" : "/history",
-    "icon" : "el-icon-s-order",
-    "children" : []
+  "myinterview": {
+    "name": "나의 면접",
+    "hidden": false,
+    "path": "/home/myinterview",
+    "children": []
   }
 }
