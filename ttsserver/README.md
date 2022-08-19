@@ -22,6 +22,14 @@ pm2 start server.js
 pm2 list
 ```
 
+### 서버 중단
+```
+pm2 stop 해당 하는 server id
+```
+```
+pm2 delete 해당 하는 server id
+```
+
 ### 기본 포트 번호
 
 - 포트번호 : **9002**
