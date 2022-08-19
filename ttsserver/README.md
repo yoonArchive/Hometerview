@@ -36,6 +36,6 @@ pm2 delete 해당 하는 server id
 
 ### 사용법
 
-- post로 tts/ttsrequest에 String을 보냅니다.
+- tts/ttsrequest에 post로 data:{"text" : 변환 하고자 하는 String}을 보냅니다.
 - tts 음성이 binary파일이 돌아옵니다.
 - decode를 통해 데이터를 음성파일로 바꾼 후 출력하거나 파일을 만들 수 있습니다.
