@@ -33,7 +33,7 @@ INSERT INTO recruit (COM_NAME, END_DATE, RECRUIT_STATUS, RECRUIT_TITLE, START_DA
 INSERT INTO recruit (COM_NAME, END_DATE, RECRUIT_STATUS, RECRUIT_TITLE, START_DATE, STD_DAY, STD_DETAIL, STD_IMG, STD_LIMIT, STD_NAME, STD_TYPE) values (NULL, '2022-08-24', 'RECRUITING', '7급 공무원 국가직 면접스터디', '2022-09-07', '매주 토요일', '같이 인성면접 준비해요! 시간 약속 철저하신분 모십니다.', 'https://i7b105.p.ssafy.io/HOMETERVIEW/Image/studyImg/official.png', '4', '취뽀하자', 'FREE');
 INSERT INTO recruit (COM_NAME, END_DATE, RECRUIT_STATUS, RECRUIT_TITLE, START_DATE, STD_DAY, STD_DETAIL, STD_IMG, STD_LIMIT, STD_NAME, STD_TYPE) values ( '쏘카', '2022-08-22', 'RECRUITING', '쏘카 2차 임원면접 스터디', '2022-08-31', '매주 화,금', '쏘카 2차 임원면접 스터디입니다. 적극적으로 참여하실분들 모십니다.', 'https://i7b105.p.ssafy.io/HOMETERVIEW/Image/studyImg/socar.jpeg', '5', '쏘카쏘카','COM');
 INSERT INTO recruit (COM_NAME, END_DATE, RECRUIT_STATUS, RECRUIT_TITLE, START_DATE, STD_DAY, STD_DETAIL, STD_IMG, STD_LIMIT, STD_NAME, STD_TYPE) values ( NULL, '2022-08-25', 'RECRUITING', '개발자 CS면접 스터디', '2022-09-25', '일주일에 한 번', '프로그래밍 기본, 네트워크, 운영체제, 자료구조, DB, 알고리즘 등을 다룰 예정입니다. 같이 배우면서 발전하실분', 'https://i7b105.p.ssafy.io/HOMETERVIEW/Image/studyImg/techinterview.png', '5', 'CS정복', 'FREE');
-INSERT INTO recruit (COM_NAME, END_DATE, RECRUIT_STATUS, RECRUIT_TITLE, START_DATE, STD_DAY, STD_DETAIL, STD_IMG, STD_LIMIT, STD_NAME, STD_TYPE) values ( '네이버', '2022-08-21', 'RECRUITING', '네이버 기술직군 신업 공채 스터디', '2022-08-29', '매주 월, 화, 수', '하반기 네이버 공채 IT 기술직군 면접 스터디입니다. 상세 시간은 같이 조율해봐요', 'https://i7b105.p.ssafy.io/HOMETERVIEW/Image/studyImg/naver.png', '5', '네이버 가즈아', 'COM');
+INSERT INTO recruit (COM_NAME, END_DATE, RECRUIT_STATUS, RECRUIT_TITLE, START_DATE, STD_DAY, STD_DETAIL, STD_IMG, STD_LIMIT, STD_NAME, STD_TYPE) values ( '네이버', '2022-08-21', 'RECRUITING', '네이버 기술직군 신입 공채 스터디', '2022-08-29', '매주 월, 화, 수', '하반기 네이버 공채 IT 기술직군 면접 스터디입니다. 상세 시간은 같이 조율해봐요', 'https://i7b105.p.ssafy.io/HOMETERVIEW/Image/studyImg/naver.png', '5', '네이버 가즈아', 'COM');
 
 INSERT INTO apply (APPLY_TYPE, RECRUIT_NO, USER_NO) VALUES ("LEADER", 2, 2);
 INSERT INTO apply (APPLY_TYPE, RECRUIT_NO, USER_NO) VALUES ("LEADER", 3, 3);
@@ -55,17 +55,17 @@ INSERT INTO study_join (JOIN_TYPE, RESUME_NO, STD_NO, USER_NO) VALUES ("NORMAL",
 
 -- 스터디 공통 질문
 
-INSERT INTO common_question (CONTENTS, QUESTION_TYPE, WRITER_NO, STD_NO) VALUES ('자신의 학점에 대해 어떻게 생각하는가?', "FREE", 1, 1);
-INSERT INTO common_question (CONTENTS, QUESTION_TYPE, WRITER_NO, STD_NO) VALUES ('자신을 채용해야 하는 이유는 무엇인가?', "FREE", 2, 1);
-INSERT INTO common_question (CONTENTS, QUESTION_TYPE, WRITER_NO, STD_NO) VALUES ('자신만의 스트레스 해소법을 말해 보아라.', "FREE", 3, 1);
-INSERT INTO common_question (CONTENTS, QUESTION_TYPE, WRITER_NO, STD_NO) VALUES ('희망하지 않는 분야에 배치된다면 어떻게 하겠는가?', "FREE", 4, 1);
-INSERT INTO common_question (CONTENTS, QUESTION_TYPE, WRITER_NO, STD_NO) VALUES ('불합리한 대우를 받는다면 어떻게 대처하겠는가?', "FREE", 5, 1);
+INSERT INTO common_question (CONTENTS, QUESTION_TYPE, WRITER_NO, STD_NO) VALUES ('자신의 학점에 대해 어떻게 생각하시나요?', "FREE", 1, 1);
+INSERT INTO common_question (CONTENTS, QUESTION_TYPE, WRITER_NO, STD_NO) VALUES ('자신을 채용해야 하는 이유는 무엇인가요?', "FREE", 2, 1);
+INSERT INTO common_question (CONTENTS, QUESTION_TYPE, WRITER_NO, STD_NO) VALUES ('자신만의 스트레스 해소법을 말해주세요.', "FREE", 3, 1);
+INSERT INTO common_question (CONTENTS, QUESTION_TYPE, WRITER_NO, STD_NO) VALUES ('희망하지 않는 분야에 배치된다면 어떻게 하실건가요?', "FREE", 4, 1);
+INSERT INTO common_question (CONTENTS, QUESTION_TYPE, WRITER_NO, STD_NO) VALUES ('불합리한 대우를 받는다면 어떻게 대처하실건가요?', "FREE", 5, 1);
 
-INSERT INTO common_question (CONTENTS, QUESTION_TYPE, WRITER_NO, STD_NO) VALUES ('네트워크에서 프로세스간 통신 방식에 대해 말해보세요', "JOB", 1, 1);
-INSERT INTO common_question (CONTENTS, QUESTION_TYPE, WRITER_NO, STD_NO) VALUES ('프로세스와 쓰레드의 차이에 대해서 알고 있는가?', "JOB", 2, 1);
-INSERT INTO common_question (CONTENTS, QUESTION_TYPE, WRITER_NO, STD_NO) VALUES ('알고있는 정렬 알고리즘에 대해 설명하시오.', "JOB", 3, 1);
-INSERT INTO common_question (CONTENTS, QUESTION_TYPE, WRITER_NO, STD_NO) VALUES ('스택과 큐의 차이점에 대해 설명하시오', "JOB", 4, 1);
-INSERT INTO common_question (CONTENTS, QUESTION_TYPE, WRITER_NO, STD_NO) VALUES ('JVM에 대해 설명해보시오.', "JOB", 5, 1);
+INSERT INTO common_question (CONTENTS, QUESTION_TYPE, WRITER_NO, STD_NO) VALUES ('네트워크에서 프로세스간 통신 방식에 대해 말해보세요.', "JOB", 1, 1);
+INSERT INTO common_question (CONTENTS, QUESTION_TYPE, WRITER_NO, STD_NO) VALUES ('프로세스와 쓰레드의 차이에 대해서 설명해주세요.', "JOB", 2, 1);
+INSERT INTO common_question (CONTENTS, QUESTION_TYPE, WRITER_NO, STD_NO) VALUES ('알고있는 정렬 알고리즘에 대해 설명해주세요.', "JOB", 3, 1);
+INSERT INTO common_question (CONTENTS, QUESTION_TYPE, WRITER_NO, STD_NO) VALUES ('스택과 큐의 차이점에 대해 설명해주세요.', "JOB", 4, 1);
+INSERT INTO common_question (CONTENTS, QUESTION_TYPE, WRITER_NO, STD_NO) VALUES ('JVM에 동작방식에 대해 설명해주세요.', "JOB", 5, 1);
 
 
 
@@ -202,10 +202,8 @@ INSERT INTO notice (NOTICE_CONTENTS, NOTICE_TITLE, WRITE_DATE) VALUES ('이달�
 
 -- 회고
 
-INSERT INTO review (REVIEW_CONTENTS, REVIEW_DATE, REVIEW_TITLE, REVIEW_TYPE, USER_NO) VALUES ('다 예상했던 질문들이었고 준비했던 답을 했다. 다만..', '2022-07-25', '신한은행 면접 회고', 'REAL', '4');
-INSERT INTO review (REVIEW_CONTENTS, REVIEW_DATE, REVIEW_TITLE, REVIEW_TYPE, USER_NO) VALUES ('나의 필살기를 더 어필할 수 있는 답변을 짜야겠다.', '2022-07-20', '신한은행 모의면접 회고', 'FAKE', '4');
-INSERT INTO review (REVIEW_CONTENTS, REVIEW_DATE, REVIEW_TITLE, REVIEW_TYPE, USER_NO) VALUES ('지원동기를 다시 다듬어야겠다.', '2022-07-18', '현대자동차 모의면접 회고', 'FAKE', '1');
-INSERT INTO review (REVIEW_CONTENTS, REVIEW_DATE, REVIEW_TITLE, REVIEW_TYPE, USER_NO) VALUES ('다대다 면접으로 진행되었고...', '2022-07-26', '현대자동차 면접 회고', 'REAL', '1');
+INSERT INTO review (REVIEW_CONTENTS, REVIEW_DATE, REVIEW_TITLE, REVIEW_TYPE, USER_NO) VALUES ('예상질문에 대한 대답을 잘 했지만 돌발 질문에 대한 대처는 조금 아쉬웠다. 준비를 더 철저하게 해야겠다.', '2022-08-11', '우리은행 모의면접 회고', 'FAKE', '1');
+INSERT INTO review (REVIEW_CONTENTS, REVIEW_DATE, REVIEW_TITLE, REVIEW_TYPE, USER_NO) VALUES ('나의 필살기를 더 어필할 수 있는 답변을 짜야겠다. 결과가 어떻게 되든간에 마음 다잡고 프로젝트에 집중해야겠다.', '2022-08-17', '우리은행 2차면접 회고', 'REAL', '1');
 
 -- dday
 

@@ -100,7 +100,7 @@
   .main-footer {
     height: 100px;
     width: 100%;
-    margin-top: 100px;
+
     background-color: #8065d3;
     color: white;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.08),
