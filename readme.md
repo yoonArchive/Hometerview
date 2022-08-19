@@ -20,6 +20,36 @@ SSAFY 2학기 공통 프로젝트
 
 ----
 
+## 결과물 PREVIEW
+
+- 멤버 모집글 페이지
+
+![recruitment](C:\Users\saffy\ssafy7\common_pjt_1\S07P12B105\README.assets\recruitment.gif)
+
+- 스터디 스페이스
+
+![studyspace](C:\Users\saffy\ssafy7\common_pjt_1\S07P12B105\README.assets\studyspace.gif)
+
+- Session - 채팅
+
+![chatting](C:\Users\saffy\ssafy7\common_pjt_1\S07P12B105\README.assets\chatting.gif)
+
+- Session - 면접관 지정
+
+![selectInterview](C:\Users\saffy\ssafy7\common_pjt_1\S07P12B105\README.assets\selectInterview.gif)
+
+- Session - tts mode
+
+![ttsMode](C:\Users\saffy\ssafy7\common_pjt_1\S07P12B105\README.assets\ttsMode.gif)
+
+- 회고
+
+![review](C:\Users\saffy\ssafy7\common_pjt_1\S07P12B105\README.assets\review.gif)
+
+- 녹화
+
+![record](C:\Users\saffy\ssafy7\common_pjt_1\S07P12B105\README.assets\record.gif)
+
 ### 1. 프로젝트 소개
 
 **프로젝트 명** : 홈터뷰 ( Home + Interview )
@@ -158,11 +188,7 @@ Openvidu, teachabel machine
 
 - 공지사항 작성 조회 수정 삭제
 
-
-
 ---
-
-
 
 ### 4. 결과물
 
@@ -170,17 +196,11 @@ Openvidu, teachabel machine
 
 ![](C:\Users\multicampus\AppData\Roaming\marktext\images\2022-08-19-11-24-22-image.png)
 
-
-
-
-
 - 스터디 스페이스
 
 <img src="file:///C:/Users/multicampus/AppData/Roaming/marktext/images/2022-08-19-11-24-54-image.png" title="" alt="" width="588">
 
 <img title="" src="file:///C:/Users/multicampus/AppData/Roaming/marktext/images/2022-08-19-11-25-25-image.png" alt="" width="588">
-
-
 
 - 세션
 
@@ -190,13 +210,9 @@ Openvidu, teachabel machine
 
 ![](C:\Users\multicampus\AppData\Roaming\marktext\images\2022-08-19-11-27-10-image.png)
 
-
-
 tts mode
 
 ![](C:\Users\multicampus\AppData\Roaming\marktext\images\2022-08-19-11-27-46-image.png)
-
-
 
 녹화
 
