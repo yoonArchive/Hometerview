@@ -116,7 +116,7 @@ export default {
     this.findresumes();
     this.getReview();
     this.getDday();
-    console.log("김" + this.Editsum);
+    window.scrollTo(0, 0);
   },
 
   beforeMount() {
@@ -202,7 +202,6 @@ span {
   letter-spacing: 0.04em;
 }
 
-@import "./main.css";
 /* @import './fullcalander/main.js'; */
 
 .conatiner {

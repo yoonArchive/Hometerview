@@ -17,6 +17,7 @@
   <div class="container">
     <div class="study-detail-information-wrapper">
       <div class="row">
+        <div style="height: 50px"></div>
         <h4 class="stdNotice col-md-3">
           스터디 공통질문 &nbsp;
           <span @click="showModal = true" id="icon">

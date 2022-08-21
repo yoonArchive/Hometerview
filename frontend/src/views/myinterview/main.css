@@ -53,7 +53,7 @@ body {
   cursor: pointer;
 }
 .fc a[data-navlink]:hover {
-  text-decoration: underline;
+  /* text-decoration: underline; */
 }
 .fc-direction-ltr {
   direction: ltr;
@@ -149,6 +149,7 @@ When it's NOT activated, the fc-button classes won't even be in the DOM.
   border-radius: 0;
   overflow: visible;
   text-transform: none;
+
   margin: 0;
   font-family: inherit;
   font-size: inherit;
@@ -186,6 +187,7 @@ When it's NOT activated, the fc-button classes won't even be in the DOM.
   font-size: 1em;
   line-height: 1.5;
   border-radius: 0.25em;
+
 }
 .fc .fc-button:hover {
   text-decoration: none;
@@ -199,6 +201,7 @@ When it's NOT activated, the fc-button classes won't even be in the DOM.
 }
 .fc {
   /* "primary" coloring */
+
 }
 .fc .fc-button-primary {
   color: #fff;
@@ -426,6 +429,11 @@ When it's NOT activated, the fc-button classes won't even be in the DOM.
   right: 0;
   bottom: 0;
   left: 0;
+}
+a{
+  color: black;
+  text-decoration: none;
+
 }
 .fc .fc-col-header-cell-cushion {
   display: inline-block; /* x-browser for when sticky (when multi-tier header) */

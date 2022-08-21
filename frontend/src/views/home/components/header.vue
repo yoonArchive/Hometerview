@@ -14,8 +14,8 @@
     <div class="col-md-7">
       <ul class="navbar__menu">
         <router-link
-          :to="item.path"
           v-for="(item, index) in state.headeritems"
+          :to="item.path"
           :key="index"
           :index="index.toString()"
           class="header-routerlink-decoration"

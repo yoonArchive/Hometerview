@@ -728,11 +728,13 @@ i:hover {
   border: 1px solid;
   border-radius: 5px;
   padding: 5px;
-  font-size: 20px;
+  font-size: 13px;
   color: black;
   background: #f6f2ff;
   z-index: 10;
   border-color: #653fd3;
+  font-style: normal;
+  font-weight: normal;
 }
 
 .uil-edit:hover .tooltip-text {

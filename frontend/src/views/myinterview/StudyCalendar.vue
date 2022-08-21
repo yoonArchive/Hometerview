@@ -110,7 +110,6 @@ export default {
       calendarApi.unselect(); // clear date selection
       let mmax = 0;
 
-      console.log("커런트 데이" + this.currentday);
       for (const aareview of this.reviews) {
         if (aareview.reviewNo > mmax) {
           mmax = aareview.reviewNo;
@@ -119,7 +118,7 @@ export default {
         }
       }
       this.reviewmodal = true;
-      console.log("mmax는" + mmax);
+
       // if (title) {
       //   calendarApi.addEvent({
       //     id: mmax+1,
@@ -157,7 +156,6 @@ export default {
     //내용 클릭했을 시
     async handleEventClick(clickInfo) {
       this.id = clickInfo.event.id;
-      console.log("아이디" + this.id);
 
       // this.fetchReview = null
       // if (confirm(`삭제하시겠습니까? '${clickInfo.event.title}'`)) {
@@ -214,8 +212,6 @@ export default {
           color: "#99CCFF"
           // backgroundColor: "#99CCFF"
         });
-
-        console.log("콘솔 로그 리뷰 " + review.reviewTitle);
       }
       for (const dday of this.dday) {
         this.calendarOptions.events.push({
@@ -224,7 +220,6 @@ export default {
           start: dday.ddayDate,
           color: "#9c7bfd "
         });
-        console.log("콘솔 로그 리뷰 " + dday.ddayTitle);
       }
     }
   },
@@ -304,6 +299,7 @@ export default {
 </template>
 
 <style scoped lang="css">
+@import "./main.css";
 h2 {
   margin: 0;
   font-size: 16px;
@@ -323,13 +319,21 @@ b {
   /* used for event dates/times */
   margin-right: 3px;
 }
-
+a {
+  text-decoration: none;
+}
 .demo-app {
   display: flex;
   min-height: 100%;
-  font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
-  font-size: 14px;
+  /* font-family: Arial, Helvetica, Helvetica, sans-serif; */
+  font-size: 12px;
+  font-family: "티머니 둥근바람";
   width: 900px;
+  color: black;
+  text-decoration: none !important;
+}
+.fc-col-header-cell-cushion {
+  color: #653fd3;
 }
 
 .demo-app-sidebar {
@@ -347,8 +351,10 @@ b {
   flex-grow: 1;
   padding: 3em;
   /* font-weight: bold; */
-  color: #653fd3;
+  /* color: #653fd3; */
   font-weight: 600;
+  /* text-decoration: none;
+  color: black; */
 }
 
 .fc {
