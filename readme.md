@@ -6,7 +6,7 @@
 
 ---
 
-![hometerview](..\ptj01-sub2\assets\hometerview.png)
+![hometerview](/uploads/d098a91d49eff99114119dec755d02bb/hometerview.png)
 
 **SSAFY 2학기 공통 프로젝트**
 
@@ -16,31 +16,32 @@
 
 - 멤버 모집글 페이지
 
-![recruitment](.\README.assets\recruitment.gif)
+![recruitment](/uploads/dbcf1f0637e34c447a960ff31c39d508/recruitment.gif)
 
 - 스터디 스페이스
 
-![studyspace](.\README.assets\studyspace.gif)
+![studyspace](/uploads/325cc40cdd0b12628c9bffbdd79a76e4/studyspace.gif)
 
 - Session - 채팅
 
-![chatting](.\README.assets\chatting.gif)
+![chatting](/uploads/1b8174343b97d7b1f04065260b7bc880/chatting.gif)
+
 
 - Session - 면접관 지정
 
-![selectInterview](.\README.assets\selectInterview.gif)
+![selectInterview](/uploads/114ff3b05a887828b275af36855cb97e/selectInterview.gif)
 
 - Session - tts mode
 
-![ttsMode](.\README.assets\ttsMode.gif)
+![ttsMode](/uploads/a7c63c56947bc085347e3f4831760090/ttsMode.gif)
 
 - 회고
 
-![review](.\README.assets\review.gif)
+![review](/uploads/852ab73362099b0bdb58a105c728fc9d/review.gif)
 
 - 녹화
 
-![record](.\README.assets\record.gif)
+![record](/uploads/6bdad5fdb52d83f1ea29b6defe48e72a/record.gif)
 
 ## 1. 프로젝트 소개
 
