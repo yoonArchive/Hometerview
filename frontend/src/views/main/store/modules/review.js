@@ -67,12 +67,9 @@ export default {
           headers: getters.authHeader
         })
         .then(data => {
-          console.log(data.data.reviews);
-          console.log(data.data.reviews.length);
           // commit('SET_CURRENT_REVIEW', data.data)
           commit("SET_REVIEW_CONTENTS", data.data.reviews);
           commit("SET_NUMBER_REVIEW", data.data.reviews.length);
-          console.log("회고리스트 가져오기");
         })
         .catch(err => {
           console.log(err);
@@ -85,10 +82,8 @@ export default {
           headers: getters.authHeader
         })
         .then(data => {
-          console.log(data.data.reviews);
           commit("SET_CURRENT_REVIEW", data.data);
           dispatch("getReviewInfo");
-          console.log("상세가져오기 성공");
         })
         .catch(err => {
           console.log("회고 상세에러" + err);
@@ -97,7 +92,6 @@ export default {
     //회고 작성하기
 
     createReview({ commit, getters, dispatch }, newreview) {
-      console.log("김");
       axios({
         url: api_url.review.reviews(),
         method: "post",
@@ -105,7 +99,7 @@ export default {
         headers: getters.authHeader
       }).then(res => {
         commit("SET_CURRENT_REVIEW", res.data);
-        console.log("회고 작성 성공" + res);
+
         dispatch("getReviewInfo");
         // router.push({ name: "diary" });
         // router.push({
@@ -121,7 +115,6 @@ export default {
     },
     //달력에서 리뷰 생성하기
     createReview1({ commit, getters, dispatch }, newreview) {
-      console.log("김");
       axios({
         url: api_url.review.reviews(),
         method: "post",
@@ -129,7 +122,7 @@ export default {
         headers: getters.authHeader
       }).then(res => {
         commit("SET_CURRENT_REVIEW", res.data);
-        console.log("공지사항 작성 성공" + res);
+
         dispatch("getReviewInfo");
         router.push({
           name: "diary"
@@ -145,8 +138,6 @@ export default {
       { commit, getters, dispatch },
       { reviewNo, reviewType, reviewDate, reviewTitle, reviewContents }
     ) {
-      console.log(reviewTitle);
-      console.log(reviewContents);
       axios({
         url: api_url.review.review(reviewNo),
         method: "put",
@@ -229,12 +220,10 @@ export default {
           headers: getters.authHeader
         })
         .then(res => {
-          console.log(res.data);
           // commit('SET_CURRENT_REVIEW', data.data)
           commit("SET_DDAYS", res.data.ddays);
           commit("SET_RESTDAYS", res.data.results);
           commit("SET_DDAYLEN", res.data.ddays.length);
-          console.log("디데이 리스트 가져오기 성공");
         })
         .catch(err => {
           console.log("dday 리스트 가져오기 에러" + err);
@@ -248,10 +237,8 @@ export default {
           headers: getters.authHeader
         })
         .then(res => {
-          console.log(res.data);
           // commit('SET_CURRENT_REVIEW', data.data)
           commit("SET_DDAY", res.data);
-          console.log("디데이 상세가져오기 성공");
         })
         .catch(err => {
           console.log("dday 상세 가져오기 에러" + err);
@@ -261,7 +248,6 @@ export default {
     //디데이 작성하기
 
     createDday({ commit, getters, dispatch }, dday) {
-      console.log("김");
       axios({
         url: api_url.accounts.dday(),
         method: "post",
@@ -270,8 +256,7 @@ export default {
       }).then(res => {
         commit("SET_DDAYS", res.data.ddays);
         dispatch("getDdayInfo");
-        // console.log("디데이 작성 성공" + res.data);
-        // this.$router.go();
+
         router.push({
           name: "diary"
         });
@@ -282,7 +267,7 @@ export default {
     //디데이 수정하기
     updateDday({ commit, getters, dispatch }, ddays) {
       const ddayNo = ddays[0];
-      console.log("ddayNo" + ddayNo);
+
       const ddayData = ddays[1];
 
       axios({
@@ -294,7 +279,6 @@ export default {
         commit("SET_DDAYS", res.data.ddays);
         dispatch("getDdayInfo");
         // router.push()
-        console.log("디데이 수정 성공" + res.data);
         router.push({
           name: "diary"
         });
@@ -313,7 +297,7 @@ export default {
           .then(() => {
             commit("SET_DDAYS", {});
             dispatch("getDdayInfo");
-            console.log("디데이 삭제 성공" + res.data);
+
             router.push({
               name: "diary"
             });
@@ -332,7 +316,6 @@ export default {
       })
         .then(res => {
           commit("SET_RECORDING", res.data.recordings);
-          console.log("레코딩 리스트 가져오기 성공" + res.data);
         })
 
         .catch(err => console.error(err.response));

@@ -88,13 +88,15 @@ tr:hover {
   border: 1px solid #653fd3;
   border-radius: 5px;
   padding: 5px;
-  font-size: 20px;
+  font-size: 13px;
   color: black;
   background: #f6f2ff;
   z-index: 10;
+  font-style: normal;
+  font-weight: normal;
 }
 
 .coverletter-icon:hover .tooltip-text {
-  display: block;
+  display: inline;
 }
 </style>

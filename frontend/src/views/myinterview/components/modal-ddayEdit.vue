@@ -6,6 +6,8 @@
           <div class="modal-header">
             <slot name="header">
               DDAY 를 설정해보세요
+
+              <!-- {{ dday }} -->
               <!-- <button @click="checkdday()"></button> -->
             </slot>
           </div>
@@ -39,7 +41,7 @@
                 <button
                   type="button"
                   class="btn btn-outline-primary"
-                  @click="updateDday([this.key, ddays]), $emit('close')"
+                  @click="updateDday([no, ddays]), $emit('close')"
                 >
                   수정하기
                 </button>
@@ -64,7 +66,7 @@ import { mapActions, mapGetters } from "vuex";
 export default {
   props: {
     dday: Object,
-    key: Number
+    no: Number
   },
   data() {
     return {
@@ -158,5 +160,22 @@ export default {
 .modal-leave-active .modal-container {
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
+}
+.btn-outline-primary {
+  --bs-btn-color: #9c7bfd;
+  --bs-btn-border-color: #9c7bfd;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: #9c7bfd;
+  --bs-btn-hover-border-color: #9c7bfd;
+  --bs-btn-focus-shadow-rgb: 13, 110, 253;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: #9c7bfd;
+  --bs-btn-active-border-color: #9c7bfd;
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  --bs-btn-disabled-color: #9c7bfd;
+  --bs-btn-disabled-bg: transparent;
+  --bs-btn-disabled-border-color: #9c7bfd;
+  --bs-gradient: none;
+  border-width: 0.23vh;
 }
 </style>

@@ -70,7 +70,7 @@
     <StudyCalendar :reviews="reviewContents" :dday="currentDdays"></StudyCalendar>
   </div>
 
-    <ModalEdit v-if="openedModal !== null" @close="openedModal = null" :dday="this.dday" :key="this.openedModal" >
+    <ModalEdit v-if="openedModal !== null" @close="openedModal = null" :dday="this.dday" :no="openedModal" >
       <!-- <h3 slot="header">dday 수정</h3> -->
     </ModalEdit>
 
@@ -107,8 +107,8 @@
                 <td>{{ reviews.reviewDate}}</td>
               </th>
               <th>
-                <td><p v-if="reviews.reviewType==='FAKE'">혼자</p>
-                    <p v-else>단체</p>
+                <td><p v-if="reviews.reviewType==='FAKE'">모의</p>
+                    <p v-else>실제</p>
                 </td>
               </th>
             </tr>
@@ -122,9 +122,7 @@
         </ReviewForm>
 
     </div>
-    <div class="layerPopup">
-  <div class="spinner"></div>
-</div>
+
   </div>
   </div>
 
@@ -187,6 +185,9 @@ export default {
   methods:{
     showModalE(id) {
       this.openedModal = id
+      console.log('id'+id)
+      console.log(this.openedModal)
+
     },
     getLengthOfObject(obj){
       let lengthOfObject = Object.keys(obj).length;
@@ -232,12 +233,7 @@ export default {
 
 
 }
-  function showSpinner() {
-    document.getElementsByClassName('layerPopup')[0].style.display='block';
-}
-function hideSpinner() {
-    document.getElementsByClassName('layerPopup')[0].style.display='none';
-}
+
 </script>
 <style lang="scss" scoped>
 
@@ -246,7 +242,7 @@ function hideSpinner() {
 </style>
 <style scoped>
 
-  @import '../main.css';
+  /* @import '../main.css'; */
 
 /* @import './fullcalander/main.js'; */
 
@@ -334,6 +330,7 @@ function hideSpinner() {
 }
 .calendar{
   width: 1000px;
+
   /* height: 800px; */
   /* display: flex; */
 }
@@ -467,38 +464,8 @@ b { /* used for event dates/times */
 
 }
 
-.layerPopup {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.8);
-    z-index: 1000;
-    justify-content: center;
-    align-items: center;
-    margin: -30px 0 0 -30px;
-}
-.spinner {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    border: 8px solid #f3f3f3; /* Light grey */
-    border-top: 8px solid #3498db; /* Blue */
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    animation: spinner 2s linear infinite;
-}
-@keyframes spinner {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
-}
+
+
 .btn-outline-primary {
   --bs-btn-color: #9c7bfd;
   --bs-btn-border-color: #9c7bfd;

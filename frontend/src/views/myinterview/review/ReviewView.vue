@@ -63,7 +63,8 @@ export default {
   },
   mounted() {
     this.findreviewDetail();
-    console.log(this.reviewNo);
+    // console.log(this.reviewNo);
+    window.scrollTo(0, 0);
   }
 };
 </script>
@@ -99,6 +100,6 @@ export default {
   justify-content: center;
 
   width: 100%;
-  height: 400px;
+  height: 100%;
 }
 </style>
