@@ -903,14 +903,11 @@ export default {
             this.recordingToSend.videoUrl = await this.recording.url;
             for (const member of memberlist) {
               this.recordingToSend.userId = await member.user.userId;
-              // console.log(this.recordingToSend.userId);
               await this.saveRecordedFile([
                 this.recordingToSend,
                 this.sessionNo
               ]);
             }
-
-            // this.recordingToSend.userId = await this.myUserId;
           })
           .then(data => resolve(data.token))
           .catch(error => reject(error.response));
@@ -985,8 +982,6 @@ export default {
       members.forEach(function(member, index) {
         const checkId = member.user.userId;
         if (userId === checkId) {
-          console.log("check!!!!!!!!!!");
-          console.log(index);
           studentindex = index;
           return;
         }
@@ -1087,28 +1082,19 @@ export default {
           this.publisher.stream.connection.data
         );
 
-        console.log("확인해보자", this.updateMain, "이거랑", clientId);
         if (!this.updateMain) {
           await this.changeScreenMode("normal");
-          // await this.changeInterviewMode(false);
           await this.changeInterviewUser("");
           await this.changeContent("chatting");
-          // await this.tmStop()
         } else {
           await this.changeScreenMode("interview");
-          // this.changeInterviewMode(true);
+
           if (clientId === this.updateMain) {
             await this.updateMainVideoStreamManager(this.publisher);
             const studentindex = await this.findIndex(this.updateMain);
             await this.changeContent("participant");
             await this.changeToCoverLetter(["coverletter", studentindex]);
             await this.plusDivs(0);
-            // await this.init()
-
-            // this.chatting = false;
-            // this.participant = true;
-            // this.selectinterviewee = false;
-            // this.commonquestion = false;
           } else if (this.subscribers) {
             this.subscribers.forEach(async sub => {
               const { clientId } = JSON.parse(sub.stream.connection.data);
@@ -1124,8 +1110,6 @@ export default {
             });
           }
         }
-
-        console.log("업데이트 확인입니다");
         console.log(event);
         console.log(this.updateMain);
       });
@@ -1133,7 +1117,6 @@ export default {
       // change TTS mode
 
       this.session.on("signal:tts-mode", async event => {
-        console.log("tts-mode 확인!!!!!!");
         console.log(event.data);
         const isTTSMode = await event.data;
         if (isTTSMode) {
@@ -1208,6 +1191,7 @@ export default {
 
       window.removeEventListener("beforeunload", this.leaveSession);
       this.moveToStudy();
+      console.log("완전히 나가기 완료");
     },
 
     updateMainVideoStreamManager(stream) {
@@ -1502,11 +1486,9 @@ export default {
     this.mySessionId = await this.changeSessionId(this.sessionNo);
     await this.joinSession();
     // await this.showDivs(1);
+  },
+  unmounted() {
+    this.leaveSession();
   }
-  // async mounted() {
-  //   console.log("걸리나?");
-  //   await this.showDivs(1);
-  //   console.log("걸렸다");
-  // }
 };
 </script>
