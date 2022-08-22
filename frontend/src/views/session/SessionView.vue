@@ -39,7 +39,7 @@
                   :src="require(`@/assets/images/session/left.png`)"
                   class="slider-button-left"
                   @click="plusDivs(-1)"
-                  style="height:4vh; margin-top:9vh;"
+                  style="height:4vh; margin-top:9vh; cursor:pointer;"
                 />
                 <!-- 자기화면 (작은) -->
                 <user-video
@@ -48,7 +48,7 @@
                   :mainStream="false"
                   :interviewMode="true"
                   @click="updateMainVideoStreamManager(publisher)"
-                  style="height:15vh;"
+                  style="height:15vh; cursor:pointer;"
                 />
                 <!-- native : 상위 컴포넌트(즉 여기 있는 이벤트)를 하위 컴포넌트에서 작동시키고 싶을 때 사용한다. -->
                 <!-- vue3에서 native가 사라지고 그냥 click을 누르면 된다. -->
@@ -66,7 +66,7 @@
                   :src="require(`@/assets/images/session/right.png`)"
                   class="slider-button-right"
                   @click="plusDivs(1)"
-                  style="height:4vh; margin-top:9vh;"
+                  style="height:4vh; margin-top:9vh; cursor:pointer;"
                 />
               </div>
             </div>
@@ -81,15 +81,11 @@
               <!-- 마이크 ONOFF-->
               <div>
                 <!-- <div class="video-button"></div> -->
-                <div
-                  v-if="audioOnOff"
-                  class="mic-button-on tooltip-image
-"
-                >
+                <div v-if="audioOnOff" class="mic-button-on tooltip-image">
                   <img
                     @click="audioONOFF()"
                     :src="require(`@/assets/images/session/micOn.png`)"
-                    style="height:4vh; margin-left:1.5vh; margin-top:1vh;"
+                    style="height:4vh; margin-left:1.5vh; margin-top:1vh; cursor:pointer;"
                   />
                   <span class="tooltip-text">
                     마이크 끄기
@@ -99,7 +95,7 @@
                   <img
                     @click="audioONOFF()"
                     :src="require(`@/assets/images/session/micOn.png`)"
-                    style="height:4vh; margin-left:1.5vh; margin-top:1vh;"
+                    style="height:4vh; margin-left:1.5vh; margin-top:1vh; cursor:pointer;"
                   />
                   <span class="tooltip-text">
                     마이크 켜기
@@ -113,7 +109,7 @@
                   <img
                     @click="videoONOFF()"
                     :src="require(`@/assets/images/session/video.png`)"
-                    style="height:2.4vh; margin-left: 1.2vh; margin-top: 1.8vh;"
+                    style="height:2.4vh; margin-left: 1.2vh; margin-top: 1.8vh; cursor:pointer;"
                   /><span class="tooltip-text">
                     카메라 끄기
                   </span>
@@ -122,7 +118,7 @@
                   <img
                     @click="videoONOFF()"
                     :src="require(`@/assets/images/session/video.png`)"
-                    style="height:2.4vh; margin-left: 1.2vh; margin-top: 1.8vh;"
+                    style="height:2.4vh; margin-left: 1.2vh; margin-top: 1.8vh; cursor:pointer;"
                   /><span class="tooltip-text">
                     카메라 켜기
                   </span>
@@ -137,7 +133,7 @@
                   <img
                     :src="require(`@/assets/images/session/teach.png`)"
                     @click="teachONOFF()"
-                    style="height:3.8vh; margin-left: 1vh; margin-top: 1.1vh;"
+                    style="height:3.8vh; margin-left: 1vh; margin-top: 1.1vh; cursor:pointer;"
                   /><span class="tooltip-text">
                     자세교정 끄기
                   </span>
@@ -146,7 +142,7 @@
                   <img
                     :src="require(`@/assets/images/session/teach.png`)"
                     @click="teachONOFF()"
-                    style="height:3.8vh; margin-left:1vh; margin-top: 1.1vh;"
+                    style="height:3.8vh; margin-left:1vh; margin-top: 1.1vh; cursor:pointer;"
                   /><span class="tooltip-text">
                     자세교정 켜기
                   </span>
@@ -158,7 +154,7 @@
                   <img
                     @click="leaveSession"
                     :src="require(`@/assets/images/session/leave.png`)"
-                    style="height:3.5vh; margin-left: 1.3vh; margin-top: 1.2vh;"
+                    style="height:3.5vh; margin-left: 1.3vh; margin-top: 1.2vh; cursor:pointer;"
                   />
                 </div>
               </div>
@@ -217,7 +213,7 @@
                     <img
                       @click="audioONOFF()"
                       :src="require(`@/assets/images/session/micOn.png`)"
-                      style="height:4vh; margin-left:1.5vh; margin-top:1vh;"
+                      style="height:4vh; margin-left:1.5vh; margin-top:1vh; cursor:pointer; cursor:pointer;"
                     /><span class="tooltip-text">
                       마이크 끄기
                     </span>
@@ -226,7 +222,7 @@
                     <img
                       @click="audioONOFF()"
                       :src="require(`@/assets/images/session/micOn.png`)"
-                      style="height:4vh; margin-left:1.5vh; margin-top:1vh;"
+                      style="height:4vh; margin-left:1.5vh; margin-top:1vh; cursor:pointer; cursor:pointer;"
                     /><span class="tooltip-text">
                       마이크 켜기
                     </span>
@@ -238,7 +234,7 @@
                     <img
                       @click="videoONOFF()"
                       :src="require(`@/assets/images/session/video.png`)"
-                      style="height:2.4vh; margin-left: 1.2vh; margin-top: 1.8vh;"
+                      style="height:2.4vh; margin-left: 1.2vh; margin-top: 1.8vh; cursor:pointer;"
                     /><span class="tooltip-text">
                       카메라 끄기
                     </span>
@@ -247,7 +243,7 @@
                     <img
                       @click="videoONOFF()"
                       :src="require(`@/assets/images/session/video.png`)"
-                      style="height:2.4vh; margin-left: 1.2vh; margin-top: 1.8vh;"
+                      style="height:2.4vh; margin-left: 1.2vh; margin-top: 1.8vh; cursor:pointer;"
                     /><span class="tooltip-text">
                       카메라 켜기
                     </span>
@@ -262,7 +258,7 @@
                     <img
                       :src="require(`@/assets/images/session/teach.png`)"
                       @click="teachONOFF()"
-                      style="height:3.8vh; margin-left: 1vh; margin-top: 1.1vh;"
+                      style="height:3.8vh; margin-left: 1vh; margin-top: 1.1vh; cursor:pointer;"
                     /><span class="tooltip-text">
                       자세교정 끄기
                     </span>
@@ -271,7 +267,7 @@
                     <img
                       :src="require(`@/assets/images/session/teach.png`)"
                       @click="teachONOFF()"
-                      style="height:3.8vh; margin-left:1vh; margin-top: 1.1vh;"
+                      style="height:3.8vh; margin-left:1vh; margin-top: 1.1vh; cursor:pointer;"
                     /><span class="tooltip-text">
                       자세교정 켜기
                     </span>
@@ -283,7 +279,7 @@
                     <img
                       @click="leaveSession"
                       :src="require(`@/assets/images/session/leave.png`)"
-                      style="height:3.5vh; margin-left: 1.3vh; margin-top: 1.2vh;"
+                      style="height:3.5vh; margin-left: 1.3vh; margin-top: 1.2vh; cursor:pointer;"
                     />
                   </div>
                 </div>
@@ -323,7 +319,7 @@
                   :src="require(`@/assets/images/session/left.png`)"
                   class="slider-button-left"
                   @click="plusDivs(-1)"
-                  style="height:4vh; margin-top:9vh;"
+                  style="height:4vh; margin-top:9vh; cursor:pointer;"
                 />
                 <!-- 자기화면 (작은) -->
                 <user-video
@@ -351,7 +347,7 @@
                   :src="require(`@/assets/images/session/right.png`)"
                   class="slider-button-right"
                   @click="plusDivs(1)"
-                  style="height:4vh; margin-top:9vh;"
+                  style="height:4vh; margin-top:9vh; cursor:pointer;"
                 />
               </div>
             </div>
@@ -370,7 +366,7 @@
                   <img
                     @click="audioONOFF()"
                     :src="require(`@/assets/images/session/micOn.png`)"
-                    style="height:4vh; margin-left:1.5vh; margin-top:1vh;"
+                    style="height:4vh; margin-left:1.5vh; margin-top:1vh; cursor:pointer;"
                   /><span class="tooltip-text">
                     마이크 끄기
                   </span>
@@ -379,7 +375,7 @@
                   <img
                     @click="audioONOFF()"
                     :src="require(`@/assets/images/session/micOn.png`)"
-                    style="height:4vh; margin-left:1.5vh; margin-top:1vh;"
+                    style="height:4vh; margin-left:1.5vh; margin-top:1vh; cursor:pointer;"
                   /><span class="tooltip-text">
                     마이크 켜기
                   </span>
@@ -392,7 +388,7 @@
                   <img
                     @click="videoONOFF()"
                     :src="require(`@/assets/images/session/video.png`)"
-                    style="height:2.4vh; margin-left: 1.2vh; margin-top: 1.8vh;"
+                    style="height:2.4vh; margin-left: 1.2vh; margin-top: 1.8vh; cursor:pointer;"
                   /><span class="tooltip-text">
                     카메라 끄기
                   </span>
@@ -401,7 +397,7 @@
                   <img
                     @click="videoONOFF()"
                     :src="require(`@/assets/images/session/video.png`)"
-                    style="height:2.4vh; margin-left: 1.2vh; margin-top: 1.8vh;"
+                    style="height:2.4vh; margin-left: 1.2vh; margin-top: 1.8vh; cursor:pointer;"
                   /><span class="tooltip-text">
                     카메라 켜기
                   </span>
@@ -415,7 +411,7 @@
                   <img
                     :src="require(`@/assets/images/session/teach.png`)"
                     @click="teachONOFF()"
-                    style="height:3.8vh; margin-left: 1vh; margin-top: 1.1vh;"
+                    style="height:3.8vh; margin-left: 1vh; margin-top: 1.1vh; cursor:pointer;"
                   />
                   <span class="tooltip-text">
                     자세교정 끄기
@@ -425,7 +421,7 @@
                   <img
                     :src="require(`@/assets/images/session/teach.png`)"
                     @click="teachONOFF()"
-                    style="height:3.8vh; margin-left:1vh; margin-top: 1.1vh;"
+                    style="height:3.8vh; margin-left:1vh; margin-top: 1.1vh; cursor:pointer;"
                   /><span class="tooltip-text">
                     자세교정 켜기
                   </span>
@@ -437,7 +433,7 @@
                   <img
                     @click="leaveSession"
                     :src="require(`@/assets/images/session/leave.png`)"
-                    style="height:3.5vh; margin-left: 1.3vh; margin-top: 1.2vh;"
+                    style="height:3.5vh; margin-left: 1.3vh; margin-top: 1.2vh; cursor:pointer;"
                   />
                 </div>
               </div>
@@ -460,13 +456,13 @@
                     <img
                       :src="require(`@/assets/images/session/chatOn.png`)"
                       @click="changeContent('chatting')"
-                      style="height:6vh; margin-top:-5%;"
+                      style="height:6vh; margin-top:-5%; cursor:pointer;"
                       v-if="chatting"
                     />
                     <img
                       :src="require(`@/assets/images/session/chatOff.png`)"
                       @click="changeContent('chatting')"
-                      style="height:6vh; margin-top:-5%;"
+                      style="height:6vh; margin-top:-5%; cursor:pointer;"
                       v-else
                     />
                   </div>
@@ -475,13 +471,13 @@
                       :src="require(`@/assets/images/session/resumeOn.png`)"
                       @click="changeContent('participant')"
                       v-if="participant"
-                      style="margin-top:5%; height:4.8vh"
+                      style="margin-top:5%; height:4.8vh; cursor:pointer;"
                     />
                     <img
                       :src="require(`@/assets/images/session/resumeOff.png`)"
                       @click="changeContent('participant')"
                       v-else
-                      style="margin-top:5%; height:4.8vh"
+                      style="margin-top:5%; height:4.8vh; cursor:pointer;"
                     />
                   </div>
                   <div
@@ -492,13 +488,13 @@
                     <img
                       :src="require(`@/assets/images/session/memberOn.png`)"
                       @click="changeContent('selectinterviewee')"
-                      style="height:5.7vh; margin-top:5%"
+                      style="height:5.7vh; margin-top:5%; cursor:pointer;"
                       v-if="selectinterviewee"
                     />
                     <img
                       :src="require(`@/assets/images/session/memberOff.png`)"
                       @click="changeContent('selectinterviewee')"
-                      style="height:5.7vh; margin-top:5%"
+                      style="height:5.7vh; margin-top:5%; cursor:pointer;"
                       v-else
                     />
                   </div>
@@ -508,7 +504,7 @@
                         require(`@/assets/images/session/questionAnswerOn.png`)
                       "
                       @click="changeContent('commonquestion')"
-                      style="margin-top: 0.8vh; height:4.5vh;"
+                      style="margin-top: 0.8vh; height:4.5vh; cursor:pointer;"
                       v-if="commonquestion"
                     />
                     <img
@@ -516,7 +512,7 @@
                         require(`@/assets/images/session/questionAnswerOff.png`)
                       "
                       @click="changeContent('commonquestion')"
-                      style="margin-top: 0.8vh; margin-left:0.3vh; height:4.5vh;"
+                      style="margin-top: 0.8vh; margin-left:0.3vh; height:4.5vh; cursor:pointer;"
                       v-else
                     />
                   </div>
@@ -533,13 +529,13 @@
                     >
                       <img
                         :src="require(`@/assets/images/session/videoOn.png`)"
-                        style="height:3vh;"
+                        style="height:3vh; cursor:pointer;"
                         v-if="recordOnOff"
                         @click="recordONOFF()"
                       />
                       <img
                         :src="require(`@/assets/images/session/videoOff.png`)"
-                        style="height:3vh;"
+                        style="height:3vh; cursor:pointer;"
                         @click="recordONOFF()"
                         v-else
                       />

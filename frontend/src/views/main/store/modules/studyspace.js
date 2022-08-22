@@ -254,6 +254,7 @@ export default {
       })
         .then(res => {
           console.log(res.data);
+          location.reload();
         })
         .catch(err => {
           console.log(err.response);
