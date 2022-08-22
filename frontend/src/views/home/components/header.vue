@@ -222,6 +222,7 @@ a {
 }
 .profile-img {
   height: 40px;
+  width: 40px;
   margin-left: 30px;
   border-radius: 70%;
   overflow: hidden;

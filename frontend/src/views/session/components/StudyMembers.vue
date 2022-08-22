@@ -7,7 +7,7 @@
       <div class="memeber">
         <img
           class="profile-photo"
-          :src="require(`@/assets/images/session/profile.png`)"
+          :src="profileImg"
           style="box-shadow: 0px 0px 7px 1px rgba(0, 0, 0, 0.6);"
         />&nbsp;&nbsp;&nbsp; {{ member.user.userName }}
       </div>
@@ -18,15 +18,8 @@
           style="box-shadow: 0px 0px 7px 1px rgba(0, 0, 0, 0.4); "
           @click="changeToCoverLetter(['coverletter', studentindex])"
         />
-        <!-- <button @click="changeToCoverLetter(['coverletter', studentindex])">
-          자소서 보기
-        </button> -->
       </div>
     </div>
-
-    <!-- 여기에 leader일때만 인터뷰어 지정 체크 버튼 생성 -->
-    <!-- 면접관이 지정 되었을 경우 메인 화면으로 그 사람이 메인 화면으로 바뀌게 만들어야 함 -->
-    <!-- 메인 스트림으로 띄울수 있게 만들면 될 것 같음 -->
   </div>
 </template>
 
@@ -49,8 +42,15 @@ export default {
       stdMemberInfo: {
         stdNo: this.$route.params.stdNo,
         userNo: this.member.user.userNo
-      }
+      },
+      profileImg: ""
     };
+  },
+  mounted() {
+    this.profileImg = this.member.user.userImg;
+    if (this.profileImg == null) {
+      this.profileImg = require(`@/assets/images/session/profile.png`);
+    }
   },
   computed: {
     ...mapGetters(["resumeQuestionList"])
@@ -67,6 +67,8 @@ export default {
   background-color: #c4c1c9;
   margin-left: 4vh;
   height: 6vh;
+  width: 51.72px;
+  height: 51.72px;
 }
 .resume {
   margin-right: 4.5vh;
