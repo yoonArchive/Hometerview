@@ -83,8 +83,7 @@
                 <!-- <div class="video-button"></div> -->
                 <div
                   v-if="audioOnOff"
-                  class="mic-button-on tooltip-image
-"
+                  class="mic-button-on tooltip-image"
                 >
                   <img
                     @click="audioONOFF()"
