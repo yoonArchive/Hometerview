@@ -165,6 +165,7 @@ export default {
     this.SET_FULL_CONTAINER("full-container");
   },
   async mounted() {
+    window.scrollTo(0, 0);
     this.SET_MAIN_CONTAINER("main-container-coverletter");
     this.SET_FULL_CONTAINER("full-container-coverletter");
 

@@ -48,7 +48,7 @@ export default {
 
   border: 2px solid #f90;
   border-radius: 5px;
-  width: 80%;
+  width: 100%;
   height: auto;
   line-height: 46px;
   text-align: center;

@@ -154,12 +154,14 @@
               </div>
               <!-- 나가기 -->
               <div>
-                <div class="leave-button">
+                <div class="leave-button tooltip-image">
                   <img
                     @click="leaveSession"
                     :src="require(`@/assets/images/session/leave.png`)"
                     style="height:3.5vh; margin-left: 1.3vh; margin-top: 1.2vh;"
-                  />
+                  /><span class="tooltip-text">
+                    나가기
+                  </span>
                 </div>
               </div>
               <!-- 화면 공유 -->
@@ -279,12 +281,15 @@
                 </div>
                 <!-- 나가기 -->
                 <div>
-                  <div class="leave-button">
+                  <div class="leave-button tooltip-image">
                     <img
                       @click="leaveSession"
                       :src="require(`@/assets/images/session/leave.png`)"
                       style="height:3.5vh; margin-left: 1.3vh; margin-top: 1.2vh;"
                     />
+                    <span class="tooltip-text">
+                      나가기
+                    </span>
                   </div>
                 </div>
                 <!-- 화면 공유 -->
@@ -433,12 +438,14 @@
               </div>
               <!-- 나가기 -->
               <div>
-                <div class="leave-button">
+                <div class="leave-button tooltip-image">
                   <img
                     @click="leaveSession"
                     :src="require(`@/assets/images/session/leave.png`)"
                     style="height:3.5vh; margin-left: 1.3vh; margin-top: 1.2vh;"
-                  />
+                  /><span class="tooltip-text">
+                    나가기
+                  </span>
                 </div>
               </div>
               <!-- 화면 공유 -->
@@ -580,6 +587,75 @@
               ></common-qusetion-list>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="modal fade"
+    id="memberCoverLetterModal"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
+    tabindex="-1"
+    aria-labelledby="staticBackdropLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="wrapper" style="margin-top:20px">
+          <div v-for="(item, index) in resumeQuestionList.length" :key="index">
+            <div class="accordion {'active': index == 0}">
+              <pre
+                class="accordion_tab {'active': index == 0}"
+                @click="clicktabs(item, $event)"
+                style="white-space: pre-line;"
+              >
+              {{ resumeQuestionList[index].question }}
+              <div class="accordion_arrow">
+                <img src="https://i.imgur.com/PJRz0Fc.png" alt="arrow" />
+              </div>
+            </pre>
+              <div class="accordion_content">
+                <div class="accordion_item">
+                  <pre style="font-size:15px; white-space: pre-line;">
+                  {{ resumeQuestionList[index].answer }}
+                </pre
+                  >
+                </div>
+                <div class="accordion_item">
+                  <p class="item_title">예상 질문 리스트</p>
+                  <div
+                    v-for="(item,
+                    idnex) in expectedQuestionList.personalQuestions"
+                    :key="idnex"
+                  >
+                    <div class="row" style="font-size:20px">
+                      {{ item.contents }}
+
+                      <!-- <div class="col">
+                      <img
+                        :src="
+                          require(`@/assets/images/session/exprectedQuestionTTSImg.png`)
+                        "
+                        @click="childttsrequest(item.contents)"
+                      />
+                    </div> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+          <button type="button" class="btn btn-primary">Understood</button>
         </div>
       </div>
     </div>
@@ -806,7 +882,9 @@ export default {
       "ttsrequestcontext",
       "interviewMode",
       "isTTSMode",
-      "screenMode"
+      "screenMode",
+      "resumeQuestionList",
+      "expectedQuestionList"
     ])
   },
   methods: {

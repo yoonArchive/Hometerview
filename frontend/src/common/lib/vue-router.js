@@ -274,7 +274,7 @@ const router = createRouter({
   history: createWebHistory(),
   routes,
   linkActiveClass: "route-active",
-  linkExactActiveClass: "route-active"
+  linkExactActiveClass: "route-exact-active"
 });
 router.beforeEach((to, from, next) => {
   console.log(store.getters.isLoggedIn);
