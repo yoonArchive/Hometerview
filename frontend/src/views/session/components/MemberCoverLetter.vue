@@ -9,7 +9,7 @@
           class="btn btn-primary"
           data-bs-toggle="modal"
           data-bs-target="#memberCoverLetterModal"
-          style="background-color: white; border: none;"
+          style="background-color: #f5f5f5; border: none;"
         >
           <img
             :src="require(`@/assets/images/SearchImage.png`)"
@@ -45,7 +45,7 @@
                   :key="idnex"
                 >
                   <div class="row" style="font-size:20px">
-                    {{ index }}. {{ item.contents }}
+                    Q. {{ item.contents }}
 
                     <!-- <div class="col">
                       <img
@@ -126,7 +126,7 @@
                       :key="idnex"
                     >
                       <div class="row" style="font-size:20px">
-                        {{ index }}. {{ item.contents }}
+                        Q. {{ item.contents }}
 
                         <!-- <div class="col">
                       <img

@@ -4,8 +4,10 @@
     style="margin-top: 20px"
     @click="playttsquestion(question.contents)"
   >
-    <template v-if="question.questionType == 'JOB'">[직무]</template>
-    <template v-else>[인성]</template>
+    <template v-if="question.questionType == 'JOB'" style="color:#653fd3"
+      >[직무]</template
+    >
+    <template v-else style="color:red">[인성]</template>
     {{ question.contents }}
   </div>
 </template>
