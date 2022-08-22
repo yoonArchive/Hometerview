@@ -89,5 +89,6 @@ input:focus {
   display: inline-block;
   margin-right: 10px;
   height: 4vh;
+  cursor: pointer;
 }
 </style>
