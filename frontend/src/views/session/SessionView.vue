@@ -447,7 +447,6 @@
         <div class=" side-right col-md-4">
           <!-- 사이드 -->
           <!-- 메시지, 자소서, 참가자 지정 -->
-
           <div class="side-panel">
             <div class="select-side-bottons">
               <div class="d-flex justify-content-between">
@@ -873,7 +872,6 @@ export default {
           )
           .then(response => {
             this.recording = response.data;
-            console.log(this.recording);
           })
           .then(data => resolve(data.token))
           .catch(error => reject(error.response));
@@ -910,17 +908,8 @@ export default {
       });
     },
     async init() {
-      const modelURL = `${this.url}model.json`;
-      const metadataURL = `${this.url}metadata.json`;
       const webcamContainer = this.$refs.webcam;
       const flip = false; // whether to flip the webcam
-      // load the model and metadata
-      // Refer to tmImage.loadFromFiles() in the API to support files from a file picker
-      // or files from your local hard drive
-      // Note: the pose library adds "tmImage" object to your window (window.tmImage)
-      // this.model = await tmPose.load(modelURL, metadataURL);
-      this.model = Object.freeze(await tmPose.load(modelURL, metadataURL));
-      // Convenience function to setup a webcam
       this.webcam = new tmPose.Webcam(
         webcamContainer.width,
         webcamContainer.height,
@@ -928,13 +917,10 @@ export default {
       ); // width, height, flip
       await this.webcam.setup(); // request access to the webcam
       await this.webcam.play();
-      webcamContainer.appendChild(this.webcam.canvas);
-
       window.requestAnimationFrame(this.loop);
     },
     async loop() {
       if (this.webcam != null) {
-        console.log("hi");
         this.webcam.update();
         await this.predict();
         await this.inference();
@@ -957,11 +943,9 @@ export default {
           await this.needToFixPosture(postureColor);
         } else if (className === "left" && pred > 0.9) {
           const postureColor = "#b93131";
-          console.log("left");
           await this.needToFixPosture(postureColor);
         } else if (className === "right" && pred > 0.9) {
           const postureColor = "#b93131";
-          console.log("right");
           await this.needToFixPosture(postureColor);
         }
       }
@@ -997,12 +981,10 @@ export default {
       if (this.recordOnOff) {
         this.recordingStopButton();
         this.recordOnOff = !this.recordOnOff;
-        console.log(this.recordOnOff);
       } else {
         await alert("녹화를 시작하겠습니다.");
         this.recordingStartButton();
         this.recordOnOff = !this.recordOnOff;
-        console.log(this.recordOnOff);
       }
     },
     videoONOFF() {
@@ -1018,19 +1000,13 @@ export default {
         //stop
         this.tmStop();
         this.teachOnOff = !this.teachOnOff;
-        console.log(this.teachOnOff);
       } else {
         //start
         await alert("자세교정 모드를 실행하겠습니다.");
         this.init();
         this.teachOnOff = !this.teachOnOff;
-        console.log(this.teachOnOff);
       }
     },
-    // mirrorONOFF(){
-    // 	this.publisher.publishVideo(!this.mirrorOnOff);
-    // 	this.mirrorOnOff = !this.mirrorOnOff;
-    // },
 
     // 기본 기능 (입장하기 퇴장하기)
     async joinSession() {
@@ -1106,14 +1082,11 @@ export default {
             });
           }
         }
-        console.log(event);
-        console.log(this.updateMain);
       });
 
       // change TTS mode
 
       this.session.on("signal:tts-mode", async event => {
-        console.log(event.data);
         const isTTSMode = await event.data;
         if (isTTSMode) {
           await this.changeScreenMode("tts");
@@ -1135,7 +1108,6 @@ export default {
           .connect(token, {
             clientData: this.myUserName,
             clientId: this.myUserId
-
             // // 면접자 지정된 것을 여기에다가 넣어주고 그것이 맞는지 본인과 일치하는지 판단을 해주면 됨
             // // 그때 update부분을 수정하면 가능 할듯
             // clientType: this.clientType
@@ -1187,7 +1159,6 @@ export default {
 
       window.removeEventListener("beforeunload", this.leaveSession);
       this.moveToStudy();
-      console.log("완전히 나가기 완료");
     },
 
     updateMainVideoStreamManager(stream) {
@@ -1236,7 +1207,6 @@ export default {
               }
               reject(err.response);
             }
-
             console.log(err.response);
           });
       });
@@ -1270,8 +1240,6 @@ export default {
           responseType: "arraybuffer"
         }
       );
-      console.log("playtts");
-      console.log(context);
       AudioContext = window.AudioContext || window.webkitAudioContext;
       const audioContext = new AudioContext();
       const audioBuffer = await audioContext.decodeAudioData(ttsdata.data);
@@ -1464,21 +1432,21 @@ export default {
   },
   watch: {
     ttsrequestcontext() {
-      console.log("이게 많이 실행되나?");
       this.ttspublish(this.ttsrequestcontext);
     }
   },
   async created() {
     await this.bringStudySpaceDetail(this.sessionNo);
     this.userType = this.studySpaceDetail.joinType;
-    console.log(this.studySpaceDetail);
+    this.model = Object.freeze(
+      await tmPose.load(`${this.url}model.json`, `${this.url}metadata.json`)
+    );
   },
   async beforeMount() {
     this.myUserName = await this.currentUser.userName;
     this.myUserId = await this.currentUser.userId;
     this.myUserImg = await this.currentUser.userImg;
     this.myJoinType = await this.studySpaceDetail.joinType;
-    console.log("this.myUserId : ", this.myUserId);
     this.mySessionId = await this.changeSessionId(this.sessionNo);
     await this.joinSession();
     // await this.showDivs(1);
