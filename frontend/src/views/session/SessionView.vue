@@ -310,7 +310,7 @@
               <div id="main-video" class="col">
                 <img
                   :src="require('@/assets/images/session/interviewer.png')"
-                  style="height:65vh;"
+                  style="height:63vh; margin-left:8vh; margin-bottom:1.5vh;"
                 />
               </div>
 
