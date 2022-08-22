@@ -61,8 +61,6 @@ export default {
         headers: getters.authHeader
       })
         .then(res => {
-          console.log(res.data.commonQuestions);
-          console.log(res.data);
           // commit('SET__commonQuestion', data.data)
           commit("SET_commonQuestions", res.data);
         })
@@ -102,7 +100,7 @@ export default {
       })
         .then(res => {
           commit("SET_commonQuestion", res.data.commonQuestions);
-          console.log("공통질문 작성 성공" + res);
+          // console.log("공통질문 작성 성공" + res);
           dispatch("commonQuestions1", stdNo);
           // router.push({
           //   name: 'commonQuestion',
@@ -118,16 +116,16 @@ export default {
       const stdNo = info[0];
       const payload = info[1];
       const commonQuestionNo = info[2];
-      console.log("info" + info);
-      console.log("질문번호" + commonQuestionNo);
-      console.log("수정 내용" + payload.contents);
+      // console.log("info" + info);
+      // console.log("질문번호" + commonQuestionNo);
+      // console.log("수정 내용" + payload.contents);
       axios({
         url: api_url.study.commonquestion(stdNo, commonQuestionNo),
         method: "put",
         data: payload,
         headers: getters.authHeader
       }).then(res => {
-        console.log("수정성공");
+        // console.log("수정성공");
         commit("SET_commonQuestion", res.data);
         dispatch("commonQuestions1", stdNo);
 
@@ -141,7 +139,7 @@ export default {
     deletecommonQuestion({ commit, getters, dispatch }, info) {
       const stdNo = info[0];
       const questionNo = info[1];
-      console.log("인포" + info);
+
       if (confirm("정말 삭제하시겠습니까?")) {
         console.log(stdNo, questionNo);
         axios({
