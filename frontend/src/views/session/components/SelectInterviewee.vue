@@ -3,7 +3,7 @@
     <!-- interviewee :{{ interviewUser }} <br /> -->
     <div>
       <div style="margin: 1.5vh; font-size: 2vh; font-weight: 500;">
-        면접자를 지정해주세요
+        면접자를 지정해주세요.
       </div>
       <div
         v-for="(member, index) in studySpaceDetail.studyJoins"
@@ -53,24 +53,16 @@ export default {
   methods: {
     ...mapActions(["bringStudySpaceDetail"]),
     async intervieweeApply() {
-      console.log("픽스된 인터뷰어 : ", this.interviewUser);
       this.$emit("streamUpdate", this.interviewUser);
     },
     async intervieweeCancel() {
-      console.log("check");
       this.$emit("streamUpdate", "");
     }
   }
-
-  // created(){
-  //   this.bringStudySpaceDetail(this.sessionNo)
-  // }
 };
 </script>
 
 <style scoped>
-.member-list {
-}
 .select-member {
   height: 90vh;
 }
