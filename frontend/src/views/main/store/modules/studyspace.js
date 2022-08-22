@@ -260,20 +260,24 @@ export default {
           console.log(err.response);
         });
     },
-    leaveStudy({ getters }, stdNo) {
+    async leaveStudy({ getters }, stdNo) {
       console.log(api_url.study.studyspacedetail(stdNo));
-      axios({
-        url: api_url.study.studyspacedetail(stdNo),
-        method: "delete",
-        headers: getters.authHeader
-      })
-        .then(res => {
-          console.log(res.data);
-          router.push({ name: "studyrecruitment" });
+      let confirmAction = await confirm("스터디를 탈퇴 하시겠습니까?");
+      if (confirmAction) {
+        axios({
+          url: api_url.study.studyspacedetail(stdNo),
+          method: "delete",
+          headers: getters.authHeader
         })
-        .catch(err => {
-          console.log(err.response);
-        });
+          .then(async res => {
+            console.log(res.data);
+            await router.push({ name: "membersrecruitment" });
+            alert("성공적으로 탈퇴되었습니다");
+          })
+          .catch(err => {
+            console.log(err.response);
+          });
+      }
     },
     deleteStudySpace({ dispatch }, deleteInfo) {
       const stdNo = deleteInfo[0];
