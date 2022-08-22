@@ -21,7 +21,9 @@
           class="input-icon uil uil-file-alt coverletter-icon"
           style="font-size:3.7vh;"
         >
-          <span class="tooltip-text">자소서를 등록, 확인 할 수 있습니다.</span>
+          <span class="tooltip-text"
+            >자기소개서를 등록, 확인 할 수 있습니다.</span
+          >
         </i>
       </router-link>
     </td>
