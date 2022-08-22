@@ -270,7 +270,6 @@ export default {
           headers: getters.authHeader
         })
           .then(async res => {
-            console.log("들어오니??????????????????????");
             console.log(res.data);
             await router.push({ name: "membersrecruitment" });
             alert("성공적으로 탈퇴되었습니다");
