@@ -81,7 +81,11 @@
               <!-- 마이크 ONOFF-->
               <div>
                 <!-- <div class="video-button"></div> -->
-                <div v-if="audioOnOff" class="mic-button-on tooltip-image">
+                <div
+                  v-if="audioOnOff"
+                  class="mic-button-on tooltip-image
+"
+                >
                   <img
                     @click="audioONOFF()"
                     :src="require(`@/assets/images/session/micOn.png`)"
@@ -150,12 +154,16 @@
               </div>
               <!-- 나가기 -->
               <div>
-                <div class="leave-button">
+                <div class="leave-button tooltip-image">
                   <img
                     @click="leaveSession"
                     :src="require(`@/assets/images/session/leave.png`)"
                     style="height:3.5vh; margin-left: 1.3vh; margin-top: 1.2vh; cursor:pointer;"
                   />
+
+                  <span class="tooltip-text">
+                    나가기
+                  </span>
                 </div>
               </div>
               <!-- 화면 공유 -->
@@ -275,12 +283,15 @@
                 </div>
                 <!-- 나가기 -->
                 <div>
-                  <div class="leave-button">
+                  <div class="leave-button tooltip-image">
                     <img
                       @click="leaveSession"
                       :src="require(`@/assets/images/session/leave.png`)"
                       style="height:3.5vh; margin-left: 1.3vh; margin-top: 1.2vh; cursor:pointer;"
                     />
+                    <span class="tooltip-text">
+                      나가기
+                    </span>
                   </div>
                 </div>
                 <!-- 화면 공유 -->
@@ -429,12 +440,16 @@
               </div>
               <!-- 나가기 -->
               <div>
-                <div class="leave-button">
+                <div class="leave-button tooltip-image">
                   <img
                     @click="leaveSession"
                     :src="require(`@/assets/images/session/leave.png`)"
                     style="height:3.5vh; margin-left: 1.3vh; margin-top: 1.2vh; cursor:pointer;"
                   />
+
+                  <span class="tooltip-text">
+                    나가기
+                  </span>
                 </div>
               </div>
               <!-- 화면 공유 -->
