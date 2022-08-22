@@ -484,4 +484,8 @@ b { /* used for event dates/times */
   border-width: 0.23vh;
   width: 120px;
 }
+.dday-button:hover {
+  cursor: pointer;
+  color: #653fd3;
+}
 </style>

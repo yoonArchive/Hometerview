@@ -4,7 +4,7 @@
       <div class="my-left">
         <div class="review-1">
           <!-- <h3>자기소개서 개수 : {{ resumeContents.length }}</h3> -->
-          <div class="row">
+          <!-- <div class="row">
             <h3 id="icon" class="col" style="width:30vh;">
               <span @click="this.addNewResume()">
                 <font-awesome-icon
@@ -19,6 +19,22 @@
                 </span>
               </span>
             </h3>
+          </div> -->
+          <div class="dday-button row">
+            <h1 id="icon col" style="width:1vh;">
+              <span @click="this.addNewResume()">
+                <font-awesome-icon
+                  icon="fa-solid fa-square-plus"
+                  style="height:4.3vh; color:#7a5fc9;"
+                />
+              </span>
+            </h1>
+            <div
+              class="align-self-center col"
+              style="font-family: '티머니 둥근바람'; font-size: 2.1vh;font-weight: 500; margin-left:2vh; margin-top: 0.01vh;"
+            >
+              자기소개서를 추가해보세요.
+            </div>
           </div>
         </div>
         <main>
@@ -483,5 +499,9 @@ b {
 #inner-table {
   border: #653fd3;
   font-size: 20px;
+}
+.dday-button:hover {
+  cursor: pointer;
+  color: #653fd3;
 }
 </style>
