@@ -183,8 +183,6 @@ Openvidu, teachabel machine
 
 ## 4.프로젝트 빌드 및 배포
 
-[toc]
-
 ### 1. 프로젝트 기술 스택
 
 ```markdown
