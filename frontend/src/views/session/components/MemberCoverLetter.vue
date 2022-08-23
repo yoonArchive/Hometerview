@@ -104,7 +104,7 @@
                 <pre
                   class="accordion_tab {'active': index == 0}"
                   @click="clicktabs(item, $event)"
-                  style="white-space: pre-line;"
+                  style="white-space: pre-line;font-size:26px;"
                 >
               {{ resumeQuestionList[index].question }}
               <div class="accordion_arrow">
@@ -113,19 +113,21 @@
             </pre>
                 <div class="accordion_content">
                   <div class="accordion_item">
-                    <pre style="font-size:15px; white-space: pre-line;">
+                    <pre style="font-size:22px; white-space: pre-line;">
                   {{ resumeQuestionList[index].answer }}
                 </pre
                     >
                   </div>
                   <div class="accordion_item">
-                    <p class="item_title">예상 질문 리스트</p>
+                    <p class="item_title" style="font-size:24px">
+                      예상 질문 리스트
+                    </p>
                     <div
                       v-for="(item,
                       idnex) in expectedQuestionList.personalQuestions"
                       :key="idnex"
                     >
-                      <div class="row" style="font-size:20px">
+                      <div class="row" style="font-size:22px">
                         Q. {{ item.contents }}
 
                         <!-- <div class="col">
