@@ -21,7 +21,9 @@
           class="input-icon uil uil-file-alt coverletter-icon"
           style="font-size:3.7vh;"
         >
-          <span class="tooltip-text">자소서를 등록, 확인 할 수 있습니다.</span>
+          <span class="tooltip-text"
+            >자기소개서를 등록, 확인 할 수 있습니다.</span
+          >
         </i>
       </router-link>
     </td>
@@ -88,13 +90,15 @@ tr:hover {
   border: 1px solid #653fd3;
   border-radius: 5px;
   padding: 5px;
-  font-size: 20px;
+  font-size: 13px;
   color: black;
   background: #f6f2ff;
   z-index: 10;
+  font-style: normal;
+  font-weight: normal;
 }
 
 .coverletter-icon:hover .tooltip-text {
-  display: block;
+  display: inline;
 }
 </style>

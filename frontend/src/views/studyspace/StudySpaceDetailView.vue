@@ -38,10 +38,9 @@ export default {
   },
   created() {
     this.commonQuestions1(this.stdNo);
-    console.log(this.stdNo);
-    console.log("스튜던트 인덱스" + this.studentIndex);
   },
   mounted() {
+    window.scrollTo(0, 0);
     this.setStudyNoAction(this.stdNo);
   }
 };

@@ -220,11 +220,28 @@ export default {
     },
     async submitType(action) {
       if (action === "만들기") {
+        this.recruitmentConfirmation();
         const formData = await this.upload();
         this.createRecruitment(formData);
       } else if (action === "수정하기") {
+        this.recruitmentConfirmation();
         const formData = await this.upload();
         this.updateRecruitmentDetail([this.recruitNo, formData]);
+      }
+    },
+    async recruitmentConfirmation() {
+      if (
+        this.newrecruitmentInfo.endDate === "" ||
+        this.newrecruitmentInfo.recruitTitle === "" ||
+        this.newrecruitmentInfo.startDate === "" ||
+        this.newrecruitmentInfo.stdDay === "" ||
+        this.newrecruitmentInfo.stdDetail === "" ||
+        this.newrecruitmentInfo.stdImg == "function File() { [native code] }" ||
+        this.newrecruitmentInfo.stdLimit === "" ||
+        this.newrecruitmentInfo.stdName === ""
+      ) {
+        alert("모든 내용을 입력해 주세요.");
+        return;
       }
     }
   }

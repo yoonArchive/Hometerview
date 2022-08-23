@@ -21,7 +21,9 @@
   <div class="carousel-caption d-none d-md-block">
     <div class="row">
       <h5>
-        <span class="comName" v-if="studySpace.comName != null"
+        <span
+          class="comName"
+          v-if="studySpace.comName != null || studySpace.comName != ''"
           >[{{ studySpace.comName }}] </span
         ><span class="stdName">{{ studySpace.stdName }}</span>
       </h5>

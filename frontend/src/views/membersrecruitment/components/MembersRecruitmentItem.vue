@@ -112,4 +112,9 @@ export default {
 .text-muted {
   font-size: 15px;
 }
+.col {
+  display: flex;
+  /* align-items: center; */
+  justify-content: center;
+}
 </style>

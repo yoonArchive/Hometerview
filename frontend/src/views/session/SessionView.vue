@@ -39,7 +39,7 @@
                   :src="require(`@/assets/images/session/left.png`)"
                   class="slider-button-left"
                   @click="plusDivs(-1)"
-                  style="height:4vh; margin-top:9vh;"
+                  style="height:4vh; margin-top:9vh; cursor:pointer;"
                 />
                 <!-- 자기화면 (작은) -->
                 <user-video
@@ -48,7 +48,7 @@
                   :mainStream="false"
                   :interviewMode="true"
                   @click="updateMainVideoStreamManager(publisher)"
-                  style="height:15vh;"
+                  style="height:15vh; cursor:pointer;"
                 />
                 <!-- native : 상위 컴포넌트(즉 여기 있는 이벤트)를 하위 컴포넌트에서 작동시키고 싶을 때 사용한다. -->
                 <!-- vue3에서 native가 사라지고 그냥 click을 누르면 된다. -->
@@ -66,7 +66,7 @@
                   :src="require(`@/assets/images/session/right.png`)"
                   class="slider-button-right"
                   @click="plusDivs(1)"
-                  style="height:4vh; margin-top:9vh;"
+                  style="height:4vh; margin-top:9vh; cursor:pointer;"
                 />
               </div>
             </div>
@@ -89,7 +89,7 @@
                   <img
                     @click="audioONOFF()"
                     :src="require(`@/assets/images/session/micOn.png`)"
-                    style="height:4vh; margin-left:1.5vh; margin-top:1vh;"
+                    style="height:4vh; margin-left:1.5vh; margin-top:1vh; cursor:pointer;"
                   />
                   <span class="tooltip-text">
                     마이크 끄기
@@ -99,7 +99,7 @@
                   <img
                     @click="audioONOFF()"
                     :src="require(`@/assets/images/session/micOn.png`)"
-                    style="height:4vh; margin-left:1.5vh; margin-top:1vh;"
+                    style="height:4vh; margin-left:1.5vh; margin-top:1vh; cursor:pointer;"
                   />
                   <span class="tooltip-text">
                     마이크 켜기
@@ -113,7 +113,7 @@
                   <img
                     @click="videoONOFF()"
                     :src="require(`@/assets/images/session/video.png`)"
-                    style="height:2.4vh; margin-left: 1.2vh; margin-top: 1.8vh;"
+                    style="height:2.4vh; margin-left: 1.2vh; margin-top: 1.8vh; cursor:pointer;"
                   /><span class="tooltip-text">
                     카메라 끄기
                   </span>
@@ -122,7 +122,7 @@
                   <img
                     @click="videoONOFF()"
                     :src="require(`@/assets/images/session/video.png`)"
-                    style="height:2.4vh; margin-left: 1.2vh; margin-top: 1.8vh;"
+                    style="height:2.4vh; margin-left: 1.2vh; margin-top: 1.8vh; cursor:pointer;"
                   /><span class="tooltip-text">
                     카메라 켜기
                   </span>
@@ -137,7 +137,7 @@
                   <img
                     :src="require(`@/assets/images/session/teach.png`)"
                     @click="teachONOFF()"
-                    style="height:3.8vh; margin-left: 1vh; margin-top: 1.1vh;"
+                    style="height:3.8vh; margin-left: 1vh; margin-top: 1.1vh; cursor:pointer;"
                   /><span class="tooltip-text">
                     자세교정 끄기
                   </span>
@@ -146,7 +146,7 @@
                   <img
                     :src="require(`@/assets/images/session/teach.png`)"
                     @click="teachONOFF()"
-                    style="height:3.8vh; margin-left:1vh; margin-top: 1.1vh;"
+                    style="height:3.8vh; margin-left:1vh; margin-top: 1.1vh; cursor:pointer;"
                   /><span class="tooltip-text">
                     자세교정 켜기
                   </span>
@@ -154,12 +154,16 @@
               </div>
               <!-- 나가기 -->
               <div>
-                <div class="leave-button">
+                <div class="leave-button tooltip-image">
                   <img
                     @click="leaveSession"
                     :src="require(`@/assets/images/session/leave.png`)"
-                    style="height:3.5vh; margin-left: 1.3vh; margin-top: 1.2vh;"
+                    style="height:3.5vh; margin-left: 1.3vh; margin-top: 1.2vh; cursor:pointer;"
                   />
+
+                  <span class="tooltip-text">
+                    나가기
+                  </span>
                 </div>
               </div>
               <!-- 화면 공유 -->
@@ -217,7 +221,7 @@
                     <img
                       @click="audioONOFF()"
                       :src="require(`@/assets/images/session/micOn.png`)"
-                      style="height:4vh; margin-left:1.5vh; margin-top:1vh;"
+                      style="height:4vh; margin-left:1.5vh; margin-top:1vh; cursor:pointer; cursor:pointer;"
                     /><span class="tooltip-text">
                       마이크 끄기
                     </span>
@@ -226,7 +230,7 @@
                     <img
                       @click="audioONOFF()"
                       :src="require(`@/assets/images/session/micOn.png`)"
-                      style="height:4vh; margin-left:1.5vh; margin-top:1vh;"
+                      style="height:4vh; margin-left:1.5vh; margin-top:1vh; cursor:pointer; cursor:pointer;"
                     /><span class="tooltip-text">
                       마이크 켜기
                     </span>
@@ -238,7 +242,7 @@
                     <img
                       @click="videoONOFF()"
                       :src="require(`@/assets/images/session/video.png`)"
-                      style="height:2.4vh; margin-left: 1.2vh; margin-top: 1.8vh;"
+                      style="height:2.4vh; margin-left: 1.2vh; margin-top: 1.8vh; cursor:pointer;"
                     /><span class="tooltip-text">
                       카메라 끄기
                     </span>
@@ -247,7 +251,7 @@
                     <img
                       @click="videoONOFF()"
                       :src="require(`@/assets/images/session/video.png`)"
-                      style="height:2.4vh; margin-left: 1.2vh; margin-top: 1.8vh;"
+                      style="height:2.4vh; margin-left: 1.2vh; margin-top: 1.8vh; cursor:pointer;"
                     /><span class="tooltip-text">
                       카메라 켜기
                     </span>
@@ -262,7 +266,7 @@
                     <img
                       :src="require(`@/assets/images/session/teach.png`)"
                       @click="teachONOFF()"
-                      style="height:3.8vh; margin-left: 1vh; margin-top: 1.1vh;"
+                      style="height:3.8vh; margin-left: 1vh; margin-top: 1.1vh; cursor:pointer;"
                     /><span class="tooltip-text">
                       자세교정 끄기
                     </span>
@@ -271,7 +275,7 @@
                     <img
                       :src="require(`@/assets/images/session/teach.png`)"
                       @click="teachONOFF()"
-                      style="height:3.8vh; margin-left:1vh; margin-top: 1.1vh;"
+                      style="height:3.8vh; margin-left:1vh; margin-top: 1.1vh; cursor:pointer;"
                     /><span class="tooltip-text">
                       자세교정 켜기
                     </span>
@@ -279,12 +283,15 @@
                 </div>
                 <!-- 나가기 -->
                 <div>
-                  <div class="leave-button">
+                  <div class="leave-button tooltip-image">
                     <img
                       @click="leaveSession"
                       :src="require(`@/assets/images/session/leave.png`)"
-                      style="height:3.5vh; margin-left: 1.3vh; margin-top: 1.2vh;"
+                      style="height:3.5vh; margin-left: 1.3vh; margin-top: 1.2vh; cursor:pointer;"
                     />
+                    <span class="tooltip-text">
+                      나가기
+                    </span>
                   </div>
                 </div>
                 <!-- 화면 공유 -->
@@ -310,7 +317,7 @@
               <div id="main-video" class="col">
                 <img
                   :src="require('@/assets/images/session/interviewer.png')"
-                  style="height:65vh;"
+                  style="height:63vh; margin-left:8vh; margin-bottom:1.5vh;"
                 />
               </div>
 
@@ -323,7 +330,7 @@
                   :src="require(`@/assets/images/session/left.png`)"
                   class="slider-button-left"
                   @click="plusDivs(-1)"
-                  style="height:4vh; margin-top:9vh;"
+                  style="height:4vh; margin-top:9vh; cursor:pointer;"
                 />
                 <!-- 자기화면 (작은) -->
                 <user-video
@@ -351,7 +358,7 @@
                   :src="require(`@/assets/images/session/right.png`)"
                   class="slider-button-right"
                   @click="plusDivs(1)"
-                  style="height:4vh; margin-top:9vh;"
+                  style="height:4vh; margin-top:9vh; cursor:pointer;"
                 />
               </div>
             </div>
@@ -370,7 +377,7 @@
                   <img
                     @click="audioONOFF()"
                     :src="require(`@/assets/images/session/micOn.png`)"
-                    style="height:4vh; margin-left:1.5vh; margin-top:1vh;"
+                    style="height:4vh; margin-left:1.5vh; margin-top:1vh; cursor:pointer;"
                   /><span class="tooltip-text">
                     마이크 끄기
                   </span>
@@ -379,7 +386,7 @@
                   <img
                     @click="audioONOFF()"
                     :src="require(`@/assets/images/session/micOn.png`)"
-                    style="height:4vh; margin-left:1.5vh; margin-top:1vh;"
+                    style="height:4vh; margin-left:1.5vh; margin-top:1vh; cursor:pointer;"
                   /><span class="tooltip-text">
                     마이크 켜기
                   </span>
@@ -392,7 +399,7 @@
                   <img
                     @click="videoONOFF()"
                     :src="require(`@/assets/images/session/video.png`)"
-                    style="height:2.4vh; margin-left: 1.2vh; margin-top: 1.8vh;"
+                    style="height:2.4vh; margin-left: 1.2vh; margin-top: 1.8vh; cursor:pointer;"
                   /><span class="tooltip-text">
                     카메라 끄기
                   </span>
@@ -401,7 +408,7 @@
                   <img
                     @click="videoONOFF()"
                     :src="require(`@/assets/images/session/video.png`)"
-                    style="height:2.4vh; margin-left: 1.2vh; margin-top: 1.8vh;"
+                    style="height:2.4vh; margin-left: 1.2vh; margin-top: 1.8vh; cursor:pointer;"
                   /><span class="tooltip-text">
                     카메라 켜기
                   </span>
@@ -415,7 +422,7 @@
                   <img
                     :src="require(`@/assets/images/session/teach.png`)"
                     @click="teachONOFF()"
-                    style="height:3.8vh; margin-left: 1vh; margin-top: 1.1vh;"
+                    style="height:3.8vh; margin-left: 1vh; margin-top: 1.1vh; cursor:pointer;"
                   />
                   <span class="tooltip-text">
                     자세교정 끄기
@@ -425,7 +432,7 @@
                   <img
                     :src="require(`@/assets/images/session/teach.png`)"
                     @click="teachONOFF()"
-                    style="height:3.8vh; margin-left:1vh; margin-top: 1.1vh;"
+                    style="height:3.8vh; margin-left:1vh; margin-top: 1.1vh; cursor:pointer;"
                   /><span class="tooltip-text">
                     자세교정 켜기
                   </span>
@@ -433,12 +440,16 @@
               </div>
               <!-- 나가기 -->
               <div>
-                <div class="leave-button">
+                <div class="leave-button tooltip-image">
                   <img
                     @click="leaveSession"
                     :src="require(`@/assets/images/session/leave.png`)"
-                    style="height:3.5vh; margin-left: 1.3vh; margin-top: 1.2vh;"
+                    style="height:3.5vh; margin-left: 1.3vh; margin-top: 1.2vh; cursor:pointer;"
                   />
+
+                  <span class="tooltip-text">
+                    나가기
+                  </span>
                 </div>
               </div>
               <!-- 화면 공유 -->
@@ -451,7 +462,6 @@
         <div class=" side-right col-md-4">
           <!-- 사이드 -->
           <!-- 메시지, 자소서, 참가자 지정 -->
-
           <div class="side-panel">
             <div class="select-side-bottons">
               <div class="d-flex justify-content-between">
@@ -460,13 +470,13 @@
                     <img
                       :src="require(`@/assets/images/session/chatOn.png`)"
                       @click="changeContent('chatting')"
-                      style="height:6vh; margin-top:-5%;"
+                      style="height:6vh; margin-top:-5%; cursor:pointer;"
                       v-if="chatting"
                     />
                     <img
                       :src="require(`@/assets/images/session/chatOff.png`)"
                       @click="changeContent('chatting')"
-                      style="height:6vh; margin-top:-5%;"
+                      style="height:6vh; margin-top:-5%; cursor:pointer;"
                       v-else
                     />
                   </div>
@@ -475,13 +485,13 @@
                       :src="require(`@/assets/images/session/resumeOn.png`)"
                       @click="changeContent('participant')"
                       v-if="participant"
-                      style="margin-top:5%; height:4.8vh"
+                      style="margin-top:5%; height:4.8vh; cursor:pointer;"
                     />
                     <img
                       :src="require(`@/assets/images/session/resumeOff.png`)"
                       @click="changeContent('participant')"
                       v-else
-                      style="margin-top:5%; height:4.8vh"
+                      style="margin-top:5%; height:4.8vh; cursor:pointer;"
                     />
                   </div>
                   <div
@@ -492,13 +502,13 @@
                     <img
                       :src="require(`@/assets/images/session/memberOn.png`)"
                       @click="changeContent('selectinterviewee')"
-                      style="height:5.7vh; margin-top:5%"
+                      style="height:5.7vh; margin-top:5%; cursor:pointer;"
                       v-if="selectinterviewee"
                     />
                     <img
                       :src="require(`@/assets/images/session/memberOff.png`)"
                       @click="changeContent('selectinterviewee')"
-                      style="height:5.7vh; margin-top:5%"
+                      style="height:5.7vh; margin-top:5%; cursor:pointer;"
                       v-else
                     />
                   </div>
@@ -508,7 +518,7 @@
                         require(`@/assets/images/session/questionAnswerOn.png`)
                       "
                       @click="changeContent('commonquestion')"
-                      style="margin-top: 0.8vh; height:4.5vh;"
+                      style="margin-top: 0.8vh; height:4.5vh; cursor:pointer;"
                       v-if="commonquestion"
                     />
                     <img
@@ -516,7 +526,7 @@
                         require(`@/assets/images/session/questionAnswerOff.png`)
                       "
                       @click="changeContent('commonquestion')"
-                      style="margin-top: 0.8vh; margin-left:0.3vh; height:4.5vh;"
+                      style="margin-top: 0.8vh; margin-left:0.3vh; height:4.5vh; cursor:pointer;"
                       v-else
                     />
                   </div>
@@ -533,13 +543,13 @@
                     >
                       <img
                         :src="require(`@/assets/images/session/videoOn.png`)"
-                        style="height:3vh;"
+                        style="height:3vh; cursor:pointer;"
                         v-if="recordOnOff"
                         @click="recordONOFF()"
                       />
                       <img
                         :src="require(`@/assets/images/session/videoOff.png`)"
-                        style="height:3vh;"
+                        style="height:3vh; cursor:pointer;"
                         @click="recordONOFF()"
                         v-else
                       />
@@ -877,7 +887,6 @@ export default {
           )
           .then(response => {
             this.recording = response.data;
-            console.log(this.recording);
           })
           .then(data => resolve(data.token))
           .catch(error => reject(error.response));
@@ -903,31 +912,19 @@ export default {
             this.recordingToSend.videoUrl = await this.recording.url;
             for (const member of memberlist) {
               this.recordingToSend.userId = await member.user.userId;
-              // console.log(this.recordingToSend.userId);
               await this.saveRecordedFile([
                 this.recordingToSend,
                 this.sessionNo
               ]);
             }
-
-            // this.recordingToSend.userId = await this.myUserId;
           })
           .then(data => resolve(data.token))
           .catch(error => reject(error.response));
       });
     },
     async init() {
-      const modelURL = `${this.url}model.json`;
-      const metadataURL = `${this.url}metadata.json`;
       const webcamContainer = this.$refs.webcam;
       const flip = false; // whether to flip the webcam
-      // load the model and metadata
-      // Refer to tmImage.loadFromFiles() in the API to support files from a file picker
-      // or files from your local hard drive
-      // Note: the pose library adds "tmImage" object to your window (window.tmImage)
-      // this.model = await tmPose.load(modelURL, metadataURL);
-      this.model = Object.freeze(await tmPose.load(modelURL, metadataURL));
-      // Convenience function to setup a webcam
       this.webcam = new tmPose.Webcam(
         webcamContainer.width,
         webcamContainer.height,
@@ -935,13 +932,10 @@ export default {
       ); // width, height, flip
       await this.webcam.setup(); // request access to the webcam
       await this.webcam.play();
-      webcamContainer.appendChild(this.webcam.canvas);
-
       window.requestAnimationFrame(this.loop);
     },
     async loop() {
       if (this.webcam != null) {
-        console.log("hi");
         this.webcam.update();
         await this.predict();
         await this.inference();
@@ -964,11 +958,9 @@ export default {
           await this.needToFixPosture(postureColor);
         } else if (className === "left" && pred > 0.9) {
           const postureColor = "#b93131";
-          console.log("left");
           await this.needToFixPosture(postureColor);
         } else if (className === "right" && pred > 0.9) {
           const postureColor = "#b93131";
-          console.log("right");
           await this.needToFixPosture(postureColor);
         }
       }
@@ -985,8 +977,6 @@ export default {
       members.forEach(function(member, index) {
         const checkId = member.user.userId;
         if (userId === checkId) {
-          console.log("check!!!!!!!!!!");
-          console.log(index);
           studentindex = index;
           return;
         }
@@ -1006,12 +996,10 @@ export default {
       if (this.recordOnOff) {
         this.recordingStopButton();
         this.recordOnOff = !this.recordOnOff;
-        console.log(this.recordOnOff);
       } else {
         await alert("녹화를 시작하겠습니다.");
         this.recordingStartButton();
         this.recordOnOff = !this.recordOnOff;
-        console.log(this.recordOnOff);
       }
     },
     videoONOFF() {
@@ -1027,19 +1015,13 @@ export default {
         //stop
         this.tmStop();
         this.teachOnOff = !this.teachOnOff;
-        console.log(this.teachOnOff);
       } else {
         //start
         await alert("자세교정 모드를 실행하겠습니다.");
         this.init();
         this.teachOnOff = !this.teachOnOff;
-        console.log(this.teachOnOff);
       }
     },
-    // mirrorONOFF(){
-    // 	this.publisher.publishVideo(!this.mirrorOnOff);
-    // 	this.mirrorOnOff = !this.mirrorOnOff;
-    // },
 
     // 기본 기능 (입장하기 퇴장하기)
     async joinSession() {
@@ -1087,28 +1069,19 @@ export default {
           this.publisher.stream.connection.data
         );
 
-        console.log("확인해보자", this.updateMain, "이거랑", clientId);
         if (!this.updateMain) {
           await this.changeScreenMode("normal");
-          // await this.changeInterviewMode(false);
           await this.changeInterviewUser("");
           await this.changeContent("chatting");
-          // await this.tmStop()
         } else {
           await this.changeScreenMode("interview");
-          // this.changeInterviewMode(true);
+
           if (clientId === this.updateMain) {
             await this.updateMainVideoStreamManager(this.publisher);
             const studentindex = await this.findIndex(this.updateMain);
             await this.changeContent("participant");
             await this.changeToCoverLetter(["coverletter", studentindex]);
             await this.plusDivs(0);
-            // await this.init()
-
-            // this.chatting = false;
-            // this.participant = true;
-            // this.selectinterviewee = false;
-            // this.commonquestion = false;
           } else if (this.subscribers) {
             this.subscribers.forEach(async sub => {
               const { clientId } = JSON.parse(sub.stream.connection.data);
@@ -1124,17 +1097,11 @@ export default {
             });
           }
         }
-
-        console.log("업데이트 확인입니다");
-        console.log(event);
-        console.log(this.updateMain);
       });
 
       // change TTS mode
 
       this.session.on("signal:tts-mode", async event => {
-        console.log("tts-mode 확인!!!!!!");
-        console.log(event.data);
         const isTTSMode = await event.data;
         if (isTTSMode) {
           await this.changeScreenMode("tts");
@@ -1156,7 +1123,6 @@ export default {
           .connect(token, {
             clientData: this.myUserName,
             clientId: this.myUserId
-
             // // 면접자 지정된 것을 여기에다가 넣어주고 그것이 맞는지 본인과 일치하는지 판단을 해주면 됨
             // // 그때 update부분을 수정하면 가능 할듯
             // clientType: this.clientType
@@ -1256,7 +1222,6 @@ export default {
               }
               reject(err.response);
             }
-
             console.log(err.response);
           });
       });
@@ -1290,8 +1255,6 @@ export default {
           responseType: "arraybuffer"
         }
       );
-      console.log("playtts");
-      console.log(context);
       AudioContext = window.AudioContext || window.webkitAudioContext;
       const audioContext = new AudioContext();
       const audioBuffer = await audioContext.decodeAudioData(ttsdata.data);
@@ -1484,29 +1447,27 @@ export default {
   },
   watch: {
     ttsrequestcontext() {
-      console.log("이게 많이 실행되나?");
       this.ttspublish(this.ttsrequestcontext);
     }
   },
   async created() {
     await this.bringStudySpaceDetail(this.sessionNo);
     this.userType = this.studySpaceDetail.joinType;
-    console.log(this.studySpaceDetail);
+    this.model = Object.freeze(
+      await tmPose.load(`${this.url}model.json`, `${this.url}metadata.json`)
+    );
   },
   async beforeMount() {
     this.myUserName = await this.currentUser.userName;
     this.myUserId = await this.currentUser.userId;
     this.myUserImg = await this.currentUser.userImg;
     this.myJoinType = await this.studySpaceDetail.joinType;
-    console.log("this.myUserId : ", this.myUserId);
     this.mySessionId = await this.changeSessionId(this.sessionNo);
     await this.joinSession();
     // await this.showDivs(1);
+  },
+  unmounted() {
+    this.leaveSession();
   }
-  // async mounted() {
-  //   console.log("걸리나?");
-  //   await this.showDivs(1);
-  //   console.log("걸렸다");
-  // }
 };
 </script>

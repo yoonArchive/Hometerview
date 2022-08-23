@@ -6,7 +6,6 @@
       </h3>
     </header>
     <section id="banner">
-      <!-- <span class="image object"> -->
       <div class="row">
         <div class="image object col-4">
           <img :src="studySpaceDetail.stdImg" alt="" class="stdImg" />
@@ -38,7 +37,6 @@
             </div>
             <div class="info">
               <pre class="detail">{{ studySpaceDetail.stdDetail }}</pre>
-              <!-- <span class="detail">{{ studySpaceDetail.stdDetail }}</span> -->
             </div>
           </blockquote>
           <div class="box">
@@ -160,7 +158,7 @@
                     data-bs-dismiss="modal"
                     @click="initStudy()"
                   >
-                    스터디 공지사항 수정
+                    수정
                   </button>
                   <button
                     type="button"
@@ -728,11 +726,13 @@ i:hover {
   border: 1px solid;
   border-radius: 5px;
   padding: 5px;
-  font-size: 20px;
+  font-size: 13px;
   color: black;
   background: #f6f2ff;
   z-index: 10;
   border-color: #653fd3;
+  font-style: normal;
+  font-weight: normal;
 }
 
 .uil-edit:hover .tooltip-text {
