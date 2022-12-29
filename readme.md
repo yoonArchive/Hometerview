@@ -68,36 +68,41 @@
 |면접 관리|- D-day 관리<br>- 캘린더, 회고록 연동<br>- 녹화본 조회|
 |공지사항|- 공지사항 작성, 조회, 수정, 삭제 (관리자 권한)|
 
-#### 결과물 PREVIEW
+<details>
+<summary>결과물 PREVIEW</summary>
+<div markdown="1">       
 
 - 멤버 모집글 페이지
 
-![recruitment](/uploads/dbcf1f0637e34c447a960ff31c39d508/recruitment.gif)
+![recruitment](./README.assets/recruitment.gif)
 
 - 스터디 스페이스
 
-![studyspace](/uploads/325cc40cdd0b12628c9bffbdd79a76e4/studyspace.gif)
+![studyspace](./README.assets/studyspace.gif)
 
 - Session - 채팅
 
-![chatting](/uploads/1b8174343b97d7b1f04065260b7bc880/chatting.gif)
+![chatting](./README.assets/chatting.gif)
 
 
 - Session - 면접관 지정
 
-![selectInterview](/uploads/114ff3b05a887828b275af36855cb97e/selectInterview.gif)
+![selectInterview](./README.assets/selectInterview.gif)
 
 - Session - tts mode
 
-![ttsMode](/uploads/a7c63c56947bc085347e3f4831760090/ttsMode.gif)
+![ttsMode](./README.assets/ttsMode.gif)
 
 - 회고
 
-![review](/uploads/852ab73362099b0bdb58a105c728fc9d/review.gif)
+![review](./README.assets/review.gif)
 
 - 녹화
 
-![record](/uploads/6bdad5fdb52d83f1ea29b6defe48e72a/record.gif)
+![record](./README.assets/record.gif)
+
+</div>
+</details>
 
 <br>
 
